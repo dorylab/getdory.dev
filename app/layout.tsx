@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description:
     'Documentation for Dory, the AI-native data workspace for modern databases.',
   icons: {
-    icon: '/logo.svg'
+    icon: '/logo.png'
   }
 };
 
