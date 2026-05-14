@@ -1,22 +1,51 @@
 ---
 title: Charts & Results
-description: Inspect result sets and turn useful queries into visual outputs.
+description: Review query results and turn well-shaped SQL output into charts in Dory.
 ---
 
 # Charts & Results
 
-Results are where query quality becomes visible. Dory helps you inspect raw rows first, then move into charting when the query output is stable enough.
+Dory helps you inspect SQL results and convert useful result sets into charts. Chart quality depends on the shape of the SQL output.
 
-## Recommended sequence
+## Result Tables
 
-1. Validate the raw result set.
-2. Confirm column types and labels.
-3. Apply grouping or ordering in SQL where needed.
-4. Choose a chart that matches the data shape.
+After running SQL, first review the result table:
 
-## Good candidates for charts
+| Check | Why It Matters |
+| --- | --- |
+| Column names | Clear names make chart configuration easier. |
+| Row count | Very large result sets are harder to chart directly. |
+| Data types | Dates, numbers, and categories should be shaped correctly. |
+| Null values | Missing values can distort charts. |
+| Aggregation level | Chart data usually works best after SQL aggregation. |
 
-- Time series trends.
-- Top-N comparisons.
-- Distribution summaries.
-- Category breakdowns.
+## Recommended Sequence
+
+1. Write or generate SQL.
+2. Run the query.
+3. Review result columns and sample rows.
+4. Aggregate or reshape the result if needed.
+5. Open charting from the result area.
+6. Choose a chart type that matches the data.
+
+## Good Candidates for Charts
+
+- Time series with date and metric columns.
+- Category comparison with category and value columns.
+- Status distribution with status and count columns.
+- Top-N lists with name and metric columns.
+
+## Common Chart Data Shapes
+
+| Chart Goal | Recommended Columns |
+| --- | --- |
+| Line chart | date, metric |
+| Bar chart | category, metric |
+| Pie chart | category, value |
+| Table summary | dimension columns plus metric columns |
+
+## Let AI Help Shape Results
+
+If the current result is hard to chart, ask AI to rewrite the SQL into chart-friendly output. Be specific about the chart type and required columns.
+
+Example: ask AI to return daily order count and total revenue for the last 30 days, with one row per day.

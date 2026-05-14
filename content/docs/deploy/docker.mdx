@@ -116,7 +116,11 @@ Check that `BETTER_AUTH_URL` exactly matches the public URL users open.
 
 Check `DORY_AI_PROVIDER`, `DORY_AI_MODEL`, `DORY_AI_API_KEY`, and `DORY_AI_URL`.
 
-## Related Docs
+### Why cannot Docker access local SQLite or DuckDB files?
+
+The file must be mounted into the container. Use the path inside the container when creating the Dory connection.
+
+## Next Steps
 
 - [Environment Variables](./environment-variables)
 - [Self-Hosting](./self-hosting)

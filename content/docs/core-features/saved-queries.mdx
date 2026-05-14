@@ -1,19 +1,45 @@
 ---
 title: Saved Queries
-description: Keep useful analysis close so you can rerun and share it later.
+description: Save useful SQL in Dory so analysis can be reused by you or your team.
 ---
 
 # Saved Queries
 
-Saved Queries turn one-off analysis into reusable work. They are useful when a query needs to be rerun, shared with teammates, or used as the starting point for another investigation.
+Saved Queries turn useful SQL into reusable analysis. They are best for queries you expect to run again or share with teammates.
 
-## When to save a query
+## What You Can Save
 
-- The query answers a recurring business question.
-- The query took time to refine.
-- A teammate will need the same analysis.
-- The query feeds a chart or dashboard workflow.
+- Reusable reports.
+- Operational checks.
+- Debugging queries.
+- Chart-ready SQL.
+- Queries generated or improved with AI after manual review.
 
-## Good naming practice
+## When to Save
 
-Use names that describe the business outcome, not just the table name.
+- The same question comes up repeatedly.
+- The query contains non-obvious business logic.
+- A teammate may need to reuse it.
+- The result powers a recurring chart or workflow.
+
+## Naming Recommendations
+
+Use names that describe the business question, not just the table name.
+
+Good examples:
+
+- Weekly active users by product area.
+- Failed payments in the last 24 hours.
+- Slow ClickHouse queries by user.
+
+## Usage Flow
+
+1. Write and validate SQL.
+2. Clean up formatting and remove temporary filters.
+3. Add a clear name and description.
+4. Save the query.
+5. Revisit it periodically to keep assumptions current.
+
+## Team Practice
+
+Document time ranges, filters, joins, and metric definitions so others can safely reuse the query.

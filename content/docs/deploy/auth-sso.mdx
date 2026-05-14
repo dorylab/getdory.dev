@@ -48,7 +48,15 @@ EMAIL_FROM="Dory <noreply@example.com>"
 
 `EMAIL_FROM` must be verified by the email provider.
 
-## OAuth Login
+## GitHub Login
+
+Configure GitHub OAuth when your team uses GitHub identities. Confirm callback URLs, client ID, client secret, and public application URL.
+
+## Google Login
+
+Configure Google OAuth when your organization uses Google Workspace identities. Confirm callback URLs, client ID, client secret, and allowed domains if needed.
+
+OAuth provider configuration:
 
 GitHub:
 
@@ -70,6 +78,10 @@ Configure OAuth callback URLs using the same public domain as `BETTER_AUTH_URL`.
 
 Define who can invite members, whether email verification is required, which organization new users join, and how admins review access. During offboarding, revoke Dory membership, database roles, MCP tokens, OAuth access, and shared secrets.
 
+## Team Provisioning Flow
+
+Create an initial admin first, verify email or OAuth settings, invite team members, then assign database access through least-privilege database credentials.
+
 ## FAQ
 
 ### Why do login links redirect to the wrong URL?
@@ -79,6 +91,10 @@ Check that `BETTER_AUTH_URL` matches the public reverse-proxy URL.
 ### Why are verification emails missing?
 
 Check `RESEND_API_KEY`, `EMAIL_FROM`, sender-domain verification, and spam folders.
+
+### Is SSO required?
+
+No. SSO is optional, but recommended for teams that need centralized identity, easier onboarding, and cleaner offboarding.
 
 ## Related Docs
 

@@ -35,6 +35,13 @@ The desktop app connects from your current machine. Docker or self-hosted Dory c
 
 Prepare the SSH host, port, username, password or private key, optional passphrase, and the private database host and port.
 
+## Security Advice
+
+- Use a dedicated database user for Dory.
+- Prefer read-only privileges for production databases.
+- Keep SSL enabled for managed cloud databases.
+- Rotate credentials and remove unused access.
+
 ## FAQ
 
 ### Why does my connection work locally but fail in production?
@@ -44,6 +51,10 @@ The desktop and deployment environments usually have different network egress. C
 ### Should I enable SSL?
 
 Use SSL whenever the database provider requires or recommends it. ClickHouse Cloud, Neon, and many managed databases commonly require TLS.
+
+### How can I reduce production database risk?
+
+Use read-only credentials, restrict network access, test queries with limits, and review AI-generated SQL before execution.
 
 ## Related Docs
 

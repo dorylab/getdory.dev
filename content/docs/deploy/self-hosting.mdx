@@ -156,6 +156,10 @@ Use a dedicated Postgres database and a dedicated Dory database user. The user s
 - Mount SQLite and DuckDB files through Docker volumes.
 - Keep AI keys and database credentials out of Git and images.
 
+## Database Connection Security
+
+Use separate database credentials for Dory, prefer readonly users for production, document who owns each connection, and rotate shared credentials when team access changes.
+
 ## Backup and Restore
 
 For PGlite:
@@ -177,6 +181,13 @@ Dory AI sends necessary context to the configured AI provider. Before rollout, d
 ## Upgrade Checklist
 
 Back up persistent data and `.env`, record the current image, test the new image, then verify login, connections, SQL Console, AI, Saved Queries, MCP tokens, and team access after deployment.
+
+## Practices to Avoid
+
+- Do not expose an unconfigured instance directly to the public internet.
+- Do not use shared admin database credentials for all users.
+- Do not rely on local container storage without backups.
+- Do not enable AI providers without understanding data boundaries.
 
 ## Related Docs
 

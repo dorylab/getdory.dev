@@ -34,6 +34,13 @@ Choose MotherDuck mode and provide a MotherDuck token. Use a dedicated token for
 | Charts & Results | Visual analysis for query results. |
 | Saved Queries | Save reusable DuckDB SQL. |
 
+## Usage Advice
+
+- Use absolute file paths for local DuckDB files.
+- Make sure the Dory process can read the file.
+- Mount local files into the container when using Docker.
+- Use MotherDuck when you need cloud-backed DuckDB workflows.
+
 ## FAQ
 
 ### Why does my DuckDB file connection fail?
@@ -43,3 +50,9 @@ Confirm that the path is absolute and readable by Dory. In Docker, confirm that 
 ### DuckDB or SQLite?
 
 SQLite is better for local application-style databases. DuckDB is better for analytical datasets, columnar files, and OLAP-style queries.
+
+## Related Docs
+
+- [Connect Your Database](../getting-started/connect-your-database)
+- [SQLite Database Support](./sqlite)
+- [Cloud Database Connection Guide](./cloud-databases)

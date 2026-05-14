@@ -43,6 +43,14 @@ Prepare the ClickHouse host, port, database, username, password, TLS setting, an
 
 When asking AI to generate ClickHouse SQL, include the time range, metrics, target table, grouping dimensions, and any function preferences such as `toStartOfHour`, `quantile`, or `uniq`.
 
+## ClickHouse Monitoring
+
+Dory can show ClickHouse monitoring views when the connected user can read the required system tables. Use these views to inspect recent queries, slow queries, errors, latency, and QPM.
+
+## ClickHouse Privilege Management
+
+When permissions are available, Dory can help review users, roles, global privileges, and scoped grants for ClickHouse environments.
+
 ## FAQ
 
 ### Why does my ClickHouse connection fail?
@@ -52,6 +60,10 @@ Check the host, port, username, password, TLS setting, and network allowlist. Fo
 ### Why is Monitoring empty?
 
 The current user may not have permission to read ClickHouse system tables, or the selected time range may not contain query records.
+
+### Why does AI-generated ClickHouse SQL need edits?
+
+ClickHouse functions and syntax can vary by version and deployment. Verify generated SQL against your schema and run a small preview before using it for production analysis.
 
 ## Related Docs
 

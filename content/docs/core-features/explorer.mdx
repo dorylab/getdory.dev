@@ -1,19 +1,41 @@
 ---
 title: Explorer
-description: Inspect database objects before you write a query.
+description: Use Dory Explorer to inspect databases, schemas, tables, columns, and sample data before writing SQL.
 ---
 
 # Explorer
 
-Explorer gives you a fast way to understand a database before writing SQL. It is especially useful when the schema is unfamiliar.
+Explorer helps you understand a database before writing SQL. It is the safest place to start when you are unfamiliar with a schema.
 
-## What to inspect
+## What You Can Inspect
 
-- Available databases and schemas.
-- Tables and views.
-- Column names and types.
-- Relationships or naming patterns across objects.
+| Area | What to Look For |
+| --- | --- |
+| Databases and schemas | Available namespaces and table grouping |
+| Tables | Table names, purpose, and row shape |
+| Columns | Names, types, and likely meanings |
+| Sample rows | Representative values and null patterns |
+| Relationships | IDs, foreign-key-like names, and join candidates |
 
-## Why it matters
+## Why It Matters
 
-Explorer reduces guesswork. It also improves the quality of AI prompts because you can reference real objects instead of describing them vaguely.
+- You can avoid guessing table and column names.
+- AI Chat can work with better schema context.
+- SQL Console queries are easier to validate.
+- You can identify safe preview queries before running larger analysis.
+
+## Recommended Flow
+
+1. Select a connection.
+2. Browse schemas and tables.
+3. Open a table and inspect columns.
+4. Preview a small sample when available.
+5. Move to SQL Console or AI Chat with the table context in mind.
+
+## Table Detail Pages
+
+Use table details to understand column names, data types, and examples before writing filters, joins, or aggregations.
+
+## Working with AI
+
+When asking AI to generate SQL, mention the exact table and columns you confirmed in Explorer. This reduces hallucinated column names and makes the first draft easier to review.

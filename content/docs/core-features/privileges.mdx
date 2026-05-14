@@ -1,21 +1,46 @@
 ---
 title: Privileges
-description: Manage ClickHouse users, roles, and grants in Dory.
+description: Understand Dory privilege workflows for users, roles, permissions, and cluster operations.
 ---
 
 # Privileges
 
-Privileges is Dory's ClickHouse user and role management interface. It lets you create and edit users, create roles, grant roles, manage global privileges, and manage database, table, or view scoped privileges.
+Privileges help teams manage database access safely. In Dory, privilege-related workflows are most relevant for ClickHouse and other databases where Dory can inspect users, roles, and permissions.
 
-This feature requires a ClickHouse connection whose credentials can manage users, roles, and grants.
+## What You Can Do
 
-## Common Tasks
+- Inspect users and roles.
+- Review granted privileges.
+- Understand who can access which databases or tables.
+- Support access review and operational troubleshooting.
+- Coordinate safer cluster or production operations.
 
-- Create users and configure allowed hosts.
-- Create roles for readonly, analyst, monitoring, or admin workflows.
-- Grant roles to users and set default roles.
-- Grant or revoke global privileges.
-- Grant or revoke database, table, or view level privileges.
-- Apply supported operations with `ON CLUSTER` when a cluster is detected.
+## User Management
 
-Use least privilege in production and prefer role-based access over direct per-user grants.
+Review database users, their purpose, and whether they have more access than needed.
+
+## Role Management
+
+Use roles to group permissions by responsibility, environment, or workload.
+
+## Permission Details
+
+Inspect grants to understand what a user or role can read, write, administer, or modify.
+
+## Cluster Operations
+
+For ClickHouse clusters, privilege review can support safer operations across nodes and environments when the connected user has permission.
+
+## Security Recommendations
+
+- Prefer read-only accounts for analysis.
+- Avoid sharing administrator credentials.
+- Separate production, staging, and local access.
+- Review grants before enabling team-wide access.
+- Keep AI-assisted workflows on least-privilege connections.
+
+## Related Pages
+
+- [ClickHouse Database Support](/docs/database-support/clickhouse)
+- [Monitoring](/docs/core-features/monitoring)
+- [Self-Host Dory](/docs/deploy/self-hosting)

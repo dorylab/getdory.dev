@@ -1,21 +1,29 @@
 ---
 title: First Query in 3 Minutes
-description: Use Dory to connect, inspect a schema, and run a useful first query in minutes.
+description: Run your first safe query in Dory and use AI to continue the analysis.
 ---
 
 # First Query in 3 Minutes
 
-This walkthrough is the fastest way to build confidence that your connection, schema visibility, and query execution path are all working.
+This guide assumes you already have a working database connection.
 
-## 1. Open Explorer
+## Before You Start
 
-Start in [Explorer](../core-features/explorer) and inspect a real table.
+- Choose a development, demo, or read-only database.
+- Open the workspace that contains your connection.
+- Confirm Explorer can show tables and columns.
+
+## 1. Open Explorer and Inspect Schema
+
+Start in Explorer. Pick a table and review its columns, sample rows, and relationships implied by names or keys.
 
 ## 2. Open SQL Console
 
-Create a new query tab and let autocomplete confirm that tables and columns are available.
+Open SQL Console from the same connection. Keep Explorer available so you can confirm table and column names while writing SQL.
 
-## 3. Run a safe query
+## 3. Run the First Safe Query
+
+Start with a limited query:
 
 ```sql
 select *
@@ -23,10 +31,50 @@ from your_table
 limit 20;
 ```
 
-## 4. Ask AI to improve it
+Review the result columns before writing filters, joins, or aggregations.
 
-Open [AI Chat](../core-features/ai-chat) and ask for filters, grouping, or a chart-ready version.
+## 4. Use AI to Generate the Next Query
 
-## 5. Save the result
+Ask Dory AI for a more specific query. Include the table name, the metric you want, filters, and the expected output columns.
 
-Store the query in [Saved Queries](../core-features/saved-queries) if you expect to reuse it.
+Example:
+
+Ask AI to count rows by status for the last 7 days and return status plus count.
+
+## 5. Review Results and Create a Chart
+
+If the result is aggregated by time, category, or status, open charting from the results area and choose a chart type that matches the data shape.
+
+## 6. Save Your First Analysis
+
+When the query is useful, save it with a clear business name and a short description of the assumptions.
+
+## Common Troubleshooting
+
+### Query returns no rows
+
+Check filters and time ranges. Start with a smaller set of conditions.
+
+### Query fails
+
+Ask AI to explain the error, then compare the suggested fix with Explorer schema.
+
+### Result is too large
+
+Add `limit`, narrow the time range, or aggregate before returning rows.
+
+### Autocomplete is missing
+
+Confirm the selected connection and schema are correct.
+
+### Query fails after changes
+
+Compare the changed SQL with the last working version and ask AI to explain only the specific error message.
+
+### AI result is inaccurate
+
+Give AI the exact table names, columns, desired filters, and expected output shape.
+
+## Next Step
+
+Continue with [SQL Console](/docs/core-features/sql-console) or [AI Chat](/docs/core-features/ai-chat).

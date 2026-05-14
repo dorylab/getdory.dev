@@ -34,11 +34,22 @@ Prepare the host, port, database, username, password, SSL setting, and SSH tunne
 
 PostgreSQL projects often use multiple schemas such as `public`, `analytics`, and `internal`. Confirm the target schema in Explorer before writing queries or asking AI to generate SQL.
 
+## Performance and Security Advice
+
+- Use read-only roles for production analysis.
+- Filter by time range before scanning large tables.
+- Review joins and aggregations before running AI-generated SQL.
+- Confirm the active schema when table names are ambiguous.
+
 ## FAQ
 
 ### Why can I connect but not see tables?
 
 The current user may lack `USAGE` permission on the schema or `SELECT` permission on the target tables.
+
+### Why does AI-generated PostgreSQL SQL reference missing columns?
+
+Open Explorer and provide the exact table and column names in the prompt. Ask AI to rewrite the query using only visible columns.
 
 ### Does Dory support Neon?
 

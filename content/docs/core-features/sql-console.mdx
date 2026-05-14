@@ -1,23 +1,67 @@
 ---
 title: SQL Console
-description: Write, run, and refine SQL with schema-aware assistance.
+description: Write, run, debug, and save SQL in Dory with schema context and AI assistance.
 ---
 
 # SQL Console
 
-The SQL Console is where most analysis starts. Dory uses live schema information to improve autocomplete, reduce query mistakes, and speed up iteration.
+SQL Console is the main workspace for writing and running SQL in Dory. It works together with Explorer, AI Chat, result tables, charts, and Saved Queries.
 
-## What it is good for
+## Interface Structure
 
-- Writing ad hoc analysis queries.
-- Validating table and column names with autocomplete.
-- Iterating quickly between edits and result checks.
-- Working with AI on the current query context.
+SQL Console typically includes:
 
-## Typical workflow
+- A connection and schema context.
+- A SQL editor.
+- Query execution controls.
+- Result tables and chart entry points.
+- Access to AI assistance.
+- Saved query actions.
 
-1. Choose the active connection.
-2. Open a new query tab.
-3. Write or paste SQL.
-4. Run the query and inspect results.
-5. Save the query if it is worth reusing.
+## Writing SQL
+
+Start with small, safe queries. Confirm table and column names in Explorer before adding complex filters, joins, or aggregations.
+
+## Running Queries
+
+Run SQL against the selected connection. Review results, errors, and execution behavior before using the output for decisions.
+
+## Multi-Tab Workflow
+
+Use multiple tabs to keep exploration, final analysis, and alternative query drafts separate.
+
+## Use the Left Schema Panel
+
+The schema panel helps you avoid guessing names:
+
+```sql
+select *
+from your_table
+limit 20;
+```
+
+Open tables in Explorer when you need more detail.
+
+## AI Copilot
+
+Use AI to generate SQL, explain SQL, fix errors, optimize queries, or reshape output for charts. Always review the generated SQL before running it.
+
+## Results and Charts
+
+After execution, inspect the result table. If the result is aggregated and well-shaped, create a chart from it.
+
+## Save Queries
+
+Save useful SQL with a clear name and description after it has been validated.
+
+## Best Practices
+
+- Use read-only credentials for production data.
+- Start with `limit` and narrow filters.
+- Keep one query goal per tab.
+- Validate AI output against schema and sample rows.
+- Save only queries that are useful beyond the current session.
+
+## Recommended Next Step
+
+Continue with [AI Chat](/docs/core-features/ai-chat), [Charts & Results](/docs/core-features/charts-results), or [Saved Queries](/docs/core-features/saved-queries).

@@ -30,6 +30,13 @@ Dory supports MySQL and MariaDB for web application databases, operational analy
 
 Use `LIMIT` during exploration, add explicit time filters, check indexes before running AI-generated joins, and account for version-specific function support.
 
+## Connection Requirements
+
+- Host, port, database name, username, and password.
+- Network access from the Dory runtime.
+- SSL settings if the server or cloud provider requires them.
+- Permissions to read schema metadata and target tables.
+
 ## FAQ
 
 ### Does Dory support MariaDB?
@@ -39,6 +46,10 @@ Yes. MariaDB has its own connection type and works similarly to MySQL.
 ### Why does my MySQL connection fail?
 
 Check the host, port, database, username, password, network allowlist, and SSL requirement.
+
+### What if AI-generated MySQL SQL does not match actual syntax?
+
+Tell AI the MySQL or MariaDB version and paste the exact error. Verify functions, date syntax, and JSON operations before rerunning.
 
 ## Related Docs
 

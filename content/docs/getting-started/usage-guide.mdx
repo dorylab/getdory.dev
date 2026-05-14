@@ -1,30 +1,72 @@
 ---
 title: Dory Usage Guide
-description: A complete first-use path from workspace setup to connections, SQL, AI, charts, and saved queries.
+description: A complete workflow for using Dory from workspace setup to SQL, AI, charts, saved queries, ClickHouse operations, and MCP.
 ---
 
 # Dory Usage Guide
 
-Dory is a SQL and AI data workspace. Use this guide as the high-level path for a first successful session.
+This guide follows the typical path from opening Dory to completing reusable database analysis.
 
-## Recommended Flow
+## 1. Enter Dory
 
-1. Open the live demo, desktop app, or self-hosted deployment.
-2. Create or choose a workspace.
-3. Add a database connection and test it.
-4. Inspect databases, schemas, tables, and columns in Explorer.
-5. Run a small `LIMIT` query in SQL Console.
-6. Use AI Chat or Copilot to generate, explain, fix, or optimize SQL.
-7. Validate results, then build a chart if the result shape is suitable.
-8. Save useful SQL in Saved Queries for reuse.
+Open Dory through the desktop app, online demo, or self-hosted deployment.
 
-## Supported Connection Types
+## 2. Create or Select a Workspace
 
-Dory supports ClickHouse, PostgreSQL, Neon, MySQL, MariaDB, SQLite, and DuckDB / MotherDuck.
+Use workspaces to separate projects, teams, environments, or customers. Keep production and development databases in clearly named workspaces when possible.
 
-## Next Steps
+## 3. Add a Database Connection
 
-- [Connect Your Database](./connect-your-database)
-- [First Query in 3 Minutes](./first-query-in-3-minutes)
-- [SQL Console](../core-features/sql-console)
-- [AI Chat](../core-features/ai-chat)
+Choose the database type and fill in the connection settings. Test the connection before continuing.
+
+| Connection Type | Typical Use |
+| --- | --- |
+| ClickHouse | Analytics, observability, event data, and operational monitoring |
+| PostgreSQL / Neon | Application data and product analytics |
+| MySQL / MariaDB | Business systems and application databases |
+| SQLite | Local files, demos, prototypes, and small datasets |
+| DuckDB / MotherDuck | Local analytics and file-based analysis |
+
+## 4. Browse Database Structure
+
+Open Explorer to inspect databases, schemas, tables, columns, and sample rows. This step helps you understand the data before writing SQL.
+
+## 5. Write and Run SQL in SQL Console
+
+Use SQL Console for query tabs, execution, result review, and saved queries. Start with safe previews and add filters or aggregations gradually.
+
+## 6. Use AI for Analysis
+
+AI Chat can help you:
+
+- Generate SQL from a natural-language request.
+- Explain a query or a table.
+- Fix SQL errors.
+- Optimize slow SQL.
+- Continue analysis based on previous results.
+
+Always review AI-generated SQL before execution.
+
+## 7. Review Results and Generate Charts
+
+After a query runs, inspect the result table. If the result is chart-friendly, create a chart directly from the result.
+
+## 8. Save and Reuse Queries
+
+Save useful queries with clear names and descriptions. Saved Queries are best for recurring analysis, common operational checks, and team knowledge.
+
+## 9. Use ClickHouse-Specific Capabilities
+
+For ClickHouse connections, Dory can expose monitoring, query logs, slow queries, error queries, cluster operations, and privilege-related workflows when the connected user has permission.
+
+## 10. Connect External AI Agents
+
+Use MCP / Agent Access when you want tools such as Codex or Claude to inspect Dory context and perform controlled database-assistant workflows.
+
+## Recommended Reading Order
+
+1. [Quick Start](/docs/getting-started/quick-start)
+2. [Connect Your Database](/docs/getting-started/connect-your-database)
+3. [SQL Console](/docs/core-features/sql-console)
+4. [AI Chat](/docs/core-features/ai-chat)
+5. [MCP / Agent Access](/docs/reference/mcp)

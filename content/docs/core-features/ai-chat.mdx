@@ -1,20 +1,79 @@
 ---
 title: AI Chat
-description: Use schema-aware AI to generate, explain, and debug SQL in context.
+description: Use Dory AI Chat to generate SQL, explain queries, fix errors, optimize SQL, and continue analysis with schema context.
 ---
 
 # AI Chat
 
-AI Chat works best when Dory has live access to schema and query context. That allows answers to stay grounded in the database you are actually using.
+Dory AI Chat is designed for database work. It can use connection, schema, table, SQL, and result context to help you move from a question to executable SQL and follow-up analysis.
 
-## Common use cases
+## Why Use Dory AI Chat
 
-- Generate a first draft of a query.
-- Explain an existing query.
-- Translate business questions into SQL.
-- Debug syntax or logic issues.
-- Refactor a long query into smaller steps.
+- It understands database context instead of answering as a generic chatbot.
+- It can generate SQL from a natural-language request.
+- It can explain existing SQL and query results.
+- It can help fix errors and suggest safer or faster queries.
+- It works alongside Explorer and SQL Console.
 
-## Best practice
+## What Context AI Chat Understands
 
-Be specific about the table, goal, and output shape you want. The more concrete the prompt, the better the generated SQL tends to be.
+- Selected database connection.
+- Visible schemas, tables, and columns.
+- Current SQL editor content.
+- Recent query errors or result shape.
+- Saved queries or workflow context when available.
+
+## Core Capabilities
+
+### 1. Generate SQL
+
+Describe the business question, tables, filters, time range, and output columns. Dory can draft SQL that you review in SQL Console.
+
+### 2. Explain SQL
+
+Paste SQL or use the current editor content and ask AI to explain joins, filters, aggregations, and potential risks.
+
+### 3. Fix SQL Errors
+
+When a query fails, ask AI to explain the error and propose a corrected version. Always compare the fix with Explorer schema.
+
+### 4. Optimize SQL
+
+Ask AI to reduce scanned data, simplify joins, add safer filters, or rewrite aggregations.
+
+### 5. Continue Analysis
+
+After reviewing results, ask follow-up questions such as grouping by another dimension, comparing time periods, or producing chart-ready output.
+
+## Recommended Usage
+
+### Use with SQL Console (Recommended)
+
+Use AI Chat to draft or improve SQL, then run and validate it in SQL Console.
+
+### Ask Standalone Questions
+
+Use AI Chat to understand table purpose, column meaning, or possible analysis paths.
+
+### Use Table Context
+
+Start from Explorer when possible so AI has the table and column names you intend to use.
+
+## High-Quality Prompt Examples
+
+- Generate SQL to count daily active users for the last 30 days. Return date and user count.
+- Explain this SQL and point out any risky filters.
+- Fix this ClickHouse error and keep the result columns unchanged.
+- Rewrite this query so the result is suitable for a line chart by day.
+
+## Best Practices
+
+- Give exact table names and output expectations.
+- Review every generated query before execution.
+- Start with read-only or limited queries.
+- Use Explorer to verify table and column names.
+- Ask AI to preserve semantics when optimizing SQL.
+
+## Recommended Next Step
+
+Continue with [Generate SQL with Dory AI](/docs/workflows/generate-sql-with-ai).

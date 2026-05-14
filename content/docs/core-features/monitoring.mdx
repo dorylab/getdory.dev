@@ -1,21 +1,42 @@
 ---
 title: Monitoring
-description: Use ClickHouse query monitoring to inspect throughput, latency, slow queries, and error queries.
+description: Use Dory monitoring views to inspect ClickHouse query activity, slow queries, errors, and operational signals.
 ---
 
 # Monitoring
 
-Monitoring is Dory's ClickHouse query observability interface. It helps you inspect total queries, slow queries, error queries, active users, P50 / P95 latency, QPM, recent queries, and SQL details.
+Monitoring helps you inspect database activity and operational issues, especially for ClickHouse connections.
 
-This feature depends on ClickHouse system tables and the permissions of the current connection.
+## Entry Points
 
-## Views
+Monitoring is available from supported connections when the connected user has permission to read the required system tables or operational metadata.
 
-- **Overview**: high-level query volume, latency, throughput, and recent queries.
-- **Query Logs**: searchable query details by user, database, type, duration, and text.
-- **Slow Queries**: queries above a fixed or dynamic threshold.
-- **Error Queries**: failed queries and their error messages.
+## Overview
 
-## Recommended Use
+Use Overview to understand recent activity, workload shape, and whether the database has visible operational signals worth investigating.
 
-Start from Overview, narrow the time range, then move into logs, slow queries, or errors. Copy problematic SQL into SQL Console or AI Chat for deeper investigation.
+## Query Logs
+
+Query Logs show recent SQL activity. Use them to understand who ran what, when it ran, and how it behaved.
+
+## Slow Queries
+
+Slow Queries help you identify expensive SQL that may need filtering, aggregation changes, partition pruning, or schema-level optimization.
+
+## Error Queries
+
+Error Queries help you find recurring failures, syntax problems, missing columns, permission issues, or runtime errors.
+
+## Usage Recommendations
+
+- Start from Overview before drilling into details.
+- Use time ranges to narrow investigation.
+- Compare slow queries with similar successful queries.
+- Ask AI to explain a slow or failing query, but verify any suggested rewrite.
+- Use read-only operational accounts where possible.
+
+## Related Pages
+
+- [ClickHouse Database Support](/docs/database-support/clickhouse)
+- [Debug Slow SQL Queries](/docs/workflows/debug-slow-queries)
+- [Privileges](/docs/core-features/privileges)

@@ -1,21 +1,58 @@
 ---
 title: Connections
-description: Manage connection setup across environments and database engines.
+description: Manage database connections in Dory for SQL, Explorer, AI, charts, and saved workflows.
 ---
 
 # Connections
 
-Connections define the database context for everything else in Dory. Different environments often need different credentials, network paths, and access rules.
+Connections are the starting point for most Dory workflows. A connection defines how Dory reaches a database and what credentials it uses.
 
-## Connection checklist
+## What You Can Manage
 
-- Use the correct database type.
-- Verify the host and port.
-- Confirm read-only versus write-capable access.
-- Label the environment clearly.
+- Database type.
+- Host, port, database, username, and password.
+- SSL, SSH Tunnel, and deployment-specific options.
+- Local database file paths for SQLite or DuckDB.
+- Workspace-level organization and naming.
 
-## Related pages
+## Supported Connection Types
 
-- [Connect Your Database](../getting-started/connect-your-database)
-- [Database Support](../database-support)
-- [Self-Hosting](../deploy/self-hosting)
+| Type | Typical Use |
+| --- | --- |
+| ClickHouse | Analytics, events, monitoring, and operational data |
+| PostgreSQL / Neon | Product and application databases |
+| MySQL / MariaDB | Business systems and web applications |
+| SQLite | Local files, demos, and small datasets |
+| DuckDB / MotherDuck | Local analytics and file-based analysis |
+
+## Create a Connection
+
+1. Open your workspace.
+2. Choose Add Connection.
+3. Select the database type.
+4. Fill in required settings.
+5. Test the connection.
+6. Open Explorer to confirm schema visibility.
+
+## Connection Checklist
+
+- Use credentials with the least privileges needed.
+- Confirm network access from the Dory runtime.
+- Use SSL when required by the database provider.
+- Use absolute paths for local database files.
+- In Docker, mount local file paths into the container.
+
+## Naming Recommendations
+
+Use names that make environment and ownership clear, such as:
+
+- `prod-clickhouse-events`
+- `staging-postgres-app`
+- `local-sqlite-demo`
+- `analytics-duckdb-reports`
+
+## Related Pages
+
+- [Connect Your Database](/docs/getting-started/connect-your-database)
+- [Database Support](/docs/database-support)
+- [Cloud Database Connection Guide](/docs/database-support/cloud-databases)

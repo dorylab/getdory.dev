@@ -29,11 +29,19 @@ Prepare the Neon connection string or connection details, project, branch, datab
 | Charts & Results | Visual analysis for query results. |
 | Saved Queries | Save reusable SQL. |
 
+## Relationship to PostgreSQL
+
+Neon is serverless PostgreSQL. In Dory, Neon uses PostgreSQL-compatible behavior, so most PostgreSQL guidance also applies, including schema selection, read-only roles, and AI SQL review.
+
 ## FAQ
 
 ### Why does my Neon connection fail?
 
 Check the connection string, host, database, username, password, SSL setting, and whether the Neon project is paused.
+
+### How should I distinguish Neon branch databases?
+
+Use connection names that include the project and branch, such as `neon-prod-main` or `neon-staging-preview`.
 
 ## Related Docs
 

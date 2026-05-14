@@ -30,11 +30,19 @@ Provide an absolute path to the SQLite file. The Dory process must be able to re
 | Charts & Results | Visual analysis for query results. |
 | Saved Queries | Save reusable SQLite SQL. |
 
+## Using SQLite in Docker
+
+When Dory runs in Docker, the SQLite file must be mounted into the container. Use the container path in the Dory connection, not the host-only path.
+
 ## FAQ
 
 ### Why cannot Dory find my SQLite file?
 
 Confirm that the path is absolute and readable by Dory. In Docker, confirm that the directory is mounted into the container.
+
+### Is SQLite suitable for team sharing?
+
+SQLite is best for local files, demos, and lightweight analysis. For shared team environments, consider PostgreSQL, MySQL, ClickHouse, or another server database.
 
 ## Related Docs
 

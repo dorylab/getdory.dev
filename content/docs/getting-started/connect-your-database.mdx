@@ -1,26 +1,91 @@
 ---
 title: Connect Your Database
-description: Create a connection so Dory can load schema context for browsing, SQL, and AI.
+description: Add a database connection to Dory and prepare schema context for SQL and AI workflows.
 ---
 
 # Connect Your Database
 
-Connections are the foundation for the rest of Dory. Explorer, SQL autocomplete, and AI grounding all depend on an active database connection.
+Dory can connect to multiple database types. After a connection is added, you can browse schema in Explorer, write SQL in SQL Console, and ask AI questions with database context.
 
-## Before you connect
+## Supported Databases
 
-- Make sure the database host is reachable from your machine or deployment.
-- Prepare the hostname, port, database name, username, and password.
-- Decide whether you are connecting to production, staging, or a local environment.
+- ClickHouse
+- PostgreSQL and Neon
+- MySQL and MariaDB
+- SQLite
+- DuckDB and MotherDuck
 
-## Recommended flow
+## Before You Connect
 
-1. Open the connection dialog in Dory.
-2. Choose the database type.
-3. Fill in the credentials and network details.
-4. Test the connection before saving.
-5. Open [Explorer](../core-features/explorer) to verify the schema is visible.
+Prepare the following information:
 
-## Supported drivers
+- Database host, port, username, and password.
+- Database name, schema, or file path where required.
+- Network access from the machine or container running Dory.
+- SSL or SSH Tunnel settings if the database requires them.
+- A read-only user when you are connecting to production data.
 
-See [Database Support](../database-support) for the current support matrix and deployment notes.
+## Recommended Connection Flow
+
+1. Open Dory.
+2. Create or select a workspace.
+3. Add a new connection.
+4. Choose the database type.
+5. Fill in connection settings.
+6. Test the connection.
+7. Open Explorer and confirm tables are visible.
+
+## Connection Tips by Type
+
+- For ClickHouse, confirm HTTP/native port, user privileges, and whether monitoring tables are available.
+- For PostgreSQL and Neon, confirm schema visibility and SSL requirements.
+- For MySQL and MariaDB, confirm host access, port, database name, and character set.
+- For SQLite and DuckDB, use an absolute file path and make sure Dory can read the file.
+- For Docker deployments, mount local database files into the container before connecting to them.
+
+## After the Connection Works
+
+### Explorer
+
+Browse databases, schemas, tables, columns, and sample rows.
+
+### SQL Console
+
+Write and run SQL against the selected connection.
+
+### AI Chat
+
+Ask Dory to generate SQL, explain tables, or continue an analysis using schema context.
+
+### Saved Queries
+
+Save useful SQL for reuse by yourself or your team.
+
+## Common Troubleshooting
+
+### Cannot connect to the database
+
+Check host, port, credentials, SSL settings, firewall rules, and whether the database allows connections from Dory.
+
+### AI cannot see table structure
+
+Open Explorer first and confirm the tables are visible. If the schema is hidden by permissions, use a role with metadata access.
+
+### ClickHouse connection fails
+
+Confirm the correct endpoint, protocol, database, and user privileges. Some managed ClickHouse environments require SSL.
+
+### Local file database cannot be accessed
+
+Use an absolute path. In Docker, mount the directory that contains the SQLite or DuckDB file.
+
+## Security Advice
+
+- Prefer read-only users for production databases.
+- Avoid sharing admin credentials.
+- Review AI-generated SQL before execution.
+- Limit network exposure for self-hosted deployments.
+
+## Next Step
+
+Continue with [First Query in 3 Minutes](/docs/getting-started/first-query-in-3-minutes).

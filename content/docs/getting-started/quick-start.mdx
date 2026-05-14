@@ -1,53 +1,40 @@
 ---
 title: Quick Start
-description: Get into a working Dory session quickly.
+description: Start Dory through the online demo, local installation, or Docker.
 ---
 
 # Quick Start
 
-Use this path when you want the fastest way to try Dory and run a first query.
+This page helps you get Dory running quickly. Choose the path that matches your goal.
 
-## Option 1: Try the Demo
+## Option 1: Try the Online Demo
 
-Open `https://app.getdory.dev` and choose **Enter as Demo**.
+Use the online demo when you want to explore Dory without installing anything.
 
-This is best when:
-
-- You want to inspect the interface quickly.
-- You do not have database credentials ready.
-- You want to try SQL Console and AI features first.
+1. Open [Dory Demo](https://app.getdory.dev).
+2. Try Explorer, SQL Console, AI Chat, and charting with the available demo data.
+3. Use the demo to understand the workflow before connecting your own database.
 
 ## Option 2: Install Locally
 
-Install the desktop app if you want to connect your own databases.
-
-### macOS（Homebrew）
+Use local installation when you want Dory on your own machine and need to connect local or development databases.
 
 ```bash
-brew install dorylab/dory/dory
+brew install dory
 ```
 
-After installation, open Dory and connect a database.
+After installation, open Dory and create your first workspace.
 
-### Other Install Options
+## Option 3: Run with Docker
 
-For Docker or other runtime options, see [Installation](./installation).
+Use Docker when you want a repeatable self-hosted environment or want to test deployment settings.
 
-## After Install
+```bash
+docker run -p 3000:3000 dorylab/dory
+```
 
-Follow this sequence:
-
-1. Complete [Connect Your Database](./connect-your-database).
-2. Run [First Query in 3 Minutes](./first-query-in-3-minutes).
-3. Open [SQL Console](../core-features/sql-console).
-4. Use [AI Chat](../core-features/ai-chat) to generate, explain, or optimize SQL.
-
-## Quick Tips
-
-- Start with a test database if this is your first session.
-- AI works best after Dory can read schema context.
-- If you use DataGrip, DBeaver, or TablePlus, you can start by treating Dory as a modern SQL workspace.
+For production deployment, read [Deploy Dory with Docker](/docs/deploy/docker) before exposing the service to a team.
 
 ## Next Step
 
-Continue with [Connect Your Database](./connect-your-database).
+After Dory is running, continue with [Connect Your Database](/docs/getting-started/connect-your-database).

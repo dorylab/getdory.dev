@@ -30,6 +30,23 @@ Dory supports MariaDB as a dedicated connection type for web applications, inter
 
 Tell AI that the target database is MariaDB, especially when JSON functions, window functions, or system tables matter. Use readonly accounts and explicit time ranges in production.
 
+## Connection Requirements
+
+- Host, port, database name, username, and password.
+- Network access from the Dory runtime.
+- SSL settings if required by your deployment.
+- A user with permission to read target schemas and tables.
+
+## FAQ
+
+### Can I use the MySQL page recommendations for MariaDB?
+
+Yes, most connection and query practices overlap. Still check MariaDB-specific version behavior for functions, JSON features, and SQL modes.
+
+### What should I check first when connection fails?
+
+Check host, port, credentials, firewall rules, database name, and whether the user can access the target schema.
+
 ## Related Docs
 
 - [MySQL](./mysql)
