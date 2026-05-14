@@ -33,7 +33,7 @@ AI Chat 是 Dory 的智能分析助手，不只是一个普通聊天框。它能
 
 ## 核心能力
 
-## 1. Generate SQL
+### 1. Generate SQL
 
 直接使用自然语言生成查询，例如：
 
@@ -42,7 +42,7 @@ AI Chat 是 Dory 的智能分析助手，不只是一个普通聊天框。它能
 - 按城市统计收入并按月分组
 - 生成适合折线图展示的 SQL
 
-## 2. Explain SQL
+### 2. Explain SQL
 
 理解复杂 SQL 时，你可以让 AI：
 
@@ -51,17 +51,17 @@ AI Chat 是 Dory 的智能分析助手，不只是一个普通聊天框。它能
 - 分析窗口函数用途
 - 输出更易读版本
 
-## 3. Fix SQL Errors
+### 3. Fix SQL Errors
 
 当 SQL 报错时，可直接让 AI 协助排查：
 
 - 语法错误
 - 字段不存在
-n- 表名错误
+- 表名错误
 - 类型不匹配
 - 聚合逻辑问题
 
-## 4. Optimize SQL
+### 4. Optimize SQL
 
 针对慢查询或复杂查询，AI 可提供：
 
@@ -71,7 +71,7 @@ n- 表名错误
 - 推荐索引思路（适用于支持索引数据库）
 - 提升可维护性
 
-## 5. Continue Analysis
+### 5. Continue Analysis
 
 查询完成后，你可以继续追问：
 
@@ -95,6 +95,10 @@ n- 表名错误
 
 直接描述业务问题，让 AI 帮你生成第一版查询。
 
+### 使用表上下文
+
+在连接工作区中，AI Chat 可以结合当前数据库和表结构回答问题。你可以先在 Explorer 中确认目标表，再让 AI 生成 SQL 或解释字段含义。
+
 ## 高质量提示词示例
 
 - 用 ClickHouse 统计最近 30 天 DAU 趋势。
@@ -110,10 +114,11 @@ n- 表名错误
 - 对生成 SQL 先审核再执行。
 - 把 AI 当分析搭档，而不是黑盒自动化工具。
 - 多轮追问通常比一次性长提示词更有效。
+- 生产环境中优先让 AI 生成只读查询，并保留 `LIMIT` 或明确时间范围。
 
 ## 下一步推荐
 
-- 配合 [SQL Console](./sql-editor) 完成查询工作流。
+- 配合 [SQL Console](./sql-console) 完成查询工作流。
 - 使用 [Explorer](./explorer) 理解表结构。
-- 将结果转到 [Charts](./charts) 做可视化分析。
+- 将结果转到 [Charts & Results](./charts-results) 做可视化分析。
 - 保存高价值 SQL 到 [Saved Queries](./saved-queries)。

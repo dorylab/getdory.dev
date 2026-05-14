@@ -1,16 +1,90 @@
 ---
-title: Debug Slow Queries
-description: A repeatable workflow for isolating expensive SQL patterns.
+title: Debug Slow SQL Queries with Dory
+description: Use Dory SQL Console, AI Chat, and ClickHouse Monitoring to investigate slow queries, high scan cost, and expensive joins.
 ---
 
-# Debug Slow Queries
+# Debug Slow SQL Queries with Dory
 
-Start by reducing query scope and validating each expensive operation independently.
+Slow query debugging works best when you isolate the expensive part before rewriting the full SQL. Reduce the scan range, validate joins, inspect aggregation and sorting, then ask AI for reviewable alternatives.
 
-## Checklist
+## When to Use This Workflow
 
-- Limit the data range.
-- Inspect joins and grouping.
-- Remove optional columns.
-- Test filters separately.
-- Ask AI for alternative query shapes, then review them critically.
+- SQL is slow or timing out.
+- The query scans too much data.
+- Joins, grouping, or ordering are expensive.
+- ClickHouse Monitoring shows slow queries.
+- AI-generated SQL is correct but too costly.
+
+## 1. Locate the Slow Query
+
+For ClickHouse, start with [Monitoring](../core-features/monitoring):
+
+- Check slow queries in the last hour or day.
+- Inspect P95 latency and QPM.
+- Filter by user, database, query type, or keyword.
+- Copy the SQL into SQL Console.
+
+For other databases, start with SQL Console duration, errors, and row counts.
+
+## 2. Reduce the Data Range
+
+```sql
+SELECT ...
+FROM your_table
+WHERE event_time >= now() - INTERVAL 1 DAY
+LIMIT 100;
+```
+
+Check that the query has a time range, uses partition or sorting fields where possible, selects only needed columns, and avoids unbounded `SELECT *`.
+
+## 3. Split Complex SQL
+
+Validate each part independently:
+
+1. Base filters.
+2. Join input sizes.
+3. Aggregation logic.
+4. Final ordering or Top-N.
+
+This helps identify whether filtering, joining, grouping, or sorting is the bottleneck.
+
+## 4. Ask AI for a Performance Rewrite
+
+```text
+This ClickHouse SQL is slow. Optimize it without changing the metric definition:
+- only analyze the last 7 days
+- avoid SELECT *
+- use event_time filtering
+- keep the final output columns
+Explain why each change may be faster.
+```
+
+## 5. Compare Before and After
+
+Run both versions and compare duration, row count, metric values, scan scope, and maintainability. If results differ, investigate before adopting the optimized query.
+
+## Common Causes
+
+| Cause | Fix |
+| --- | --- |
+| No time filter | Add a clear time range. |
+| Too many columns | Select only required fields. |
+| Join inputs too large | Filter or pre-aggregate before joining. |
+| Too many group dimensions | Reduce dimensions or analyze in layers. |
+| Sorting a large result | Aggregate or limit to Top-N first. |
+
+## FAQ
+
+### What if AI changes the result?
+
+Do not adopt it. Compare filters, join type, deduplication, and aggregation grain.
+
+### What should I check first for ClickHouse?
+
+Time range, partition keys, sorting keys, read rows, read bytes, and group dimensions.
+
+## Next Steps
+
+- Rewrite with [Generate SQL with AI](./generate-sql-with-ai).
+- Build visuals with [Build Charts from SQL](./build-charts-from-sql).
+- Save proven queries in [Saved Queries](../core-features/saved-queries).

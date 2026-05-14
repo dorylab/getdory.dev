@@ -1,9 +1,9 @@
 ---
-title: First Query in 3 Minutes
+title: 3 分钟完成第一条查询
 description: 用几分钟完成连接验证、查看 Schema，并运行你的第一条有价值查询。
 ---
 
-# First Query in 3 Minutes
+# 3 分钟完成第一条查询
 
 这是体验 Dory 价值最快的方式。完成本页步骤后，你将确认数据库连接正常、Schema 已加载，并完成第一轮查询分析。
 
@@ -11,8 +11,8 @@ description: 用几分钟完成连接验证、查看 Schema，并运行你的第
 
 请先确保你已经完成：
 
-- [Installation](./installation)
-- [Connect Your Database](./connect-your-database)
+- [安装说明](./installation)
+- [连接数据库](./connect-your-database)
 
 ## 1. 打开 Explorer 查看数据结构
 
@@ -29,7 +29,7 @@ description: 用几分钟完成连接验证、查看 Schema，并运行你的第
 
 ## 2. 打开 SQL Console
 
-新建一个查询标签页，确认：
+打开当前连接下的 SQL Console，新建一个查询标签页，确认：
 
 - 编辑器已连接当前数据库
 - 表名可以自动补全
@@ -40,9 +40,9 @@ description: 用几分钟完成连接验证、查看 Schema，并运行你的第
 ## 3. 运行第一条安全查询
 
 ```sql
-select *
+SELECT *
 from your_table
-limit 20;
+LIMIT 20;
 ```
 
 推荐先使用 `limit` 查询少量数据，快速验证：
@@ -79,6 +79,18 @@ limit 20;
 
 ## 常见问题
 
+### 查询没有返回结果
+
+先确认表名和数据库选择是否正确，再缩小过滤条件。对于分区表，可以先查最近一天或最近一小时的数据。
+
+### 查询报错
+
+把错误信息和当前 SQL 一起交给 AI Chat，让它解释原因并给出修正版。执行前仍然要人工检查 SQL。
+
+### 结果太大
+
+先增加 `LIMIT`，并只选择必要字段。探索阶段不要直接 `SELECT *` 扫描大表。
+
 ### 没有自动补全
 
 请确认数据库连接成功，并等待 Schema 加载完成。
@@ -93,7 +105,7 @@ limit 20;
 
 ## 下一步推荐
 
-- 深入使用 [SQL Console](../core-features/sql-editor)
+- 深入使用 [SQL Console](../core-features/sql-console)
 - 学习 [AI Chat](../core-features/ai-chat)
 - 浏览 [Explorer](../core-features/explorer)
 - 查看 [Saved Queries](../core-features/saved-queries)

@@ -1,0 +1,58 @@
+---
+title: Dory MariaDB 数据库支持
+description: 使用 Dory 连接 MariaDB，运行 SQL、浏览数据库表结构、借助 AI 生成查询并分析业务数据。
+---
+
+# Dory MariaDB 数据库支持
+
+Dory 支持 MariaDB 连接类型，适合使用 MariaDB 的 Web 应用、内部系统、运营报表和业务数据分析。MariaDB 与 MySQL 使用体验相近，但在版本、函数和 SQL 行为上可能存在差异。
+
+## 适合的 MariaDB 使用场景
+
+- 查询业务系统中的用户、订单、商品和支付数据。
+- 浏览陌生 MariaDB 数据库结构。
+- 用 AI 生成统计报表 SQL。
+- 排查生产或测试环境中的数据问题。
+- 保存团队常用 MariaDB 查询。
+
+## Dory 中的 MariaDB 能力
+
+| 能力 | MariaDB 支持情况 |
+| --- | --- |
+| Connections | 支持 Host、Port、Database、Username、Password、SSL 和 SSH Tunnel。 |
+| Explorer | 支持浏览数据库、表、视图和字段。 |
+| SQL Console | 支持 MariaDB SQL 编写、运行和结果查看。 |
+| AI Chat | 可结合表结构生成、解释和修复 SQL。 |
+| Charts & Results | 支持对聚合结果做图表分析。 |
+| Saved Queries | 支持保存和复用 MariaDB 查询。 |
+
+## 连接 MariaDB 前需要准备
+
+- Host 和 Port，默认端口通常是 `3306`。
+- Database 名称。
+- Username 和 Password。
+- 是否需要 SSL。
+- 是否需要通过 SSH Tunnel 访问内网数据库。
+
+## MariaDB 使用建议
+
+- 在提示 AI 时说明数据库是 MariaDB，而不是泛泛说 MySQL。
+- 注意 MariaDB 与 MySQL 在 JSON、窗口函数和部分系统表上的差异。
+- 探索大表时保留 `LIMIT` 和时间范围。
+- 生产环境优先使用只读账号。
+
+## 常见问题
+
+### MariaDB 可以用 MySQL 页面里的建议吗？
+
+大多数连接和查询建议通用，但涉及版本特性、函数或系统表时，应以 MariaDB 实际版本为准。
+
+### 连接失败时先检查什么？
+
+先确认 Host、Port、用户名、密码、数据库名和网络白名单，再检查 SSL 或 SSH Tunnel 设置。
+
+## 相关文档
+
+- [MySQL](./mysql)
+- [连接数据库](../getting-started/connect-your-database)
+- [SQL Console](../core-features/sql-console)

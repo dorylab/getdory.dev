@@ -1,15 +1,73 @@
 ---
-title: Explore Unknown Tables
-description: A practical workflow for understanding unfamiliar schemas.
+title: Explore Unknown Tables with Dory
+description: Use Dory Explorer, table preview, SQL Console, and AI Chat to understand unfamiliar database schemas quickly.
 ---
 
-# Explore Unknown Tables
+# Explore Unknown Tables with Dory
 
-When the schema is unfamiliar, start by inspecting names, types, and obvious relationships before asking AI for help.
+When you open a new database or schema, do not start with a complex AI-generated query. First inspect table structure, column types, and sample rows. Then ask AI to explain relationships or generate SQL with real context.
 
-## Suggested sequence
+## When to Use This Workflow
 
-1. Open [Explorer](../core-features/explorer).
-2. Inspect likely tables and columns.
-3. Run a few limited preview queries.
-4. Ask [AI Chat](../core-features/ai-chat) to explain relationships.
+- You connected a new ClickHouse, PostgreSQL, MySQL, SQLite, or DuckDB database.
+- You are not sure which table contains a metric.
+- Table and column names are unfamiliar.
+- You inherited a dataset from another team.
+- You need to decide whether data is chart-ready.
+
+## 1. Start in Explorer
+
+Open [Explorer](../core-features/explorer) and confirm that databases, schemas, tables, and views load correctly.
+
+Look for table names, time columns, status fields, IDs, numeric metrics, comments, partition keys, and sorting keys.
+
+## 2. Classify the Table
+
+| Table type | Common signs | How to analyze |
+| --- | --- | --- |
+| Detail table | IDs, timestamps, statuses, amounts | Preview first, then aggregate by time and dimension. |
+| Dimension table | Smaller row count, names, categories, attributes | Use for joins and label explanation. |
+| Aggregate table | Date or metric columns already present | Avoid double-counting or repeated aggregation. |
+| Log table | Large volume, many fields, clear time column | Always filter by time and limit rows. |
+
+## 3. Run a Safe Preview Query
+
+```sql
+SELECT *
+FROM your_table
+LIMIT 50;
+```
+
+For large tables, add a time filter first.
+
+## 4. Ask AI to Explain the Structure
+
+```text
+Based on the current table schema, explain what business data this table likely contains. Identify time dimensions, measures, and categorical dimensions.
+```
+
+## 5. Generate Exploration Queries
+
+Ask AI for low-risk exploration queries:
+
+```text
+Generate 3 exploration queries for the current table: daily row volume, status distribution, and recent abnormal records. Include a safe time range or LIMIT.
+```
+
+Review the generated SQL before running it.
+
+## FAQ
+
+### What if AI cannot infer relationships?
+
+Confirm table and column names in Explorer, then provide the likely related tables explicitly.
+
+### What if preview queries are slow?
+
+Find the time, partition, or sorting key and narrow the range before querying.
+
+## Next Steps
+
+- Generate a first business query with [Generate SQL with AI](./generate-sql-with-ai).
+- Run and validate it in [SQL Console](../core-features/sql-console).
+- Build visuals with [Build Charts from SQL](./build-charts-from-sql).

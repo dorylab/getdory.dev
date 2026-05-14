@@ -1,15 +1,206 @@
 ---
 title: SQL Snippets
-description: Reusable SQL patterns for common analysis tasks.
+description: Reusable Dory SQL snippets for database exploration, data quality checks, analytics, and safe query workflows.
 ---
 
 # SQL Snippets
 
-This section is a good home for trusted starter queries, guardrail examples, and common analytical patterns.
+Use these SQL snippets as starting points in Dory. Adapt table names, timestamp columns, and database-specific date functions before running them.
 
-## Useful categories
+## Safe preview
 
-- Top-N queries.
-- Time-bucket aggregations.
-- Retention or funnel building blocks.
-- Join templates.
+Preview a table without scanning more rows than needed.
+
+```sql
+SELECT *
+FROM your_table
+LIMIT 100;
+```
+
+For wide tables, inspect only the columns you need:
+
+```sql
+SELECT id, created_at, status
+FROM your_table
+ORDER BY created_at DESC
+LIMIT 100;
+```
+
+## Count rows
+
+```sql
+SELECT COUNT(*) AS row_count
+FROM your_table;
+```
+
+Use this before deeper analysis to understand table size.
+
+## Top N values
+
+```sql
+SELECT status, COUNT(*) AS records
+FROM your_table
+GROUP BY status
+ORDER BY records DESC
+LIMIT 20;
+```
+
+Good for status fields, categories, countries, event names, plans, and error codes.
+
+## Recent records
+
+```sql
+SELECT *
+FROM your_table
+WHERE created_at >= CURRENT_DATE - INTERVAL '7 days'
+ORDER BY created_at DESC
+LIMIT 200;
+```
+
+Date arithmetic differs by database. If your database does not support this exact expression, ask Dory AI to convert it for PostgreSQL, MySQL, ClickHouse, SQLite, DuckDB, or MariaDB.
+
+## Daily trend
+
+PostgreSQL, DuckDB, and many compatible engines:
+
+```sql
+SELECT
+  DATE_TRUNC('day', created_at) AS day,
+  COUNT(*) AS records
+FROM your_table
+WHERE created_at >= CURRENT_DATE - INTERVAL '30 days'
+GROUP BY day
+ORDER BY day;
+```
+
+ClickHouse:
+
+```sql
+SELECT
+  toStartOfDay(created_at) AS day,
+  count() AS records
+FROM your_table
+WHERE created_at >= now() - INTERVAL 30 DAY
+GROUP BY day
+ORDER BY day;
+```
+
+MySQL and MariaDB:
+
+```sql
+SELECT
+  DATE(created_at) AS day,
+  COUNT(*) AS records
+FROM your_table
+WHERE created_at >= CURRENT_DATE - INTERVAL 30 DAY
+GROUP BY day
+ORDER BY day;
+```
+
+## Null check
+
+```sql
+SELECT
+  COUNT(*) AS total_rows,
+  SUM(CASE WHEN email IS NULL THEN 1 ELSE 0 END) AS missing_email,
+  SUM(CASE WHEN created_at IS NULL THEN 1 ELSE 0 END) AS missing_created_at
+FROM users;
+```
+
+Use this before relying on a column for joins, time filters, or chart grouping.
+
+## Duplicate key check
+
+```sql
+SELECT id, COUNT(*) AS duplicates
+FROM your_table
+GROUP BY id
+HAVING COUNT(*) > 1
+ORDER BY duplicates DESC
+LIMIT 100;
+```
+
+Use this for primary-key assumptions, imported data, and event tables that should be unique by natural key.
+
+## Join template
+
+```sql
+SELECT
+  o.id AS order_id,
+  o.created_at,
+  o.total_amount,
+  u.id AS user_id,
+  u.email
+FROM orders o
+JOIN users u ON u.id = o.user_id
+WHERE o.created_at >= CURRENT_DATE - INTERVAL '30 days'
+ORDER BY o.created_at DESC
+LIMIT 200;
+```
+
+Always verify join cardinality before using a join for revenue, usage, or customer counts.
+
+## Join cardinality check
+
+```sql
+SELECT
+  COUNT(*) AS joined_rows,
+  COUNT(DISTINCT o.id) AS distinct_orders,
+  COUNT(DISTINCT u.id) AS distinct_users
+FROM orders o
+JOIN users u ON u.id = o.user_id
+WHERE o.created_at >= CURRENT_DATE - INTERVAL '30 days';
+```
+
+If `joined_rows` is much larger than the expected distinct count, inspect duplicate keys or many-to-many joins.
+
+## Conversion funnel
+
+```sql
+SELECT
+  COUNT(DISTINCT CASE WHEN event_name = 'viewed_page' THEN user_id END) AS viewed_page,
+  COUNT(DISTINCT CASE WHEN event_name = 'started_checkout' THEN user_id END) AS started_checkout,
+  COUNT(DISTINCT CASE WHEN event_name = 'completed_purchase' THEN user_id END) AS completed_purchase
+FROM events
+WHERE created_at >= CURRENT_DATE - INTERVAL '30 days';
+```
+
+Adjust event names and identity columns to match your product analytics schema.
+
+## Error investigation
+
+```sql
+SELECT
+  error_code,
+  COUNT(*) AS occurrences,
+  MAX(created_at) AS last_seen
+FROM application_logs
+WHERE level = 'error'
+  AND created_at >= CURRENT_DATE - INTERVAL '24 hours'
+GROUP BY error_code
+ORDER BY occurrences DESC
+LIMIT 20;
+```
+
+Use this with logs, job runs, sync operations, and ingestion tables.
+
+## Slow query sample
+
+```sql
+SELECT
+  query_id,
+  user_name,
+  duration_ms,
+  created_at,
+  query_text
+FROM query_log
+WHERE duration_ms > 5000
+ORDER BY duration_ms DESC
+LIMIT 50;
+```
+
+Column names vary by database and monitoring table. Use Dory Schema Explorer or AI Chat to adapt this pattern.
+
+## SEO note
+
+These Dory SQL snippets cover common searches such as SQL preview query, SQL top N query, SQL daily trend query, SQL null check, SQL duplicate check, SQL join template, SQL funnel query, and SQL error analysis query.

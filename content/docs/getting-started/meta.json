@@ -3,6 +3,7 @@
   "defaultOpen": true,
   "pages": [
     "index",
+    "usage-guide",
     "quick-start",
     "installation",
     "connect-your-database",

@@ -1,14 +1,51 @@
 ---
-title: PostgreSQL
-description: Notes for using Dory with PostgreSQL.
+title: Dory PostgreSQL Database Support
+description: Connect PostgreSQL to Dory, browse schema, write SQL, generate queries with AI, and safely analyze operational databases.
 ---
 
-# PostgreSQL
+# Dory PostgreSQL Database Support
 
-PostgreSQL works well for operational applications, internal tools, and analytical side workflows.
+Dory supports PostgreSQL databases for operational analytics, internal tools, product analysis, and day-to-day data investigation. After connecting PostgreSQL, you can browse schema, write SQL, inspect results, build charts, and ask AI to generate or explain queries with real database context.
 
-## Good practice
+## Best-Fit Use Cases
 
-- Confirm the target schema before querying.
-- Use read-only roles where possible.
-- Check indexing when AI suggests expensive joins.
+- Query operational application data.
+- Analyze users, orders, payments, logs, or product events.
+- Explore unfamiliar schemas quickly.
+- Generate first-draft SQL with AI and refine it manually.
+- Save reusable troubleshooting and metric queries.
+
+## Supported Capabilities
+
+| Capability | PostgreSQL support |
+| --- | --- |
+| Connections | Host, port, database, username, password, SSL, and SSH tunnel. |
+| Explorer | Schemas, tables, views, columns, constraints, and DDL. |
+| SQL Console | PostgreSQL SQL editing, execution, results, and tabs. |
+| AI Chat | Schema-grounded SQL generation, Join explanation, and optimization help. |
+| Charts & Results | Turn aggregated query results into charts or detail tables. |
+| Saved Queries | Save and organize reusable PostgreSQL SQL. |
+
+## Connection Requirements
+
+Prepare the host, port, database, username, password, SSL setting, and SSH tunnel details if the database is private. Production environments should use readonly roles whenever possible.
+
+## Schema Tips
+
+PostgreSQL projects often use multiple schemas such as `public`, `analytics`, and `internal`. Confirm the target schema in Explorer before writing queries or asking AI to generate SQL.
+
+## FAQ
+
+### Why can I connect but not see tables?
+
+The current user may lack `USAGE` permission on the schema or `SELECT` permission on the target tables.
+
+### Does Dory support Neon?
+
+Yes. Neon uses Dory's PostgreSQL-compatible capabilities. See [Neon](./neon).
+
+## Related Docs
+
+- [Connect Your Database](../getting-started/connect-your-database)
+- [Explorer](../core-features/explorer)
+- [SQL Console](../core-features/sql-console)

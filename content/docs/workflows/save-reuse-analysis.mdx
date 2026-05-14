@@ -1,15 +1,72 @@
 ---
-title: Save & Reuse Analysis
-description: Keep good analysis close and easy to revisit.
+title: Save and Reuse Analysis in Dory
+description: Use Dory Saved Queries to preserve SQL, document assumptions, organize folders, and build reusable team analysis assets.
 ---
 
-# Save & Reuse Analysis
+# Save and Reuse Analysis in Dory
 
-When a query proves useful, save it before the context is lost. Reusable analysis compounds over time.
+A useful query should not stay in a temporary tab. Dory Saved Queries lets you preserve SQL, business context, and assumptions so the work can be reused by you or your team.
 
-## What to preserve
+## When to Save Analysis
 
-- The business question.
-- The final query.
-- Any assumptions about filters or scope.
-- Links to follow-up charts or related queries.
+- The query will be run repeatedly.
+- It answers a stable business question.
+- It has been debugged or optimized.
+- It powers a chart, report, or operational workflow.
+- Other team members will need it.
+
+## 1. Clean Up the SQL
+
+Before saving:
+
+- Remove temporary experiments.
+- Keep useful comments.
+- Make time ranges or parameter points clear.
+- Use readable column aliases.
+- Confirm that the query contains only the shared logic.
+
+## 2. Use Business-Oriented Names
+
+| Weak name | Better name |
+| --- | --- |
+| `orders query` | Daily orders for last 30 days |
+| `user sql` | Top cities by active users |
+| `debug` | Failed payment order investigation |
+| `clickhouse test` | ClickHouse slow queries Top 50 |
+
+## 3. Document Assumptions
+
+Include the business question, metric definition, time range, filters, deduplication logic, connection, and chart use case.
+
+```text
+Counts daily paid orders for the last 30 days. Used for the operations trend chart. Aggregates by created_at date and does not deduplicate users.
+```
+
+## 4. Organize with Folders
+
+Useful folder patterns:
+
+- Domain: Orders, Users, Payments, Events.
+- Use case: Dashboards, Debugging, Weekly Reports.
+- Environment: Production Readonly, Staging, Demo.
+- Database: ClickHouse, PostgreSQL, MySQL.
+
+## 5. Review and Archive
+
+Periodically archive stale queries, update SQL after schema changes, merge duplicates, and mark important queries clearly.
+
+## FAQ
+
+### What should not be saved?
+
+Avoid saving unverified experiments, sensitive values, write operations, or queries that depend on a personal local environment.
+
+### Do Saved Queries replace documentation?
+
+No. Saved Queries preserve executable SQL. Complex metric definitions still belong in documentation.
+
+## Next Steps
+
+- Generate queries with [Generate SQL with AI](./generate-sql-with-ai).
+- Shape chart output with [Build Charts from SQL](./build-charts-from-sql).
+- Learn feature details in [Saved Queries](../core-features/saved-queries).

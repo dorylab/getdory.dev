@@ -1,10 +1,14 @@
 {
   "title": "Database Support",
   "pages": [
+    "index",
     "clickhouse",
     "postgresql",
+    "neon",
     "mysql",
+    "mariadb",
     "sqlite",
+    "duckdb",
     "cloud-databases"
   ]
 }

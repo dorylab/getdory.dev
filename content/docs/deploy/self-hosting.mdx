@@ -1,43 +1,73 @@
 ---
-title: Self-Hosting
-description: Run Dory in your own environment with Docker and explicit AI provider configuration.
+title: Self-Host Dory
+description: Self-host Dory on your own server, private network, or cloud environment with Docker, HTTPS, secrets, AI, and database access planning.
 ---
 
-# Self-Hosting
+# Self-Host Dory
 
-The public repository currently documents a Docker-first path for running Dory yourself.
+Self-hosting Dory is useful when your team wants to control runtime environment, access boundaries, database credentials, and AI provider configuration. The public repository currently supports a Docker-first deployment path.
 
-## What self-hosting gives you
+## Who Should Self-Host
 
-- Control over deployment environment and credentials.
-- A browser-accessible Dory workspace for local or team evaluation.
-- Explicit configuration of the AI provider and model used by the product.
+- Teams running Dory in a private network or cloud environment.
+- Teams managing their own database credentials and AI keys.
+- Teams that need a shared browser-accessible workspace.
+- Teams connecting to private, cloud, staging, or production databases.
 
-## Core environment variables
+## Recommended Architecture
 
-| Variable | Purpose |
+1. Dory Docker container.
+2. Persistent data volume.
+3. Reverse proxy with HTTPS.
+4. Secret-managed `.env` values.
+5. Network access to target databases.
+6. Email and OAuth providers when needed.
+
+## Preflight Checklist
+
+| Item | What to prepare |
 | --- | --- |
-| `DS_SECRET_KEY` | Secret used by the application runtime. |
-| `BETTER_AUTH_SECRET` | Secret used for authentication flows. |
-| `BETTER_AUTH_URL` | Public base URL for the running deployment. |
-| `DORY_AI_PROVIDER` | AI provider key such as `openai` or `anthropic`. |
-| `DORY_AI_MODEL` | Model name used by the chosen provider. |
-| `DORY_AI_API_KEY` | API key for the provider. |
-| `DORY_AI_URL` | Base URL when required by the provider or compatible endpoint. |
+| Domain | A public or internal URL such as `https://dory.example.com`. |
+| HTTPS | Required for production. |
+| Secrets | `DS_SECRET_KEY` and `BETTER_AUTH_SECRET`. |
+| Auth URL | `BETTER_AUTH_URL` matching the public URL. |
+| AI | Provider, model, API key, and URL. |
+| Network | Dory can reach target databases. |
+| Init user | `DORY_INIT_USER_EMAIL` and `DORY_INIT_USER_PASSWORD`. |
+| Email | Resend settings if verification or invitations are enabled. |
 
-## Operational caution
+## Rollout Steps
 
-- Treat AI credentials as deployment secrets.
-- Match the provider, model, and URL carefully. A mismatch can fail at runtime.
-- Review production authentication settings instead of reusing quick local defaults.
+1. Prepare `.env`.
+2. Start the Docker container.
+3. Configure HTTPS reverse proxy.
+4. Sign in with the initialized user.
+5. Change credentials or configure team login.
+6. Add a test database.
+7. Validate SQL Console, Explorer, AI Chat, and Saved Queries.
+8. Add production databases with readonly accounts first.
 
-## Current status
+## Production Advice
 
-The repository makes Docker deployment straightforward, but it does not yet present a complete long-form operations guide for backups, HA, or enterprise hardening. Plan to validate those areas before broader rollout.
+- Use readonly database accounts for production analysis.
+- Create dedicated database users for Dory.
+- Allowlist the Dory server egress IP for cloud databases.
+- Use SSH tunnels for private databases when needed.
+- Mount SQLite and DuckDB files through Docker volumes.
+- Keep AI keys and database credentials out of Git and images.
 
-## Continue with deploy setup
+## AI Data Boundary
 
-- Review [Docker](./docker) for the container-first path.
-- Collect runtime config in [Environment Variables](./environment-variables).
-- Plan identity in [Auth / SSO](./auth-sso).
-- Prepare collaboration conventions in [Team Setup](./team-setup).
+Dory AI sends necessary context to the configured AI provider. Before rollout, decide which provider is allowed, whether schema or result summaries may be sent, whether an internal AI gateway is required, and how keys are rotated.
+
+## Upgrade Checklist
+
+Back up persistent data and `.env`, record the current image, test the new image, then verify login, connections, SQL Console, AI, Saved Queries, and team access after deployment.
+
+## Related Docs
+
+- [Docker](./docker)
+- [Environment Variables](./environment-variables)
+- [Auth / SSO](./auth-sso)
+- [Team Setup](./team-setup)
+- [Cloud Databases](../database-support/cloud-databases)

@@ -1,16 +1,121 @@
 ---
-title: Team Setup
-description: 为团队共用环境准备 Dory 的基础约定。
+title: Dory 团队上线设置
+description: 为团队使用 Dory 建立组织、成员、连接、权限、Saved Queries、MCP 和运维支持规范。
 ---
 
-# Team Setup
+# Dory 团队上线设置
 
-团队设置不只是某一个功能点，而是整个使用方式和运维边界的约定。
+Team Setup 不是单个功能，而是一组团队约定。上线前把组织、连接、权限、查询资产和支持责任说清楚，可以显著减少误用生产库、重复 SQL 和权限混乱。
 
-## 需要先对齐
+## 1. 规划组织和成员
 
-- 环境命名方式。
-- 共享连接和个人连接如何划分。
-- 访问边界。
-- 查询共享规范。
-- 部署和支持的责任归属。
+建议先明确：
+
+- 组织名称和 slug。
+- 谁是组织管理员。
+- 谁可以邀请成员。
+- 新成员默认权限。
+- 是否允许访客或演示用户。
+- 离职成员如何移除。
+
+## 2. 规范数据库连接
+
+连接命名应包含环境和用途：
+
+| 不推荐 | 推荐 |
+| --- | --- |
+| `clickhouse` | `prod-clickhouse-events-readonly` |
+| `pg` | `staging-postgres-app` |
+| `test` | `demo-sqlite-local` |
+
+生产连接建议：
+
+- 使用只读账号。
+- 在名称中标记 `prod`、`staging`、`demo`。
+- 避免共享管理员数据库账号。
+- 对高风险连接写清楚说明。
+
+## 3. 定义权限边界
+
+团队中通常需要区分：
+
+- 管理员：管理成员、连接和部署配置。
+- 分析用户：运行 SQL、使用 AI、保存查询。
+- 只读用户：查看和运行已有查询。
+- 运维用户：查看 ClickHouse Monitoring 或 Privileges。
+
+数据库权限和 Dory 权限都要控制。即使 Dory 侧允许访问，数据库账号也应使用最小权限。
+
+## 4. 建立 Saved Queries 规范
+
+建议统一：
+
+- 文件夹结构。
+- 查询命名方式。
+- 描述中必须写的业务口径。
+- 是否允许保存生产排查 SQL。
+- 旧查询何时归档。
+
+推荐文件夹：
+
+- `Dashboards`
+- `Debugging`
+- `Weekly Reports`
+- `ClickHouse Operations`
+- `Data Quality`
+
+## 5. 约定 AI 使用方式
+
+团队上线前应明确：
+
+- 哪个 AI Provider 被允许。
+- 是否允许把 Schema 或结果摘要发送给外部 Provider。
+- 生产库 AI 生成 SQL 是否必须人工审核。
+- 是否要求查询保留时间范围和 `LIMIT`。
+- AI Key 由谁维护和轮换。
+
+## 6. 管理 MCP / Agent Access
+
+如果团队使用 Codex、Claude 或其他 MCP 客户端访问 Dory：
+
+- 每个用户或客户端使用独立 token。
+- 不要共享 MCP Token。
+- 定期撤销不用的 token。
+- 离职时回收 token。
+- 生产数据库仍依赖数据库只读账号做最终防线。
+
+## 7. 上线检查清单
+
+上线前确认：
+
+- Dory 使用 HTTPS。
+- `BETTER_AUTH_URL` 配置正确。
+- 初始化管理员密码已更换。
+- 邮件或 OAuth 登录已验证。
+- 测试数据库连接成功。
+- 生产数据库使用只读账号。
+- AI Provider 配置可用。
+- 团队成员知道如何保存和命名查询。
+- 运维负责人知道如何升级和备份。
+
+## 常见问题
+
+### 是否应该让所有人都能创建连接？
+
+不建议。生产环境连接应由管理员或数据平台负责人统一创建，普通成员使用已审核连接。
+
+### 团队如何避免重复 SQL？
+
+统一 Saved Queries 命名和文件夹结构，并在周报、排查和核心指标中优先复用已有查询。
+
+### AI 使用如何控制风险？
+
+使用只读数据库账号、明确时间范围、人工审核 AI 生成 SQL，并避免把敏感数据直接放进提示词。
+
+## 相关文档
+
+- [Auth / SSO](./auth-sso)
+- [Environment Variables](./environment-variables)
+- [Connections](../core-features/connections)
+- [Saved Queries](../core-features/saved-queries)
+- [MCP / Agent Access](../reference/mcp)

@@ -1,0 +1,79 @@
+---
+title: Monitoring
+description: 使用 ClickHouse 查询监控查看吞吐、延迟、慢查询和错误查询。
+---
+
+# Monitoring
+
+Monitoring 是 Dory 针对 ClickHouse 的查询观察界面。它可以帮助你快速了解一段时间内的查询量、延迟、慢查询、错误查询和最近执行的 SQL。
+
+该能力依赖 ClickHouse 系统表和账号权限。非 ClickHouse 连接或权限不足时，页面可能无法展示完整数据。
+
+## 入口
+
+进入 ClickHouse 连接后，打开 **Monitoring**。页面包含：
+
+- Overview
+- Query Logs
+- Slow Queries
+- Error Queries
+
+## Overview
+
+Overview 用于快速判断整体状态：
+
+- 总查询数
+- 慢查询数
+- 错误查询数
+- 活跃用户数
+- P50 / P95 查询耗时
+- QPM 查询吞吐
+- 最近查询列表
+
+当你不确定问题范围时，先从 Overview 判断是整体延迟升高、错误增多，还是少数查询异常。
+
+## Query Logs
+
+Query Logs 展示查询明细，适合按用户、数据库、查询类型、耗时和关键字定位 SQL。
+
+常见排查方式：
+
+1. 选择时间范围，例如最近 1 小时或 24 小时。
+2. 按数据库或用户过滤。
+3. 设置最小耗时，筛出高成本查询。
+4. 打开 SQL 详情，复制到 SQL Console 或交给 AI 分析。
+
+## Slow Queries
+
+Slow Queries 用于集中查看慢查询。Dory 支持固定阈值和动态阈值：
+
+- 固定阈值：你手动指定耗时下限。
+- 动态阈值：使用最近查询的 p95 作为慢查询参考。
+
+建议把慢查询复制到 SQL Console，再结合 Explain、时间范围缩小和 AI 优化建议逐步排查。
+
+## Error Queries
+
+Error Queries 用于查看执行失败的 SQL 和错误信息。常见原因包括：
+
+- 表名或字段不存在。
+- 权限不足。
+- 类型转换失败。
+- 语法错误。
+- 查询超时或资源不足。
+
+你可以把错误 SQL 和错误信息交给 AI Chat，让它先解释问题，再生成修复版本。
+
+## 使用建议
+
+- 先用 Overview 判断问题规模，再进入明细页面。
+- 过滤时间范围，避免把历史问题和当前问题混在一起。
+- 慢查询排查优先看扫描范围、Join、Group By 和排序。
+- 错误查询排查优先看权限、字段变更和 SQL 方言差异。
+- 不要直接在生产库执行 AI 生成的优化 SQL，先人工确认。
+
+## 关联页面
+
+- [ClickHouse](../database-support/clickhouse)
+- [Debug Slow Queries](../workflows/debug-slow-queries)
+- [AI Chat](./ai-chat)

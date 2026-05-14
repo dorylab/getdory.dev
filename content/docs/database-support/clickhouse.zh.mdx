@@ -1,20 +1,110 @@
 ---
-title: ClickHouse
-description: 在 Dory 中使用 ClickHouse 的说明。
+title: Dory ClickHouse 数据库支持
+description: 了解如何在 Dory 中连接 ClickHouse、运行 SQL、浏览 Schema、使用 AI 生成查询，并使用监控和权限管理能力。
 ---
 
-# ClickHouse
+# Dory ClickHouse 数据库支持
 
-ClickHouse 是 Dory 的核心数据库目标之一，通常也拥有最完整的功能覆盖。
+ClickHouse 是 Dory 支持最深入的数据库之一。除了常规 SQL 查询、Schema 浏览、AI Chat 和结果图表，Dory 还为 ClickHouse 提供查询监控和权限管理等专属能力。
 
-## 常见场景
+## 适合使用 Dory 连接 ClickHouse 的场景
 
-- 产品分析。
-- 可观测性数据分析。
-- 事件型高吞吐工作负载。
+- 产品事件分析和行为数据分析。
+- 日志、链路追踪、可观测性数据查询。
+- 大规模明细数据探索。
+- 慢查询、错误查询和查询吞吐排查。
+- ClickHouse 用户、角色和权限管理。
 
-## 建议确认的事项
+## 核心能力
 
-- 驱动兼容性。
-- 网络可达性。
-- 元数据读取权限。
+| 能力 | ClickHouse 支持情况 |
+| --- | --- |
+| SQL Console | 支持编写、运行和迭代 ClickHouse SQL。 |
+| Explorer | 支持浏览数据库、表、视图、字段、DDL、分区键和排序键等元数据。 |
+| AI Chat | 可结合 ClickHouse Schema 生成 SQL、解释查询和优化语句。 |
+| Charts & Results | 支持从查询结果生成趋势、对比和明细分析。 |
+| Monitoring | 支持查询总量、慢查询、错误查询、P50 / P95 耗时和 QPM。 |
+| Privileges | 支持管理用户、角色、全局权限和数据库 / 表 / 视图级权限。 |
+
+## 连接 ClickHouse 前需要准备
+
+- ClickHouse Host 和端口。
+- 数据库名称。
+- 用户名和密码。
+- 是否使用 HTTPS / TLS。
+- 如果通过内网访问，是否需要 SSH Tunnel。
+- 账号是否具备读取系统表、元数据或管理权限。
+
+ClickHouse Cloud 通常需要启用 SSL，并使用服务提供的连接地址和端口。
+
+## 推荐连接流程
+
+1. 打开 [Connections](../core-features/connections)。
+2. 选择 ClickHouse。
+3. 填写 Host、Port、HTTP Port、Database、Username 和 Password。
+4. 如果连接 ClickHouse Cloud 或启用了加密连接，打开 SSL。
+5. 点击 **Test Connection**。
+6. 保存后进入 SQL Console 或 Explorer。
+
+## AI 生成 ClickHouse SQL 的建议
+
+向 AI 提问时，尽量说明：
+
+- 时间范围，例如最近 7 天、最近 30 天。
+- 指标口径，例如 UV、PV、错误率、P95 延迟。
+- 需要使用的表或字段。
+- 是否需要按小时、天、渠道、城市等维度聚合。
+- 是否需要使用 ClickHouse 函数，例如 `toStartOfHour`、`quantile`、`uniq`。
+
+示例提示：
+
+```text
+基于当前 ClickHouse 表，统计最近 24 小时每小时请求量和 P95 延迟，结果适合画折线图。
+```
+
+## ClickHouse 监控
+
+使用 [Monitoring](../core-features/monitoring) 可以查看：
+
+- 查询总数和活跃用户数。
+- 慢查询和错误查询。
+- 查询耗时趋势（P50 / P95）。
+- 查询吞吐（QPM）。
+- 最近查询和 SQL 详情。
+
+当 ClickHouse 查询变慢时，建议先从 Monitoring 缩小时间范围，再把问题 SQL 复制到 SQL Console 中继续分析。
+
+## ClickHouse 权限管理
+
+使用 [Privileges](../core-features/privileges) 可以管理：
+
+- 用户。
+- 角色。
+- 默认角色。
+- 全局权限。
+- 数据库、表和视图级权限。
+- 集群级 `ON CLUSTER` 操作。
+
+生产环境中建议按角色授权，避免团队成员共用管理员账号。
+
+## 常见问题
+
+### Dory 连接 ClickHouse 失败怎么办？
+
+先确认 Host、端口、用户名和密码正确。如果使用 ClickHouse Cloud，检查是否启用了 SSL，以及网络白名单是否允许当前访问来源。
+
+### 为什么 Monitoring 没有数据？
+
+当前账号可能没有读取 ClickHouse 系统表的权限，或当前时间范围内没有查询记录。请调整时间范围，并确认账号权限。
+
+### 为什么 AI 生成的 ClickHouse SQL 需要修改？
+
+AI 会结合 Schema 生成 SQL，但仍可能需要你确认业务口径、函数选择和性能成本。生产库执行前应人工审核。
+
+## 相关文档
+
+- [连接数据库](../getting-started/connect-your-database)
+- [SQL Console](../core-features/sql-console)
+- [AI Chat](../core-features/ai-chat)
+- [Monitoring](../core-features/monitoring)
+- [Privileges](../core-features/privileges)

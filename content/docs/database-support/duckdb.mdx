@@ -1,0 +1,45 @@
+---
+title: Dory DuckDB and MotherDuck Support
+description: Connect local DuckDB files or MotherDuck to Dory, query analytical datasets, browse tables, and generate SQL with AI.
+---
+
+# Dory DuckDB and MotherDuck Support
+
+Dory supports local DuckDB files and MotherDuck tokens. DuckDB is useful for local analytics, data file exploration, prototyping, and reproducible analytical workflows.
+
+## Best-Fit Use Cases
+
+- Query local analytical files and intermediate datasets.
+- Explore processed CSV or Parquet data through DuckDB.
+- Share analytical databases through MotherDuck.
+- Run lightweight OLAP analysis without a traditional database server.
+- Generate exploratory SQL with AI.
+
+## Local DuckDB
+
+Choose local DuckDB mode and provide an absolute path to the DuckDB file. In Docker, mount the file directory into the container and use the container path.
+
+## MotherDuck
+
+Choose MotherDuck mode and provide a MotherDuck token. Use a dedicated token for Dory so it can be rotated, revoked, and audited independently.
+
+## Supported Capabilities
+
+| Capability | DuckDB / MotherDuck support |
+| --- | --- |
+| Connections | Local DuckDB files and MotherDuck tokens. |
+| Explorer | Databases, tables, and columns. |
+| SQL Console | DuckDB SQL execution and results. |
+| AI Chat | Schema-grounded DuckDB SQL generation and explanation. |
+| Charts & Results | Visual analysis for query results. |
+| Saved Queries | Save reusable DuckDB SQL. |
+
+## FAQ
+
+### Why does my DuckDB file connection fail?
+
+Confirm that the path is absolute and readable by Dory. In Docker, confirm that the directory is mounted into the container.
+
+### DuckDB or SQLite?
+
+SQLite is better for local application-style databases. DuckDB is better for analytical datasets, columnar files, and OLAP-style queries.

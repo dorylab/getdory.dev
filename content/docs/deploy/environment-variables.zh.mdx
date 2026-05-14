@@ -1,16 +1,75 @@
 ---
-title: Environment Variables
-description: 在部署 Dory 之前先梳理需要的运行时配置项。
+title: Dory 环境变量配置
+description: 查看 Dory 部署所需的认证、AI、邮件、OAuth、MCP 和初始化用户环境变量。
 ---
 
-# Environment Variables
+# Dory 环境变量配置
 
-部署 Dory 前，需要先规划数据库访问、AI 提供商、网络路由和认证等运行时配置如何注入。
+Dory 的部署行为主要由环境变量控制。生产环境应把这些值作为 Secret 管理，不要写入仓库或镜像。
 
-## 推荐分类
+## 必填变量
 
-- 数据库连接默认值。
-- AI 提供商凭据。
-- 对外基础 URL。
-- 认证与回调配置。
-- 日志或可观测性端点。
+| 变量 | 说明 | 示例 |
+| --- | --- | --- |
+| `DS_SECRET_KEY` | 应用运行时密钥，用于加密或安全相关操作。 | `openssl rand -base64 32` |
+| `BETTER_AUTH_SECRET` | Better Auth 认证密钥。 | `openssl rand -hex 32` |
+| `BETTER_AUTH_URL` | 用户访问 Dory 的公开基础地址。 | `https://dory.example.com` |
+
+`BETTER_AUTH_URL` 必须和浏览器访问地址一致，否则登录、回调、邀请或邮件链接可能异常。
+
+## AI 配置
+
+| 变量 | 说明 |
+| --- | --- |
+| `DORY_AI_PROVIDER` | AI 提供商，例如 `openai`、`anthropic`、`google`、`qwen`、`xai`、`meta` 或 `openai-compatible`。 |
+| `DORY_AI_MODEL` | 使用的模型名称。 |
+| `DORY_AI_API_KEY` | Provider API Key。 |
+| `DORY_AI_URL` | Provider 或兼容端点的 Base URL。 |
+
+基础示例：
+
+```bash
+DORY_AI_PROVIDER=openai
+DORY_AI_MODEL=gpt-4o-mini
+DORY_AI_API_KEY=replace_with_api_key
+DORY_AI_URL=https://api.openai.com/v1
+```
+
+如果 AI 功能不可用，优先检查 provider、model、API key 和 URL 是否匹配。
+
+## 认证和登录
+
+| 变量 | 说明 |
+| --- | --- |
+| `NEXT_PUBLIC_REQUIRE_EMAIL_VERIFICATION` | 是否要求注册后验证邮箱。设置为 `false` 可关闭。 |
+| `TRUSTED_ORIGINS` | 可信来源列表，多个地址用逗号分隔。用于 Auth 和 MCP Origin 校验。 |
+| `DORY_INIT_USER_EMAIL` | 容器启动时自动创建或更新的初始用户邮箱。 |
+| `DORY_INIT_USER_PASSWORD` | 初始用户密码。 |
+| `GITHUB_CLIENT_ID` / `GITHUB_CLIENT_SECRET` | GitHub OAuth 登录配置。 |
+| `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` | Google OAuth 登录配置。 |
+
+初始化用户适合自托管首次进入系统。生产环境上线后应立即修改默认密码，或改用团队身份系统。
+
+## 邮件配置
+
+| 变量 | 说明 |
+| --- | --- |
+| `RESEND_API_KEY` | Resend API Key，用于发送验证、重置和邀请邮件。 |
+| `EMAIL_FROM` | 发件人地址，需要在邮件服务中完成验证。 |
+
+如果启用邮箱验证或邀请流程，请配置有效邮件服务。否则用户可能无法完成注册或找回密码。
+
+## 生产环境建议
+
+- 使用强随机值生成 `DS_SECRET_KEY` 和 `BETTER_AUTH_SECRET`。
+- 不要在部署后频繁更换认证和加密 Secret。
+- `BETTER_AUTH_URL` 使用 HTTPS 公开地址。
+- 将 `.env` 纳入 Secret 管理系统，而不是提交到 Git。
+- AI Key、OAuth Secret、邮件 Key 和数据库密码分开管理并定期轮换。
+
+## 相关文档
+
+- [Docker](./docker)
+- [Self-Hosting](./self-hosting)
+- [Auth / SSO](./auth-sso)
+- [AI Providers](../reference/ai-providers)

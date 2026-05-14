@@ -1,14 +1,61 @@
 ---
-title: SQLite
-description: 在 Dory 中使用 SQLite 的说明。
+title: Dory SQLite 数据库支持
+description: 使用 Dory 连接本地 SQLite 文件，浏览表结构、运行 SQL、用 AI 分析轻量数据集和演示数据。
 ---
 
-# SQLite
+# Dory SQLite 数据库支持
 
-SQLite 适合本地开发、嵌入式场景以及可复现的轻量演示。
+Dory 支持连接本地 SQLite 数据库文件，适合本地开发、产品原型、演示数据、测试数据和轻量级分析。你可以直接读取 `.sqlite` 或 `.db` 文件，在 Dory 中浏览表结构、运行 SQL、分析结果并保存查询。
 
-## 更适合的场景
+## 适合的 SQLite 使用场景
 
-- 本地实验。
-- 产品原型。
-- 分享小体量数据集。
+- 本地开发数据库检查。
+- 产品原型或演示数据分析。
+- 小型数据集探索。
+- 可复现测试数据查询。
+- 不想部署远程数据库时的轻量分析。
+
+## 连接 SQLite 前需要准备
+
+- SQLite 文件路径。
+- Dory 进程对该文件的读取权限。
+- Docker 部署时的 volume 挂载路径。
+
+SQLite 路径必须是绝对路径。桌面端可以直接选择文件；Docker 中需要填写容器内可访问的路径。
+
+## Dory 中的 SQLite 能力
+
+| 能力 | SQLite 支持情况 |
+| --- | --- |
+| Connections | 支持通过绝对路径连接本地 `.sqlite` / `.db` 文件。 |
+| Explorer | 支持浏览表、字段和基础结构信息。 |
+| SQL Console | 支持 SQLite SQL 查询和结果查看。 |
+| AI Chat | 可结合 SQLite 表结构生成和解释 SQL。 |
+| Charts & Results | 支持对查询结果做图表分析。 |
+| Saved Queries | 支持保存常用 SQLite 查询。 |
+
+## Docker 中使用 SQLite
+
+如果 Dory 通过 Docker 运行，需要将 SQLite 文件所在目录挂载到容器中。例如：
+
+```bash
+docker run -v /local/data:/app/data ...
+```
+
+然后在 Dory 连接中填写容器内路径，例如 `/app/data/demo.sqlite`。
+
+## 常见问题
+
+### 为什么 Dory 找不到 SQLite 文件？
+
+请确认路径是绝对路径，并且 Dory 进程能访问该文件。Docker 中尤其要确认 volume 已正确挂载。
+
+### SQLite 适合团队共享吗？
+
+SQLite 更适合本地和轻量场景。多人团队长期共享分析建议使用 PostgreSQL、ClickHouse、DuckDB / MotherDuck 或其他托管数据库。
+
+## 相关文档
+
+- [连接数据库](../getting-started/connect-your-database)
+- [SQL Console](../core-features/sql-console)
+- [DuckDB](./duckdb)

@@ -5,9 +5,9 @@ description: Configure the model provider used by Dory's AI features.
 
 # AI Providers
 
-Dory uses a pluggable AI provider architecture. You can switch providers through environment variables without changing application code.
+Dory uses a pluggable AI provider architecture for AI Chat, SQL generation, chart suggestions, and schema-aware analysis. You can switch providers through environment variables without changing application code.
 
-## Providers listed in the public repository
+## Supported providers
 
 | Provider | `DORY_AI_PROVIDER` value | Notes |
 | --- | --- | --- |
@@ -18,9 +18,9 @@ Dory uses a pluggable AI provider architecture. You can switch providers through
 | Qwen | `qwen` | Qwen models through a compatible endpoint. |
 | xAI | `xai` | Grok models via xAI API. |
 
-## Required variables
+## Core variables
 
-In practice you will usually need:
+Most deployments need the following values:
 
 ```bash
 export DORY_AI_PROVIDER=openai
@@ -29,11 +29,108 @@ export DORY_AI_API_KEY=your_api_key_here
 export DORY_AI_URL=https://api.openai.com/v1
 ```
 
-## How to choose
+| Variable | Required | Description |
+| --- | --- | --- |
+| `DORY_AI_PROVIDER` | Yes | Selects the provider adapter. |
+| `DORY_AI_MODEL` | Yes | Selects the model used by Dory AI features. |
+| `DORY_AI_API_KEY` | Usually | API key or bearer token accepted by the provider. |
+| `DORY_AI_URL` | Provider-dependent | Base URL for OpenAI-compatible providers or custom endpoints. |
 
-- Use OpenAI when you want the default documented path.
-- Use OpenAI-compatible when you already standardize on a compatible gateway or proxy.
-- Choose a provider based on model availability, latency, cost, and internal policy.
+Do not put provider credentials in frontend code, checked-in `.env` files, screenshots, or support tickets.
+
+## Provider examples
+
+### OpenAI
+
+```bash
+DORY_AI_PROVIDER=openai
+DORY_AI_MODEL=gpt-4o-mini
+DORY_AI_API_KEY=sk-...
+DORY_AI_URL=https://api.openai.com/v1
+```
+
+Use this path when you want the most direct documented setup for Dory AI SQL generation.
+
+### OpenAI-compatible
+
+```bash
+DORY_AI_PROVIDER=openai-compatible
+DORY_AI_MODEL=your-model-name
+DORY_AI_API_KEY=your_provider_key
+DORY_AI_URL=https://your-compatible-endpoint.example.com/v1
+```
+
+Use this path when your organization already standardizes on an OpenAI-compatible API surface.
+
+### Anthropic
+
+```bash
+DORY_AI_PROVIDER=anthropic
+DORY_AI_MODEL=claude-3-5-sonnet-latest
+DORY_AI_API_KEY=your_anthropic_key
+```
+
+Use Anthropic when your team prefers Claude models for longer context reasoning or policy reasons.
+
+### Google
+
+```bash
+DORY_AI_PROVIDER=google
+DORY_AI_MODEL=gemini-1.5-pro
+DORY_AI_API_KEY=your_google_key
+```
+
+Use Google when your organization already runs Gemini workflows.
+
+### Qwen
+
+```bash
+DORY_AI_PROVIDER=qwen
+DORY_AI_MODEL=qwen-plus
+DORY_AI_API_KEY=your_qwen_key
+```
+
+Use Qwen when it is the preferred model family for your language, region, or cost profile.
+
+### xAI
+
+```bash
+DORY_AI_PROVIDER=xai
+DORY_AI_MODEL=grok-2-latest
+DORY_AI_API_KEY=your_xai_key
+```
+
+Use xAI when Grok models are part of your approved AI stack.
+
+## Choosing a provider
+
+| Requirement | Recommended direction |
+| --- | --- |
+| Fastest standard setup | Start with OpenAI. |
+| Existing compatible endpoint or proxy | Use OpenAI-compatible. |
+| Long reasoning tasks | Compare Anthropic and OpenAI models. |
+| Existing Google AI usage | Use Google. |
+| Region, language, or cost fit | Compare Qwen and other approved providers. |
+| Internal compliance requirement | Choose the provider already approved by your organization. |
+
+## Validation checklist
+
+1. Confirm the provider value matches one of the documented `DORY_AI_PROVIDER` values.
+2. Confirm the model name exists for that provider.
+3. Confirm the API key has permission to call the selected model.
+4. If using a compatible endpoint, confirm `DORY_AI_URL` includes the correct base path.
+5. Restart the Dory server after changing provider variables.
+6. Test AI Chat with a small schema question before testing large SQL generation tasks.
+
+## Troubleshooting
+
+| Symptom | Likely cause | Fix |
+| --- | --- | --- |
+| AI Chat returns authentication errors | Invalid or missing API key. | Rotate the key and update `DORY_AI_API_KEY`. |
+| Model not found | Wrong model name for the selected provider. | Use a model name supported by that provider. |
+| Compatible endpoint fails | Incorrect base URL or path. | Verify the provider's OpenAI-compatible base URL. |
+| SQL quality is inconsistent | Model has limited schema reasoning ability. | Try a stronger model and include clearer table context. |
+| Responses are slow | Provider latency or large schema context. | Use a faster model or narrow the database context. |
 
 ## Limitation
 

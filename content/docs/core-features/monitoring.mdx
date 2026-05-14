@@ -1,0 +1,21 @@
+---
+title: Monitoring
+description: Use ClickHouse query monitoring to inspect throughput, latency, slow queries, and error queries.
+---
+
+# Monitoring
+
+Monitoring is Dory's ClickHouse query observability interface. It helps you inspect total queries, slow queries, error queries, active users, P50 / P95 latency, QPM, recent queries, and SQL details.
+
+This feature depends on ClickHouse system tables and the permissions of the current connection.
+
+## Views
+
+- **Overview**: high-level query volume, latency, throughput, and recent queries.
+- **Query Logs**: searchable query details by user, database, type, duration, and text.
+- **Slow Queries**: queries above a fixed or dynamic threshold.
+- **Error Queries**: failed queries and their error messages.
+
+## Recommended Use
+
+Start from Overview, narrow the time range, then move into logs, slow queries, or errors. Copy problematic SQL into SQL Console or AI Chat for deeper investigation.

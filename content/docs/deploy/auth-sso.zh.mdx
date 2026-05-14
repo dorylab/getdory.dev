@@ -1,15 +1,118 @@
 ---
-title: Auth / SSO
-description: 在团队上线前规划身份认证、访问控制和用户开通流程。
+title: Dory 认证与 SSO 配置
+description: 规划 Dory 团队部署中的邮箱登录、邮箱验证、GitHub 登录、Google 登录、用户开通和离职回收。
 ---
 
-# Auth / SSO
+# Dory 认证与 SSO 配置
 
-如果 Dory 面向团队开放，通常需要先明确身份体系，再决定如何对外提供服务。
+Dory 团队部署前，需要先确定用户如何登录、谁可以加入、如何邀请成员，以及成员离职或不再需要访问时如何回收权限。
 
-## 需要回答的问题
+## 支持的认证方式
 
-- 哪个身份提供商是权威来源？
-- 用户如何开通？
-- 离职或停用时如何回收权限？
-- 哪些环境必须启用 SSO？
+代码中当前可配置的登录能力包括：
+
+- 邮箱和密码登录。
+- 邮箱验证。
+- GitHub OAuth 登录。
+- Google OAuth 登录。
+- 初始化管理员用户。
+- 组织和成员管理。
+
+是否启用某种方式取决于部署环境变量和团队策略。
+
+## 基础认证变量
+
+| 变量 | 说明 |
+| --- | --- |
+| `BETTER_AUTH_SECRET` | 认证密钥。 |
+| `BETTER_AUTH_URL` | 认证系统生成链接和回调时使用的公开地址。 |
+| `TRUSTED_ORIGINS` | 可信来源，建议包含 Dory 的公开 URL。 |
+| `NEXT_PUBLIC_REQUIRE_EMAIL_VERIFICATION` | 是否要求邮箱验证。 |
+
+生产环境应使用 HTTPS URL，并保证 `BETTER_AUTH_URL` 与用户访问地址一致。
+
+## 初始化管理员
+
+自托管首次启动时，可以使用：
+
+```bash
+DORY_INIT_USER_EMAIL=admin@example.com
+DORY_INIT_USER_PASSWORD=change_this_password
+```
+
+Dory 会创建或更新该用户，并确保其拥有默认组织。首次登录后应修改密码，或改用正式身份系统。
+
+## 邮箱验证和邮件服务
+
+启用邮箱验证或邀请邮件时，需要配置：
+
+```bash
+NEXT_PUBLIC_REQUIRE_EMAIL_VERIFICATION=true
+RESEND_API_KEY=replace_with_resend_key
+EMAIL_FROM="Dory <noreply@example.com>"
+```
+
+`EMAIL_FROM` 必须是邮件服务中已验证的发件人地址。
+
+## GitHub 登录
+
+配置 GitHub OAuth：
+
+```bash
+GITHUB_CLIENT_ID=replace_with_client_id
+GITHUB_CLIENT_SECRET=replace_with_client_secret
+```
+
+在 GitHub OAuth App 中配置回调地址时，应使用 `BETTER_AUTH_URL` 对应的公开域名。
+
+## Google 登录
+
+配置 Google OAuth：
+
+```bash
+GOOGLE_CLIENT_ID=replace_with_client_id
+GOOGLE_CLIENT_SECRET=replace_with_client_secret
+```
+
+如果使用桌面端，需要注意 Google 登录在桌面端可能受运行环境限制；团队 Web 部署优先验证浏览器登录流程。
+
+## 团队开通流程
+
+建议先定义：
+
+- 谁可以创建组织。
+- 谁可以邀请成员。
+- 新成员默认进入哪个组织。
+- 成员是否必须验证邮箱。
+- 是否允许访客或演示入口。
+- 管理员如何审查成员列表。
+
+## 离职和权限回收
+
+离职回收不只是在 Dory 中移除成员，还应包括：
+
+- 撤销数据库账号或角色。
+- 撤销 MCP Token。
+- 撤销 OAuth 或 SSO 访问。
+- 轮换共享 Secret。
+- 检查 Saved Queries 和连接是否依赖该成员个人账号。
+
+## 常见问题
+
+### 为什么登录后跳转地址不对？
+
+检查 `BETTER_AUTH_URL` 和反向代理公开地址是否一致。
+
+### 为什么收不到验证邮件？
+
+检查 `RESEND_API_KEY`、`EMAIL_FROM`、发件域名验证状态，以及邮箱垃圾箱。
+
+### 是否必须启用 SSO？
+
+小团队可以先使用邮箱登录和初始化管理员。更大团队建议接入统一 OAuth / SSO，并建立离职回收流程。
+
+## 相关文档
+
+- [Environment Variables](./environment-variables)
+- [Team Setup](./team-setup)
+- [Self-Hosting](./self-hosting)

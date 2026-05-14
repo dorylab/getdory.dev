@@ -1,0 +1,32 @@
+---
+title: Dory Deployment Guide
+description: Plan Dory self-hosting, Docker deployment, environment variables, authentication, SSO, and team rollout.
+---
+
+# Dory Deployment Guide
+
+Dory can run as a desktop app, local web app, or Docker-based self-hosted deployment. For team rollout, plan runtime configuration, authentication, AI provider credentials, database network access, secrets, and collaboration rules before inviting users.
+
+## Deployment Pages
+
+| Page | Use case | Focus |
+| --- | --- | --- |
+| [Self-Hosting](./self-hosting) | Run Dory in your own environment | Architecture, secrets, persistence, proxying, and rollout checks. |
+| [Docker](./docker) | Start Dory quickly in a container | `docker run`, `.env`, ports, volumes, and upgrades. |
+| [Environment Variables](./environment-variables) | Configure runtime behavior | Auth, AI, email, OAuth, MCP, and init user variables. |
+| [Auth / SSO](./auth-sso) | Plan team identity | Email verification, Google/GitHub login, provisioning, and offboarding. |
+| [Team Setup](./team-setup) | Prepare shared use | Naming, connection governance, permissions, and Saved Queries practices. |
+
+## Recommended Rollout
+
+1. Run Dory locally or on a test server with [Docker](./docker).
+2. Prepare secrets, auth URL, and AI configuration in [Environment Variables](./environment-variables).
+3. Put Dory behind HTTPS.
+4. Decide login and verification rules in [Auth / SSO](./auth-sso).
+5. Validate SQL Console, Explorer, and AI on test databases.
+6. Define team conventions in [Team Setup](./team-setup).
+7. Add production databases with readonly accounts first.
+
+## Quick Answer
+
+Dory can be self-hosted with Docker. Production deployments need `DS_SECRET_KEY`, `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL`, and AI variables when AI is enabled. Team deployments should use HTTPS, readonly database accounts, trusted origins, and a clear user management process.

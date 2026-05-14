@@ -1,14 +1,77 @@
 ---
-title: PostgreSQL
-description: 在 Dory 中使用 PostgreSQL 的说明。
+title: Dory PostgreSQL 数据库支持
+description: 使用 Dory 连接 PostgreSQL，浏览 Schema、编写 SQL、让 AI 生成查询，并安全分析业务数据库。
 ---
 
-# PostgreSQL
+# Dory PostgreSQL 数据库支持
 
-PostgreSQL 很适合业务系统、内部工具以及偏分析型的日常工作流。
+Dory 支持连接 PostgreSQL 数据库，适合业务系统、内部工具、产品分析和日常数据排查。连接后，你可以在 Dory 中浏览 Schema、编写 SQL、查看结果、生成图表，并让 AI 基于真实表结构生成或解释查询。
 
-## 建议实践
+## 适合的 PostgreSQL 使用场景
 
-- 查询前先确认目标 Schema。
-- 尽量使用只读角色。
-- 当 AI 生成较重的 Join 时，先检查索引情况。
+- 查询业务系统数据。
+- 分析用户、订单、支付、日志等关系型数据。
+- 在陌生 Schema 中快速定位表和字段。
+- 用 AI 生成第一版 SQL，再人工调整。
+- 保存常用排查 SQL 和指标查询。
+
+## 支持能力
+
+| 能力 | PostgreSQL 支持情况 |
+| --- | --- |
+| Connections | 支持 Host、Port、Database、Username、Password、SSL 和 SSH Tunnel。 |
+| Explorer | 支持浏览数据库对象、Schema、表、视图、字段、约束和 DDL。 |
+| SQL Console | 支持 PostgreSQL SQL 编写、运行、结果查看和多标签页。 |
+| AI Chat | 可结合 PostgreSQL Schema 生成 SQL、解释 Join 和优化查询。 |
+| Charts & Results | 支持将聚合结果转换为趋势图、柱状图或明细表。 |
+| Saved Queries | 支持保存常用 PostgreSQL 查询并按文件夹管理。 |
+
+## 连接 PostgreSQL 前需要准备
+
+- Host 和 Port，默认端口通常是 `5432`。
+- Database 名称。
+- Username 和 Password。
+- 是否需要 SSL。
+- 是否需要通过 SSH Tunnel 访问内网数据库。
+- 当前账号能访问的 Schema 和表范围。
+
+生产环境建议使用只读账号，并限制可访问 Schema。
+
+## PostgreSQL Schema 使用建议
+
+PostgreSQL 项目经常存在多个 Schema，例如 `public`、`analytics`、`internal`。在 Dory 中使用 PostgreSQL 时，建议先在 Explorer 中确认目标 Schema，再进入 SQL Console 写查询。
+
+如果 AI 生成 SQL 时引用了错误 Schema，可以在提示中明确说明：
+
+```text
+请只使用 analytics schema 下的 orders 和 users 表，统计最近 30 天每日订单数。
+```
+
+## 性能与安全建议
+
+- 探索阶段使用 `LIMIT`。
+- 先明确时间范围，再执行聚合查询。
+- 对 AI 生成的 Join 查询，检查 Join key 和索引。
+- 对大表查询，避免无过滤条件的 `SELECT *`。
+- 生产库优先使用只读角色。
+
+## 常见问题
+
+### PostgreSQL 连接成功但看不到表？
+
+请确认当前账号是否有目标 Schema 的 `USAGE` 权限，以及表的 `SELECT` 权限。也要确认当前选择的数据库和 Schema 是否正确。
+
+### AI 生成的 PostgreSQL SQL 报字段不存在？
+
+通常是字段名、Schema 或表别名不匹配。先在 Explorer 中确认真实字段，再让 AI 基于当前表结构重新生成。
+
+### Dory 支持 Neon 吗？
+
+支持。Neon 使用 PostgreSQL 兼容能力，详情见 [Neon](./neon)。
+
+## 相关文档
+
+- [连接数据库](../getting-started/connect-your-database)
+- [Explorer](../core-features/explorer)
+- [SQL Console](../core-features/sql-console)
+- [AI Chat](../core-features/ai-chat)

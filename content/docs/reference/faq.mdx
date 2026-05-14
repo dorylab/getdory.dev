@@ -1,15 +1,83 @@
 ---
 title: FAQ
-description: Capture recurring questions so teams do not repeat the same onboarding friction.
+description: Frequently asked questions about Dory setup, supported databases, AI SQL generation, saved queries, MCP access, and deployment.
 ---
 
 # FAQ
 
-This page is best used for short answers to questions that appear repeatedly during rollout or onboarding.
+This FAQ answers common questions that appear during Dory onboarding, database setup, AI SQL generation, MCP agent access, and self-hosted deployment.
 
-## Good FAQ candidates
+## What is Dory?
 
-- Why cannot I see a table?
-- Which database types are supported?
-- How does AI access schema context?
-- Where are saved queries stored?
+Dory is an AI-native SQL workspace for connecting databases, exploring schema, writing SQL, generating analysis with AI, saving reusable queries, and giving MCP-capable agents controlled database context.
+
+## Which databases does Dory support?
+
+Dory documentation covers ClickHouse, PostgreSQL, Neon, MySQL, MariaDB, SQLite, DuckDB, MotherDuck, and other hosted databases that expose compatible connection endpoints. See [Database Support](/docs/database-support) for driver-specific guidance.
+
+## Does Dory replace my BI tool?
+
+Dory is strongest for SQL exploration, ad hoc analysis, AI-assisted querying, saved query reuse, and agent workflows. It can complement a BI tool, especially during investigation and dashboard prototyping.
+
+## Does Dory run AI-generated SQL automatically?
+
+No. Treat AI output as a draft. Review generated SQL before running it, especially joins, filters, time windows, and aggregation logic.
+
+## How does AI access schema context?
+
+Dory can use connection metadata, tables, columns, and selected query context to help generate SQL. The quality of AI SQL depends on the selected model, schema clarity, table names, comments, and the prompt you provide.
+
+## Why did AI generate invalid SQL?
+
+Common causes include ambiguous table names, missing schema context, dialect differences, model limitations, or prompts that do not state the target database. Mention the database type and ask Dory to adapt syntax for PostgreSQL, ClickHouse, MySQL, MariaDB, SQLite, or DuckDB.
+
+## Why can I not see a table?
+
+Check these items:
+
+- The database user has permission to read the schema.
+- You selected the correct connection and database.
+- The table is in a different schema or catalog.
+- The connection has been refreshed after a new table was created.
+- Network rules allow Dory to reach the database.
+
+## Why is a query slow?
+
+Slow queries usually come from large scans, missing filters, missing indexes, expensive joins, or high-cardinality grouping. Add a time window, select fewer columns, use `LIMIT` during exploration, and inspect the database execution plan when available.
+
+## Where are Saved Queries stored?
+
+Saved Queries are stored in Dory and associated with the current organization, user, connection, and folder structure. Use clear names and folders so teammates can understand and reuse them.
+
+## Can I share a Saved Query with teammates?
+
+Yes, if your Dory workspace and permissions allow the teammate to access the same organization and connection. A saved query is still only useful when the teammate also has database access.
+
+## Does MCP expose database passwords?
+
+No. MCP tools expose controlled metadata and read/analysis operations. They do not return database passwords or connection secrets. Use one MCP token per client and revoke old tokens when they are no longer needed.
+
+## Can an MCP agent write to my database?
+
+Dory MCP is designed for read-only SQL execution. You should still use read-only database credentials for production connections because database permissions are the final safety boundary.
+
+## Why does my Docker deployment fail to connect to SQLite or DuckDB files?
+
+The container must be able to see the file path. Mount the host directory that contains the database file and configure Dory with the path as seen from inside the container.
+
+## Why do login links or redirects point to the wrong host?
+
+Check the public application URL configured for the deployment. It must match the URL users open in the browser, including protocol and hostname.
+
+## How should I choose an AI provider?
+
+Start with the provider already approved by your organization. If you need a standard path, use OpenAI. If your organization uses a compatible endpoint, use OpenAI-compatible. See [AI Providers](/docs/reference/ai-providers).
+
+## What should I do before connecting production data?
+
+- Use read-only database users.
+- Limit network access to Dory.
+- Confirm SSL requirements.
+- Start with small query limits.
+- Review AI-generated SQL before execution.
+- Create separate MCP tokens for each external agent client.

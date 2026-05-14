@@ -1,0 +1,39 @@
+---
+title: Dory 部署指南
+description: 规划 Dory 自托管、Docker 部署、环境变量、认证 SSO 和团队上线流程。
+---
+
+# Dory 部署指南
+
+Dory 支持桌面端、本地运行和 Docker 自托管。团队部署时，建议先规划运行环境、认证方式、AI 提供商、数据库网络访问、Secret 管理和团队使用规范，再开放给更多成员。
+
+## 部署路径概览
+
+| 页面 | 适用场景 | 重点内容 |
+| --- | --- | --- |
+| [Self-Hosting](./self-hosting) | 在自己的服务器或内网环境运行 Dory | 部署架构、Secret、数据持久化、反向代理和上线检查。 |
+| [Docker](./docker) | 快速用容器启动 Dory | `docker run`、`.env`、端口、volume 和升级流程。 |
+| [Environment Variables](./environment-variables) | 梳理运行时配置 | Auth、AI、邮件、OAuth、MCP 和初始化用户。 |
+| [Auth / SSO](./auth-sso) | 团队身份认证规划 | 邮箱验证、Google/GitHub 登录、成员开通和离职回收。 |
+| [Team Setup](./team-setup) | 团队正式使用前准备 | 环境命名、连接治理、权限边界、Saved Queries 规范。 |
+
+## 推荐上线顺序
+
+1. 先用 [Docker](./docker) 在本地或测试服务器跑通。
+2. 在 [Environment Variables](./environment-variables) 中准备 Secret、Auth URL 和 AI 配置。
+3. 配置反向代理和 HTTPS。
+4. 按 [Auth / SSO](./auth-sso) 决定登录方式和邮箱验证策略。
+5. 连接一两个测试数据库，验证 SQL Console、Explorer 和 AI。
+6. 按 [Team Setup](./team-setup) 建立团队命名、权限和保存查询规范。
+7. 再接入生产数据库，优先使用只读账号。
+
+## 快速答案
+
+Dory 可以通过 Docker 自托管。生产部署至少需要配置 `DS_SECRET_KEY`、`BETTER_AUTH_SECRET`、`BETTER_AUTH_URL`，如果启用 AI 还需要 `DORY_AI_PROVIDER`、`DORY_AI_MODEL`、`DORY_AI_API_KEY` 和必要的 `DORY_AI_URL`。团队部署建议启用 HTTPS、只读数据库账号、可信来源配置和明确的成员管理流程。
+
+## 相关文档
+
+- [连接数据库](../getting-started/connect-your-database)
+- [AI Providers](../reference/ai-providers)
+- [Database Support](../database-support)
+- [MCP / Agent Access](../reference/mcp)

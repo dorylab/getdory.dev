@@ -1,0 +1,49 @@
+---
+title: Dory 支持的数据库
+description: 查看 Dory 支持的 ClickHouse、PostgreSQL、Neon、MySQL、SQLite、DuckDB 和云数据库连接能力。
+---
+
+# Dory 支持的数据库
+
+Dory 是面向现代数据库的 AI 原生数据工作台。你可以连接常见数据库，在同一工作区中完成 Schema 浏览、SQL 查询、AI 生成 SQL、结果分析、图表和保存查询。
+
+## 数据库支持概览
+
+| 数据库 | 适合场景 | Dory 支持重点 |
+| --- | --- | --- |
+| [ClickHouse](./clickhouse) | 事件、日志、可观测性和高吞吐分析 | 深度支持 SQL、Explorer、AI、Monitoring 和 Privileges。 |
+| [PostgreSQL](./postgresql) | 业务系统、内部工具和通用分析 | 支持 Schema 浏览、SQL 查询、AI 辅助和结果分析。 |
+| [Neon](./neon) | Serverless PostgreSQL 和云端开发环境 | 使用 PostgreSQL 能力连接 Neon 项目、分支和数据库。 |
+| [MySQL](./mysql) | Web 应用数据库、运营分析和报表 | 支持常规连接、查询、AI 辅助和安全探索。 |
+| [MariaDB](./mariadb) | MariaDB 应用数据库和报表查询 | 作为独立连接类型支持 SQL、Explorer 和 AI 辅助。 |
+| [SQLite](./sqlite) | 本地文件、原型、演示和轻量分析 | 支持通过绝对路径连接本地 `.sqlite` / `.db` 文件。 |
+| [DuckDB](./duckdb) | 本地分析文件、数据探索和 MotherDuck | 支持本地 DuckDB 文件和 MotherDuck Token。 |
+| [Cloud Databases](./cloud-databases) | 托管数据库、内网数据库和团队部署 | 覆盖 TLS、IP 白名单、SSH Tunnel 和密钥管理。 |
+
+## Dory 的数据库工作流
+
+无论连接哪种数据库，典型流程都类似：
+
+1. 在 [Connections](../core-features/connections) 中创建连接。
+2. 使用 [Explorer](../core-features/explorer) 浏览数据库、Schema、表和字段。
+3. 在 [SQL Console](../core-features/sql-console) 中编写和运行 SQL。
+4. 使用 [AI Chat](../core-features/ai-chat) 生成、解释、修复或优化查询。
+5. 在 [Charts & Results](../core-features/charts-results) 中验证结果并生成图表。
+6. 将高价值 SQL 保存到 [Saved Queries](../core-features/saved-queries)。
+
+## 选择数据库连接方式
+
+- 远程数据库：准备 Host、Port、Database、Username、Password 和 SSL 设置。
+- 云数据库：确认网络白名单、TLS 要求和连接串格式。
+- 内网数据库：根据网络环境配置 SSH Tunnel。
+- 本地文件数据库：SQLite 和 DuckDB 需要填写 Dory 进程可访问的绝对路径。
+
+## SEO / AEO 快速答案
+
+Dory 支持连接 ClickHouse、PostgreSQL、Neon、MySQL、MariaDB、SQLite、DuckDB 和 MotherDuck。Dory 可以作为 AI SQL 客户端、数据库 Explorer、查询结果分析工具和 ClickHouse 运维辅助工具使用。
+
+## 下一步
+
+- 第一次使用请从 [连接数据库](../getting-started/connect-your-database) 开始。
+- 如果你主要使用 ClickHouse，请阅读 [Dory ClickHouse 数据库支持](./clickhouse)。
+- 如果你要部署给团队，请阅读 [Cloud Databases](./cloud-databases)。

@@ -1,16 +1,114 @@
 ---
-title: Debug Slow Queries
-description: 用可重复的方法定位高成本 SQL 问题。
+title: 使用 Dory 排查慢 SQL 查询
+description: 用 Dory SQL Console、AI Chat 和 ClickHouse Monitoring 定位慢查询、高扫描成本和 Join 性能问题。
 ---
 
-# Debug Slow Queries
+# 使用 Dory 排查慢 SQL 查询
 
-先缩小查询范围，再逐个验证高成本操作，通常是定位性能问题最快的方式。
+慢查询排查的关键不是一次性重写整条 SQL，而是逐步缩小范围：先确认慢在哪里，再减少扫描量、验证 Join、检查聚合和排序，最后让 AI 提供可审查的改写方案。
 
-## 检查清单
+## 什么时候使用这个流程
 
-- 缩小数据时间范围。
-- 检查 Join 和 Group By。
-- 去掉非必要列。
-- 单独测试过滤条件。
-- 让 AI 提供替代写法，但要人工审查其成本。
+- SQL 执行明显变慢或超时。
+- 查询扫描数据量过大。
+- Join、Group By 或 Order By 成本高。
+- ClickHouse Monitoring 中出现慢查询。
+- AI 生成的 SQL 结果正确但性能不可接受。
+
+## 1. 先定位慢查询
+
+如果使用 ClickHouse，先打开 [Monitoring](../core-features/monitoring)：
+
+- 查看最近 1 小时或 24 小时的慢查询。
+- 关注 P95 耗时和 QPM 是否异常。
+- 按用户、数据库、查询类型或关键字过滤。
+- 打开 SQL 详情并复制到 SQL Console。
+
+其他数据库可以从 SQL Console 中的执行耗时、错误信息和返回行数开始判断。
+
+## 2. 缩小数据范围
+
+先让查询只处理必要数据：
+
+```sql
+SELECT ...
+FROM your_table
+WHERE event_time >= now() - INTERVAL 1 DAY
+LIMIT 100;
+```
+
+检查点：
+
+- 是否有时间范围。
+- 是否使用分区字段或排序字段过滤。
+- 是否只选择必要列。
+- 是否避免无条件 `SELECT *`。
+
+## 3. 拆开复杂查询
+
+把复杂 SQL 拆成几个可验证的小查询：
+
+1. 单独跑基础过滤条件。
+2. 单独确认 Join 左右两边的数据量。
+3. 单独验证聚合逻辑。
+4. 最后再合并 CTE 或子查询。
+
+这样可以快速判断是过滤、Join、聚合还是排序导致变慢。
+
+## 4. 让 AI 做性能改写
+
+把当前 SQL、数据库类型和性能目标一起给 AI：
+
+```text
+这条 ClickHouse SQL 执行很慢。请在不改变结果口径的前提下优化：
+- 只分析最近 7 天
+- 避免 SELECT *
+- 优先利用 event_time 过滤
+- 保留最终输出列
+请解释每个改动为什么可能更快。
+```
+
+不要只让 AI “优化一下”。要明确不能改变指标口径。
+
+## 5. 对比优化前后
+
+在 SQL Console 中分别运行原 SQL 和改写 SQL，比较：
+
+- 执行耗时。
+- 返回行数。
+- 指标是否一致。
+- 是否减少扫描范围。
+- 是否更容易维护。
+
+如果结果不同，不要直接采用优化版本，先让 AI 解释差异并人工核对。
+
+## 常见慢查询原因
+
+| 原因 | 处理方式 |
+| --- | --- |
+| 没有时间范围 | 增加明确时间过滤。 |
+| 扫描无关列 | 只选择必要字段。 |
+| Join 前数据量太大 | 先过滤、预聚合，再 Join。 |
+| Group By 维度过多 | 降低维度数量或先做分层分析。 |
+| Order By 大结果集 | 先聚合或限制 Top N。 |
+| 重复计数 | 明确去重字段和口径。 |
+
+## 常见问题
+
+### AI 优化后的 SQL 结果不一致怎么办？
+
+不要采用。让 AI 对比两版 SQL 的口径差异，重点检查过滤条件、Join 类型、去重方式和聚合粒度。
+
+### ClickHouse 慢查询应该优先看什么？
+
+优先看时间范围、分区键、排序键、读取行数、读取字节数和聚合维度。Dory Monitoring 可以帮助你先定位问题 SQL。
+
+### 什么时候需要数据库管理员介入？
+
+如果 SQL 已经合理但仍然慢，可能涉及索引、分区、表设计、资源配置或集群压力，需要数据库管理员进一步处理。
+
+## 下一步
+
+- 如果 SQL 需要重写，使用 [Generate SQL with AI](./generate-sql-with-ai)。
+- 如果结果稳定，使用 [Build Charts from SQL](./build-charts-from-sql)。
+- 把优化后的排查 SQL 保存到 [Saved Queries](../core-features/saved-queries)。

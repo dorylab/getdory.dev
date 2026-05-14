@@ -1,15 +1,87 @@
 ---
 title: Settings
-description: Centralize the settings that affect team-wide behavior and local workflows.
+description: Dory settings reference for editor behavior, themes, query limits, connections, and team workflows.
 ---
 
 # Settings
 
-Use this page to document the settings that matter for performance, AI behavior, execution safety, and local preferences.
+Dory settings cover two layers: local workflow preferences for each user and shared operational choices for teams. Use this reference when standardizing a Dory SQL workspace or documenting onboarding defaults.
 
-## Common categories
+## SQL editor settings
 
-- Default connection behavior.
-- Query execution limits.
-- AI provider selection.
-- Theme and editor preferences.
+| Setting | Options | Default | What it affects |
+| --- | --- | --- | --- |
+| Editor theme | `Auto`, `GitHub Light`, `GitHub Dark`, `VS Light`, `VS Dark` | `Auto` | Monaco editor colors and contrast. |
+| Font family | `Monaco`, `Menlo`, `Consolas`, `JetBrains Mono`, `Fira Code`, `Source Code Pro`, `Custom` | `Monaco` | SQL readability and alignment. |
+| Font size | `12` to `24` | `12` | Editor text size. |
+| Line height | `1.1` to `2.2` | `1.5` | Vertical spacing between SQL lines. |
+| Line numbers | `On`, `Off` | `On` | Whether line numbers are shown. |
+| Minimap | `On`, `Off` | `Off` | Whether the Monaco minimap is displayed. |
+| Word wrap | `On`, `Off` | `On` | Whether long SQL lines wrap inside the editor. |
+| Folding | `On`, `Off` | `On` | Whether SQL blocks can be collapsed. |
+| Query limit | `100`, `200`, `500`, `1000`, `2000`, `5000` | `200` | Default row limit for query previews and analysis workflows. |
+
+## App theme settings
+
+Dory also includes application-level color themes:
+
+| Group | Themes |
+| --- | --- |
+| Default | Default, Blue, Green, Amber, Liquid |
+| Scaled | Default Scaled, Blue Scaled, Liquid Scaled |
+| Monospaced | Mono Scaled |
+
+Choose a restrained theme for shared screens, demos, and team walkthroughs. Choose monospaced variants when dense SQL and table scanning are the primary workflow.
+
+## Query limit guidance
+
+| Use case | Suggested limit |
+| --- | --- |
+| Schema exploration | `100` or `200` |
+| Dashboard prototyping | `200` or `500` |
+| Data quality checks | `500` or `1000` |
+| Export-like inspection | `2000` or `5000` only when needed |
+
+Lower limits make Dory feel faster and reduce accidental large scans. For analytical aggregates, prefer SQL-level grouping over raising the result limit.
+
+## Connection settings
+
+Connection settings vary by database driver, but most teams should standardize these decisions:
+
+| Area | Recommendation |
+| --- | --- |
+| Names | Use names that include environment and database purpose, such as `prod-analytics-readonly`. |
+| Credentials | Use read-only database users for analysis connections. |
+| Host access | Confirm Docker deployments can reach the database host from inside the container. |
+| Local files | For SQLite and DuckDB, use absolute paths and mount the containing directory when running in Docker. |
+| SSL | Follow the database provider's SSL requirements instead of disabling verification for convenience. |
+
+## AI settings
+
+AI behavior is controlled by the provider and model selected during deployment. For the detailed reference, see [AI Providers](/docs/reference/ai-providers).
+
+For team use, document:
+
+- Approved provider and model.
+- Which environments may use AI features.
+- Whether production schema names are allowed in prompts.
+- Expected review process before running AI-generated SQL.
+
+## Saved query settings
+
+Saved Queries are most useful when teams agree on naming and folder conventions.
+
+| Convention | Example |
+| --- | --- |
+| Prefix by domain | `billing - monthly revenue` |
+| Include grain | `orders - daily count` |
+| Include database when ambiguous | `warehouse.users - active users` |
+| Keep drafts separate | `drafts / migration checks` |
+
+## Recommended team defaults
+
+- Keep query limit at `200` for new users.
+- Keep word wrap on for onboarding and demos.
+- Use read-only credentials for shared connections.
+- Save reusable SQL instead of sharing one-off screenshots.
+- Review AI-generated SQL before execution, especially joins and filters.

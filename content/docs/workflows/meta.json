@@ -1,6 +1,7 @@
 {
   "title": "Workflows",
   "pages": [
+    "index",
     "explore-unknown-tables",
     "generate-sql-with-ai",
     "debug-slow-queries",

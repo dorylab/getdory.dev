@@ -1,15 +1,206 @@
 ---
 title: SQL Snippets
-description: 面向常见分析任务的可复用 SQL 片段。
+description: 面向数据库探索、数据质量检查、分析和安全查询流程的 Dory SQL 片段。
 ---
 
 # SQL Snippets
 
-这里适合沉淀可靠的起始查询、保护性示例以及常见分析模式。
+这些 SQL 片段可以作为 Dory 中的起始模板。运行前请替换表名、时间字段，并按目标数据库调整日期函数。
 
-## 适合整理的分类
+## 安全预览
 
-- Top N 查询。
-- 时间分桶聚合。
-- 留存或漏斗分析模板。
-- Join 模板。
+在不扫描过多数据的情况下预览表。
+
+```sql
+SELECT *
+FROM your_table
+LIMIT 100;
+```
+
+对于宽表，优先只看必要字段：
+
+```sql
+SELECT id, created_at, status
+FROM your_table
+ORDER BY created_at DESC
+LIMIT 100;
+```
+
+## 行数统计
+
+```sql
+SELECT COUNT(*) AS row_count
+FROM your_table;
+```
+
+深入分析前，先用它判断表的大致规模。
+
+## Top N 分布
+
+```sql
+SELECT status, COUNT(*) AS records
+FROM your_table
+GROUP BY status
+ORDER BY records DESC
+LIMIT 20;
+```
+
+适合状态、分类、国家、事件名、套餐、错误码等字段。
+
+## 最近记录
+
+```sql
+SELECT *
+FROM your_table
+WHERE created_at >= CURRENT_DATE - INTERVAL '7 days'
+ORDER BY created_at DESC
+LIMIT 200;
+```
+
+不同数据库的日期表达式不同。如果目标数据库不支持这个写法，可以让 Dory AI 转换成 PostgreSQL、MySQL、ClickHouse、SQLite、DuckDB 或 MariaDB 语法。
+
+## 按天趋势
+
+PostgreSQL、DuckDB 和很多兼容引擎：
+
+```sql
+SELECT
+  DATE_TRUNC('day', created_at) AS day,
+  COUNT(*) AS records
+FROM your_table
+WHERE created_at >= CURRENT_DATE - INTERVAL '30 days'
+GROUP BY day
+ORDER BY day;
+```
+
+ClickHouse：
+
+```sql
+SELECT
+  toStartOfDay(created_at) AS day,
+  count() AS records
+FROM your_table
+WHERE created_at >= now() - INTERVAL 30 DAY
+GROUP BY day
+ORDER BY day;
+```
+
+MySQL 和 MariaDB：
+
+```sql
+SELECT
+  DATE(created_at) AS day,
+  COUNT(*) AS records
+FROM your_table
+WHERE created_at >= CURRENT_DATE - INTERVAL 30 DAY
+GROUP BY day
+ORDER BY day;
+```
+
+## 空值检查
+
+```sql
+SELECT
+  COUNT(*) AS total_rows,
+  SUM(CASE WHEN email IS NULL THEN 1 ELSE 0 END) AS missing_email,
+  SUM(CASE WHEN created_at IS NULL THEN 1 ELSE 0 END) AS missing_created_at
+FROM users;
+```
+
+在把某个字段用于 Join、时间过滤或图表分组前，建议先做空值检查。
+
+## 重复键检查
+
+```sql
+SELECT id, COUNT(*) AS duplicates
+FROM your_table
+GROUP BY id
+HAVING COUNT(*) > 1
+ORDER BY duplicates DESC
+LIMIT 100;
+```
+
+适合验证主键假设、导入数据，以及按自然键应该唯一的事件表。
+
+## Join 模板
+
+```sql
+SELECT
+  o.id AS order_id,
+  o.created_at,
+  o.total_amount,
+  u.id AS user_id,
+  u.email
+FROM orders o
+JOIN users u ON u.id = o.user_id
+WHERE o.created_at >= CURRENT_DATE - INTERVAL '30 days'
+ORDER BY o.created_at DESC
+LIMIT 200;
+```
+
+把 Join 用于收入、使用量或客户数统计前，一定要先确认 Join 基数。
+
+## Join 基数检查
+
+```sql
+SELECT
+  COUNT(*) AS joined_rows,
+  COUNT(DISTINCT o.id) AS distinct_orders,
+  COUNT(DISTINCT u.id) AS distinct_users
+FROM orders o
+JOIN users u ON u.id = o.user_id
+WHERE o.created_at >= CURRENT_DATE - INTERVAL '30 days';
+```
+
+如果 `joined_rows` 明显大于预期的 distinct 数量，需要检查重复键或多对多 Join。
+
+## 转化漏斗
+
+```sql
+SELECT
+  COUNT(DISTINCT CASE WHEN event_name = 'viewed_page' THEN user_id END) AS viewed_page,
+  COUNT(DISTINCT CASE WHEN event_name = 'started_checkout' THEN user_id END) AS started_checkout,
+  COUNT(DISTINCT CASE WHEN event_name = 'completed_purchase' THEN user_id END) AS completed_purchase
+FROM events
+WHERE created_at >= CURRENT_DATE - INTERVAL '30 days';
+```
+
+请按你的产品分析 Schema 替换事件名和用户标识字段。
+
+## 错误排查
+
+```sql
+SELECT
+  error_code,
+  COUNT(*) AS occurrences,
+  MAX(created_at) AS last_seen
+FROM application_logs
+WHERE level = 'error'
+  AND created_at >= CURRENT_DATE - INTERVAL '24 hours'
+GROUP BY error_code
+ORDER BY occurrences DESC
+LIMIT 20;
+```
+
+适合日志、任务运行、同步操作和数据导入表。
+
+## 慢查询样例
+
+```sql
+SELECT
+  query_id,
+  user_name,
+  duration_ms,
+  created_at,
+  query_text
+FROM query_log
+WHERE duration_ms > 5000
+ORDER BY duration_ms DESC
+LIMIT 50;
+```
+
+不同数据库和监控表的字段名不同，可以用 Dory Schema Explorer 或 AI Chat 调整这个模板。
+
+## SEO 覆盖
+
+这些 Dory SQL Snippets 覆盖 SQL 预览查询、SQL Top N 查询、SQL 按天趋势查询、SQL 空值检查、SQL 重复检查、SQL Join 模板、SQL 漏斗分析和 SQL 错误排查等常见搜索主题。

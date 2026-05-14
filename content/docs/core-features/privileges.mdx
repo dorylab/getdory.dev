@@ -1,0 +1,21 @@
+---
+title: Privileges
+description: Manage ClickHouse users, roles, and grants in Dory.
+---
+
+# Privileges
+
+Privileges is Dory's ClickHouse user and role management interface. It lets you create and edit users, create roles, grant roles, manage global privileges, and manage database, table, or view scoped privileges.
+
+This feature requires a ClickHouse connection whose credentials can manage users, roles, and grants.
+
+## Common Tasks
+
+- Create users and configure allowed hosts.
+- Create roles for readonly, analyst, monitoring, or admin workflows.
+- Grant roles to users and set default roles.
+- Grant or revoke global privileges.
+- Grant or revoke database, table, or view level privileges.
+- Apply supported operations with `ON CLUSTER` when a cluster is detected.
+
+Use least privilege in production and prefer role-based access over direct per-user grants.

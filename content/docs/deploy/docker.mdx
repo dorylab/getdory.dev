@@ -1,20 +1,88 @@
 ---
-title: Docker
-description: Run Dory in a container for evaluation or browser-based access.
+title: Deploy Dory with Docker
+description: Run Dory with Docker and configure ports, secrets, init users, AI providers, and persistent data.
 ---
 
-# Docker
+# Deploy Dory with Docker
 
-Docker is the simplest way to run Dory in a browser-accessible environment without packaging a native desktop app.
+Docker is the most direct path for self-hosting Dory in a browser-accessible environment. The container listens on port `3000`.
 
-## Basic run command
+## Minimal Command
 
 ```bash
-docker run -p 3000:3000 dorylab/dory:latest
+docker run -d --name dory \
+  -p 3000:3000 \
+  -e DS_SECRET_KEY="$(openssl rand -base64 32 | tr -d '\n')" \
+  -e BETTER_AUTH_SECRET="$(openssl rand -hex 32)" \
+  -e BETTER_AUTH_URL="http://localhost:3000" \
+  -e NEXT_PUBLIC_REQUIRE_EMAIL_VERIFICATION=false \
+  -e DORY_INIT_USER_EMAIL=admin@getdory.dev \
+  -e DORY_INIT_USER_PASSWORD=admin \
+  dorylab/dory:latest
 ```
 
-## Typical next steps
+Open `http://localhost:3000` and sign in with the initialized user.
 
-- Add persistent configuration.
-- Mount secrets safely.
-- Put the service behind an internal proxy.
+## Enable AI
+
+Add AI environment variables when you want SQL generation, AI Chat, and result analysis:
+
+```bash
+  -e DORY_AI_PROVIDER=openai \
+  -e DORY_AI_MODEL=gpt-4o-mini \
+  -e DORY_AI_API_KEY=your_api_key_here \
+  -e DORY_AI_URL=https://api.openai.com/v1 \
+```
+
+Supported providers include `openai`, `openai-compatible`, `anthropic`, `google`, `qwen`, `xai`, and `meta`.
+
+## Use an `.env` File
+
+```bash
+docker run -d --name dory \
+  -p 3000:3000 \
+  --env-file .env \
+  dorylab/dory:latest
+```
+
+## Persist Data
+
+Use a volume for production or long-running evaluation:
+
+```bash
+docker run -d --name dory \
+  -p 3000:3000 \
+  --env-file .env \
+  -v dory-data:/app/data \
+  dorylab/dory:latest
+```
+
+SQLite and DuckDB files also need to be mounted into the container if you want Dory to read them.
+
+## Reverse Proxy and HTTPS
+
+Put Dory behind HTTPS for team deployments. Set `BETTER_AUTH_URL` to the public Dory URL and include that URL in `TRUSTED_ORIGINS`.
+
+## Upgrade Checklist
+
+1. Back up persistent data and `.env`.
+2. Pull the new image.
+3. Stop the old container.
+4. Start the new container with the same env file and volume.
+5. Verify login, connections, SQL Console, AI, and Saved Queries.
+
+## FAQ
+
+### Why do auth links use the wrong domain?
+
+Check that `BETTER_AUTH_URL` exactly matches the public URL users open.
+
+### Why is AI unavailable?
+
+Check `DORY_AI_PROVIDER`, `DORY_AI_MODEL`, `DORY_AI_API_KEY`, and `DORY_AI_URL`.
+
+## Related Docs
+
+- [Environment Variables](./environment-variables)
+- [Self-Hosting](./self-hosting)
+- [Cloud Databases](../database-support/cloud-databases)

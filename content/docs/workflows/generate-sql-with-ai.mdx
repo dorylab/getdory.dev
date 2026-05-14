@@ -1,15 +1,78 @@
 ---
-title: Generate SQL with AI
-description: Turn a business question into a grounded first draft query.
+title: Generate SQL with Dory AI
+description: Use Dory AI Chat and SQL Console to turn business questions into executable, reviewable SQL queries.
 ---
 
-# Generate SQL with AI
+# Generate SQL with Dory AI
 
-AI is strongest when you provide a concrete question, relevant tables, and the output shape you expect.
+Dory AI can generate SQL using the current connection, schema, table metadata, and SQL context. Good output comes from a clear question, real schema context, an expected result shape, and human review.
 
-## Prompt template
+## When to Use AI SQL Generation
 
-- Goal: what question are you answering?
-- Tables: which objects should be used?
-- Filters: what time range or conditions matter?
-- Output: what columns should be returned?
+- You know the business question but not the exact SQL.
+- You know the tables but need help with joins or aggregation.
+- You need a first draft query to refine.
+- You want chart-ready output.
+- You need to adapt syntax for ClickHouse, PostgreSQL, MySQL, or another supported database.
+
+## 1. Prepare Context
+
+Before asking AI, confirm that the database is connected, Explorer can read the target tables, the metric is clear, the time range is defined, and the expected output shape is known.
+
+If you do not know the right table yet, start with [Explore Unknown Tables](./explore-unknown-tables).
+
+## 2. Use a Specific Prompt
+
+```text
+Goal: count daily active users for the last 30 days.
+Database: ClickHouse.
+Table: events.
+Fields: user_id, event_time, event_name.
+Filter: event_name = 'app_open'.
+Output: date and dau, ordered by date ascending, suitable for a line chart.
+Requirement: avoid scanning unrelated time ranges.
+```
+
+This is much more reliable than “write a DAU query.”
+
+## 3. Validate in SQL Console
+
+Review the generated SQL before treating it as correct:
+
+1. Are table and column names real?
+2. Is the time range correct?
+3. Does the aggregation match the business definition?
+4. Does the query need deduplication?
+5. Are filters or limits present?
+6. Does the syntax match the current database?
+
+## 4. Ask AI to Fix Errors
+
+Include the SQL and error message:
+
+```text
+This SQL fails in PostgreSQL with: column "created_date" does not exist.
+Fix it using the current schema and explain the change.
+```
+
+## 5. Generate Chart-Ready SQL
+
+```text
+Rewrite this query for a bar chart. Return only category and value, order by value descending, and limit to the top 10.
+```
+
+## FAQ
+
+### Can AI-generated SQL run directly in production?
+
+Do not run it blindly. Review generated SQL carefully, especially for large tables, missing time filters, and any non-readonly operation.
+
+### Why does AI reference missing columns?
+
+Confirm the table in Explorer and ask AI to regenerate using the current schema.
+
+## Next Steps
+
+- Debug performance with [Debug Slow Queries](./debug-slow-queries).
+- Build visuals with [Build Charts from SQL](./build-charts-from-sql).
+- Save stable work with [Save & Reuse Analysis](./save-reuse-analysis).

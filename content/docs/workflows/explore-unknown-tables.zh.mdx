@@ -1,15 +1,103 @@
 ---
-title: Explore Unknown Tables
-description: 快速理解陌生 Schema 的实用流程。
+title: 使用 Dory 探索陌生数据表
+description: 学习如何用 Dory Explorer、表预览、SQL Console 和 AI Chat 快速理解陌生数据库 Schema。
 ---
 
-# Explore Unknown Tables
+# 使用 Dory 探索陌生数据表
 
-当 Schema 不熟悉时，先查看名称、类型和明显关系，再让 AI 进一步协助，通常更稳妥。
+当你第一次接触一个数据库、Schema 或业务系统时，不要直接让 AI 生成复杂 SQL。更稳妥的方式是先用 Explorer 看清表结构、字段类型和样本数据，再让 AI 基于真实上下文解释表关系或生成查询。
 
-## 建议顺序
+## 什么时候使用这个流程
 
-1. 打开 [Explorer](../core-features/explorer)。
-2. 查看关键表和字段。
-3. 运行几条带 `limit` 的预览查询。
-4. 让 [AI Chat](../core-features/ai-chat) 解释对象之间的关系。
+- 刚接入新的 ClickHouse、PostgreSQL、MySQL、SQLite 或 DuckDB 连接。
+- 不确定某个指标应该使用哪张表。
+- 表名和字段名缺少业务说明。
+- 接手他人维护的数据集。
+- 需要快速判断数据是否适合做分析或图表。
+
+## 1. 从 Explorer 开始
+
+打开 [Explorer](../core-features/explorer)，先确认数据库、Schema、表和视图是否能正常加载。
+
+优先观察：
+
+- 表名是否指向业务域，例如 `orders`、`events`、`users`、`payments`。
+- 字段名是否包含时间、状态、ID、金额、渠道、地域等常见分析维度。
+- 是否存在视图、物化视图或聚合表。
+- 表备注、字段备注、分区键和排序键是否可见。
+
+## 2. 判断表的类型
+
+陌生表通常可以先分成几类：
+
+| 表类型 | 常见特征 | 分析方式 |
+| --- | --- | --- |
+| 明细表 | 有 ID、时间、状态、金额等字段，每行是一条事件或记录 | 先 `LIMIT` 预览，再按时间和维度聚合。 |
+| 维度表 | 行数较少，包含名称、分类、属性 | 常用于 Join 和标签解释。 |
+| 聚合表 | 已经包含日期、指标或计数字段 | 注意不要重复聚合或重复计数。 |
+| 日志表 | 字段多、数据量大、时间字段明显 | 必须限制时间范围和返回行数。 |
+
+## 3. 运行安全预览查询
+
+在 [SQL Console](../core-features/sql-console) 中先运行小范围查询：
+
+```sql
+SELECT *
+FROM your_table
+LIMIT 50;
+```
+
+如果是大表，建议先加时间范围：
+
+```sql
+SELECT *
+FROM your_table
+WHERE created_at >= now() - INTERVAL 1 DAY
+LIMIT 50;
+```
+
+不同数据库的时间函数不同，必要时让 AI 根据当前数据库类型改写。
+
+## 4. 让 AI 解释表结构
+
+当你已经确认目标表后，可以向 [AI Chat](../core-features/ai-chat) 提问：
+
+```text
+请基于当前表结构，解释这张表可能记录什么业务数据。指出适合作为时间维度、指标和分类维度的字段。
+```
+
+也可以更具体：
+
+```text
+这张表适合用来统计订单转化率吗？如果不适合，还需要哪些表或字段？
+```
+
+## 5. 生成第一条探索 SQL
+
+让 AI 输出低风险的探索查询：
+
+```text
+基于当前表生成 3 条探索 SQL：一条查看每日数据量，一条查看状态分布，一条查看最近 50 条异常记录。每条 SQL 都要包含合理的时间范围或 LIMIT。
+```
+
+执行前检查表名、字段名、时间范围和扫描成本。
+
+## 常见问题
+
+### AI 无法理解表关系怎么办？
+
+先在 Explorer 中确认字段名和样本数据，再把你认为相关的表名告诉 AI。AI 不一定能自动推断隐藏的业务关系。
+
+### 表太大，预览也很慢怎么办？
+
+先找时间字段或分区字段，缩小时间范围。ClickHouse 表优先使用分区键或排序键过滤。
+
+### 什么时候可以开始写正式查询？
+
+当你确认了目标表、时间字段、主键或去重字段、指标字段和必要过滤条件后，再写正式查询。
+
+## 下一步
+
+- 用 [Generate SQL with AI](./generate-sql-with-ai) 生成第一版业务查询。
+- 在 [SQL Console](../core-features/sql-console) 中运行并验证结果。
+- 输出稳定后使用 [Build Charts from SQL](./build-charts-from-sql) 做可视化。

@@ -1,15 +1,87 @@
 ---
-title: Auth / SSO
-description: Plan identity, access control, and user provisioning before rollout.
+title: Dory Auth and SSO Configuration
+description: Plan email login, email verification, GitHub login, Google login, user provisioning, and offboarding for Dory team deployments.
 ---
 
-# Auth / SSO
+# Dory Auth and SSO Configuration
 
-Team deployments usually need a clear identity model before Dory is exposed broadly.
+Before rolling Dory out to a team, decide how users sign in, who can join, how members are invited, and how access is removed during offboarding.
 
-## Questions to answer
+## Supported Auth Options
 
-- Which identity provider is authoritative?
-- How are users provisioned?
-- What is the offboarding process?
-- Which environments should require SSO?
+Current configurable auth capabilities include:
+
+- Email and password login.
+- Email verification.
+- GitHub OAuth login.
+- Google OAuth login.
+- Bootstrapped initial admin user.
+- Organization and member management.
+
+## Core Auth Variables
+
+| Variable | Purpose |
+| --- | --- |
+| `BETTER_AUTH_SECRET` | Authentication secret. |
+| `BETTER_AUTH_URL` | Public URL used for generated links and callbacks. |
+| `TRUSTED_ORIGINS` | Trusted origins, usually including the public Dory URL. |
+| `NEXT_PUBLIC_REQUIRE_EMAIL_VERIFICATION` | Whether email verification is required. |
+
+Production deployments should use HTTPS and keep `BETTER_AUTH_URL` aligned with the public URL.
+
+## Initial Admin User
+
+```bash
+DORY_INIT_USER_EMAIL=admin@example.com
+DORY_INIT_USER_PASSWORD=change_this_password
+```
+
+Dory creates or updates this user and ensures a default organization exists.
+
+## Email Verification
+
+```bash
+NEXT_PUBLIC_REQUIRE_EMAIL_VERIFICATION=true
+RESEND_API_KEY=replace_with_resend_key
+EMAIL_FROM="Dory <noreply@example.com>"
+```
+
+`EMAIL_FROM` must be verified by the email provider.
+
+## OAuth Login
+
+GitHub:
+
+```bash
+GITHUB_CLIENT_ID=replace_with_client_id
+GITHUB_CLIENT_SECRET=replace_with_client_secret
+```
+
+Google:
+
+```bash
+GOOGLE_CLIENT_ID=replace_with_client_id
+GOOGLE_CLIENT_SECRET=replace_with_client_secret
+```
+
+Configure OAuth callback URLs using the same public domain as `BETTER_AUTH_URL`.
+
+## Provisioning and Offboarding
+
+Define who can invite members, whether email verification is required, which organization new users join, and how admins review access. During offboarding, revoke Dory membership, database roles, MCP tokens, OAuth access, and shared secrets.
+
+## FAQ
+
+### Why do login links redirect to the wrong URL?
+
+Check that `BETTER_AUTH_URL` matches the public reverse-proxy URL.
+
+### Why are verification emails missing?
+
+Check `RESEND_API_KEY`, `EMAIL_FROM`, sender-domain verification, and spam folders.
+
+## Related Docs
+
+- [Environment Variables](./environment-variables)
+- [Team Setup](./team-setup)
+- [Self-Hosting](./self-hosting)

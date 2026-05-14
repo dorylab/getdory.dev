@@ -1,9 +1,9 @@
 ---
-title: Connect Your Database
+title: 连接数据库
 description: 连接你的数据库，让 Dory 加载 Schema 上下文，并启用 SQL Console、Explorer 与 AI 能力。
 ---
 
-# Connect Your Database
+# 连接数据库
 
 连接数据库后，Dory 才能完整发挥价值。数据库连接会为 SQL Console、Explorer、自动补全、AI Chat 与结果分析提供实时上下文。
 
@@ -13,9 +13,11 @@ Dory 当前重点支持以下数据库：
 
 - ClickHouse
 - PostgreSQL
+- Neon
 - MySQL
 - MariaDB
 - SQLite
+- DuckDB / MotherDuck
 
 完整兼容情况请查看 [数据库支持](../database-support)。
 
@@ -29,16 +31,33 @@ Dory 当前重点支持以下数据库：
 - 用户名（Username）
 - 密码（Password）
 - 是否需要 SSL / TLS
+- 是否需要 SSH Tunnel
+- SQLite / DuckDB 文件的绝对路径
+- Neon 或 MotherDuck 使用的连接串或 Token
 - 当前环境（生产、测试、本地开发）
 
 ## 推荐连接流程
 
 1. 在 Dory 中打开 **Connections**。
-2. 点击 **New Connection**。
+2. 点击 **Add Connection**。
 3. 选择数据库类型。
 4. 输入连接信息与认证凭据。
-5. 点击 **Test Connection** 验证可用性。
-6. 保存连接并进入数据库工作区。
+5. 如果数据库位于内网，按需启用 **SSH Tunnel**。
+6. 如果数据库要求加密连接，按需启用 **SSL**。
+7. 点击 **Test Connection** 验证可用性。
+8. 保存连接并进入数据库工作区。
+
+## 不同连接类型的填写建议
+
+| 类型 | 关键字段 |
+| --- | --- |
+| ClickHouse | Host、Port、HTTP Port、Database、Username、Password、SSL。 |
+| PostgreSQL / MySQL / MariaDB | Host、Port、Database、Username、Password、SSL。 |
+| Neon | 使用连接串或 Neon 提供的 Host 信息。 |
+| SQLite | 填写 `.sqlite` 或 `.db` 文件的绝对路径。 |
+| DuckDB | 本地模式填写 DuckDB 文件绝对路径；MotherDuck 模式填写 Token。 |
+
+SQLite 和 DuckDB 文件路径必须是绝对路径。桌面端选择文件更方便；Docker 部署时需要确保容器能访问该挂载路径。
 
 ## 连接成功后你可以做什么
 
@@ -54,6 +73,10 @@ Dory 当前重点支持以下数据库：
 
 AI 可以基于数据库结构生成 SQL、解释查询并辅助分析结果。
 
+### Saved Queries
+
+把常用 SQL 保存到当前连接下，后续直接打开、运行或继续修改。
+
 ## 常见问题排查
 
 ### 无法连接数据库
@@ -64,6 +87,8 @@ AI 可以基于数据库结构生成 SQL、解释查询并辅助分析结果。
 - 数据库允许当前设备访问。
 - 云数据库安全组 / 防火墙已放行。
 - 用户名密码正确。
+- 如果启用了 SSH Tunnel，确认 SSH 主机、端口、用户名和私钥 / 密码正确。
+- 如果启用了 SSL，确认数据库端确实支持对应端口和证书策略。
 
 ### AI 看不到表结构
 
@@ -73,11 +98,16 @@ AI 可以基于数据库结构生成 SQL、解释查询并辅助分析结果。
 
 如果你使用 ClickHouse Cloud，通常需要使用 HTTPS / TLS 地址与正确端口。
 
+### 本地文件数据库无法访问
+
+SQLite 和 DuckDB 需要 Dory 进程能读取文件。Docker 运行时请通过 volume 把文件所在目录挂载进容器，并在连接中填写容器内的绝对路径。
+
 ## 安全建议
 
 - 为生产库使用只读账号更安全。
 - 不建议多个成员共享管理员账号。
 - 定期轮换数据库密码与访问凭据。
+- 团队环境中建议按角色拆分只读、分析和管理员账号。
 
 ## 下一步
 

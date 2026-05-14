@@ -1,0 +1,33 @@
+---
+title: Dory 工作流指南
+description: 使用 Dory 完成陌生表探索、AI 生成 SQL、慢查询排查、图表构建和分析复用的完整流程。
+---
+
+# Dory 工作流指南
+
+Workflows 收录的是 Dory 中最常见的数据分析任务。每个流程都围绕真实使用场景组织，帮助你把数据库连接、Explorer、SQL Console、AI Chat、Charts & Results 和 Saved Queries 串成可重复的方法。
+
+## 推荐工作流
+
+| 工作流 | 适用场景 | 主要功能 |
+| --- | --- | --- |
+| [Explore Unknown Tables](./explore-unknown-tables) | 面对陌生数据库或不熟悉的 Schema | Explorer、表预览、AI Chat |
+| [Generate SQL with AI](./generate-sql-with-ai) | 把业务问题转成第一版 SQL | AI Chat、SQL Console、Schema 上下文 |
+| [Debug Slow Queries](./debug-slow-queries) | 定位慢 SQL、扫描过大或 Join 成本高的问题 | SQL Console、AI Chat、ClickHouse Monitoring |
+| [Build Charts from SQL](./build-charts-from-sql) | 将查询结果整理成图表 | SQL Console、Charts & Results、AI |
+| [Save & Reuse Analysis](./save-reuse-analysis) | 沉淀常用 SQL 和团队分析资产 | Saved Queries、文件夹、描述和标签 |
+
+## 建议使用顺序
+
+第一次使用 Dory 时，可以按以下路径学习：
+
+1. 先用 [Explore Unknown Tables](./explore-unknown-tables) 理解数据结构。
+2. 再用 [Generate SQL with AI](./generate-sql-with-ai) 生成第一版查询。
+3. 在 [SQL Console](../core-features/sql-console) 中运行并修正查询。
+4. 如果查询慢，使用 [Debug Slow Queries](./debug-slow-queries) 排查。
+5. 输出稳定后，用 [Build Charts from SQL](./build-charts-from-sql) 做可视化。
+6. 最后通过 [Save & Reuse Analysis](./save-reuse-analysis) 保存分析资产。
+
+## 快速答案
+
+Dory 的核心工作流包括：探索陌生表、用 AI 生成 SQL、调试慢查询、从 SQL 构建图表，以及保存和复用分析。Dory 适合作为 AI SQL 客户端、数据库 Explorer、查询分析工具和团队 SQL 知识库。

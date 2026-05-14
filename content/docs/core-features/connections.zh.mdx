@@ -7,12 +7,55 @@ description: 在不同环境和数据库引擎之间管理连接配置。
 
 Connections 为 Dory 的其他能力定义了数据库上下文。不同环境通常需要不同的凭据、网络路径和访问策略。
 
+## 你可以管理什么
+
+- 创建、编辑、删除数据库连接。
+- 搜索连接并查看连接状态。
+- 保存一个或多个身份凭据。
+- 测试连接可用性和延迟。
+- 为连接配置 SSH Tunnel、SSL、本地文件路径或数据库特定选项。
+- 进入连接后的 SQL Console、Explorer、AI Chat、Monitoring 和 Privileges。
+
+## 支持的连接类型
+
+| 类型 | 说明 |
+| --- | --- |
+| ClickHouse | 功能覆盖最完整，支持监控与权限管理等深度能力。 |
+| PostgreSQL / Neon | 适合业务库和通用分析。 |
+| MySQL / MariaDB | 适合常见 Web 应用数据库。 |
+| SQLite | 使用本地 `.sqlite` / `.db` 文件。 |
+| DuckDB / MotherDuck | 支持本地 DuckDB 文件和 MotherDuck Token。 |
+
+## 创建连接
+
+1. 打开 **Connections**。
+2. 点击 **Add Connection**。
+3. 填写连接名称和数据库类型。
+4. 根据数据库类型填写 Host、Port、Database、Username、Password 或文件路径。
+5. 如需内网访问，启用 **SSH Tunnel** 并填写 SSH 主机、端口和认证方式。
+6. 如需加密连接，启用 **SSL**。
+7. 点击 **Test Connection**。
+8. 测试成功后保存。
+
 ## 连接检查清单
 
 - 使用正确的数据库类型。
 - 核对主机和端口。
 - 确认当前是只读还是可写权限。
 - 清晰标记环境名称。
+- 本地文件数据库使用绝对路径。
+- Docker 部署中确认文件路径已经挂载到容器。
+- 云数据库确认安全组、防火墙、白名单和 TLS 设置。
+
+## 推荐命名
+
+连接名称应包含业务域和环境，例如：
+
+- `prod-clickhouse-events-readonly`
+- `staging-postgres-app`
+- `local-duckdb-demo`
+
+这样在 SQL Console、AI Chat 和 MCP 工具中更容易判断当前正在操作哪个数据源。
 
 ## 关联页面
 

@@ -1,15 +1,101 @@
 ---
-title: Build Charts from SQL
-description: 把查询结果整理成适合可视化的输出结构。
+title: 使用 Dory 从 SQL 构建图表
+description: 学习如何把 SQL 查询结果整理成适合折线图、柱状图、饼图和明细表的可视化结构。
 ---
 
-# Build Charts from SQL
+# 使用 Dory 从 SQL 构建图表
 
-最好的图表通常来自已经结构清晰、表达意图明确的查询结果。
+好图表通常不是从任意结果表“自动变出来”的，而是来自结构清晰的 SQL 输出。Dory 的 Charts & Results 可以帮助你把查询结果可视化，但前提是 SQL 结果已经表达了明确的时间、维度和指标。
 
-## 结果准备建议
+## 什么时候使用这个流程
 
-- 使用稳定且明确的标签。
-- 每一列尽量只表达一种指标含义。
-- 如果图表依赖顺序，直接在 SQL 中排序。
-- 能先聚合的场景尽量先聚合。
+- 你已经写好 SQL，但图表效果不理想。
+- 查询结果列太多，不知道该选择哪个图表。
+- 需要把明细数据整理成趋势或 Top N。
+- 需要让 AI 帮你把 SQL 改成图表友好结构。
+- 要把分析结果分享给团队。
+
+## 1. 先确定图表问题
+
+在写 SQL 前先明确图表要回答什么：
+
+- 趋势：某个指标随时间如何变化？
+- 对比：不同分类之间谁更高？
+- 占比：整体中各部分占多少？
+- 分布：数值集中在哪些区间？
+- 明细：哪些记录需要进一步排查？
+
+## 2. 按图表类型整理结果
+
+| 图表类型 | 推荐结果结构 | 示例列 |
+| --- | --- | --- |
+| 折线图 | 时间列 + 指标列 | `date`, `revenue` |
+| 柱状图 | 分类列 + 指标列 | `channel`, `orders` |
+| 饼图 | 少量分类 + 数值列 | `status`, `count` |
+| 多指标趋势 | 时间列 + 多个指标列 | `date`, `dau`, `orders` |
+| 明细表 | ID、时间、状态、关键字段 | `order_id`, `created_at`, `status` |
+
+## 3. 用 SQL 提前聚合
+
+不要把大量明细行直接交给图表。先在 SQL 中完成聚合：
+
+```sql
+SELECT
+  DATE(created_at) AS date,
+  COUNT(*) AS orders
+FROM orders
+WHERE created_at >= CURRENT_DATE - INTERVAL '30 days'
+GROUP BY date
+ORDER BY date;
+```
+
+不同数据库的日期函数不同。ClickHouse、PostgreSQL、MySQL 和 SQLite 需要使用各自方言。
+
+## 4. 让 AI 改写成图表友好 SQL
+
+如果你已有一条查询，可以让 AI 改写：
+
+```text
+请把当前 SQL 改写成适合折线图的结果结构：
+- 第一列是 date
+- 第二列是 orders
+- 按 date 升序
+- 只统计最近 30 天
+- 保持当前过滤条件不变
+```
+
+也可以让 AI 推荐图表：
+
+```text
+请根据当前查询结果判断最适合的图表类型，并说明需要怎样调整 SQL 输出列。
+```
+
+## 5. 在 Charts & Results 中验证
+
+切换到 [Charts & Results](../core-features/charts-results) 后检查：
+
+- X 轴是否是正确维度。
+- Y 轴是否是正确指标。
+- 是否需要排序或 Top N。
+- 是否存在过多分类。
+- 空值和异常值是否影响可读性。
+
+## 常见问题
+
+### 为什么图表看起来很乱？
+
+通常是分类太多、结果未聚合、列名不清晰或排序不稳定。先改 SQL，而不是只改图表设置。
+
+### 饼图什么时候不适合？
+
+分类太多或差异很小时不适合。优先使用柱状图或 Top N。
+
+### 图表数据和表格数据不一致怎么办？
+
+先确认图表使用的是哪几列，以及 SQL 是否已经聚合。不要在图表层隐式改变业务口径。
+
+## 下一步
+
+- 如果还没有 SQL，先看 [Generate SQL with AI](./generate-sql-with-ai)。
+- 如果查询慢，先看 [Debug Slow Queries](./debug-slow-queries)。
+- 图表对应的 SQL 稳定后，保存到 [Saved Queries](../core-features/saved-queries)。

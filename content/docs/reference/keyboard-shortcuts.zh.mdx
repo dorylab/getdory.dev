@@ -1,16 +1,59 @@
 ---
 title: Keyboard Shortcuts
-description: 团队最常用的 Dory 快捷键参考。
+description: Dory SQL 编辑、查询执行、AI Chat、Saved Queries 和结果表格快捷键参考。
 ---
 
 # Keyboard Shortcuts
 
-这个页面适合沉淀团队在 Dory 中最常用的快捷键。
+Dory 快捷键围绕高频 SQL 探索设计：写查询、让 AI 辅助、执行、查看结果、保存可复用版本，尽量不用离开键盘。
 
-## 建议覆盖的操作
+在 macOS 上，文档中的 `Cmd/Ctrl` 对应 `Cmd`；在 Windows 和 Linux 上，对应 `Ctrl`。
 
-- 打开查询标签页。
-- 运行选中 SQL。
-- 格式化 SQL。
-- 打开 AI Chat。
-- 保存查询。
+## SQL 编辑器
+
+| 快捷键 | 操作 | 说明 |
+| --- | --- | --- |
+| `Cmd/Ctrl + Enter` | 运行查询 | 运行当前 SQL Tab。若选中了文本，编辑器流程支持时会以选中内容作为查询上下文。 |
+| `Cmd/Ctrl + Shift + F` | 格式化 SQL | 格式化当前编辑器中的 SQL。 |
+| `Cmd/Ctrl + S` | 保存 SQL | 打开当前 SQL 的保存对话框。 |
+| `Cmd/Ctrl + Alt + L` | 新建 SQL Tab | 创建并激活一个新的查询 Tab。 |
+| 空行输入 `/` | 打开 Inline Ask AI | 在当前行打开内联 AI 输入。 |
+| 非空行输入 `/` | 输入斜杠 | 如果当前行已有 SQL 文本，会按普通字符输入。 |
+
+## AI 面板
+
+| 快捷键 | 操作 | 说明 |
+| --- | --- | --- |
+| `Cmd/Ctrl + I` | 开关 AI Chat 面板 | 在当前 SQL Tab 中打开或关闭右侧 AI 面板。 |
+| 非输入控件中按 `/` | 打开 Inline Ask AI | 当前 Tab 是 SQL Tab，且焦点不在其他输入框中时生效。 |
+
+## 结果表格
+
+| 快捷键 | 操作 | 说明 |
+| --- | --- | --- |
+| `Cmd/Ctrl + F` | 搜索结果 | 在结果表格激活时打开结果搜索。 |
+| `Cmd/Ctrl + C` | 复制选中单元格 | 从虚拟表格中复制选中的结果单元格。 |
+
+## Saved Queries
+
+| 快捷键 | 操作 | 说明 |
+| --- | --- | --- |
+| `Cmd/Ctrl + S` | 保存当前 SQL | 当查询已经值得复用、命名、分类或分享时使用。 |
+
+## 推荐工作流
+
+1. 按 `Cmd/Ctrl + Alt + L` 打开干净的新 Tab。
+2. 在空行输入 `/`，让 Dory AI 生成查询草稿。
+3. 审查 SQL 后，按 `Cmd/Ctrl + Shift + F` 格式化。
+4. 按 `Cmd/Ctrl + Enter` 执行查询。
+5. 用 `Cmd/Ctrl + F` 搜索结果表格。
+6. 按 `Cmd/Ctrl + S` 保存最终查询。
+
+## 快捷键问题排查
+
+| 问题 | 处理方式 |
+| --- | --- |
+| 打开的是浏览器搜索，而不是结果搜索 | 先点击结果表格，再按 `Cmd/Ctrl + F`。 |
+| `/` 输入成了普通斜杠 | 移动到编辑器空行，或确认焦点不在其他输入框中。 |
+| `Cmd/Ctrl + S` 触发了浏览器保存 | 先确认 SQL Console 页面处于焦点状态。 |
+| 快捷键与系统设置冲突 | 如果系统或浏览器先拦截快捷键，需要调整对应快捷键设置。 |

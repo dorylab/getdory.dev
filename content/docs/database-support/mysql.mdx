@@ -1,14 +1,47 @@
 ---
-title: MySQL
-description: Notes for using Dory with MySQL.
+title: Dory MySQL Database Support
+description: Connect MySQL or MariaDB to Dory, run SQL, browse tables, generate queries with AI, and analyze operational data.
 ---
 
-# MySQL
+# Dory MySQL Database Support
 
-MySQL support is useful for many web application databases and operational reporting scenarios.
+Dory supports MySQL and MariaDB for web application databases, operational analytics, reporting, and production troubleshooting. Use SQL Console, Explorer, AI Chat, result charts, and Saved Queries in one workflow.
 
-## Things to watch
+## Best-Fit Use Cases
 
-- Version-specific SQL differences.
-- Character set and collation behavior.
-- Production-safe query patterns.
+- Query users, orders, products, payments, and other application tables.
+- Understand unfamiliar application schemas.
+- Generate reporting SQL or troubleshooting SQL with AI.
+- Save recurring operational queries.
+- Visualize aggregated query results.
+
+## Supported Capabilities
+
+| Capability | MySQL / MariaDB support |
+| --- | --- |
+| Connections | Host, port, database, username, password, SSL, and SSH tunnel. |
+| Explorer | Databases, tables, views, and columns. |
+| SQL Console | MySQL SQL editing, execution, and results. |
+| AI Chat | Schema-grounded SQL generation, explanation, and error fixing. |
+| Charts & Results | Visual analysis for aggregated results. |
+| Saved Queries | Save reusable MySQL queries. |
+
+## Query Tips
+
+Use `LIMIT` during exploration, add explicit time filters, check indexes before running AI-generated joins, and account for version-specific function support.
+
+## FAQ
+
+### Does Dory support MariaDB?
+
+Yes. MariaDB has its own connection type and works similarly to MySQL.
+
+### Why does my MySQL connection fail?
+
+Check the host, port, database, username, password, network allowlist, and SSL requirement.
+
+## Related Docs
+
+- [Connect Your Database](../getting-started/connect-your-database)
+- [SQL Console](../core-features/sql-console)
+- [Cloud Databases](./cloud-databases)

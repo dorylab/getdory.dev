@@ -1,14 +1,65 @@
 ---
-title: MySQL
-description: 在 Dory 中使用 MySQL 的说明。
+title: Dory MySQL 数据库支持
+description: 使用 Dory 连接 MySQL 或 MariaDB，运行 SQL、浏览表结构、使用 AI 生成查询并分析业务数据。
 ---
 
-# MySQL
+# Dory MySQL 数据库支持
 
-MySQL 支持适合常见 Web 应用数据库和运营报表场景。
+Dory 支持连接 MySQL 和 MariaDB，适合 Web 应用数据库、运营数据分析、报表查询和生产问题排查。连接后，你可以使用 SQL Console、Explorer、AI Chat、结果图表和 Saved Queries 完成完整数据工作流。
 
-## 需要注意的点
+## 适合的 MySQL 使用场景
 
-- 不同版本之间的 SQL 差异。
-- 字符集和排序规则行为。
-- 生产环境中的安全查询模式。
+- 查询用户、订单、商品、支付等业务表。
+- 快速理解陌生应用数据库结构。
+- 用 AI 生成报表 SQL 或排查 SQL。
+- 把常用运营查询保存为团队资产。
+- 对查询结果做图表分析。
+
+## 支持能力
+
+| 能力 | MySQL / MariaDB 支持情况 |
+| --- | --- |
+| Connections | 支持 Host、Port、Database、Username、Password、SSL 和 SSH Tunnel。 |
+| Explorer | 支持浏览数据库、表、视图和字段。 |
+| SQL Console | 支持 MySQL SQL 编写、运行和结果查看。 |
+| AI Chat | 可基于表结构生成 SQL、解释查询和修复错误。 |
+| Charts & Results | 支持对聚合结果做可视化分析。 |
+| Saved Queries | 支持保存常用 MySQL 查询。 |
+
+## 连接 MySQL 前需要准备
+
+- Host 和 Port，默认端口通常是 `3306`。
+- Database 名称。
+- Username 和 Password。
+- 是否需要 SSL。
+- 是否需要通过 SSH Tunnel 访问内网数据库。
+- 当前账号的表访问权限。
+
+## MySQL 查询建议
+
+- 探索阶段使用 `LIMIT`，避免扫描大表。
+- 明确时间范围，例如 `created_at >= ...`。
+- 当 AI 生成 Join 时，检查 Join 字段是否有索引。
+- 注意不同 MySQL 版本的函数和窗口函数支持差异。
+- 注意字符集和排序规则对文本比较的影响。
+
+## 常见问题
+
+### Dory 支持 MariaDB 吗？
+
+支持。MariaDB 使用独立连接类型，使用方式与 MySQL 类似。
+
+### MySQL 连接失败怎么办？
+
+确认 Host、Port、用户名、密码和数据库名正确。云数据库还需要检查安全组、IP 白名单和 SSL 要求。
+
+### AI 生成的 MySQL SQL 和实际语法不一致？
+
+请在提示中说明数据库版本，并让 AI 避免使用当前版本不支持的函数或窗口函数。
+
+## 相关文档
+
+- [连接数据库](../getting-started/connect-your-database)
+- [SQL Console](../core-features/sql-console)
+- [AI Chat](../core-features/ai-chat)
+- [Cloud Databases](./cloud-databases)

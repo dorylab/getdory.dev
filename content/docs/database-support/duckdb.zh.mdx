@@ -1,0 +1,64 @@
+---
+title: Dory DuckDB 和 MotherDuck 支持
+description: 使用 Dory 连接本地 DuckDB 文件或 MotherDuck，查询分析型数据文件、浏览表结构并用 AI 生成 SQL。
+---
+
+# Dory DuckDB 和 MotherDuck 支持
+
+Dory 支持连接本地 DuckDB 文件，也支持通过 MotherDuck Token 使用 MotherDuck。DuckDB 适合本地分析、数据文件探索、原型验证和可复现分析工作流。
+
+## 适合的 DuckDB 使用场景
+
+- 本地分析文件和中间结果查询。
+- CSV、Parquet 等数据处理后的分析。
+- 小团队共享 MotherDuck 数据库。
+- 不想部署传统数据库时的轻量 OLAP 分析。
+- 用 AI 快速生成数据探索 SQL。
+
+## 本地 DuckDB 连接
+
+创建连接时选择 DuckDB 本地模式，并填写 DuckDB 文件的绝对路径。桌面端可以直接选择文件；Docker 部署时需要先把文件所在目录挂载进容器，再填写容器内路径。
+
+示例路径：
+
+```text
+/Users/me/data/analytics.duckdb
+```
+
+## MotherDuck 连接
+
+选择 MotherDuck 模式，并填写 MotherDuck Token。建议为 Dory 创建单独 Token，便于后续轮换、撤销和审计。
+
+## Dory 中的 DuckDB 能力
+
+| 能力 | DuckDB / MotherDuck 支持情况 |
+| --- | --- |
+| Connections | 支持本地 DuckDB 文件和 MotherDuck Token。 |
+| Explorer | 支持浏览数据库、表和字段。 |
+| SQL Console | 支持 DuckDB SQL 查询和结果查看。 |
+| AI Chat | 可结合表结构生成和解释 DuckDB SQL。 |
+| Charts & Results | 支持对分析结果做趋势、对比和明细展示。 |
+| Saved Queries | 支持保存常用 DuckDB 查询。 |
+
+## 使用建议
+
+- 本地文件路径必须是绝对路径。
+- 大文件分析前先用小 `LIMIT` 查询确认结构。
+- 团队共享优先使用稳定挂载路径或 MotherDuck。
+- 对 AI 生成 SQL，确认函数和扩展是否在当前 DuckDB 环境可用。
+
+## 常见问题
+
+### Dory 连接 DuckDB 文件失败怎么办？
+
+确认文件路径是绝对路径，并且 Dory 进程有读取权限。Docker 中需要确认 volume 已挂载。
+
+### DuckDB 和 SQLite 应该怎么选？
+
+SQLite 更适合应用型本地数据库和小型数据集；DuckDB 更适合分析型数据、列式文件和 OLAP 查询。
+
+## 相关文档
+
+- [SQLite](./sqlite)
+- [连接数据库](../getting-started/connect-your-database)
+- [SQL Console](../core-features/sql-console)

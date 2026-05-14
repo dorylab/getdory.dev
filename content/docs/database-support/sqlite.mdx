@@ -1,14 +1,43 @@
 ---
-title: SQLite
-description: Notes for using Dory with SQLite.
+title: Dory SQLite Database Support
+description: Connect local SQLite files to Dory, browse tables, run SQL, and analyze lightweight datasets or demo data with AI.
 ---
 
-# SQLite
+# Dory SQLite Database Support
 
-SQLite is useful for local development, embedded applications, and quick reproducible demos.
+Dory supports local SQLite database files for development, prototypes, demos, test data, and lightweight analysis. You can open `.sqlite` or `.db` files, browse tables, run SQL, inspect results, and save queries.
 
-## Best fit
+## Best-Fit Use Cases
 
-- Local experiments.
-- Product prototypes.
-- Sharing a compact dataset.
+- Local development database inspection.
+- Product prototypes and demo datasets.
+- Small dataset exploration.
+- Reproducible test data queries.
+- Lightweight analysis without a remote database.
+
+## Connection Requirements
+
+Provide an absolute path to the SQLite file. The Dory process must be able to read the file. In Docker, mount the file directory into the container and use the container path.
+
+## Supported Capabilities
+
+| Capability | SQLite support |
+| --- | --- |
+| Connections | Absolute-path `.sqlite` / `.db` file connections. |
+| Explorer | Tables, columns, and basic structure. |
+| SQL Console | SQLite SQL execution and results. |
+| AI Chat | Schema-grounded SQL generation and explanation. |
+| Charts & Results | Visual analysis for query results. |
+| Saved Queries | Save reusable SQLite SQL. |
+
+## FAQ
+
+### Why cannot Dory find my SQLite file?
+
+Confirm that the path is absolute and readable by Dory. In Docker, confirm that the directory is mounted into the container.
+
+## Related Docs
+
+- [Connect Your Database](../getting-started/connect-your-database)
+- [SQL Console](../core-features/sql-console)
+- [DuckDB](./duckdb)

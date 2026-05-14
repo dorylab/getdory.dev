@@ -1,15 +1,83 @@
 ---
 title: FAQ
-description: 收录高频问题，减少重复 onboarding 成本。
+description: Dory 安装、支持数据库、AI SQL 生成、Saved Queries、MCP 访问和部署相关高频问题。
 ---
 
 # FAQ
 
-这个页面适合收录上线和 onboarding 过程中反复出现的问题，并给出简短直接的答案。
+本页回答 Dory onboarding、数据库连接、AI SQL 生成、MCP Agent 访问和自托管部署中的常见问题。
 
-## 适合进入 FAQ 的问题
+## Dory 是什么？
 
-- 为什么我看不到某张表？
-- 当前支持哪些数据库？
-- AI 是如何读取 Schema 上下文的？
-- Saved Queries 存在哪里？
+Dory 是面向 AI 的 SQL 工作区，可以连接数据库、探索 Schema、编写 SQL、用 AI 生成分析、保存可复用查询，并为支持 MCP 的 Agent 提供受控数据库上下文。
+
+## Dory 支持哪些数据库？
+
+Dory 文档覆盖 ClickHouse、PostgreSQL、Neon、MySQL、MariaDB、SQLite、DuckDB、MotherDuck，以及提供兼容连接端点的托管数据库。驱动细节见 [Database Support](/docs/database-support)。
+
+## Dory 可以替代 BI 工具吗？
+
+Dory 更适合 SQL 探索、临时分析、AI 辅助查询、Saved Query 复用和 Agent 工作流。它可以补充 BI 工具，尤其适合排查问题和制作 Dashboard 原型。
+
+## Dory 会自动执行 AI 生成的 SQL 吗？
+
+不会。请把 AI 输出当作草稿。执行前需要审查 SQL，尤其是 Join、Filter、时间窗口和聚合逻辑。
+
+## AI 如何获取 Schema 上下文？
+
+Dory 可以使用连接元数据、表、字段和当前查询上下文来辅助生成 SQL。AI SQL 的质量取决于所选模型、Schema 清晰度、表名、注释和提示语。
+
+## 为什么 AI 生成了无效 SQL？
+
+常见原因包括表名有歧义、上下文不足、数据库方言差异、模型能力限制，或提示语没有说明目标数据库。建议明确数据库类型，并让 Dory 转换成 PostgreSQL、ClickHouse、MySQL、MariaDB、SQLite 或 DuckDB 语法。
+
+## 为什么我看不到某张表？
+
+请检查：
+
+- 数据库用户是否有读取 Schema 的权限。
+- 是否选择了正确连接和数据库。
+- 表是否在其他 Schema 或 Catalog 下。
+- 新建表后是否刷新了连接元数据。
+- 网络规则是否允许 Dory 访问数据库。
+
+## 为什么查询很慢？
+
+慢查询通常来自大表扫描、缺少过滤条件、缺少索引、昂贵 Join 或高基数字段分组。探索阶段先加时间窗口、减少字段、使用 `LIMIT`，必要时查看数据库执行计划。
+
+## Saved Queries 存在哪里？
+
+Saved Queries 存在 Dory 中，并与当前组织、用户、连接和文件夹结构关联。建议使用清晰命名和目录，方便团队理解和复用。
+
+## 可以把 Saved Query 分享给队友吗？
+
+可以，前提是队友在同一个 Dory 组织中，并且有对应连接的访问权限。保存的 SQL 仍然需要队友具备数据库访问权限才有意义。
+
+## MCP 会暴露数据库密码吗？
+
+不会。MCP 工具只暴露受控的元数据读取和只读分析能力，不返回数据库密码或连接密钥。建议每个客户端使用独立 MCP token，并及时撤销不再使用的 token。
+
+## MCP Agent 能写入数据库吗？
+
+Dory MCP 设计为执行只读 SQL。生产连接仍建议使用数据库层面的只读账号，因为数据库权限是最终安全边界。
+
+## Docker 部署为什么连不上 SQLite 或 DuckDB 文件？
+
+容器必须能看到数据库文件路径。请挂载包含数据库文件的宿主机目录，并在 Dory 中填写容器内部可见的路径。
+
+## 登录链接或跳转为什么指向错误域名？
+
+检查部署使用的公开应用 URL。它需要和用户在浏览器中打开的地址一致，包括协议和域名。
+
+## 应该如何选择 AI 提供商？
+
+优先选择组织已经批准的提供商。如果需要标准路径，可以从 OpenAI 开始；如果组织已有兼容端点，可以使用 OpenAI-compatible。详见 [AI Providers](/docs/reference/ai-providers)。
+
+## 连接生产数据前应该做什么？
+
+- 使用只读数据库账号。
+- 限制 Dory 到数据库的网络访问范围。
+- 确认 SSL 要求。
+- 初始查询行数保持较小。
+- 执行 AI 生成 SQL 前先审查。
+- 为每个外部 Agent 客户端创建独立 MCP token。

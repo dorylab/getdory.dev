@@ -1,15 +1,21 @@
 ---
-title: Quick Start
+title: 快速开始
 description: 从零开始进入可用 Dory 会话的最快路径。
 ---
 
-# Quick Start
+# 快速开始
 
 如果你希望用最少的准备快速体验 Dory，按这条路径开始即可。
 
 ## 方式 1：体验在线演示
 
-打开 `https://app.getdory.dev`，选择 **Enter as Demo**。
+打开 `https://app.getdory.dev`，选择 **Enter as Demo** 或 **Continue as guest**。
+
+在线演示适合快速了解：
+
+- 数据库连接列表和示例数据。
+- SQL Console 的查询、结果和图表能力。
+- AI Chat 与 Schema 上下文协作方式。
 
 ## 方式 2：本地安装
 
@@ -19,10 +25,28 @@ description: 从零开始进入可用 Dory 会话的最快路径。
 brew install dorylab/dory/dory
 ```
 
-如果你更偏向容器部署或浏览器访问，继续阅读 [安装说明](./installation)。
+安装完成后打开 Dory，按照登录页提示进入工作区。
+
+## 方式 3：Docker 运行
+
+如果你更偏向浏览器访问或团队评估，可以使用 Docker：
+
+```bash
+docker run -d --name dory \
+  -p 3000:3000 \
+  -e DS_SECRET_KEY="$(openssl rand -base64 32 | tr -d '\n')" \
+  -e BETTER_AUTH_SECRET="$(openssl rand -hex 32)" \
+  -e BETTER_AUTH_URL="http://localhost:3000" \
+  -e NEXT_PUBLIC_REQUIRE_EMAIL_VERIFICATION=false \
+  -e DORY_INIT_USER_EMAIL=admin@getdory.dev \
+  -e DORY_INIT_USER_PASSWORD=admin \
+  dorylab/dory:latest
+```
+
+启动后访问 `http://localhost:3000`，使用 `admin@getdory.dev` / `admin` 登录。需要 AI 功能时，再补充 [AI Providers](../reference/ai-providers) 中的环境变量。
 
 ## 下一步
 
 1. 完成 [连接数据库](./connect-your-database)。
 2. 跑通 [3 分钟跑通第一条查询](./first-query-in-3-minutes)。
-3. 再去了解 [SQL Console](../core-features/sql-editor) 和 [AI Chat](../core-features/ai-chat)。
+3. 再去了解 [SQL Console](../core-features/sql-console) 和 [AI Chat](../core-features/ai-chat)。

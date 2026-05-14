@@ -1,15 +1,87 @@
 ---
 title: Settings
-description: 汇总影响团队行为和本地工作流的关键设置项。
+description: Dory 编辑器行为、主题、查询限制、连接和团队工作流设置参考。
 ---
 
 # Settings
 
-这个页面适合整理和性能、AI 行为、执行安全以及个人偏好相关的重要设置。
+Dory 设置分为两层：每个用户的本地工作流偏好，以及团队共享的操作规范。搭建 Dory SQL 工作区或编写 onboarding 文档时，可以参考本页。
 
-## 常见分类
+## SQL 编辑器设置
 
-- 默认连接行为。
-- 查询执行限制。
-- AI 提供商选择。
-- 主题和编辑器偏好。
+| 设置 | 可选项 | 默认值 | 影响 |
+| --- | --- | --- | --- |
+| Editor theme | `Auto`、`GitHub Light`、`GitHub Dark`、`VS Light`、`VS Dark` | `Auto` | Monaco 编辑器的颜色和对比度。 |
+| Font family | `Monaco`、`Menlo`、`Consolas`、`JetBrains Mono`、`Fira Code`、`Source Code Pro`、`Custom` | `Monaco` | SQL 可读性和对齐效果。 |
+| Font size | `12` 到 `24` | `12` | 编辑器字号。 |
+| Line height | `1.1` 到 `2.2` | `1.5` | SQL 行间距。 |
+| Line numbers | `On`、`Off` | `On` | 是否显示行号。 |
+| Minimap | `On`、`Off` | `Off` | 是否显示 Monaco minimap。 |
+| Word wrap | `On`、`Off` | `On` | 长 SQL 是否自动换行。 |
+| Folding | `On`、`Off` | `On` | 是否允许折叠 SQL 代码块。 |
+| Query limit | `100`、`200`、`500`、`1000`、`2000`、`5000` | `200` | 查询预览和分析工作流的默认返回行数。 |
+
+## 应用主题设置
+
+Dory 还提供应用级颜色主题：
+
+| 分组 | 主题 |
+| --- | --- |
+| Default | Default、Blue、Green、Amber、Liquid |
+| Scaled | Default Scaled、Blue Scaled、Liquid Scaled |
+| Monospaced | Mono Scaled |
+
+团队演示、共享屏幕或培训时，建议选择克制、对比清晰的主题。主要工作流是密集 SQL 和表格扫描时，可以选择 Monospaced 变体。
+
+## Query limit 建议
+
+| 场景 | 建议限制 |
+| --- | --- |
+| Schema 探索 | `100` 或 `200` |
+| Dashboard 原型 | `200` 或 `500` |
+| 数据质量检查 | `500` 或 `1000` |
+| 类导出检查 | 确实需要时再用 `2000` 或 `5000` |
+
+较低的限制能让 Dory 响应更快，也能减少意外大扫描。做聚合分析时，优先在 SQL 里 `GROUP BY`，不要只靠提高结果行数。
+
+## Connection 设置
+
+不同数据库驱动的连接表单会有差异，但团队通常应该统一以下规则：
+
+| 范围 | 建议 |
+| --- | --- |
+| 命名 | 名称里体现环境和用途，例如 `prod-analytics-readonly`。 |
+| 凭据 | 分析连接使用只读数据库账号。 |
+| Host 访问 | Docker 部署时，确认容器内部可以访问数据库 Host。 |
+| 本地文件 | SQLite 和 DuckDB 使用绝对路径；Docker 中挂载包含文件的目录。 |
+| SSL | 按数据库提供商要求配置 SSL，不要为了方便关闭校验。 |
+
+## AI 设置
+
+AI 行为由部署时选择的提供商和模型控制。详细说明见 [AI Providers](/docs/reference/ai-providers)。
+
+团队使用时建议明确：
+
+- 已批准的提供商和模型。
+- 哪些环境允许使用 AI 功能。
+- Prompt 中是否允许出现生产 Schema 名称。
+- 执行 AI 生成 SQL 前的审核要求。
+
+## Saved Query 设置
+
+Saved Queries 最适合配合团队命名和目录规范使用。
+
+| 约定 | 示例 |
+| --- | --- |
+| 按业务域加前缀 | `billing - monthly revenue` |
+| 写清统计粒度 | `orders - daily count` |
+| 有歧义时包含数据库对象 | `warehouse.users - active users` |
+| 单独放置草稿 | `drafts / migration checks` |
+
+## 推荐团队默认值
+
+- 新用户默认 Query limit 保持 `200`。
+- Onboarding 和演示时保持 Word wrap 开启。
+- 共享连接使用只读凭据。
+- 可复用 SQL 保存成 Saved Query，不要只分享截图。
+- 执行 AI 生成 SQL 前先审查，尤其是 Join 和 Filter 条件。

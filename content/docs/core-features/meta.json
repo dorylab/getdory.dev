@@ -6,6 +6,8 @@
     "explorer",
     "charts-results",
     "saved-queries",
-    "connections"
+    "connections",
+    "monitoring",
+    "privileges"
   ]
 }

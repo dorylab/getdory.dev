@@ -1,43 +1,118 @@
 ---
-title: 自托管
-description: 通过 Docker 在自己的环境中运行 Dory，并显式配置 AI 提供商。
+title: Dory 自托管部署
+description: 在自己的服务器、内网或云环境中自托管 Dory，规划 Docker、HTTPS、Secret、AI、数据库网络和团队上线。
 ---
 
-# 自托管
+# Dory 自托管部署
 
-公开仓库当前主要提供了基于 Docker 的自托管路径。
+自托管 Dory 适合希望由自己控制部署环境、访问边界、数据库凭据和 AI Provider 的团队。当前公开仓库主要提供 Docker 优先的部署路径。
 
-## 自托管可以带来什么
+## 自托管适合谁
 
-- 由你自己控制部署环境与凭据。
-- 在本地或团队环境中运行可通过浏览器访问的 Dory 工作区。
-- 明确配置产品所使用的 AI 提供商与模型。
+- 需要在公司内网或私有云运行 Dory。
+- 需要自己管理数据库连接和 AI Key。
+- 需要为团队提供统一的浏览器访问入口。
+- 需要连接内网数据库、云数据库或测试环境数据库。
+- 需要明确数据访问、账号权限和 Secret 管理边界。
 
-## 关键环境变量
+## 推荐架构
 
-| 变量 | 作用 |
+基础自托管架构通常包括：
+
+1. Dory Docker 容器。
+2. 持久化数据目录或 volume。
+3. 反向代理和 HTTPS。
+4. Secret 管理系统或受控 `.env`。
+5. 可访问目标数据库的网络环境。
+6. 邮件服务和 OAuth 配置（如需要）。
+
+## 部署前检查
+
+| 项目 | 检查内容 |
 | --- | --- |
-| `DS_SECRET_KEY` | 应用运行时使用的密钥。 |
-| `BETTER_AUTH_SECRET` | 认证流程所需密钥。 |
-| `BETTER_AUTH_URL` | 当前部署对外访问的基础地址。 |
-| `DORY_AI_PROVIDER` | AI 提供商标识，例如 `openai` 或 `anthropic`。 |
-| `DORY_AI_MODEL` | 当前提供商对应的模型名称。 |
-| `DORY_AI_API_KEY` | 提供商 API Key。 |
-| `DORY_AI_URL` | 提供商或兼容端点所需的基础 URL。 |
+| 域名 | 准备 `https://dory.example.com` 之类的访问地址。 |
+| HTTPS | 生产环境必须使用 HTTPS。 |
+| Secret | 生成 `DS_SECRET_KEY` 和 `BETTER_AUTH_SECRET`。 |
+| Auth URL | `BETTER_AUTH_URL` 与公开访问地址一致。 |
+| AI | 配置 provider、model、API key 和 URL。 |
+| 数据库网络 | Dory 运行环境能访问目标数据库。 |
+| 初始化用户 | 配置 `DORY_INIT_USER_EMAIL` 和 `DORY_INIT_USER_PASSWORD`。 |
+| 邮件 | 如果启用邮箱验证或邀请，配置 Resend。 |
 
-## 运维注意事项
+## 基础部署步骤
 
-- 将 AI 凭据视为部署密钥。
-- 仔细匹配 provider、model 与 URL，否则运行时可能直接失败。
-- 不要直接把本地快速体验配置照搬到生产环境认证配置中。
+1. 准备 `.env`。
+2. 启动 Docker 容器。
+3. 配置 HTTPS 反向代理。
+4. 使用初始化用户登录。
+5. 修改初始密码或配置团队登录方式。
+6. 添加测试数据库连接。
+7. 验证 SQL Console、Explorer、AI Chat 和 Saved Queries。
+8. 再添加生产数据库连接。
 
-## 当前状态
+## 生产配置建议
 
-仓库已经让 Docker 部署足够直接，但尚未形成完整的备份、高可用或企业级加固指南。在更大范围部署前，建议自行补齐这些验证。
+```bash
+DS_SECRET_KEY=replace_with_base64_secret
+BETTER_AUTH_SECRET=replace_with_hex_secret
+BETTER_AUTH_URL=https://dory.example.com
+TRUSTED_ORIGINS=https://dory.example.com
+NEXT_PUBLIC_REQUIRE_EMAIL_VERIFICATION=true
+DORY_INIT_USER_EMAIL=admin@example.com
+DORY_INIT_USER_PASSWORD=change_this_password
+DORY_AI_PROVIDER=openai
+DORY_AI_MODEL=gpt-4o-mini
+DORY_AI_API_KEY=replace_with_api_key
+DORY_AI_URL=https://api.openai.com/v1
+RESEND_API_KEY=replace_with_resend_key
+EMAIL_FROM="Dory <noreply@example.com>"
+```
 
-## 继续完成部署准备
+## 数据库连接安全
 
-- 查看 [Docker](./docker) 了解容器优先的部署路径。
-- 在 [Environment Variables](./environment-variables) 中梳理运行时配置。
-- 在 [Auth / SSO](./auth-sso) 中规划身份方案。
-- 在 [Team Setup](./team-setup) 中明确团队使用约定。
+- 生产数据库优先使用只读账号。
+- 为 Dory 创建独立数据库用户，避免共用管理员账号。
+- 云数据库需要放行 Dory 服务器出口 IP。
+- 内网数据库可使用 SSH Tunnel。
+- SQLite 和 DuckDB 文件需要通过 volume 挂载到容器。
+
+## AI 和数据边界
+
+Dory 的 AI 功能会把必要上下文发送给配置的 AI Provider。团队上线前应明确：
+
+- 使用哪个 AI Provider。
+- Schema、SQL 和结果摘要是否允许发送给该 Provider。
+- 是否需要使用公司统一 AI Gateway。
+- AI Key 如何轮换和审计。
+
+## 升级和回滚
+
+升级前：
+
+- 备份持久化数据。
+- 备份 `.env`。
+- 记录当前镜像版本。
+- 在测试环境验证新版本。
+
+升级后：
+
+- 验证登录。
+- 验证已有连接。
+- 验证 SQL Console 和 AI。
+- 验证 Saved Queries 和团队访问。
+
+## 不建议的做法
+
+- 使用默认初始化密码长期运行。
+- 在公网暴露 HTTP 明文服务。
+- 用管理员数据库账号做日常分析。
+- 把 AI Key、数据库密码写进镜像或 Git。
+- 未确认 `BETTER_AUTH_URL` 就配置 OAuth 或邮件邀请。
+
+## 相关文档
+
+- [Docker](./docker)
+- [Environment Variables](./environment-variables)
+- [Auth / SSO](./auth-sso)
+- [Team Setup](./team-setup)
+- [Cloud Databases](../database-support/cloud-databases)

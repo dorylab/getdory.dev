@@ -1,0 +1,56 @@
+---
+title: Dory Neon 数据库支持
+description: 使用 Dory 连接 Neon Serverless PostgreSQL，查询云端 Postgres 数据、浏览 Schema，并用 AI 生成 SQL。
+---
+
+# Dory Neon 数据库支持
+
+Neon 是 Serverless PostgreSQL 平台。Dory 通过 PostgreSQL 兼容能力连接 Neon，适合云端开发环境、分支数据库、产品数据分析和团队协作查询。
+
+## 适合的 Neon 使用场景
+
+- 查询 Neon 项目中的业务数据。
+- 在开发、预发或生产分支之间切换分析。
+- 使用 AI 基于 PostgreSQL Schema 生成 SQL。
+- 快速验证应用数据库中的数据问题。
+- 保存团队常用 Neon 查询。
+
+## 连接 Neon 前需要准备
+
+- Neon 控制台提供的连接信息或连接串。
+- Project、Branch 和 Database 信息。
+- Username 和 Password。
+- SSL 要求。
+- 当前账号可访问的 Schema 和表。
+
+Neon 通常要求 SSL。创建连接时请根据 Neon 控制台提供的信息配置。
+
+## Dory 中的 Neon 能力
+
+| 能力 | Neon 支持情况 |
+| --- | --- |
+| SQL Console | 支持 PostgreSQL 兼容 SQL 查询。 |
+| Explorer | 支持浏览 Schema、表、视图、字段和 DDL。 |
+| AI Chat | 可结合 Neon 数据库结构生成、解释和修复 SQL。 |
+| Charts & Results | 支持对查询结果做图表分析。 |
+| Saved Queries | 支持保存和复用常用查询。 |
+
+## Neon 与 PostgreSQL 的关系
+
+在 Dory 中，Neon 使用 PostgreSQL 兼容驱动能力。因此大多数 PostgreSQL 使用建议也适用于 Neon，包括 Schema 选择、只读角色、索引检查和 AI 生成 SQL 的审核流程。
+
+## 常见问题
+
+### Dory 连接 Neon 失败怎么办？
+
+确认连接串、Host、数据库名、用户名和密码正确。还需要确认 Neon 项目没有暂停，并按要求启用 SSL。
+
+### Neon 分支数据库如何区分？
+
+建议在 Dory 连接名称中写清楚项目和分支，例如 `neon-prod-main`、`neon-staging-preview`。
+
+## 相关文档
+
+- [PostgreSQL](./postgresql)
+- [连接数据库](../getting-started/connect-your-database)
+- [Cloud Databases](./cloud-databases)

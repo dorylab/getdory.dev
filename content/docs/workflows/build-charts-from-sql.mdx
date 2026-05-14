@@ -1,15 +1,81 @@
 ---
-title: Build Charts from SQL
-description: Shape query output so it is ready for visualization.
+title: Build Charts from SQL in Dory
+description: Shape SQL query results for line charts, bar charts, pie charts, and detail tables in Dory.
 ---
 
-# Build Charts from SQL
+# Build Charts from SQL in Dory
 
-The best charts usually come from queries that already return tidy, intention-revealing output.
+Good charts come from clear SQL output. Dory Charts & Results can visualize query results, but the query should already express the right time column, dimension, and metric.
 
-## Prepare the result
+## When to Use This Workflow
 
-- Use stable labels.
-- Keep one metric meaning per column.
-- Add ordering in SQL when the chart depends on it.
-- Aggregate before charting when possible.
+- Your SQL works but the chart looks wrong.
+- The result has too many columns.
+- You need to turn detail rows into trends or Top-N comparisons.
+- You want AI to rewrite SQL into a chart-ready shape.
+- You need to share an analysis with the team.
+
+## 1. Define the Chart Question
+
+Decide what the chart should answer:
+
+- Trend: how does a metric change over time?
+- Comparison: which category is higher?
+- Share: what percentage does each part represent?
+- Distribution: where do values cluster?
+- Detail: which records need investigation?
+
+## 2. Shape the Result
+
+| Chart type | Recommended result | Example columns |
+| --- | --- | --- |
+| Line chart | Time column + metric | `date`, `revenue` |
+| Bar chart | Category + metric | `channel`, `orders` |
+| Pie chart | Small category set + value | `status`, `count` |
+| Multi-metric trend | Time column + metrics | `date`, `dau`, `orders` |
+| Detail table | ID, time, status, key fields | `order_id`, `created_at`, `status` |
+
+## 3. Aggregate in SQL
+
+```sql
+SELECT
+  DATE(created_at) AS date,
+  COUNT(*) AS orders
+FROM orders
+WHERE created_at >= CURRENT_DATE - INTERVAL '30 days'
+GROUP BY date
+ORDER BY date;
+```
+
+Use the date functions for your database dialect.
+
+## 4. Ask AI for Chart-Ready SQL
+
+```text
+Rewrite the current SQL for a line chart:
+- first column: date
+- second column: orders
+- order by date ascending
+- last 30 days only
+- keep the current filters
+```
+
+## 5. Validate in Charts & Results
+
+Check the X axis, Y axis, ordering, Top-N behavior, category count, null values, and outliers.
+
+## FAQ
+
+### Why is my chart messy?
+
+The result is usually not aggregated, has too many categories, has unclear column names, or lacks stable ordering.
+
+### When should I avoid pie charts?
+
+Avoid pie charts when there are many categories or small differences. Use a bar chart or Top-N instead.
+
+## Next Steps
+
+- Generate SQL with [Generate SQL with AI](./generate-sql-with-ai).
+- Debug performance with [Debug Slow Queries](./debug-slow-queries).
+- Save stable chart queries in [Saved Queries](../core-features/saved-queries).

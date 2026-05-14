@@ -1,16 +1,60 @@
 ---
-title: Environment Variables
-description: Track the configuration values you need before deploying Dory.
+title: Dory Environment Variables
+description: Configure Dory authentication, AI providers, email, OAuth, MCP origins, and init users for deployment.
 ---
 
-# Environment Variables
+# Dory Environment Variables
 
-Before deploying Dory, decide how you will provide runtime configuration for database access, AI providers, network routing, and authentication.
+Dory deployment behavior is controlled by environment variables. Treat production values as secrets and do not commit them to source control or bake them into public images.
 
-## Recommended categories
+## Required Variables
 
-- Database connection defaults.
-- AI provider credentials.
-- Public base URLs.
-- Auth and callback settings.
-- Logging or observability endpoints.
+| Variable | Purpose | Example |
+| --- | --- | --- |
+| `DS_SECRET_KEY` | Runtime secret used by application security features. | `openssl rand -base64 32` |
+| `BETTER_AUTH_SECRET` | Better Auth secret. | `openssl rand -hex 32` |
+| `BETTER_AUTH_URL` | Public base URL users open. | `https://dory.example.com` |
+
+`BETTER_AUTH_URL` must match the browser-facing URL, or login, callback, invitation, and email links can break.
+
+## AI Variables
+
+| Variable | Purpose |
+| --- | --- |
+| `DORY_AI_PROVIDER` | Provider key such as `openai`, `anthropic`, `google`, `qwen`, `xai`, `meta`, or `openai-compatible`. |
+| `DORY_AI_MODEL` | Model name. |
+| `DORY_AI_API_KEY` | Provider API key. |
+| `DORY_AI_URL` | Provider or compatible endpoint base URL. |
+
+## Auth and Login
+
+| Variable | Purpose |
+| --- | --- |
+| `NEXT_PUBLIC_REQUIRE_EMAIL_VERIFICATION` | Require email verification after sign-up unless set to `false`. |
+| `TRUSTED_ORIGINS` | Comma-separated trusted origins for auth and MCP origin checks. |
+| `DORY_INIT_USER_EMAIL` | Email for the bootstrapped initial user. |
+| `DORY_INIT_USER_PASSWORD` | Password for the bootstrapped initial user. |
+| `GITHUB_CLIENT_ID` / `GITHUB_CLIENT_SECRET` | GitHub OAuth login. |
+| `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` | Google OAuth login. |
+
+## Email
+
+| Variable | Purpose |
+| --- | --- |
+| `RESEND_API_KEY` | Resend API key for verification, reset, and invitation emails. |
+| `EMAIL_FROM` | Verified sender address. |
+
+## Production Advice
+
+- Generate strong random values for `DS_SECRET_KEY` and `BETTER_AUTH_SECRET`.
+- Do not rotate auth and encryption secrets casually after deployment.
+- Use HTTPS in `BETTER_AUTH_URL`.
+- Store `.env` through your secret management process.
+- Rotate AI keys, OAuth secrets, email keys, and database credentials deliberately.
+
+## Related Docs
+
+- [Docker](./docker)
+- [Self-Hosting](./self-hosting)
+- [Auth / SSO](./auth-sso)
+- [AI Providers](../reference/ai-providers)

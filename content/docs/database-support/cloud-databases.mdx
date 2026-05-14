@@ -1,15 +1,52 @@
 ---
-title: Cloud Databases
-description: Guidance for managed databases and network-aware deployments.
+title: Dory Cloud Database Connection Guide
+description: Connect managed cloud databases to Dory with TLS, IP allowlists, SSH tunnels, secrets, and team access boundaries.
 ---
 
-# Cloud Databases
+# Dory Cloud Database Connection Guide
 
-Managed databases usually add network, auth, and secret-management concerns on top of normal connection setup.
+Managed databases require more than a host and password. You often need to account for network access, TLS, IP allowlists, secrets, and team permissions before Dory can connect.
 
-## Plan for
+## Common Cloud Database Scenarios
 
-- VPC or IP allowlists.
-- TLS requirements.
-- Secret rotation.
-- Team access boundaries.
+- ClickHouse Cloud.
+- Neon Serverless PostgreSQL.
+- Managed MySQL or PostgreSQL.
+- Databases behind VPCs, private networks, or security groups.
+- Databases accessed through SSH bastion hosts.
+- Self-hosted Dory environments shared by a team.
+
+## Preflight Checklist
+
+| Item | What to verify |
+| --- | --- |
+| Network reachability | The Dory runtime can reach the database host and port. |
+| IP allowlist | The database allows the Dory desktop or server egress IP. |
+| TLS / SSL | Cloud providers may require encrypted connections. |
+| SSH tunnel | Private databases may require a bastion host. |
+| Permissions | Production should use readonly or least-privilege roles. |
+| Secret management | Passwords, API keys, and tokens should not be committed. |
+
+## Desktop vs Docker
+
+The desktop app connects from your current machine. Docker or self-hosted Dory connects from the server or container network. If a connection works locally but fails after deployment, check the deployed network path and cloud allowlist.
+
+## SSH Tunnel Requirements
+
+Prepare the SSH host, port, username, password or private key, optional passphrase, and the private database host and port.
+
+## FAQ
+
+### Why does my connection work locally but fail in production?
+
+The desktop and deployment environments usually have different network egress. Check allowlists, VPC routing, firewalls, and container networking.
+
+### Should I enable SSL?
+
+Use SSL whenever the database provider requires or recommends it. ClickHouse Cloud, Neon, and many managed databases commonly require TLS.
+
+## Related Docs
+
+- [Connect Your Database](../getting-started/connect-your-database)
+- [Self Hosting](../deploy/self-hosting)
+- [Docker](../deploy/docker)

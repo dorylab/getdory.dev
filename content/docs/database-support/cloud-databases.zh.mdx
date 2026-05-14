@@ -1,15 +1,77 @@
 ---
-title: Cloud Databases
-description: 面向托管数据库和云网络部署的连接建议。
+title: Dory 云数据库连接指南
+description: 了解如何在 Dory 中连接云数据库和托管数据库，配置 TLS、IP 白名单、SSH Tunnel、密钥和团队访问边界。
 ---
 
-# Cloud Databases
+# Dory 云数据库连接指南
 
-托管数据库通常会在常规连接配置之外，再增加网络、认证和密钥管理方面的要求。
+云数据库和托管数据库通常不只是填写 Host 和密码，还需要处理网络、安全、TLS、密钥和团队权限。Dory 支持连接多种云数据库，但连接前需要先确认部署环境能访问目标数据库。
 
-## 需要提前规划
+## 常见云数据库场景
 
-- VPC 或 IP 白名单。
-- TLS 要求。
-- 密钥轮换策略。
-- 团队访问边界。
+- ClickHouse Cloud。
+- Neon Serverless PostgreSQL。
+- 云厂商托管 MySQL 或 PostgreSQL。
+- 位于 VPC、内网或安全组后的数据库。
+- 需要通过 SSH 跳板机访问的数据库。
+- 团队共享 Dory 自托管环境。
+
+## 连接前检查清单
+
+| 项目 | 说明 |
+| --- | --- |
+| 网络可达性 | Dory 运行环境必须能访问数据库 Host 和端口。 |
+| IP 白名单 | 云数据库需要放行 Dory 服务或桌面端所在出口 IP。 |
+| TLS / SSL | ClickHouse Cloud、Neon 等服务通常要求加密连接。 |
+| SSH Tunnel | 内网数据库可通过跳板机连接。 |
+| 账号权限 | 生产环境建议使用只读账号或最小权限角色。 |
+| Secret 管理 | API Key、数据库密码和 Token 不应写进仓库。 |
+
+## 桌面端和 Docker 的区别
+
+桌面端 Dory 从当前电脑发起数据库连接；Docker 或自托管 Dory 从服务器或容器网络发起连接。因此同一数据库在桌面端可访问，不代表 Docker 环境也能访问。
+
+排查时请分别确认：
+
+- 当前运行 Dory 的机器或容器能否访问数据库。
+- 云数据库白名单放行的是正确出口 IP。
+- Docker 网络、代理或防火墙没有阻断连接。
+
+## SSH Tunnel 建议
+
+如果数据库只允许内网访问，可以在 Dory 连接配置中启用 SSH Tunnel。你需要准备：
+
+- SSH Host 和 Port。
+- SSH Username。
+- 密码或私钥。
+- 私钥密码（如有）。
+- 数据库在内网中的 Host 和 Port。
+
+## 安全建议
+
+- 不要给日常分析账号授予管理员权限。
+- 为 Dory 创建单独数据库用户，便于审计和轮换。
+- 团队部署时统一管理环境变量和 Secret。
+- 定期轮换数据库密码、MotherDuck Token 和 MCP Token。
+- 对生产库默认使用只读连接。
+
+## 常见问题
+
+### 为什么本地能连，部署后不能连？
+
+本地桌面端和服务器部署使用不同网络出口。请检查云数据库白名单、VPC 路由、防火墙和容器网络。
+
+### 是否必须启用 SSL？
+
+取决于数据库服务。ClickHouse Cloud、Neon 和多数托管数据库通常要求 SSL 或强烈建议启用 SSL。
+
+### 如何降低生产数据库风险？
+
+使用只读账号、限制可访问数据库和 Schema、保留 `LIMIT`、明确时间范围，并审查 AI 生成 SQL。
+
+## 相关文档
+
+- [连接数据库](../getting-started/connect-your-database)
+- [自托管](../deploy/self-hosting)
+- [Docker](../deploy/docker)
+- [Environment Variables](../deploy/environment-variables)

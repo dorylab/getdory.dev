@@ -1,20 +1,118 @@
 ---
-title: Docker
-description: 通过容器运行 Dory，适合评估和浏览器访问场景。
+title: 使用 Docker 部署 Dory
+description: 通过 Docker 运行 Dory，配置端口、Secret、初始化用户、AI 提供商和持久化目录。
 ---
 
-# Docker
+# 使用 Docker 部署 Dory
 
-Docker 是在浏览器环境中运行 Dory 的最直接方式之一，也适合快速评估部署流程。
+Docker 是自托管 Dory 最直接的方式，适合本地评估、团队测试和浏览器访问场景。容器默认监听 `3000` 端口。
 
-## 基础运行命令
+## 最小启动命令
 
 ```bash
-docker run -p 3000:3000 dorylab/dory:latest
+docker run -d --name dory \
+  -p 3000:3000 \
+  -e DS_SECRET_KEY="$(openssl rand -base64 32 | tr -d '\n')" \
+  -e BETTER_AUTH_SECRET="$(openssl rand -hex 32)" \
+  -e BETTER_AUTH_URL="http://localhost:3000" \
+  -e NEXT_PUBLIC_REQUIRE_EMAIL_VERIFICATION=false \
+  -e DORY_INIT_USER_EMAIL=admin@getdory.dev \
+  -e DORY_INIT_USER_PASSWORD=admin \
+  dorylab/dory:latest
 ```
 
-## 常见下一步
+启动后访问 `http://localhost:3000`，使用初始化用户登录。
 
-- 增加持久化配置。
-- 安全挂载 Secret。
-- 通过内部代理暴露服务。
+## 启用 AI 功能
+
+如果需要 SQL 生成、AI Chat 和结果分析，请增加 AI 环境变量：
+
+```bash
+  -e DORY_AI_PROVIDER=openai \
+  -e DORY_AI_MODEL=gpt-4o-mini \
+  -e DORY_AI_API_KEY=your_api_key_here \
+  -e DORY_AI_URL=https://api.openai.com/v1 \
+```
+
+支持的 provider 包括 `openai`、`openai-compatible`、`anthropic`、`google`、`qwen`、`xai` 和 `meta`。不同 provider 对 `DORY_AI_URL` 的要求不同，详情见 [AI Providers](../reference/ai-providers)。
+
+## 使用 `.env` 文件
+
+生产或团队环境建议使用 `.env` 管理配置：
+
+```bash
+docker run -d --name dory \
+  -p 3000:3000 \
+  --env-file .env \
+  dorylab/dory:latest
+```
+
+示例 `.env`：
+
+```bash
+DS_SECRET_KEY=replace_with_base64_secret
+BETTER_AUTH_SECRET=replace_with_hex_secret
+BETTER_AUTH_URL=https://dory.example.com
+TRUSTED_ORIGINS=https://dory.example.com
+NEXT_PUBLIC_REQUIRE_EMAIL_VERIFICATION=false
+DORY_INIT_USER_EMAIL=admin@example.com
+DORY_INIT_USER_PASSWORD=change_me
+DORY_AI_PROVIDER=openai
+DORY_AI_MODEL=gpt-4o-mini
+DORY_AI_API_KEY=replace_with_api_key
+DORY_AI_URL=https://api.openai.com/v1
+```
+
+## 持久化数据
+
+Dory 容器会在运行时写入应用数据。生产环境应挂载持久化目录，避免容器重建后数据丢失。
+
+示例：
+
+```bash
+docker run -d --name dory \
+  -p 3000:3000 \
+  --env-file .env \
+  -v dory-data:/app/data \
+  dorylab/dory:latest
+```
+
+如果要连接 SQLite 或 DuckDB 文件，也需要把文件所在目录挂载到容器中，并在 Dory 连接表单中填写容器内绝对路径。
+
+## 反向代理和 HTTPS
+
+团队部署建议放在 Nginx、Caddy、Traefik 或公司统一网关之后，并启用 HTTPS。此时：
+
+- `BETTER_AUTH_URL` 必须等于用户访问 Dory 的公开地址。
+- `TRUSTED_ORIGINS` 应包含公开访问地址。
+- OAuth 回调地址也应使用同一公开域名。
+
+## 升级容器
+
+常见升级流程：
+
+1. 备份持久化数据和 `.env`。
+2. 拉取新镜像。
+3. 停止旧容器。
+4. 使用相同 `.env` 和 volume 启动新容器。
+5. 登录后验证连接、SQL Console、AI 和 Saved Queries。
+
+## 常见问题
+
+### 为什么登录或邀请链接跳到错误域名？
+
+检查 `BETTER_AUTH_URL` 是否与用户访问地址完全一致，包括协议、域名和端口。
+
+### 为什么容器能启动但 AI 不可用？
+
+检查 `DORY_AI_PROVIDER`、`DORY_AI_MODEL`、`DORY_AI_API_KEY` 和 `DORY_AI_URL`。Provider 和 URL 不匹配时，运行时会失败。
+
+### 为什么 Docker 中无法访问本地 SQLite / DuckDB 文件？
+
+Docker 只能访问容器内路径。请用 volume 挂载文件目录，并填写容器内绝对路径。
+
+## 下一步
+
+- 阅读 [Environment Variables](./environment-variables) 完整梳理配置。
+- 阅读 [Self-Hosting](./self-hosting) 完成团队上线准备。
+- 阅读 [Cloud Databases](../database-support/cloud-databases) 规划数据库网络访问。

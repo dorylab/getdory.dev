@@ -1,16 +1,59 @@
 ---
 title: Keyboard Shortcuts
-description: Common shortcuts worth standardizing across the team.
+description: Dory keyboard shortcuts for SQL editing, query execution, AI Chat, saved queries, and result tables.
 ---
 
 # Keyboard Shortcuts
 
-Use this page to document the shortcuts your team relies on most in Dory.
+Dory keyboard shortcuts are optimized for fast SQL exploration: write a query, ask AI for help, run it, inspect results, and save the useful version without leaving the keyboard.
 
-## Recommended sections
+On macOS, use `Cmd` where this page says `Cmd/Ctrl`. On Windows and Linux, use `Ctrl`.
 
-- Open query tabs.
-- Run selected SQL.
-- Format SQL.
-- Open AI Chat.
-- Save a query.
+## SQL editor
+
+| Shortcut | Action | Notes |
+| --- | --- | --- |
+| `Cmd/Ctrl + Enter` | Run query | Runs the active SQL tab. If text is selected, use the selection as the query context where supported by the editor flow. |
+| `Cmd/Ctrl + Shift + F` | Format SQL | Formats the SQL in the active editor. |
+| `Cmd/Ctrl + S` | Save SQL | Opens the save dialog for the current SQL text. |
+| `Cmd/Ctrl + Alt + L` | New SQL tab | Creates and activates a new query tab. |
+| `/` on an empty editor line | Inline Ask AI | Opens the inline AI prompt at the current line. |
+| `/` elsewhere | Type a slash | If the current line already has SQL text, the slash is inserted normally. |
+
+## AI panel
+
+| Shortcut | Action | Notes |
+| --- | --- | --- |
+| `Cmd/Ctrl + I` | Toggle AI Chat panel | Opens or closes the SQL Console AI panel for the active SQL tab. |
+| `/` outside editable controls | Open inline Ask AI | Works when the active tab is a SQL tab and focus is not already inside another input. |
+
+## Result table
+
+| Shortcut | Action | Notes |
+| --- | --- | --- |
+| `Cmd/Ctrl + F` | Search results | Opens result-table search when the result table is active. |
+| `Cmd/Ctrl + C` | Copy selected cells | Copies selected result cells from the virtualized table. |
+
+## Saved queries
+
+| Shortcut | Action | Notes |
+| --- | --- | --- |
+| `Cmd/Ctrl + S` | Save current SQL | Use this when a query becomes reusable enough to name, organize, and share. |
+
+## Practical workflow
+
+1. Press `Cmd/Ctrl + Alt + L` to start a clean tab.
+2. Type `/` on an empty line to ask Dory AI for a query draft.
+3. Review the SQL, then press `Cmd/Ctrl + Shift + F` to format it.
+4. Press `Cmd/Ctrl + Enter` to run the query.
+5. Use `Cmd/Ctrl + F` to search the result table.
+6. Press `Cmd/Ctrl + S` to save the finished query.
+
+## Troubleshooting shortcuts
+
+| Problem | Fix |
+| --- | --- |
+| Browser search opens instead of result search | Click inside the result table, then press `Cmd/Ctrl + F` again. |
+| `/` types a slash instead of opening AI | Move to an empty editor line, or make sure focus is not inside another input. |
+| `Cmd/Ctrl + S` triggers browser save | Make sure the SQL Console page is focused. |
+| Shortcut conflicts with OS settings | Change the OS or browser shortcut if it intercepts the key before Dory receives it. |

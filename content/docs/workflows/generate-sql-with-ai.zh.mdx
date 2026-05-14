@@ -1,15 +1,97 @@
 ---
-title: Generate SQL with AI
-description: 把业务问题转换成带真实上下文的第一版 SQL。
+title: 使用 Dory AI 生成 SQL
+description: 学习如何用 Dory AI Chat 和 SQL Console 把业务问题转换成可执行、可验证的 SQL 查询。
 ---
 
-# Generate SQL with AI
+# 使用 Dory AI 生成 SQL
 
-当你能提供清晰问题、相关表以及期望输出结构时，AI 更容易生成可用的第一版 SQL。
+Dory AI 可以结合当前数据库连接、Schema、表结构和 SQL 上下文生成查询。高质量 SQL 不是靠一句模糊提示得到的，而是通过清晰问题、真实表结构、明确输出和人工验证共同完成。
 
-## 提示模板
+## 什么时候使用 AI 生成 SQL
 
-- 目标：你要回答什么问题？
-- 表：应该使用哪些对象？
-- 过滤：需要哪些时间范围或条件？
-- 输出：期望返回哪些列？
+- 你知道业务问题，但不熟悉 SQL 写法。
+- 你知道要用哪些表，但不确定 Join 或聚合方式。
+- 你需要快速生成一个可修改的第一版查询。
+- 你希望把结果整理成适合图表的结构。
+- 你需要把 ClickHouse、PostgreSQL、MySQL 等不同 SQL 方言改写到正确语法。
+
+## 1. 先准备上下文
+
+生成 SQL 前，先确认：
+
+- 已连接正确数据库。
+- Explorer 能看到目标表和字段。
+- 已明确目标指标和时间范围。
+- 已知道结果要用于表格、趋势图、柱状图还是排查明细。
+
+如果你不确定目标表，先阅读 [Explore Unknown Tables](./explore-unknown-tables)。
+
+## 2. 使用高质量提示词
+
+推荐模板：
+
+```text
+目标：统计最近 30 天每日活跃用户数。
+数据库：ClickHouse。
+表：events。
+关键字段：user_id、event_time、event_name。
+过滤条件：只统计 event_name = 'app_open'。
+输出：date、dau 两列，按 date 升序，适合画折线图。
+要求：避免扫描无关时间范围。
+```
+
+这个模板包含目标、数据库类型、表、字段、过滤条件、输出结构和性能要求，比“帮我写 DAU SQL”更可靠。
+
+## 3. 在 SQL Console 中验证
+
+AI 生成 SQL 后，不要直接把它当作最终结果。建议按顺序检查：
+
+1. 表名和字段名是否真实存在。
+2. 时间范围是否正确。
+3. 聚合口径是否符合业务定义。
+4. 是否需要去重，例如 `count(distinct user_id)` 或 `uniq(user_id)`。
+5. 是否保留了 `LIMIT` 或合理过滤条件。
+6. SQL 方言是否匹配当前数据库。
+
+## 4. 让 AI 修正错误
+
+如果执行报错，把错误信息和当前 SQL 一起给 AI：
+
+```text
+这条 SQL 在 PostgreSQL 中报错：column "created_date" does not exist。
+请根据当前 Schema 修正字段名，并解释修改原因。
+```
+
+如果结果不符合预期，描述问题：
+
+```text
+这条 SQL 返回的用户数明显偏大。请检查是否存在重复计数，并给出使用用户 ID 去重的版本。
+```
+
+## 5. 生成图表友好的 SQL
+
+如果查询结果要进入 [Charts & Results](../core-features/charts-results)，可以直接要求 AI 输出稳定列名：
+
+```text
+请把当前 SQL 改写成适合柱状图的数据结构，只返回 category 和 value 两列，按 value 降序，并限制 Top 10。
+```
+
+## 常见问题
+
+### AI 生成的 SQL 可以直接在生产库执行吗？
+
+不建议。AI 生成结果必须人工审核，尤其是生产库、大表、无时间范围查询和包含写操作的 SQL。
+
+### AI 经常引用不存在的字段怎么办？
+
+先在 Explorer 中打开目标表，确认字段。然后在提示中明确列出可用字段或让 AI 基于当前表结构重新生成。
+
+### 如何让 AI 生成更快的 SQL？
+
+说明数据库类型、分区字段、时间范围、需要的列和性能目标。例如“只扫描最近 7 天，不要 SELECT *”。
+
+## 下一步
+
+- 如果查询慢，阅读 [Debug Slow Queries](./debug-slow-queries)。
+- 如果要画图，阅读 [Build Charts from SQL](./build-charts-from-sql)。
+- 查询稳定后，阅读 [Save & Reuse Analysis](./save-reuse-analysis)。

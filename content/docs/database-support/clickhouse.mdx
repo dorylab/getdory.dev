@@ -1,20 +1,61 @@
 ---
-title: ClickHouse
-description: Notes for using Dory with ClickHouse.
+title: Dory ClickHouse Database Support
+description: Learn how to connect ClickHouse to Dory, run SQL, browse schema, generate queries with AI, and use monitoring and privilege management.
 ---
 
-# ClickHouse
+# Dory ClickHouse Database Support
 
-ClickHouse is a core database target for Dory and typically benefits from the deepest feature coverage.
+ClickHouse is one of Dory's deepest database integrations. In addition to SQL Console, Explorer, AI Chat, and charts, Dory provides ClickHouse-specific monitoring and privilege management.
 
-## Typical use cases
+## Best-Fit Use Cases
 
-- Product analytics.
-- Observability data.
-- Event-heavy workloads.
+- Product event analytics.
+- Log, tracing, and observability data exploration.
+- Large-scale detail-table analysis.
+- Slow query and error query investigation.
+- ClickHouse user, role, and grant management.
 
-## What to verify
+## Supported Capabilities
 
-- Driver compatibility.
-- Network reachability.
-- Permissions for metadata access.
+| Capability | ClickHouse support |
+| --- | --- |
+| SQL Console | Write, run, and iterate ClickHouse SQL. |
+| Explorer | Browse databases, tables, views, columns, DDL, partition keys, and sorting keys. |
+| AI Chat | Generate, explain, fix, and optimize SQL with ClickHouse schema context. |
+| Charts & Results | Turn query results into trends, comparisons, and detail views. |
+| Monitoring | Inspect total queries, slow queries, errors, P50 / P95 latency, and QPM. |
+| Privileges | Manage users, roles, global privileges, and scoped grants. |
+
+## Connection Requirements
+
+Prepare the ClickHouse host, port, database, username, password, TLS setting, and any required SSH tunnel details. ClickHouse Cloud connections commonly require SSL.
+
+## Recommended Flow
+
+1. Open [Connections](../core-features/connections).
+2. Choose ClickHouse.
+3. Enter host, port, HTTP port, database, username, and password.
+4. Enable SSL if your deployment requires TLS.
+5. Test and save the connection.
+6. Open SQL Console or Explorer.
+
+## AI Query Tips
+
+When asking AI to generate ClickHouse SQL, include the time range, metrics, target table, grouping dimensions, and any function preferences such as `toStartOfHour`, `quantile`, or `uniq`.
+
+## FAQ
+
+### Why does my ClickHouse connection fail?
+
+Check the host, port, username, password, TLS setting, and network allowlist. For ClickHouse Cloud, SSL is usually required.
+
+### Why is Monitoring empty?
+
+The current user may not have permission to read ClickHouse system tables, or the selected time range may not contain query records.
+
+## Related Docs
+
+- [Connect Your Database](../getting-started/connect-your-database)
+- [SQL Console](../core-features/sql-console)
+- [Monitoring](../core-features/monitoring)
+- [Privileges](../core-features/privileges)
