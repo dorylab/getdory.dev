@@ -65,19 +65,54 @@ DORY_AI_URL=https://api.openai.com/v1
 
 ## 持久化数据
 
-Dory 容器会在运行时写入应用数据。生产环境应挂载持久化目录，避免容器重建后数据丢失。
+Dory 默认使用 PGlite 文件存储自己的应用数据。Docker 中默认数据路径位于 `/app/data` 下，生产环境应挂载持久化目录，避免容器重建后数据丢失。
 
-示例：
+使用 Docker named volume：
+
+```bash
+docker volume create dory-data
+
+docker run -d --name dory \
+  -p 3000:3000 \
+  --env-file .env \
+  -e DB_TYPE=pglite \
+  -v dory-data:/app/data \
+  dorylab/dory:latest
+```
+
+使用宿主机目录：
+
+```bash
+mkdir -p /srv/dory/data
+
+docker run -d --name dory \
+  -p 3000:3000 \
+  --env-file .env \
+  -e DB_TYPE=pglite \
+  -v /srv/dory/data:/app/data \
+  dorylab/dory:latest
+```
+
+如果要连接 SQLite 或 DuckDB 文件，也需要把文件所在目录挂载到容器中，并在 Dory 连接表单中填写容器内绝对路径。
+
+## 使用 Postgres 存储应用数据
+
+生产环境也可以用 Postgres 存储 Dory 自己的应用数据：
+
+```bash
+DB_TYPE=postgres
+DATABASE_URL=postgres://dory:strong_password@postgres.example.com:5432/dory
+POSTGRES_SSL=true
+```
+
+然后使用同一个 `.env` 启动容器：
 
 ```bash
 docker run -d --name dory \
   -p 3000:3000 \
   --env-file .env \
-  -v dory-data:/app/data \
   dorylab/dory:latest
 ```
-
-如果要连接 SQLite 或 DuckDB 文件，也需要把文件所在目录挂载到容器中，并在 Dory 连接表单中填写容器内绝对路径。
 
 ## 反向代理和 HTTPS
 

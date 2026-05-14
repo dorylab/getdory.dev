@@ -17,6 +17,40 @@ Dory 的部署行为主要由环境变量控制。生产环境应把这些值作
 
 `BETTER_AUTH_URL` 必须和浏览器访问地址一致，否则登录、回调、邀请或邮件链接可能异常。
 
+## 应用数据库
+
+Dory 会把自己的工作区数据存储在应用数据库中。它和你在 Dory 中连接并查询的外部数据库不是一回事。
+
+| 变量 | 说明 |
+| --- | --- |
+| `DB_TYPE` | 应用数据库提供方。`pglite` 表示本地文件存储，`postgres` 表示生产 Postgres。默认是 `pglite`。 |
+| `PGLITE_DB_PATH` | PGlite 文件路径。Docker 中建议放在已挂载目录下，例如 `/app/data/dory`。 |
+| `DATABASE_URL` | `DB_TYPE=postgres` 时使用的 Postgres 连接串。 |
+| `POSTGRES_URL` | 当 `DATABASE_URL` 未设置时可用的备用 Postgres 连接串。 |
+| `POSTGRES_CONNECTION_STRING` | 另一个备用 Postgres 连接串变量。 |
+| `POSTGRES_SSL` | Postgres 服务要求 SSL 时设置为 `true`。 |
+| `POSTGRES_SSL_REJECT_UNAUTHORIZED` | 只有明确需要跳过证书校验时才设置为 `false`。 |
+| `POSTGRES_MAX_CONNECTIONS` | 可选的 Postgres 连接池大小限制。 |
+
+PGlite 示例：
+
+```bash
+DB_TYPE=pglite
+PGLITE_DB_PATH=/app/data/dory
+```
+
+Postgres 示例：
+
+```bash
+DB_TYPE=postgres
+DATABASE_URL=postgres://dory:strong_password@postgres.example.com:5432/dory
+POSTGRES_SSL=true
+POSTGRES_SSL_REJECT_UNAUTHORIZED=true
+POSTGRES_MAX_CONNECTIONS=10
+```
+
+如果 Docker 部署使用 PGlite，请把 `/app/data` 挂载到持久化 Docker volume 或宿主机目录。
+
 ## AI 配置
 
 | 变量 | 说明 |
@@ -64,6 +98,7 @@ DORY_AI_URL=https://api.openai.com/v1
 - 使用强随机值生成 `DS_SECRET_KEY` 和 `BETTER_AUTH_SECRET`。
 - 不要在部署后频繁更换认证和加密 Secret。
 - `BETTER_AUTH_URL` 使用 HTTPS 公开地址。
+- PGlite 使用持久化挂载；Postgres 使用托管备份或数据库备份策略。
 - 将 `.env` 纳入 Secret 管理系统，而不是提交到 Git。
 - AI Key、OAuth Secret、邮件 Key 和数据库密码分开管理并定期轮换。
 

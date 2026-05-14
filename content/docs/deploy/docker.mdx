@@ -47,17 +47,52 @@ docker run -d --name dory \
 
 ## Persist Data
 
-Use a volume for production or long-running evaluation:
+Dory uses PGlite file storage by default for its own application data. In Docker, keep that file under `/app/data` and mount `/app/data` to persistent disk storage:
+
+```bash
+docker volume create dory-data
+
+docker run -d --name dory \
+  -p 3000:3000 \
+  --env-file .env \
+  -e DB_TYPE=pglite \
+  -v dory-data:/app/data \
+  dorylab/dory:latest
+```
+
+You can also use a host directory:
+
+```bash
+mkdir -p /srv/dory/data
+
+docker run -d --name dory \
+  -p 3000:3000 \
+  --env-file .env \
+  -e DB_TYPE=pglite \
+  -v /srv/dory/data:/app/data \
+  dorylab/dory:latest
+```
+
+SQLite and DuckDB files also need to be mounted into the container if you want Dory to read them.
+
+## Use Postgres for Application Data
+
+For production, you can store Dory application data in Postgres:
+
+```bash
+DB_TYPE=postgres
+DATABASE_URL=postgres://dory:strong_password@postgres.example.com:5432/dory
+POSTGRES_SSL=true
+```
+
+Then run the container with the same `.env` file:
 
 ```bash
 docker run -d --name dory \
   -p 3000:3000 \
   --env-file .env \
-  -v dory-data:/app/data \
   dorylab/dory:latest
 ```
-
-SQLite and DuckDB files also need to be mounted into the container if you want Dory to read them.
 
 ## Reverse Proxy and HTTPS
 
