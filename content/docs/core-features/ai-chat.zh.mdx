@@ -1,124 +1,77 @@
 ---
 title: AI Chat
-description: 使用理解数据库 Schema、当前 SQL 与结果上下文的 AI，生成查询、解释逻辑并持续完成数据分析。
+description: 在 Chatbot 页面或 SQL Console 右侧 AI 面板中使用 Dory AI，结合数据库上下文生成 SQL、解释结果并继续分析。
 ---
 
 # AI Chat
 
-AI Chat 是 Dory 的智能分析助手，不只是一个普通聊天框。它能够结合当前数据库连接、Schema 结构、正在编写的 SQL，以及查询结果上下文，帮助你更快完成从问题到答案的全过程。
+Dory AI Chat 是面向数据库工作的 AI 助手。当前产品里有两个入口：
 
-## 为什么使用 Dory AI Chat
+- 左侧导航里的 **Chatbot**：适合围绕当前连接进行完整对话。
+- SQL Console 里的 **Ask AI**：适合基于当前 SQL、结果和分析上下文继续处理。
 
-传统 AI 工具通常不了解你的真实数据库结构，需要你手动提供表名、字段和上下文。Dory AI Chat 可以直接结合当前工作区信息，生成更准确、更可执行的回答。
+两个入口都会围绕当前选中的连接工作，所以使用前先确认连接是否正确。
 
-你可以获得：
+## Chatbot 页面
 
-- 更准确的 SQL 生成结果。
-- 对当前查询的实时解释与优化建议。
-- 更自然的数据分析对话体验。
-- 基于结果继续追问的连续分析能力。
-- 减少手动描述 Schema 的成本。
+当你还在探索问题、想生成第一版 SQL，或想理解陌生表结构时，打开左侧 **Chatbot**。
+
+![Dory AI Chat 首页](/images/core-features/dory-ai-chat-home.png)
+
+提问后，Dory 会把对话保存在当前 session 中，并在同一页面展示问题和回答。
+
+![Dory AI Chat 问题与回答](/images/core-features/dory-ai-chat-question-answer.png)
+
+更有效的提问通常会明确表、指标、时间范围和输出结构，例如：
+
+- Show top 10 users by order amount.
+- Generate daily order trends for this month.
+- Summarize all tables with row counts.
+- Find error logs in the last 24 hours.
+
+## SQL Console AI 面板
+
+当你已经在 SQL Console 中编写或运行 SQL 时，使用 **Ask AI**。右侧 AI 面板可以结合当前编辑器内容、Schema、最近执行结果和结果结构。
+
+![Dory SQL Console AI 面板](/images/core-features/dory-ai-chat-sql-console-panel.png)
+
+它适合这些场景：
+
+- 解释当前编辑器里的 SQL。
+- 修复查询报错。
+- 把结果改写成适合 Charts 的结构。
+- 基于当前结果继续分析。
+- 把临时查询整理成适合保存复用的版本。
 
 ## AI Chat 理解哪些上下文
 
-当数据库已连接时，AI Chat 可以结合以下信息：
+AI Chat 可以使用 Dory 中已经存在的上下文：
 
-- 当前数据库与 Schema
-- 表结构与字段信息
-- 当前 SQL Console 中的查询语句
-- 查询执行结果（如已运行）
-- 当前分析目标与历史对话内容
+- 当前连接和数据库。
+- 可见的 Schema、表和字段。
+- 当前 SQL 编辑器内容。
+- 最近的查询错误或结果结构。
+- 当前对话历史。
 
-这让回答更贴近真实业务场景，而不是通用模板答案。
+这些上下文会让 AI 生成的 SQL 更贴近真实 Schema，而不是通用模板。
 
-## 核心能力
+## 推荐流程
 
-### 1. Generate SQL
-
-直接使用自然语言生成查询，例如：
-
-- 统计最近 7 天订单趋势
-- 找出活跃用户 Top 20
-- 按城市统计收入并按月分组
-- 生成适合折线图展示的 SQL
-
-### 2. Explain SQL
-
-理解复杂 SQL 时，你可以让 AI：
-
-- 解释每个子查询作用
-- 说明 JOIN 逻辑
-- 分析窗口函数用途
-- 输出更易读版本
-
-### 3. Fix SQL Errors
-
-当 SQL 报错时，可直接让 AI 协助排查：
-
-- 语法错误
-- 字段不存在
-- 表名错误
-- 类型不匹配
-- 聚合逻辑问题
-
-### 4. Optimize SQL
-
-针对慢查询或复杂查询，AI 可提供：
-
-- 重写查询结构
-- 减少扫描数据量
-- 优化 JOIN 顺序
-- 推荐索引思路（适用于支持索引数据库）
-- 提升可维护性
-
-### 5. Continue Analysis
-
-查询完成后，你可以继续追问：
-
-- 为什么这个指标下降了？
-- 再按渠道拆分看看。
-- 按周维度重新统计。
-- 找异常值最高的地区。
-
-这让分析过程更加连续，而不是每次重新开始。
-
-## 推荐使用方式
-
-### 与 SQL Console 配合使用（推荐）
-
-1. 在 SQL Console 编写或运行查询。
-2. 打开 AI Chat。
-3. 让 AI 解释、优化或继续分析。
-4. 将生成 SQL 回到编辑器执行。
-
-### 独立提问
-
-直接描述业务问题，让 AI 帮你生成第一版查询。
-
-### 使用表上下文
-
-在连接工作区中，AI Chat 可以结合当前数据库和表结构回答问题。你可以先在 Explorer 中确认目标表，再让 AI 生成 SQL 或解释字段含义。
-
-## 高质量提示词示例
-
-- 用 ClickHouse 统计最近 30 天 DAU 趋势。
-- 解释这段 SQL 为什么重复计数。
-- 优化这条 PostgreSQL 查询性能。
-- 基于当前结果生成柱状图 SQL。
-- 把这个复杂查询拆成多个 CTE。
+1. 选中正确连接。
+2. 先在 **Explorer** 中确认目标表和字段。
+3. 如果还没有 SQL，从 **Chatbot** 开始；如果已经在写 SQL，从 SQL Console 的 **Ask AI** 开始。
+4. 执行前先审核生成的 SQL。
+5. 先用安全的 `LIMIT` 或时间范围运行。
+6. 再通过追问让 AI 解释、修复、优化或调整结果结构。
 
 ## 最佳实践
 
-- 连接真实数据库后再使用，效果最佳。
-- 明确说明时间范围、指标口径与维度。
-- 对生成 SQL 先审核再执行。
-- 把 AI 当分析搭档，而不是黑盒自动化工具。
-- 多轮追问通常比一次性长提示词更有效。
-- 生产环境中优先让 AI 生成只读查询，并保留 `LIMIT` 或明确时间范围。
+- 知道表名时直接写出准确表名。
+- 说明指标、维度、时间范围和希望返回的字段。
+- 如果要生成图表，明确要求输出 chart-ready result。
+- 生产数据库中，把生成 SQL 当作草稿，审核后再执行。
+- 除非明确需要写操作，优先让 AI 生成只读查询。
 
 ## 下一步推荐
 
-- 配合 [SQL Console](./sql-console) 完成查询工作流。
-- 使用 [Explorer](./explorer) 理解表结构。
-- 将结果转到 [Charts & Results](./charts-results) 做可视化分析。
-- 保存高价值 SQL 到 [Saved Queries](./saved-queries)。
+继续阅读 [Generate SQL with Dory AI](../workflows/generate-sql-with-ai) 或 [SQL Console](./sql-console)。

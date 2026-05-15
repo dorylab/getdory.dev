@@ -34,6 +34,21 @@ Connections are the starting point for most Dory workflows. A connection defines
 5. Test the connection.
 6. Open Explorer to confirm schema visibility.
 
+## Desktop SQLite File Flow
+
+In the Dory desktop app, local SQLite files can be used directly as database connections. This is the common flow for demos, local datasets, and small file-based analysis:
+
+1. Open the Dory desktop app.
+2. Go to **Connections** and choose **Add Connection**.
+3. Select **SQLite** as the connection type.
+4. Enter an absolute database file path, such as `/Users/Shared/Data/demo.sqlite`.
+5. Create the connection.
+6. Select the new connection before moving to SQL Console.
+
+For SQLite, importing the file means pointing Dory at the local `.sqlite` or `.db` file path. The file remains on your machine, and the desktop runtime reads it through that path.
+
+![Dory desktop SQLite connection](/images/core-features/dory-desktop-connections-sqlite.png)
+
 ## Connection Checklist
 
 - Use credentials with the least privileges needed.

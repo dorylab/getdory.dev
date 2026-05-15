@@ -18,17 +18,25 @@ SQL Console typically includes:
 - Access to AI assistance.
 - Saved query actions.
 
+![Dory SQL Console interface](/images/sql-console.png)
+
 ## Writing SQL
 
 Start with small, safe queries. Confirm table and column names in Explorer before adding complex filters, joins, or aggregations.
+
+![Dory SQL Console editor and autocomplete](/images/sql-editor.png)
 
 ## Running Queries
 
 Run SQL against the selected connection. Review results, errors, and execution behavior before using the output for decisions.
 
+![Dory SQL Console query result](/images/resultset.png)
+
 ## Multi-Tab Workflow
 
 Use multiple tabs to keep exploration, final analysis, and alternative query drafts separate.
+
+![Dory SQL Console tabs and top controls](/images/top-panel.png)
 
 ## Use the Left Schema Panel
 
@@ -42,17 +50,49 @@ limit 20;
 
 Open tables in Explorer when you need more detail.
 
+![Dory SQL Console schema panel](/images/table-panel.png)
+
 ## AI Copilot
 
 Use AI to generate SQL, explain SQL, fix errors, optimize queries, or reshape output for charts. Always review the generated SQL before running it.
+
+![Dory SQL Console Ask AI panel](/images/ask.png)
 
 ## Results and Charts
 
 After execution, inspect the result table. If the result is aggregated and well-shaped, create a chart from it.
 
+![Dory SQL Console charts view](/images/charts.png)
+
+## Desktop SQLite Example
+
+After creating a SQLite connection from `/Users/Shared/Data/demo.sqlite`, open **SQL Console** with that connection selected. The left schema panel should show the SQLite `main` database and its tables.
+
+Run a chart-friendly aggregate query:
+
+```sql
+select strftime('%Y-%m', created_at) as month,
+       status,
+       round(sum(amount), 2) as revenue,
+       count(*) as orders
+from orders
+group by month, status
+order by month, status;
+```
+
+The result table confirms that Dory executed the SQL against the local SQLite file.
+
+![Dory desktop SQL Console SQLite result](/images/core-features/dory-desktop-sql-console-sqlite-results.png)
+
+Switch from **Table** to **Charts** to inspect the same result visually. Dory can use the month column as the X axis and a numeric metric such as revenue or count as the Y axis.
+
+![Dory desktop SQL Console SQLite chart](/images/core-features/dory-desktop-sql-console-sqlite-charts.png)
+
 ## Save Queries
 
 Save useful SQL with a clear name and description after it has been validated.
+
+![Dory SQL Console save query dialog](/images/core-features/dory-sql-console-save-query.png)
 
 ## Best Practices
 
