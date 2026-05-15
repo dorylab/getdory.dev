@@ -1,57 +1,33 @@
 ---
-title: Introduction
-description: Understand who Dory is for, what problems it solves, and which documentation path to follow first.
+title: Overview
+description: Install Dory, connect a database, and complete your first reviewed query.
 ---
 
-# Introduction
+# Overview
 
-Dory is an AI-native data workspace for developers, data teams, and operations teams. It helps you connect databases, understand schema, write SQL, analyze results, generate charts, and save reusable analysis in one place.
+The first Dory session has a short path: launch the app, connect a reachable data source, run a limited query, and review the result.
 
-## Who Dory Is For
+## Setup Path
 
-- Developers who need to inspect application data and debug SQL quickly.
-- Data analysts who need a lightweight workspace for exploration and repeatable queries.
-- Operations teams who need ClickHouse visibility, query logs, monitoring, and privilege management.
-- Teams that want AI-assisted SQL generation but still need schema awareness and manual review.
+1. [Quick Start](/en/docs/getting-started/quick-start): choose hosted demo, desktop app, or Docker.
+2. [Installation](/en/docs/getting-started/installation): install the desktop app or start a self-hosted runtime.
+3. [Connect Your Database](/en/docs/getting-started/connect-your-database): create a connection and confirm schema visibility.
+4. [First Query in 3 Minutes](/en/docs/getting-started/first-query-in-3-minutes): run a limited query, review results, and use AI for the next step.
 
-## Why Choose Dory
+## What Comes After Setup
 
-Traditional database tools separate SQL editing, schema browsing, AI assistance, and result analysis. Dory connects these steps so you can:
+After the first query works, use the rest of the documentation by intent:
 
-- Start from a database schema instead of a blank editor.
-- Ask AI questions with table and column context.
-- Run SQL, inspect results, and turn useful results into charts.
-- Save queries for reuse instead of repeating the same analysis.
+| Need | Read |
+| --- | --- |
+| Understand a product surface | [Core Features](/en/docs/core-features) |
+| Follow a task-oriented process | [Workflows](/en/docs/workflows) |
+| Check database-specific behavior | [Database Support](/en/docs/database-support) |
+| Configure deployment or auth | [Deploy](/en/docs/deploy) |
+| Look up settings, shortcuts, snippets, MCP, or FAQ | [Reference](/en/docs/reference) |
 
-## 5-Minute Quick Start
+## Minimum Production Advice
 
-1. Open Dory.
-2. Create or select a workspace.
-3. Add a database connection.
-4. Open Explorer and inspect tables.
-5. Run your first query in SQL Console.
-
-## Core Capabilities
-
-### SQL Console
-
-Write and run SQL, manage query tabs, inspect results, and save useful queries.
-
-### AI Chat
-
-Ask Dory to generate SQL, explain existing SQL, fix errors, optimize queries, or continue an analysis.
-
-### Explorer
-
-Browse databases, schemas, tables, columns, and sample data before writing SQL.
-
-### Charts & Results
-
-Review query results and turn well-shaped results into visual charts.
-
-## Recommended Next Reading
-
-- [Quick Start](/en/docs/getting-started/quick-start)
-- [Connect Your Database](/en/docs/getting-started/connect-your-database)
-- [First Query in 3 Minutes](/en/docs/getting-started/first-query-in-3-minutes)
-- [Dory Usage Guide](/en/docs/getting-started/usage-guide)
+- Use read-only credentials for production databases.
+- Confirm network access from the runtime that runs Dory, especially in Docker.
+- Review AI-generated SQL before running it.

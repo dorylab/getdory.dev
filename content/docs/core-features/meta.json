@@ -1,6 +1,7 @@
 {
   "title": "Core Features",
   "pages": [
+    "index",
     "sql-console",
     "ai-chat",
     "explorer",

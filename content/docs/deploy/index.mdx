@@ -1,37 +1,33 @@
 ---
-title: Dory Deployment Guide
-description: Plan Dory self-hosting, Docker deployment, environment variables, authentication, and SSO.
+title: Overview
+description: Plan a team deployment, start the Docker container, configure environment variables, and set up authentication.
 ---
 
-# Dory Deployment Guide
+# Overview
 
-Dory can run as a desktop app, local web app, or Docker-based self-hosted deployment. For shared deployments, plan runtime configuration, authentication, AI provider credentials, database network access, secrets, and user access before inviting users.
+A shared Dory deployment usually starts with runtime, persistence, public URL, authentication, AI provider, database network, and secret-management decisions.
 
-## Deployment Pages
+## Quick Links
 
 | Page | Use case | Focus |
 | --- | --- | --- |
-| [Self-Hosting](/en/docs/deploy/self-hosting) | Run Dory in your own environment | Architecture, secrets, persistence, proxying, and rollout checks. |
-| [Docker](/en/docs/deploy/docker) | Start Dory quickly in a container | `docker run`, `.env`, ports, volumes, and upgrades. |
-| [Environment Variables](/en/docs/deploy/environment-variables) | Configure runtime behavior | Auth, AI, email, OAuth, MCP, and init user variables. |
-| [Auth / SSO](/en/docs/deploy/auth-sso) | Plan team identity | Email verification, Google/GitHub login, provisioning, and offboarding. |
+| [Self-Hosting](/en/docs/deploy/self-hosting) | You are planning a team deployment | Architecture choices, persistence decisions, rollout checks, and operational boundaries. |
+| [Docker](/en/docs/deploy/docker) | You need concrete container commands | `docker run`, `.env`, ports, volumes, Postgres mode, and upgrades. |
+| [Environment Variables](/en/docs/deploy/environment-variables) | You need the configuration reference | Required secrets, application database, AI, auth, email, OAuth, and related variables. |
+| [Auth / SSO](/en/docs/deploy/auth-sso) | You are deciding how users sign in | Email login, verification, OAuth, initial admin, provisioning, and offboarding. |
 
-## Recommended Rollout
+## Recommended Order
 
-1. Run Dory locally or on a test server with [Docker](/en/docs/deploy/docker).
-2. Prepare secrets, auth URL, and AI configuration in [Environment Variables](/en/docs/deploy/environment-variables).
-3. Put Dory behind HTTPS.
-4. Decide login and verification rules in [Auth / SSO](/en/docs/deploy/auth-sso).
-5. Validate SQL Console, Explorer, and AI on test databases.
-6. Add production databases with readonly accounts first.
+1. Read [Self-Hosting](/en/docs/deploy/self-hosting) to choose storage, network, HTTPS, auth, and rollout boundaries.
+2. Use [Docker](/en/docs/deploy/docker) for the actual container start command.
+3. Fill in required values from [Environment Variables](/en/docs/deploy/environment-variables).
+4. Configure login rules in [Auth / SSO](/en/docs/deploy/auth-sso).
+5. Validate with a test database before adding production connections.
 
-## Quick Answer
+## Launch Checklist
 
-Dory can be self-hosted with Docker. Production deployments need `DS_SECRET_KEY`, `BETTER_AUTH_SECRET`, `BETTER_AUTH_URL`, and AI variables when AI is enabled. Team deployments should use HTTPS, readonly database accounts, trusted origins, and a clear user management process.
-
-## Related Docs
-
-- [Docker](/en/docs/deploy/docker)
-- [Self-Hosting](/en/docs/deploy/self-hosting)
-- [Environment Variables](/en/docs/deploy/environment-variables)
-- [Auth / SSO](/en/docs/deploy/auth-sso)
+- Public access uses HTTPS.
+- `BETTER_AUTH_URL` matches the URL users open.
+- Application data is persisted through a volume or Postgres.
+- Initial admin, login method, and offboarding process are decided.
+- Production database connections use readonly credentials first.

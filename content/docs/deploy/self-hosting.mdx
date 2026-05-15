@@ -1,193 +1,72 @@
 ---
-title: Self-Host Dory
-description: Self-host Dory on your own server, private network, or cloud environment with Docker, HTTPS, secrets, AI, and database access planning.
+title: Self-Hosting
+description: Plan the runtime, storage, network, security, and rollout boundaries for a shared Dory deployment.
 ---
 
-# Self-Host Dory
+# Self-Hosting
 
-Self-hosting Dory is useful when your team wants to control the deployment environment, access boundaries, database credentials, AI provider configuration, and application data persistence. The public repository currently supports a Docker-first deployment path.
+Self-hosting is for teams that need a shared web entry point, private network access, dedicated database credentials, AI key management, and persistent application data.
 
-Dory has two different database concepts:
+## Best-Fit Scenarios
 
-| Database role | What it stores | Examples |
-| --- | --- | --- |
-| Dory application database | Dory users, organizations, connections, saved queries, settings, MCP tokens, and workspace state. | PGlite file storage or Postgres. |
-| Connected analytical databases | The external databases your team queries through Dory. | ClickHouse, PostgreSQL, Neon, MySQL, MariaDB, SQLite, DuckDB, MotherDuck. |
-
-This page is about the first one: where Dory stores its own application data.
-
-## Who Should Self-Host
-
-- Teams running Dory in a private network or cloud environment.
-- Teams managing their own database credentials and AI keys.
-- Teams that need a shared browser-accessible workspace.
-- Teams connecting to private, cloud, staging, or production databases.
+- Run Dory in a private network, private cloud, or self-managed server.
+- Manage database access, AI keys, secrets, and team permissions directly.
+- Provide one shared browser entry point for a team.
+- Connect private, cloud, staging, or production databases.
 
 ## Recommended Architecture
 
-1. Dory Docker container.
-2. Persistent application data storage.
-3. Reverse proxy with HTTPS.
-4. Secret-managed `.env` values.
-5. Network access to target databases.
-6. Email and OAuth providers when needed.
+| Layer | Decision |
+| --- | --- |
+| Runtime | Run Dory as a Docker container. |
+| Application data | Choose persistent PGlite storage or Postgres. |
+| Public access | Put Dory behind HTTPS through a reverse proxy or gateway. |
+| Secrets | Store `.env` values through a secret-management process. |
+| Database network | Confirm the Dory runtime can reach target databases. |
+| Identity | Choose email login, verification, OAuth, or team SSO policy. |
 
-## Persistence Options
+## Two Database Concepts
 
-Choose one application database mode before production rollout.
-
-| Mode | Best for | Required configuration |
+| Database role | What it stores | Where to configure |
 | --- | --- | --- |
-| PGlite file storage | Local evaluation, single-server self-hosting, small teams, simple backups. | `DB_TYPE=pglite`, persistent Docker mount for `/app/data`. |
-| Postgres | Production teams, shared infrastructure, external backups, higher operational control. | `DB_TYPE=postgres`, `DATABASE_URL`, and optional Postgres pool / SSL settings. |
+| Application database | Dory users, organizations, connections, saved queries, settings, and MCP tokens. | [Environment Variables](/en/docs/deploy/environment-variables) |
+| Connected databases | Business or analytical databases queried through Dory. | [Connect Your Database](/en/docs/getting-started/connect-your-database) |
 
-Do not run a long-lived Dory container without persistent storage. If the container writes to its internal filesystem only, Dory workspace data can be lost when the container is removed or recreated.
-
-## Option 1: PGlite with Docker Persistent Storage
-
-PGlite is Dory's default application storage mode. In Docker, the default PGlite path is `/app/data/dory`, so you should mount `/app/data` to durable disk storage.
-
-Use a named Docker volume:
-
-```bash
-docker volume create dory-data
-
-docker run -d --name dory \
-  -p 3000:3000 \
-  --env-file .env \
-  -e DB_TYPE=pglite \
-  -v dory-data:/app/data \
-  dorylab/dory:latest
-```
-
-Or use a host directory when you want the files to live in a known server path:
-
-```bash
-mkdir -p /srv/dory/data
-
-docker run -d --name dory \
-  -p 3000:3000 \
-  --env-file .env \
-  -e DB_TYPE=pglite \
-  -v /srv/dory/data:/app/data \
-  dorylab/dory:latest
-```
-
-You can override the PGlite file path with `PGLITE_DB_PATH`, but keep the path inside a mounted directory:
-
-```bash
-DB_TYPE=pglite
-PGLITE_DB_PATH=/app/data/dory
-```
-
-Back up the mounted directory or Docker volume before upgrades.
-
-## Option 2: Postgres for Production
-
-For production environments, Dory can use Postgres as its application database. This is useful when your team already has managed Postgres, centralized backup policies, monitoring, and restore workflows.
-
-Example `.env`:
-
-```bash
-DB_TYPE=postgres
-DATABASE_URL=postgres://dory:strong_password@postgres.example.com:5432/dory
-POSTGRES_SSL=true
-POSTGRES_SSL_REJECT_UNAUTHORIZED=true
-POSTGRES_MAX_CONNECTIONS=10
-```
-
-Then run Dory with the same application secrets and public URL settings:
-
-```bash
-docker run -d --name dory \
-  -p 3000:3000 \
-  --env-file .env \
-  dorylab/dory:latest
-```
-
-Use a dedicated Postgres database and a dedicated Dory database user. The user should be able to connect, create and update Dory application tables, and run migrations for the Dory schema.
-
-## PGlite vs Postgres
-
-| Requirement | Choose PGlite | Choose Postgres |
-| --- | --- | --- |
-| Fastest self-hosted start | Yes | Possible, but more setup. |
-| Single-node deployment | Yes | Yes. |
-| Managed backups and restore | Manual volume backup. | Use your Postgres backup system. |
-| Existing production database operations | Not ideal. | Yes. |
-| Multiple app instances | Not recommended. | Prefer Postgres. |
-| Easy file-level backup | Yes. | Use database dumps or provider snapshots. |
+Do not leave application data inside a disposable container filesystem for production. PGlite needs a persistent volume; Postgres needs a dedicated backed-up database.
 
 ## Preflight Checklist
 
-| Item | What to prepare |
+| Item | Confirm |
 | --- | --- |
-| Domain | A public or internal URL such as `https://dory.example.com`. |
-| HTTPS | Required for production. |
-| Secrets | `DS_SECRET_KEY` and `BETTER_AUTH_SECRET`. |
-| Auth URL | `BETTER_AUTH_URL` matching the public URL. |
-| Application database | Choose `DB_TYPE=pglite` with a persistent `/app/data` mount, or `DB_TYPE=postgres` with `DATABASE_URL`. |
-| AI | Provider, model, API key, and URL. |
-| Network | Dory can reach target databases. |
-| Init user | `DORY_INIT_USER_EMAIL` and `DORY_INIT_USER_PASSWORD`. |
-| Email | Resend settings if verification or invitations are enabled. |
+| Domain | The URL users will open, such as `https://dory.example.com`. |
+| HTTPS | Required for team deployments. |
+| Auth URL | `BETTER_AUTH_URL` matches the browser-facing URL. |
+| Secrets | `DS_SECRET_KEY` and `BETTER_AUTH_SECRET` are generated and stored safely. |
+| Application database | PGlite persistent storage or Postgres is selected. |
+| AI | Provider, model, API key, data boundary, and key rotation are decided. |
+| Database accounts | Production connections use readonly credentials first. |
+| Members | Invitation, connection ownership, and offboarding rules are defined. |
+| Backups | Application data, `.env`, and database credentials have a backup plan. |
 
-## Rollout Steps
+## Recommended Rollout
 
-1. Prepare `.env`.
-2. Choose PGlite or Postgres for Dory application storage.
-3. Configure persistent storage:
-   - PGlite: mount `/app/data` to a Docker volume or host disk.
-   - Postgres: create the Dory database and set `DATABASE_URL`.
-4. Start the Docker container.
-5. Configure HTTPS reverse proxy.
-6. Sign in with the initialized user.
-7. Change credentials or configure team login.
-8. Add a test database.
-9. Validate SQL Console, Explorer, AI Chat, and Saved Queries.
-10. Add production databases with readonly accounts first.
+1. Choose the domain, HTTPS path, and network boundary.
+2. Choose application storage: PGlite or Postgres.
+3. Prepare `.env` and secrets.
+4. Start a test deployment with [Docker](/en/docs/deploy/docker).
+5. Sign in with the initial admin user.
+6. Configure authentication policy.
+7. Connect a test database and validate SQL Console, Explorer, AI, and Saved Queries.
+8. Back up data before adding production database connections.
 
-## Production Advice
+## Operational Boundaries
 
-- Use readonly database accounts for production analysis.
-- Create dedicated database users for Dory.
+- Use dedicated database users for production connections.
+- Prefer readonly credentials for production analysis.
 - Allowlist the Dory server egress IP for cloud databases.
-- Use SSH tunnels for private databases when needed.
-- Mount SQLite and DuckDB files through Docker volumes.
-- Keep AI keys and database credentials out of Git and images.
-
-## Database Connection Security
-
-Use separate database credentials for Dory, prefer readonly users for production, document who owns each connection, and rotate shared credentials when team access changes.
-
-## Backup and Restore
-
-For PGlite:
-
-- Back up the Docker volume or host directory mounted at `/app/data`.
-- Stop the container before taking a file-level backup when possible.
-- Restore by mounting the recovered directory back to `/app/data` and starting the same or newer compatible Dory image.
-
-For Postgres:
-
-- Use your managed Postgres snapshots, point-in-time recovery, or `pg_dump`.
-- Back up before Dory upgrades.
-- Test restore into a staging Dory deployment before relying on the backup plan.
-
-## AI Data Boundary
-
-Dory AI sends necessary context to the configured AI provider. Before rollout, decide which provider is allowed, whether schema or result summaries may be sent, and how keys are rotated.
-
-## Upgrade Checklist
-
-Back up persistent data and `.env`, record the current image, test the new image, then verify login, connections, SQL Console, AI, Saved Queries, MCP tokens, and team access after deployment.
-
-## Practices to Avoid
-
-- Do not expose an unconfigured instance directly to the public internet.
-- Do not use shared admin database credentials for all users.
-- Do not rely on local container storage without backups.
-- Do not enable AI providers without understanding data boundaries.
+- Use SSH tunnels or private routing for internal databases.
+- Mount SQLite and DuckDB files into the container when needed.
+- Dory AI sends necessary context to the configured provider, so decide the allowed data boundary before rollout.
 
 ## Related Docs
 

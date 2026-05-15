@@ -1,60 +1,33 @@
 ---
-title: 开始使用 Dory
-description: 了解 Dory 是什么、适合谁使用，以及如何在几分钟内开始你的 AI 数据工作流。
+title: 概览
+description: 安装 Dory、连接数据库，并完成第一条可验证查询。
 ---
 
-# 开始使用 Dory
+# 概览
 
-Dory 是面向现代数据库的 AI 原生数据工作台。它将 SQL Console、数据库 Explorer、Schema 上下文感知 AI、查询结果分析与图表能力整合在同一工作空间中，帮助你更快完成从提问、查询到洞察的完整流程。
+Dory 的首次使用路径很短：先启动应用，再连接一个可访问的数据源，最后运行一条有限制的查询并检查结果。
 
-## Dory 适合谁
+## 入门路径
 
-Dory 适用于需要频繁使用数据库的个人与团队，包括：
+1. [快速开始](/zh/docs/getting-started/quick-start)：选择在线演示、桌面端或 Docker。
+2. [安装说明](/zh/docs/getting-started/installation)：安装桌面端或启动自托管运行环境。
+3. [连接数据库](/zh/docs/getting-started/connect-your-database)：创建连接并确认 Schema 可见。
+4. [3 分钟完成第一条查询](/zh/docs/getting-started/first-query-in-3-minutes)：运行有限制的查询、检查结果，并让 AI 继续辅助下一步。
 
-- 数据分析师：更快完成查询、验证假设与结果可视化。
-- 数据工程师：高效浏览结构、调试 SQL、管理日常查询任务。
-- 后端工程师：快速定位数据问题，理解业务数据结构。
-- AI 团队与产品团队：通过自然语言降低 SQL 使用门槛。
+## 下一步
 
-## 为什么选择 Dory
+第一条查询跑通后，按目标阅读：
 
-- **AI 原生工作流**：基于当前连接、Schema 与上下文辅助生成 SQL、解释结果与优化查询。
-- **一体化体验**：编辑器、Explorer、图表与查询记录保持在同一工作流中。
-- **现代数据库支持**：面向 ClickHouse、PostgreSQL、MySQL、SQLite 等主流数据库场景设计。
-- **灵活部署方式**：支持桌面端、本地开发环境、Docker 与团队部署。
+| 需求 | 阅读 |
+| --- | --- |
+| 理解某个产品界面 | [核心功能](/zh/docs/core-features) |
+| 按任务完成一套流程 | [工作流](/zh/docs/workflows) |
+| 查看不同数据库的差异 | [数据库支持](/zh/docs/database-support) |
+| 配置部署或登录认证 | [部署](/zh/docs/deploy) |
+| 查询设置、快捷键、SQL 片段、MCP 或 FAQ | [参考](/zh/docs/reference) |
 
-## 5 分钟快速开始
+## 生产数据前的最低建议
 
-按以下顺序即可快速体验 Dory：
-
-1. 阅读 [Dory 使用文档](/zh/docs/getting-started/usage-guide)。
-2. 阅读 [Quick Start](/zh/docs/getting-started/quick-start)。
-3. 按照 [安装说明](/zh/docs/getting-started/installation) 安装桌面版或本地运行环境。
-4. 完成 [连接数据库](/zh/docs/getting-started/connect-your-database)。
-5. 运行 [3 分钟完成第一条查询](/zh/docs/getting-started/first-query-in-3-minutes)。
-
-## 核心能力一览
-
-### SQL Console
-
-现代 SQL 编辑器，支持编写、运行、结果查看与多轮迭代分析。
-
-### AI Chat
-
-结合数据库结构与当前上下文，生成 SQL、解释语句、辅助排查问题。
-
-### Explorer
-
-浏览数据库、Schema、表结构、字段与对象信息，快速理解数据模型。
-
-### Charts & Results
-
-将查询结果转换为图表，用于探索、汇报与分享。
-
-## 下一步推荐阅读
-
-- [SQL Console](/zh/docs/core-features/sql-console)
-- [AI Chat](/zh/docs/core-features/ai-chat)
-- [数据库支持](/zh/docs/database-support)
-- [Deploy](/zh/docs/deploy)
-- [发布说明](/zh/docs/release-notes)
+- 生产数据库优先使用只读账号。
+- Docker 中连接本地文件或内网数据库时，先确认运行环境真的能访问。
+- AI 生成的 SQL 执行前需要人工审查。
