@@ -28,6 +28,14 @@ type PageProps = {
 
 const heroCardKeys = ["aiChat", "sqlConsole", "teamFlow"] as const;
 const workspaceFeatureKeys = ["editor", "schema", "saved"] as const;
+const databaseSupportItems = [
+  { name: "ClickHouse", icon: "/icons/databases/clickhouse.svg" },
+  { name: "PostgreSQL", icon: "/icons/databases/postgresql.svg" },
+  { name: "MySQL", icon: "/icons/databases/mysql.svg" },
+  { name: "SQLite", icon: "/icons/databases/sqlite.svg" },
+  { name: "MariaDB", icon: "/icons/databases/mariadb.svg" },
+  { name: "Neon", icon: "/icons/databases/neon.svg" },
+] as const;
 const moreFeatureKeys = [
   "secure",
   "connectivity",
@@ -274,13 +282,21 @@ export default async function Page({ params }: PageProps) {
             </div>
 
             <div className="grid auto-rows-fr grid-cols-2 gap-3 md:grid-cols-3">
-              {["ClickHouse", "PostgreSQL", "MySQL", "SQLite", "MariaDB", "Neon"].map((database) => (
+              {databaseSupportItems.map((database) => (
                 <div
-                  key={database}
-                  className="flex min-h-28 flex-col justify-between border border-slate-950/10 bg-white p-4 dark:border-white/12 dark:bg-white/6"
+                  key={database.name}
+                  className="flex min-h-20 items-center gap-3 border border-slate-950/10 bg-white p-4 dark:border-white/12 dark:bg-white/6"
                 >
-                  <Database className="size-5 text-slate-500 dark:text-slate-300" />
-                  <div className="text-lg font-medium">{database}</div>
+                  <div className="flex size-11 shrink-0 items-center justify-center border border-slate-950/10 bg-slate-50 dark:border-white/12 dark:bg-white/10">
+                    <Image
+                      src={database.icon}
+                      alt=""
+                      width={32}
+                      height={32}
+                      className="max-h-8 max-w-8 object-contain"
+                    />
+                  </div>
+                  <div className="min-w-0 text-base font-medium md:text-lg">{database.name}</div>
                 </div>
               ))}
             </div>

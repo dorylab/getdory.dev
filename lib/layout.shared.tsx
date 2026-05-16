@@ -28,7 +28,7 @@ export function baseOptions(locale: string): BaseLayoutProps {
           <img
             src="/logo.png"
             alt="Dory"
-            className="h-8 w-8 rounded-xl object-contain shadow-sm"
+            className="h-8 w-8 object-contain"
           />
           Dory
         </span>
