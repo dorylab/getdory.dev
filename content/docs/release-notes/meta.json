@@ -1,5 +1,6 @@
 {
   "title": "Release Notes",
+  "defaultOpen": false,
   "pages": [
     "index",
     "v0-13-1",

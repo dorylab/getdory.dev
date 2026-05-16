@@ -27,6 +27,7 @@ export const i18nUI = defineI18nUI(i18n, {
 
 export function baseOptions(locale: string): BaseLayoutProps {
   const isZh = locale === 'zh';
+  const localePrefix = isZh ? '/zh' : '';
 
   return {
     i18n,
@@ -47,21 +48,21 @@ export function baseOptions(locale: string): BaseLayoutProps {
       {
         type: 'main',
         text: isZh ? '文档' : 'Docs',
-        url: '/docs',
+        url: `${localePrefix}/docs`,
         active: 'nested-url',
         icon: <BookOpen />
       },
       {
         type: 'main',
         text: isZh ? '博客' : 'Blog',
-        url: '/blog',
+        url: `${localePrefix}/blog`,
         active: 'nested-url',
         icon: <Newspaper />
       },
       {
         type: 'main',
         text: isZh ? '下载' : 'Download',
-        url: '/download',
+        url: `${localePrefix}/download`,
         active: 'nested-url',
         icon: <Download />
       }

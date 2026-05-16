@@ -1,6 +1,7 @@
 {
   "title": "Getting Started",
   "defaultOpen": true,
+  "collapsible": false,
   "pages": [
     "index",
     "quick-start",

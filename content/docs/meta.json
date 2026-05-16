@@ -1,11 +1,15 @@
 {
   "pages": [
+    "---Start---",
+    "index",
     "getting-started",
+    "release-notes",
+    "---Product---",
     "core-features",
-    "database-support",
     "workflows",
+    "database-support",
+    "---Operate---",
     "deploy",
-    "reference",
-    "release-notes"
+    "reference"
   ]
 }

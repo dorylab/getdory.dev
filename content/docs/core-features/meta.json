@@ -1,13 +1,13 @@
 {
-  "title": "Core Features",
+  "title": "Workspace",
   "pages": [
     "index",
+    "connections",
     "sql-console",
     "ai-chat",
     "explorer",
     "charts-results",
     "saved-queries",
-    "connections",
     "monitoring",
     "privileges"
   ]
