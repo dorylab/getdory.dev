@@ -27,7 +27,9 @@ export async function getMarketingOgContent(
     return {
       title: t('title'),
       description: t('description'),
-      site: `${siteName} Blog`
+      site: `${siteName} Blog`,
+      label: 'Release Notes',
+      tone: 'release' as const
     };
   }
 
@@ -37,7 +39,9 @@ export async function getMarketingOgContent(
     return {
       title: t('title'),
       description: t('description', { product: 'Dory' }),
-      site: siteName
+      site: siteName,
+      label: 'Download',
+      tone: 'default' as const
     };
   }
 
@@ -46,7 +50,9 @@ export async function getMarketingOgContent(
   return {
     title: 'Dory',
     description: t('heroDescription'),
-    site: siteName
+    site: siteName,
+    label: 'AI Native Data Workspace',
+    tone: 'default' as const
   };
 }
 

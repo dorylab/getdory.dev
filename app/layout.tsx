@@ -5,7 +5,7 @@ import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://docs.getdory.dev'),
+  metadataBase: new URL('https://www.getdory.dev'),
   title: {
     default: 'Dory',
     template: '%s | Dory'
@@ -13,7 +13,8 @@ export const metadata: Metadata = {
   description:
     'Dory is an AI-native data workspace for querying databases, understanding spreadsheets, and talking with data.',
   icons: {
-    icon: '/logo.png'
+    icon: '/logo.png',
+    apple: '/apple-touch-icon.png'
   }
 };
 

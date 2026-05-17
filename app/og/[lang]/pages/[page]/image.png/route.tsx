@@ -1,4 +1,3 @@
-import { generate as DefaultImage } from 'fumadocs-ui/og';
 import { ImageResponse } from 'next/og';
 import { notFound } from 'next/navigation';
 
@@ -7,6 +6,8 @@ import {
   getMarketingOgContent,
   type MarketingOgPage
 } from '@/lib/marketing-og';
+import { DoryOgImage } from '@/lib/og-image';
+import { getOgLogoDataUrl } from '@/lib/og-logo';
 
 const pages = ['home', 'blog', 'download'] satisfies MarketingOgPage[];
 
@@ -23,13 +24,17 @@ export async function GET(
   }
 
   const content = await getMarketingOgContent(page, lang);
+  const logoSrc = await getOgLogoDataUrl();
 
   return new ImageResponse(
     (
-      <DefaultImage
+      <DoryOgImage
         title={content.title}
         description={content.description}
         site={content.site}
+        label={content.label}
+        logoSrc={logoSrc}
+        tone={content.tone}
       />
     ),
     {

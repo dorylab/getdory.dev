@@ -4,7 +4,7 @@ import { existsSync } from 'node:fs';
 import { defaultLanguage, locales } from '@/lib/i18n';
 import { source } from '@/lib/source';
 
-const siteUrl = 'https://docs.getdory.dev';
+const siteUrl = 'https://www.getdory.dev';
 const docsBasePath = '/docs';
 const localizedDocExtensions = ['es', 'zh', 'ja'] as const;
 

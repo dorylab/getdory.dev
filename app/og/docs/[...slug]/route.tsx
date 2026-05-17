@@ -1,7 +1,8 @@
-import { generate as DefaultImage } from 'fumadocs-ui/og';
 import { ImageResponse } from 'next/og';
 import { notFound } from 'next/navigation';
 
+import { DoryOgImage } from '@/lib/og-image';
+import { getOgLogoDataUrl } from '@/lib/og-logo';
 import { getPageImage, source } from '@/lib/source';
 
 const lang = 'en';
@@ -20,12 +21,17 @@ export async function GET(
     notFound();
   }
 
+  const logoSrc = await getOgLogoDataUrl();
+
   return new ImageResponse(
     (
-      <DefaultImage
+      <DoryOgImage
         title={page.data.title}
         description={page.data.description}
         site={siteName}
+        label="Docs"
+        logoSrc={logoSrc}
+        tone="docs"
       />
     ),
     {
