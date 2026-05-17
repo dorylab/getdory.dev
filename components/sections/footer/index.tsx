@@ -59,11 +59,11 @@ export default function FooterSection({ className }: FooterProps) {
   return (
     <footer
       className={cn(
-        "relative w-full border-t border-dory-line bg-dory-page-wash px-4 py-10 md:px-16 md:py-14 dark:bg-dory-page",
+        "relative w-full border-t border-dory-line bg-dory-page-wash px-4 py-10 sm:px-6 md:px-10 md:py-14 dark:bg-dory-page",
         className,
       )}
     >
-      <div className="relative mx-auto w-full max-w-[1400px]">
+      <div className="relative mx-auto w-full max-w-[1300px]">
         <div className="grid grid-cols-2 gap-x-8 gap-y-10 pb-10 sm:grid-cols-4">
           {footerColumns.map((column) => (
             <div key={column.title}>

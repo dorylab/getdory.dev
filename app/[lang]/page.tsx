@@ -84,7 +84,7 @@ export default async function Page({ params }: PageProps) {
   return (
     <MarketingLayout lang={lang}>
       <main className="min-h-screen overflow-x-clip bg-dory-page px-4 pt-0 pb-20 text-dory-ink sm:px-6 md:px-10">
-        <div className="mx-auto flex w-full max-w-[1180px] flex-col">
+        <div className="mx-auto flex w-full max-w-[1300px] flex-col">
           <section className="relative grid gap-10 border-b border-slate-950/10 pt-6 pb-14 md:min-h-[760px] md:grid-cols-[0.84fr_1.16fr] md:items-center md:pt-8 md:pb-16 lg:min-h-[820px] dark:border-white/12">
             <div className="pointer-events-none absolute inset-x-0 top-0 h-72 bg-[image:var(--dory-brand-glow)]" />
             <div className="pointer-events-none absolute inset-0 bg-[image:var(--dory-grid-background)] bg-[size:44px_44px] [mask-image:linear-gradient(to_bottom,black,transparent_78%)]" />

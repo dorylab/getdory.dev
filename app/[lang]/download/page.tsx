@@ -61,7 +61,7 @@ export default async function DownloadPage({
   return (
     <MarketingLayout lang={lang}>
       <main className="min-h-screen bg-dory-page px-4 pt-14 pb-20 text-dory-ink sm:px-6 md:px-10">
-        <div className="mx-auto flex w-full max-w-[1180px] flex-col gap-14">
+        <div className="mx-auto flex w-full max-w-[1300px] flex-col gap-14">
           <section className="grid gap-10 border-b border-slate-950/10 pt-10 pb-14 md:grid-cols-[1fr_360px] md:items-end md:pt-16 md:pb-18 dark:border-white/12">
             <div>
               <div className="mb-5 inline-flex items-center gap-2 border border-dory-brand-line bg-dory-brand-soft px-3 py-1.5 text-xs font-medium tracking-wide text-brand uppercase">

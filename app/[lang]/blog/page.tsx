@@ -42,7 +42,7 @@ export default async function BlogIndexPage({
   return (
     <MarketingLayout lang={lang}>
     <main className="min-h-screen bg-dory-page px-4 pt-10 pb-20 text-dory-ink sm:px-6 md:px-10">
-      <div className="mx-auto flex w-full max-w-[1180px] flex-col gap-12">
+      <div className="mx-auto flex w-full max-w-[1300px] flex-col gap-12">
         <section className="grid min-h-[28rem] gap-px overflow-hidden border border-slate-950/10 bg-slate-950/10 md:grid-cols-[1.22fr_0.78fr] dark:border-white/10 dark:bg-white/10">
           {latestPost ? (
             <Link

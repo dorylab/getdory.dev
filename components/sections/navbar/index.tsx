@@ -67,7 +67,7 @@ export default function Navbar({
         className,
       )}
     >
-      <div className="relative mx-auto flex max-w-[1400px] justify-center">
+      <div className="relative mx-auto flex max-w-[1300px] justify-center">
         <NavbarComponent className="justify-center px-0 py-0">
           <div className="site-header-shell pointer-events-auto relative flex w-full max-w-[21.5rem] items-center justify-between gap-3 rounded-full px-3 py-1.5 sm:max-w-[24rem] md:w-fit md:max-w-full md:justify-center md:gap-3 md:px-2">
             <NavbarLeft className="flex-none">

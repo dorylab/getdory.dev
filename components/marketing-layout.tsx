@@ -14,7 +14,7 @@ function MarketingContainer({
     <main
       id="nd-home-layout"
       {...props}
-      className={`flex flex-1 flex-col [--fd-layout-width:1400px] ${className ?? ''}`}
+      className={`flex flex-1 flex-col [--fd-layout-width:1300px] ${className ?? ''}`}
     >
       {children}
     </main>
