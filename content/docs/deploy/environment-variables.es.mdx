@@ -26,11 +26,6 @@ Dory almacena los datos de su propio espacio de trabajo en una base de datos de 
 | ` DB_TYPE ` | Proveedor de base de datos de aplicaciones. Utilice ` pglite `para el almacenamiento de archivos local o ` postgres `para Postgres de producción. El valor predeterminado es ` pglite `. |
 | ` PGLITE_DB_PATH ` | Ruta del archivo PGlite. En Docker, manténgalo en un directorio montado como `/app/data/dory `. |
 | ` DATABASE_URL ` | Cadena de conexión de Postgres cuando ` DB_TYPE=postgres `. |
-| ` POSTGRES_URL ` | Cadena de conexión alternativa de Postgres si no se establece ` DATABASE_URL `. |
-| ` POSTGRES_CONNECTION_STRING ` | Cadena de conexión de Postgres alternativa si las otras variables de PostgresURLno están configuradas. |
-| ` POSTGRES_SSL ` | Establezca en ` true `cuando el servidor Postgres requieraSSL. |
-| ` POSTGRES_SSL_REJECT_UNAUTHORIZED ` | Configúrelo en ` false `solo cuando necesite omitir intencionalmente la verificación del certificado. |
-| ` POSTGRES_MAX_CONNECTIONS ` | Límite de tamaño del grupo de Postgres opcional. |
 
 Ejemplo de PGlite:
 
@@ -44,9 +39,6 @@ Ejemplo de Postgres:
 ```bash
 DB_TYPE=postgres
 DATABASE_URL=postgres://dory:strong_password@postgres.example.com:5432/dory
-POSTGRES_SSL=true
-POSTGRES_SSL_REJECT_UNAUTHORIZED=true
-POSTGRES_MAX_CONNECTIONS=10
 ```
 
 Para implementaciones de Docker que utilizan PGlite, monte `/app/data ` en un volumen de Docker persistente o en un directorio de host.

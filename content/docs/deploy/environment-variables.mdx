@@ -26,11 +26,6 @@ Dory stores its own workspace data in an application database. This is separate 
 | `DB_TYPE` | Application database provider. Use `pglite` for local file storage or `postgres` for production Postgres. Defaults to `pglite`. |
 | `PGLITE_DB_PATH` | PGlite file path. In Docker, keep this under a mounted directory such as `/app/data/dory`. |
 | `DATABASE_URL` | Postgres connection string when `DB_TYPE=postgres`. |
-| `POSTGRES_URL` | Alternative Postgres connection string if `DATABASE_URL` is not set. |
-| `POSTGRES_CONNECTION_STRING` | Alternative Postgres connection string if the other Postgres URL variables are not set. |
-| `POSTGRES_SSL` | Set to `true` when the Postgres server requires SSL. |
-| `POSTGRES_SSL_REJECT_UNAUTHORIZED` | Set to `false` only when you intentionally need to skip certificate verification. |
-| `POSTGRES_MAX_CONNECTIONS` | Optional Postgres pool size limit. |
 
 PGlite example:
 
@@ -44,9 +39,6 @@ Postgres example:
 ```bash
 DB_TYPE=postgres
 DATABASE_URL=postgres://dory:strong_password@postgres.example.com:5432/dory
-POSTGRES_SSL=true
-POSTGRES_SSL_REJECT_UNAUTHORIZED=true
-POSTGRES_MAX_CONNECTIONS=10
 ```
 
 For Docker deployments using PGlite, mount `/app/data` to a persistent Docker volume or host directory.

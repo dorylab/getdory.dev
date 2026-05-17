@@ -26,11 +26,6 @@ Dory 会把自己的工作区数据存储在应用数据库中。它和你在 Do
 | `DB_TYPE` | 应用数据库提供方。`pglite` 表示本地文件存储，`postgres` 表示生产 Postgres。默认是 `pglite`。 |
 | `PGLITE_DB_PATH` | PGlite 文件路径。Docker 中建议放在已挂载目录下，例如 `/app/data/dory`。 |
 | `DATABASE_URL` | `DB_TYPE=postgres` 时使用的 Postgres 连接串。 |
-| `POSTGRES_URL` | 当 `DATABASE_URL` 未设置时可用的备用 Postgres 连接串。 |
-| `POSTGRES_CONNECTION_STRING` | 另一个备用 Postgres 连接串变量。 |
-| `POSTGRES_SSL` | Postgres 服务要求 SSL 时设置为 `true`。 |
-| `POSTGRES_SSL_REJECT_UNAUTHORIZED` | 只有明确需要跳过证书校验时才设置为 `false`。 |
-| `POSTGRES_MAX_CONNECTIONS` | 可选的 Postgres 连接池大小限制。 |
 
 PGlite 示例：
 
@@ -44,9 +39,6 @@ Postgres 示例：
 ```bash
 DB_TYPE=postgres
 DATABASE_URL=postgres://dory:strong_password@postgres.example.com:5432/dory
-POSTGRES_SSL=true
-POSTGRES_SSL_REJECT_UNAUTHORIZED=true
-POSTGRES_MAX_CONNECTIONS=10
 ```
 
 如果 Docker 部署使用 PGlite，请把 `/app/data` 挂载到持久化 Docker volume 或宿主机目录。
