@@ -18,6 +18,7 @@ type DownloadButtonProps = {
   windowsUrl?: string;
   fallbackUrl: string;
   className?: string;
+  platformOverride?: DownloadPlatform;
 };
 
 export function DownloadButton({
@@ -28,6 +29,7 @@ export function DownloadButton({
   windowsUrl,
   fallbackUrl,
   className,
+  platformOverride,
 }: DownloadButtonProps) {
   const t = useTranslations("landing");
   const [platform, setPlatform] = useState<DownloadPlatform>("other");
@@ -48,31 +50,33 @@ export function DownloadButton({
     );
   }
 
+  const resolvedPlatform = platformOverride ?? platform;
+
   const label =
-    platform === "mac-apple-silicon" || platform === "mac-intel"
+    resolvedPlatform === "mac-apple-silicon" || resolvedPlatform === "mac-intel"
       ? t("downloadForMac")
-      : platform === "windows"
+      : resolvedPlatform === "windows"
         ? t("downloadForWindows")
         : t("downloadLatest");
 
   const href =
-    platform === "mac-apple-silicon"
+    resolvedPlatform === "mac-apple-silicon"
       ? (macAppleSiliconUrl ?? macUrl ?? macIntelUrl ?? fallbackUrl)
-      : platform === "mac-intel"
+      : resolvedPlatform === "mac-intel"
         ? (macIntelUrl ?? macUrl ?? macAppleSiliconUrl ?? fallbackUrl)
-        : platform === "windows"
+        : resolvedPlatform === "windows"
           ? (windowsInstallerUrl ?? windowsUrl ?? fallbackUrl)
           : fallbackUrl;
 
   return (
     <Button
       asChild
-      className={cn(buttonVariants(), "max-sm:text-sm", className)}
+      className={cn(buttonVariants(), "h-auto shadow-none max-sm:text-sm", className)}
       onClick={handleDownload}
     >
       <a href={href}>
-        <Download className="mr-2 h-4 w-4 shrink-0" />
         <span className="min-w-0 truncate">{label}</span>
+        <Download className="ml-2 h-4 w-4 shrink-0" />
       </a>
     </Button>
   );

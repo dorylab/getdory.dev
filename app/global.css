@@ -494,6 +494,46 @@ a {
   content: none;
 }
 
+#nd-nav a[href='/download'],
+#nd-nav a[href='/zh/download'],
+.site-header-download-button {
+  border: 1px solid #26251e;
+  border-radius: 999px;
+  background: #26251e;
+  color: #f7f7f4;
+  box-shadow: none;
+  height: 36px;
+  min-width: 4.5rem;
+  padding-inline: 1em;
+  font-weight: 400;
+  line-height: 1;
+}
+
+#nd-nav a[href='/download']:hover,
+#nd-nav a[href='/zh/download']:hover,
+.site-header-download-button:hover {
+  border-color: #3b3a33;
+  background: #3b3a33;
+  color: #f7f7f4;
+  box-shadow: none;
+}
+
+.dark #nd-nav a[href='/download'],
+.dark #nd-nav a[href='/zh/download'],
+.dark .site-header-download-button {
+  border-color: #edecec;
+  background: #edecec;
+  color: #14120b;
+}
+
+.dark #nd-nav a[href='/download']:hover,
+.dark #nd-nav a[href='/zh/download']:hover,
+.dark .site-header-download-button:hover {
+  border-color: #d7d6d5;
+  background: #d7d6d5;
+  color: #14120b;
+}
+
 .dory-docs-shell #nd-sidebar {
   border-right: 1px solid var(--dory-sidebar-border);
   background: var(--dory-sidebar-background);

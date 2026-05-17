@@ -119,11 +119,6 @@ export default function Navigation({
       isLink: true,
       href: "/blog",
     },
-    {
-      title: t("download"),
-      isLink: true,
-      href: "/download",
-    },
   ];
 
   return (

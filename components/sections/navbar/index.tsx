@@ -6,12 +6,10 @@ import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 
 import { Link } from "@/i18n/navigation";
-import { siteConfig } from "@/lib/site";
 import { cn } from "@/lib/utils";
 import DoryIcon from "@/public/dory.png";
 
 import { ModeToggle } from "../../dory/mode-toggle";
-import Github from "../../logos/github";
 import { Button } from "../../ui/button";
 import {
   Navbar as NavbarComponent,
@@ -102,18 +100,9 @@ export default function Navbar({
                   variant="ghost"
                   size="sm"
                   asChild
-                  className="text-landing-foreground hover:text-landing-foreground h-8 rounded-full border border-transparent px-3 text-[13px] font-medium tracking-[0.01em] hover:bg-black/4 dark:text-white dark:hover:bg-white/7"
+                  className="site-header-download-button h-9 rounded-full px-4 text-sm font-normal"
                 >
-                  <a
-                    href={siteConfig.links.github}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex items-center gap-2.5"
-                  >
-                    <Github className="size-3.5 opacity-72" />
-                    Github
-                    <ArrowUpRight className="text-landing-foreground/45 size-3.5 dark:text-white/50" />
-                  </a>
+                  <Link href="/download">{t("download")}</Link>
                 </Button>
               </div>
               <Sheet>
@@ -169,32 +158,13 @@ export default function Navbar({
                   )}
 
                   <div className="mt-auto flex flex-col gap-3 pt-8 md:hidden">
-                    <ModeToggle compact={false} />
                     <Button
-                      variant="outline"
-                      className="site-action-button h-auto w-full justify-between rounded-2xl px-4 py-4"
                       asChild
+                      className="site-header-download-button h-11 w-full rounded-full px-5 text-sm font-medium"
                     >
-                      <a
-                        href={siteConfig.links.github}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="flex items-center gap-3 text-left"
-                      >
-                        <span className="flex size-10 items-center justify-center rounded-full border border-white/10 bg-white/6">
-                          <Github className="size-4" />
-                        </span>
-                        <span className="flex flex-1 flex-col">
-                          <span className="text-foreground text-sm font-medium">
-                            GitHub
-                          </span>
-                          <span className="text-muted-foreground text-xs">
-                            {t("githubDescription")}
-                          </span>
-                        </span>
-                        <ArrowUpRight className="text-muted-foreground size-4 shrink-0" />
-                      </a>
+                      <Link href="/download">{t("download")}</Link>
                     </Button>
+                    <ModeToggle compact={false} />
                   </div>
                 </SheetContent>
               </Sheet>

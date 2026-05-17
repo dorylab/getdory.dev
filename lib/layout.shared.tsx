@@ -1,4 +1,4 @@
-import { BookOpen, Download, Newspaper } from 'lucide-react';
+import { BookOpen, Newspaper } from 'lucide-react';
 import { defineI18nUI } from 'fumadocs-ui/i18n';
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
 
@@ -30,8 +30,8 @@ export function baseOptions(locale: string): BaseLayoutProps {
   const localePrefix = isZh ? '/zh' : '';
 
   return {
-    i18n,
-    githubUrl: 'https://github.com/dorylab/dory',
+    i18n: false,
+    githubUrl: undefined,
     nav: {
       title: (
         <span className="flex items-center gap-2 font-semibold">
@@ -60,11 +60,11 @@ export function baseOptions(locale: string): BaseLayoutProps {
         icon: <Newspaper />
       },
       {
-        type: 'main',
+        type: 'button',
         text: isZh ? '下载' : 'Download',
         url: `${localePrefix}/download`,
         active: 'nested-url',
-        icon: <Download />
+        secondary: true
       }
     ]
   };

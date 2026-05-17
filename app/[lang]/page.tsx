@@ -15,10 +15,12 @@ import type { ReactNode } from "react";
 import { getTranslations } from "next-intl/server";
 
 import { DownloadButton } from "@/components/landing/download-button";
+import { buttonVariants } from "@/components/landing/variants";
 import { MarketingLayout } from "@/components/marketing-layout";
 import FooterSection from "@/components/sections/footer";
 import { Link } from "@/i18n/navigation";
 import { getLatestReleaseDownloads } from "@/lib/github-release";
+import { cn } from "@/lib/utils";
 import AiTablePreview from "@/public/ai-table-overview.png";
 import ChatbotPreview from "@/public/chatbot.png";
 import HeroPreview from "@/public/easy-to-use-sql-console.png";
@@ -101,22 +103,18 @@ export default async function Page({ params }: PageProps) {
               <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 <DownloadButton
                   macUrl={downloads.macUrl}
-                  windowsUrl={downloads.windowsUrl}
                   fallbackUrl={downloads.releaseUrl}
-                  className="h-12 rounded-none bg-brand px-5 text-sm font-medium text-brand-foreground shadow-[var(--dory-shadow-brand)] hover:bg-brand-200 sm:min-w-[13.5rem]"
+                  platformOverride="mac-apple-silicon"
+                  className="h-[43px] px-[1.35em] py-0 text-base"
                 />
-                <Link
-                  href="/download"
-                  className="inline-flex h-12 items-center justify-center gap-2 border border-dory-line bg-dory-surface/85 px-5 text-sm font-medium text-dory-muted shadow-[var(--dory-shadow-sm)] transition hover:border-dory-brand-line hover:bg-dory-surface hover:text-dory-ink"
-                >
-                  <LayoutGrid className="size-4" />
-                  {t("allPlatform")}
-                </Link>
                 <a
                   href="https://app.getdory.dev"
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex h-12 items-center justify-center gap-2 border border-dory-line bg-dory-page/60 px-5 text-sm font-medium text-dory-muted transition hover:border-dory-brand-line hover:bg-dory-surface/70 hover:text-dory-ink"
+                  className={cn(
+                    buttonVariants({ variant: "secondary" }),
+                    "h-[43px] px-[1.35em] py-0 text-base",
+                  )}
                 >
                   {t("heroExperienceCta")}
                   <ArrowRight className="size-4" />

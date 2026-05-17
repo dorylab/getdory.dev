@@ -86,7 +86,7 @@ export default async function DownloadPage({
                 windowsInstallerUrl={downloads.windowsInstallerUrl}
                 windowsUrl={downloads.windowsUrl}
                 fallbackUrl="/download/redirect"
-                  className="h-12 w-full rounded-none bg-brand px-5 text-sm font-medium text-brand-foreground shadow-none hover:bg-brand-200"
+                className="h-12 w-full px-5 text-sm font-medium"
               />
               <a
                 href={downloads.releaseUrl}

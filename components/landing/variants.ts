@@ -10,22 +10,22 @@ export const headingVariants = cva('font-medium tracking-tight', {
 });
 
 export const buttonVariants = cva(
-  'inline-flex items-center justify-center font-medium tracking-tight transition-all duration-200',
+  'inline-flex items-center justify-center font-normal tracking-normal transition-colors duration-150',
   {
     variants: {
       variant: {
         primary:
-          'bg-brand text-brand-foreground shadow-[var(--dory-shadow-brand)] hover:bg-brand-200 hover:shadow-[var(--dory-shadow-panel)]',
+          'border border-[#26251e] bg-[#26251e] text-[#f7f7f4] hover:border-[#3b3a33] hover:bg-[#3b3a33] hover:text-[#f7f7f4] dark:border-[#edecec] dark:bg-[#edecec] dark:text-[#14120b] dark:hover:border-[#d7d6d5] dark:hover:bg-[#d7d6d5]',
         secondary:
-          'border border-dory-line bg-dory-surface/85 text-dory-ink shadow-[var(--dory-shadow-card)] hover:border-dory-brand-line hover:bg-dory-surface hover:shadow-[var(--dory-shadow-floating)] dark:border-white/12 dark:bg-white/6 dark:text-slate-100 dark:hover:border-white/20 dark:hover:bg-white/10',
+          'border border-[#26251e06] bg-[#e6e5e0] text-[#26251e] hover:border-[#26251e06] hover:bg-[#e1e0db] hover:text-[#26251e] dark:border-white/8 dark:bg-[#26241e] dark:text-[#edecec] dark:hover:bg-[#2b2923]',
       },
       size: {
-        default: 'rounded-full px-5 py-3 hover:-translate-y-0.5',
-        compact: 'rounded-lg px-3.5 py-2 text-sm',
+        default: 'rounded-full px-[1.45em] pt-[0.89em] pb-[0.91em] leading-none md:px-[1.35em] md:pt-[0.78em] md:pb-[0.8em]',
+        compact: 'rounded-full px-[1.2em] pt-[0.64em] pb-[0.66em] text-sm leading-none md:px-[1.25em] md:pt-[0.6em] md:pb-[0.62em]',
       },
       surface: {
         elevated: '',
-        flat: 'shadow-none hover:translate-y-0 hover:shadow-none',
+        flat: '',
       },
     },
     defaultVariants: {
