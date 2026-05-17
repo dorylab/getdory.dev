@@ -71,7 +71,7 @@ export function DownloadButton({
   return (
     <Button
       asChild
-      className={cn(buttonVariants(), "h-auto shadow-none max-sm:text-sm", className)}
+      className={cn(buttonVariants(), "shadow-none max-sm:text-sm", className)}
       onClick={handleDownload}
     >
       <a href={href}>

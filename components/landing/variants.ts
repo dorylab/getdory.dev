@@ -20,8 +20,8 @@ export const buttonVariants = cva(
           'border border-[#26251e06] bg-[#e6e5e0] text-[#26251e] hover:border-[#26251e06] hover:bg-[#e1e0db] hover:text-[#26251e] dark:border-white/8 dark:bg-[#26241e] dark:text-[#edecec] dark:hover:bg-[#2b2923]',
       },
       size: {
-        default: 'rounded-full px-[1.45em] pt-[0.89em] pb-[0.91em] leading-none md:px-[1.35em] md:pt-[0.78em] md:pb-[0.8em]',
-        compact: 'rounded-full px-[1.2em] pt-[0.64em] pb-[0.66em] text-sm leading-none md:px-[1.25em] md:pt-[0.6em] md:pb-[0.62em]',
+        default: 'h-[43px] rounded-full px-[1.35em] py-0 text-base leading-none',
+        compact: 'h-9 rounded-full px-[1.2em] py-0 text-sm leading-none',
       },
       surface: {
         elevated: '',

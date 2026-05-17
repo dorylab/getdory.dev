@@ -1,26 +1,14 @@
 "use client";
 
-import { cva } from "class-variance-authority";
 import { type ComponentProps, useState } from "react";
 
+import { buttonVariants } from "@/components/landing/variants";
 import { cn } from "@/lib/utils";
 import EasyToUseImg from "@/public/easy-to-use-sql-console.png";
 import ResultTableImg from "@/public/result-table.png";
 import schemaSuggestionImg from "@/public/schema-aware-autocomplete.png";
 
 import { FramedImage } from "../ui/shotframe";
-
-const previewButtonVariants = cva(
-  "h-9 min-w-0 flex-1 rounded-full px-3 text-xs font-medium transition-colors sm:h-8 sm:w-40 sm:flex-none sm:text-sm",
-  {
-    variants: {
-      active: {
-        true: "bg-blue-600 text-white dark:bg-blue-500",
-        false: "bg-white text-zinc-600 dark:bg-black dark:text-zinc-400",
-      },
-    },
-  },
-);
 
 const highlightPositions = {
   0: "translateX(0)",
@@ -50,7 +38,7 @@ export function PreviewImages(props: ComponentProps<"div">) {
       <div className="absolute bottom-3 left-1/2 z-2 flex w-[calc(100%-1.5rem)] -translate-x-1/2 flex-row rounded-full border bg-white p-0.5 shadow-xl sm:bottom-0 sm:w-auto dark:bg-black">
         <div
           role="none"
-          className="bg-fd-primary absolute z-[-1] h-9 w-1/3 rounded-full transition-transform sm:h-8 sm:w-40"
+          className="absolute z-[-1] h-[43px] w-1/3 rounded-full bg-[#26251e] transition-transform sm:w-40 dark:bg-[#edecec]"
           style={{
             transform: highlightPositions[active],
           }}
@@ -58,7 +46,12 @@ export function PreviewImages(props: ComponentProps<"div">) {
         {previews.map((item, i) => (
           <button
             key={i}
-            className={cn(previewButtonVariants({ active: active === i }))}
+            className={cn(
+              buttonVariants({
+                variant: active === i ? "primary" : "secondary",
+              }),
+              "min-w-0 flex-1 px-3 text-sm sm:w-40 sm:flex-none",
+            )}
             onClick={() => setActive(i as 0 | 1 | 2)}
           >
             <span className="block truncate">{item.name}</span>

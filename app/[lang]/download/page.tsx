@@ -9,9 +9,11 @@ import { getTranslations } from "next-intl/server";
 
 import { DownloadButton } from "@/components/landing/download-button";
 import { DownloadCommandBar } from "@/components/landing/download-command-bar";
+import { buttonVariants } from "@/components/landing/variants";
 import { MarketingLayout } from "@/components/marketing-layout";
 import FooterSection from "@/components/sections/footer";
 import { getLatestReleaseDownloads } from "@/lib/github-release";
+import { cn } from "@/lib/utils";
 
 export default async function DownloadPage({
   params,
@@ -86,13 +88,13 @@ export default async function DownloadPage({
                 windowsInstallerUrl={downloads.windowsInstallerUrl}
                 windowsUrl={downloads.windowsUrl}
                 fallbackUrl="/download/redirect"
-                className="h-12 w-full px-5 text-sm font-medium"
+                className="w-full"
               />
               <a
                 href={downloads.releaseUrl}
                 target="_blank"
                 rel="noreferrer noopener"
-                className="inline-flex h-12 items-center justify-center gap-2 border border-slate-950/10 px-5 text-sm font-medium text-slate-700 transition hover:border-slate-950/30 hover:text-slate-950 dark:border-white/12 dark:text-slate-300 dark:hover:border-white/30 dark:hover:text-white"
+                className={cn(buttonVariants({ variant: "secondary" }), "w-full gap-2")}
               >
                 {t("viewAllReleases")}
                 <ArrowRight className="size-4" />
@@ -159,7 +161,7 @@ export default async function DownloadPage({
                           </p>
                         </div>
                       </div>
-                      <span className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 transition group-hover:text-slate-950 dark:text-slate-300 dark:group-hover:text-white">
+                      <span className={cn(buttonVariants({ variant: "secondary" }), "gap-2")}>
                         {t("downloadAsset")}
                         <ArrowDownToLine className="size-4" />
                       </span>
@@ -186,7 +188,7 @@ export default async function DownloadPage({
                       </p>
                     </div>
                   </div>
-                  <span className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 transition group-hover:text-slate-950 dark:text-slate-300 dark:group-hover:text-white">
+                  <span className={cn(buttonVariants({ variant: "secondary" }), "gap-2")}>
                     {t("viewAllReleases")}
                     <ArrowRight className="size-4" />
                   </span>
@@ -199,7 +201,7 @@ export default async function DownloadPage({
             <p className="max-w-2xl leading-6">{t("tip")}</p>
             <a
               href="/download/redirect"
-              className="inline-flex items-center gap-2 font-medium text-slate-950 hover:underline dark:text-white"
+              className={cn(buttonVariants({ variant: "secondary" }), "gap-2")}
             >
               {t("autoDetect")}
               <ArrowRight className="size-4" />

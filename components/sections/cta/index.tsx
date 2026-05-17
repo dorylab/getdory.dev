@@ -34,7 +34,7 @@ export default function CTA({ className }: CTAProps) {
         </div>
 
         <div className="flex items-center justify-center lg:justify-end">
-          <div className="w-full [&_[data-slot=button]]:h-11 [&_[data-slot=button]]:w-full [&_[data-slot=button]]:rounded-full [&_[data-slot=button]]:px-6 [&_[data-slot=button]]:text-sm sm:w-auto sm:[&_[data-slot=button]]:w-auto">
+          <div className="w-full [&_[data-slot=button]]:w-full sm:w-auto sm:[&_[data-slot=button]]:w-auto">
             <DownloadButton fallbackUrl="/download" />
           </div>
         </div>

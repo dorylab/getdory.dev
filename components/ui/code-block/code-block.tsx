@@ -149,7 +149,7 @@ export function SmartCodeBlock({
                     size="icon"
                     variant="outline"
                     className={cn(
-                        'absolute right-2 top-1 z-10 h-7 w-7 rounded-full border bg-background/80 shadow-sm',
+                        'absolute right-2 top-1 z-10',
                         'opacity-0 transition-opacity group-hover:opacity-100',
                         copied && 'opacity-100',
                     )}

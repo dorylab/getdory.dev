@@ -42,7 +42,7 @@ export function ModeToggle({
         variant="ghost"
         size="icon"
         className={cn(
-          "text-muted-foreground hover:text-foreground size-9 rounded-full border border-transparent bg-transparent",
+          "shrink-0",
           className,
         )}
         onClick={toggleTheme}
@@ -57,7 +57,7 @@ export function ModeToggle({
     <Button
       variant="outline"
       className={cn(
-        "h-auto w-full justify-between rounded-2xl border-white/10 bg-white/4 px-4 py-4 text-left shadow-none hover:bg-white/8 dark:border-white/10 dark:bg-white/4",
+        "w-full justify-between text-left shadow-none",
         className,
       )}
       onClick={toggleTheme}

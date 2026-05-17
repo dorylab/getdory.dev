@@ -100,7 +100,7 @@ export default function Navbar({
                   variant="ghost"
                   size="sm"
                   asChild
-                  className="site-header-download-button h-9 rounded-full px-4 text-sm font-normal"
+                  className="site-header-download-button"
                 >
                   <Link href="/download">{t("download")}</Link>
                 </Button>
@@ -110,7 +110,7 @@ export default function Navbar({
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="size-9 shrink-0 rounded-full border border-transparent hover:bg-black/4 dark:hover:bg-white/7 md:hidden"
+                    className="shrink-0 md:hidden"
                   >
                     <Menu className="size-5" />
                     <span className="sr-only">{t("toggleMenu")}</span>
@@ -160,7 +160,7 @@ export default function Navbar({
                   <div className="mt-auto flex flex-col gap-3 pt-8 md:hidden">
                     <Button
                       asChild
-                      className="site-header-download-button h-11 w-full rounded-full px-5 text-sm font-medium"
+                      className="site-header-download-button w-full"
                     >
                       <Link href="/download">{t("download")}</Link>
                     </Button>

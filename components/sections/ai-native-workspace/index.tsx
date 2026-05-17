@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 
+import { buttonVariants } from "@/components/landing/variants";
 import { cn } from "@/lib/utils";
 import actionsImage from "@/public/actions.png";
 import askImage from "@/public/ask.png";
@@ -77,11 +78,11 @@ export default function AiNativeWorkspace() {
                     type="button"
                     onClick={() => setActiveTabId(tab.id)}
                     className={cn(
-                      "relative min-w-0 rounded-full px-3 py-2 text-sm font-medium transition sm:px-5",
+                      buttonVariants({
+                        variant: active ? "primary" : "secondary",
+                      }),
+                      "relative min-w-0 px-3 text-sm sm:px-5",
                       "focus-visible:ring-brand/50 focus-visible:ring-2 focus-visible:outline-none",
-                      active
-                        ? "bg-brand text-white shadow-[0_10px_24px_rgba(37,99,235,0.26)]"
-                        : "text-muted-foreground hover:text-foreground hover:bg-black/[0.04] dark:hover:bg-white/[0.06]",
                     )}
                   >
                     <span className="block truncate">{tab.label}</span>

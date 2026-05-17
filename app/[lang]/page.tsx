@@ -105,7 +105,6 @@ export default async function Page({ params }: PageProps) {
                   macUrl={downloads.macUrl}
                   fallbackUrl={downloads.releaseUrl}
                   platformOverride="mac-apple-silicon"
-                  className="h-[43px] px-[1.35em] py-0 text-base"
                 />
                 <a
                   href="https://app.getdory.dev"
@@ -113,7 +112,6 @@ export default async function Page({ params }: PageProps) {
                   rel="noreferrer"
                   className={cn(
                     buttonVariants({ variant: "secondary" }),
-                    "h-[43px] px-[1.35em] py-0 text-base",
                   )}
                 >
                   {t("heroExperienceCta")}
@@ -377,14 +375,14 @@ export default async function Page({ params }: PageProps) {
             <div className="flex flex-col gap-3 sm:flex-row md:flex-col">
               <Link
                 href="/download"
-                className="inline-flex h-12 items-center justify-center gap-2 bg-slate-950 px-5 text-sm font-medium text-white transition hover:bg-slate-800 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-200"
+                className={cn(buttonVariants(), "gap-2")}
               >
                 {t("downloadLatest")}
                 <ArrowRight className="size-4" />
               </Link>
               <Link
                 href="/docs"
-                className="inline-flex h-12 items-center justify-center gap-2 border border-slate-950/10 bg-white px-5 text-sm font-medium text-slate-700 transition hover:border-slate-950/30 hover:text-slate-950 dark:border-white/12 dark:bg-white/6 dark:text-slate-300 dark:hover:border-white/30 dark:hover:text-white"
+                className={cn(buttonVariants({ variant: "secondary" }), "gap-2")}
               >
                 Docs
                 <ArrowRight className="size-4" />
