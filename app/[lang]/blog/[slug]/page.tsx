@@ -74,7 +74,7 @@ export default async function BlogPostPage({
           </div>
         </article>
       </main>
-      <FooterSection />
+      <FooterSection locale={locale} />
     </MarketingLayout>
   );
 }

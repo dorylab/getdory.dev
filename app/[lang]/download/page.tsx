@@ -221,7 +221,7 @@ export default async function DownloadPage({
           </section>
         </div>
       </main>
-      <FooterSection />
+      <FooterSection locale={lang} />
     </MarketingLayout>
   );
 }

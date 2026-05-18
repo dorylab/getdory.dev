@@ -100,6 +100,10 @@ function buildGitHubBlobUrl(path: string) {
   return `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/blob/main/${path}`;
 }
 
+function localizePath(path: string, locale: Language) {
+  return locale === defaultLanguage ? path : `/${locale}${path}`;
+}
+
 function normalizeContentSlug(value: string) {
   return value.trim().replace(/(?:\.(?:es|ja|zh))?\.mdx?$/i, "");
 }
@@ -107,6 +111,7 @@ function normalizeContentSlug(value: string) {
 function buildReleasePost(
   item: Pick<GitHubContentItem, "name" | "path">,
   raw: string,
+  locale: Language = defaultLanguage,
 ): BlogPost {
   const { data, content } = matter(raw);
   const slug = normalizeContentSlug(item.name);
@@ -131,7 +136,7 @@ function buildReleasePost(
     title,
     description: descriptionSource.slice(0, 180),
     version,
-    href: `/docs/release-notes/${slug.replaceAll(".", "-")}`,
+    href: localizePath(`/docs/release-notes/${slug.replaceAll(".", "-")}`, locale),
     url: buildGitHubBlobUrl(item.path),
     body: content,
     excerpt: descriptionSource,
@@ -185,8 +190,8 @@ async function buildLocalBlogPost(
     title: entry.title,
     description: descriptionSource.slice(0, 180),
     version: "Blog",
-    href: `${locale === defaultLanguage ? "" : `/${locale}`}/blog/${slug}`,
-    url: `${locale === defaultLanguage ? "" : `/${locale}`}/blog/${slug}`,
+    href: localizePath(`/blog/${slug}`, locale),
+    url: localizePath(`/blog/${slug}`, locale),
     body: await entry.getText("processed"),
     excerpt: descriptionSource,
   };
@@ -253,7 +258,7 @@ async function fetchReleaseNoteFile(path: string) {
   return Buffer.from(file.content, "base64").toString("utf8");
 }
 
-async function getRemoteReleaseNotes(): Promise<BlogPost[]> {
+async function getRemoteReleaseNotes(locale: Language): Promise<BlogPost[]> {
   try {
     const files = await fetchReleaseNoteIndex();
 
@@ -262,7 +267,7 @@ async function getRemoteReleaseNotes(): Promise<BlogPost[]> {
         .filter((item) => item.type === "file" && /\.mdx?$/i.test(item.name) && item.download_url)
         .map(async (item) => {
           const raw = await fetchReleaseNoteBody(item.download_url!);
-          return buildReleasePost(item, raw);
+          return buildReleasePost(item, raw, locale);
         }),
     );
   } catch {
@@ -274,7 +279,7 @@ export const getReleaseNotes = cache(
   async (locale: Language = defaultLanguage): Promise<BlogPost[]> => {
     const [blogPosts, remotePosts] = await Promise.all([
       getLocalBlogPosts(locale),
-      getRemoteReleaseNotes(),
+      getRemoteReleaseNotes(locale),
     ]);
     const postsBySlug = new Map<string, BlogPost>();
 

@@ -401,7 +401,7 @@ export default async function Page({ params }: PageProps) {
           </section>
         </div>
       </main>
-      <FooterSection />
+      <FooterSection locale={lang} />
     </MarketingLayout>
   );
 }

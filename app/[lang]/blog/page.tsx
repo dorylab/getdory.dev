@@ -20,6 +20,10 @@ function resolveLanguage(lang: string): Language {
   return locales.includes(lang as Language) ? (lang as Language) : defaultLanguage;
 }
 
+function localizedPath(path: string, locale: Language) {
+  return locale === defaultLanguage ? path : `/${locale}${path}`;
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -122,7 +126,10 @@ export default async function BlogIndexPage({
           {categories.map((category) => (
             <Link
               key={category.slug}
-              href={category.slug === "blog" ? "/blog" : "/docs/release-notes"}
+              href={localizedPath(
+                category.slug === "blog" ? "/blog" : "/docs/release-notes",
+                locale,
+              )}
               className="border border-slate-950/12 px-4 py-2 text-sm font-medium text-slate-700 transition hover:border-slate-950 hover:text-slate-950 dark:border-white/12 dark:text-slate-300 dark:hover:border-white dark:hover:text-white"
             >
               {category.title}
@@ -173,7 +180,7 @@ export default async function BlogIndexPage({
           </div>
           {latestPost ? (
             <Link
-              href="/docs/release-notes"
+              href={localizedPath("/docs/release-notes", locale)}
               className="inline-flex items-center gap-2 text-sm font-semibold text-slate-950 dark:text-white"
             >
               {t("readLatest")}
@@ -183,7 +190,7 @@ export default async function BlogIndexPage({
         </section>
       </div>
     </main>
-    <FooterSection />
+    <FooterSection locale={locale} />
     </MarketingLayout>
   );
 }

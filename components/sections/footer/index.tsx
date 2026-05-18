@@ -1,11 +1,13 @@
 import { LanguageSwitcher } from "@/components/language-switcher";
-import { isI18nEnabled } from "@/lib/i18n";
+import { defaultLanguage, isI18nEnabled, locales, type Language } from "@/lib/i18n";
 import { siteConfig } from "@/lib/site";
 import { cn } from "@/lib/utils";
 import { ArrowUpRight } from "lucide-react";
+import { getLocale } from "next-intl/server";
 
 interface FooterProps {
   className?: string;
+  locale?: string;
 }
 
 type FooterColumn = {
@@ -16,6 +18,11 @@ type FooterColumn = {
     external?: boolean;
   }[];
 };
+
+function localizeHref(href: string, locale: Language) {
+  if (!href.startsWith("/")) return href;
+  return locale === defaultLanguage ? href : `/${locale}${href}`;
+}
 
 const footerColumns: FooterColumn[] = [
   {
@@ -55,7 +62,12 @@ const footerColumns: FooterColumn[] = [
   },
 ];
 
-export default function FooterSection({ className }: FooterProps) {
+export default async function FooterSection({ className, locale: localeProp }: FooterProps) {
+  const requestedLocale = localeProp ?? await getLocale();
+  const locale = locales.includes(requestedLocale as Language)
+    ? (requestedLocale as Language)
+    : defaultLanguage;
+
   return (
     <footer
       className={cn(
@@ -72,7 +84,7 @@ export default function FooterSection({ className }: FooterProps) {
                 {column.links.map((link) => (
                   <li key={link.label}>
                     <a
-                      href={link.href}
+                      href={link.external ? link.href : localizeHref(link.href, locale)}
                       target={link.external ? "_blank" : undefined}
                       rel={link.external ? "noreferrer noopener" : undefined}
                       className="group inline-flex items-center gap-1.5 text-sm text-dory-muted transition-colors hover:text-dory-ink"

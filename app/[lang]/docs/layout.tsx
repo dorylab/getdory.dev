@@ -32,7 +32,7 @@ export default async function DocsLayoutPage({
       >
         {children}
       </DocsLayout>
-      <FooterSection />
+      <FooterSection locale={lang} />
     </HomeLayout>
   );
 }

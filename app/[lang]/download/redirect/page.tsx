@@ -109,7 +109,7 @@ export default async function DownloadRedirectPage({
         </section>
       </div>
     </main>
-    <FooterSection />
+    <FooterSection locale={lang} />
     </MarketingLayout>
   );
 }
