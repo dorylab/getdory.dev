@@ -1,41 +1,117 @@
 ---
-title: Generate SQL with Dory AI
-description: Use Dory AI Chat and SQL Console to turn business questions into executable, reviewable SQL queries.
+title: Generate SQL with Ask AI
+description: Use Inline Ask AI, the SQL Console Ask AI panel, and Copilot Actions to turn natural language questions into reviewable SQL.
 ---
 
-# Generate SQL with Dory AI
+# Generate SQL with Ask AI
 
-Dory AI can generate SQL using the current connection, schema, table metadata, and SQL context. Good output comes from a clear question, real schema context, an expected result shape, and human review.
+Dory SQL generation is built into SQL Console, not a detached prompt box. Depending on where you ask, Dory can use the active connection, database, SQL dialect, editor text, selection, recent execution, result shape, and schema context. Generated SQL is returned to the editor or Copilot panel first, so you can review it before running it.
 
-## When to Use AI SQL Generation
+## Choose an Entry Point
 
-- You know the business question but not the exact SQL.
-- You know the tables but need help with joins or aggregation.
-- You need a first draft query to refine.
-- You want chart-ready output.
-- You need to adapt syntax for ClickHouse, PostgreSQL, MySQL, or another supported database.
+| Entry point | Best for | How it enters your workflow |
+| --- | --- | --- |
+| `/` in the editor | Add a query, filter, aggregation, or CTE while writing SQL. | Dory inserts a comment with your request and the generated SQL at the cursor. |
+| Toolbar **Ask AI** | Start from an empty tab or draft the first version of a query. | Generated SQL lands in the active SQL tab for review, formatting, and execution. |
+| Right-side Ask AI panel | Explain current SQL, continue from results, fix errors, or ask follow-up questions. | The panel carries editor and result context; SQL changes can be applied back to the editor. |
+| Copilot Actions | Fix, optimize, rewrite, or aggregate existing SQL. | Preview the generated SQL, then replace the current SQL or open it in a new tab. |
 
-## 1. Prepare Context
+If you do not know the right table yet, start with [Explore Unknown Tables](/en/docs/workflows/explore-unknown-tables) or the table structure view in Explorer.
 
-Before asking AI, confirm that the database is connected, Explorer can read the target tables, the metric is clear, the time range is defined, and the expected output shape is known.
+## Inline Ask AI
 
-If you do not know the right table yet, start with [Explore Unknown Tables](/en/docs/workflows/explore-unknown-tables).
+Type `/` on an empty line in the SQL editor, or click **Ask AI** in the toolbar. If the current line already has SQL text, `/` is inserted as a normal character so it does not interrupt the statement you are writing.
 
-## 2. Use a Specific Prompt
+Inline Ask uses:
+
+- The full editor text in the current SQL tab.
+- The current database and SQL dialect.
+- The table names you mention in the prompt or already have in the editor.
+- Your natural-language request as the instruction for the generated SQL.
+
+After submission, Dory generates SQL only. It does not execute the query. The inserted block includes a comment so you can see which request created it:
 
 ```text
-Goal: count daily active users for the last 30 days.
-Database: ClickHouse.
-Table: events.
-Fields: user_id, event_time, event_name.
-Filter: event_name = 'app_open'.
-Output: date and dau, ordered by date ascending, suitable for a line chart.
-Requirement: avoid scanning unrelated time ranges.
+Count new users per day for the last 30 days, ascending by date, return only date and users.
 ```
 
-This is much more reliable than “write a DAU query.”
+Generated output looks like:
 
-## 3. Validate in SQL Console
+```sql
+-- Count new users per day for the last 30 days, ascending by date, return only date and users.
+select
+  date(created_at) as date,
+  count(*) as users
+from users
+where created_at >= current_date - interval '30 days'
+group by 1
+order by 1 asc;
+```
+
+The actual syntax is adapted to the active connection type, such as PostgreSQL, MySQL, SQLite, ClickHouse, Doris, DuckDB, or MariaDB.
+
+## Ask AI Panel
+
+Press `Cmd/Ctrl + I` to open the SQL Console Ask AI panel. Use this when you want a conversation instead of a one-shot insert. The panel receives Copilot Context:
+
+- Current editor text and selection.
+- Inferred database, schema, and tables.
+- Recent result columns, types, row count, limits, and result profile.
+- Current SQL dialect and available schema context.
+
+You can ask:
+
+```text
+Explain each step in the current SQL and point out where duplicate counting may happen.
+```
+
+Or continue from the current result:
+
+```text
+Rewrite this as a weekly aggregation and keep the same filters.
+```
+
+When the question needs data, the Ask AI panel first generates read-only SQL and can run it through Dory's controlled `sqlRunner`. It does not fabricate results. If SQL is rejected, fails, or only returns a sample, the panel uses the error and result metadata to repair the query or explain the limitation.
+
+## Copilot Actions
+
+When you already have SQL or a failed execution, use Actions in the right panel:
+
+| Action | Use when |
+| --- | --- |
+| Fix SQL errors | Execution failed and AI should use the error, dialect, and original SQL to repair it. |
+| Optimize performance | The query works but scans too much, needs stronger filters, or should preserve the same output with less cost. |
+| Rewrite SQL | You want clearer SQL, a different style, or a dialect adjustment. |
+| Convert to aggregation | Detailed rows need to become analysis-ready or chart-ready aggregate output. |
+
+Actions generate a reviewable SQL preview first. You choose whether to replace the current editor content or open the result in a new tab.
+
+## Write Better Requests
+
+Good requests are short but specific about result shape and boundaries:
+
+```text
+Use the events table to count DAU for the last 14 days.
+Fields: user_id, event_time, event_name.
+Only count event_name = 'app_open'.
+Return date and dau, ordered by date ascending.
+Do not SELECT *; only scan the required time range.
+```
+
+If you are editing existing SQL, you can be shorter:
+
+```text
+Based on the current SQL, add grouping by country and keep only the top 20.
+```
+
+For errors:
+
+```text
+This SQL fails in PostgreSQL with: column "created_date" does not exist.
+Fix the field name using the current schema and preserve the same metric definition.
+```
+
+## Review Before Running
 
 Review the generated SQL before treating it as correct:
 
@@ -45,17 +121,9 @@ Review the generated SQL before treating it as correct:
 4. Does the query need deduplication?
 5. Are filters or limits present?
 6. Does the syntax match the current database?
+7. Does it project only the needed columns instead of using `SELECT *`?
 
-## 4. Ask AI to Fix Errors
-
-Include the SQL and error message:
-
-```text
-This SQL fails in PostgreSQL with: column "created_date" does not exist.
-Fix it using the current schema and explain the change.
-```
-
-## 5. Generate Chart-Ready SQL
+## Generate Chart-Ready SQL
 
 ```text
 Rewrite this query for a bar chart. Return only category and value, order by value descending, and limit to the top 10.
@@ -65,15 +133,15 @@ Rewrite this query for a bar chart. Return only category and value, order by val
 
 ### Can AI-generated SQL run directly in production?
 
-Do not run it blindly. Review generated SQL carefully, especially for large tables, missing time filters, and any non-readonly operation.
+Do not run it blindly. Inline Ask and Actions generate SQL without automatically executing it. Review carefully, especially for production databases, large tables, missing time filters, and any non-readonly operation.
 
 ### Why does AI reference missing columns?
 
-Confirm the table in Explorer and ask AI to regenerate using the current schema.
+Confirm the table in Explorer, then name the table and columns in your request or ask Dory to regenerate from the current table structure. The right-side Ask AI panel has the richest schema and result context; Inline Ask is best when you already know the table names you want to use.
 
 ### How can I make AI generate faster SQL?
 
-Describe the expected time range, grouping level, filters, and database type. Ask AI to reduce scanned rows and preserve the same result columns.
+Describe partition fields, time range, required columns, and performance goals. For existing SQL, use Optimize performance in Copilot Actions.
 
 ## Next Steps
 

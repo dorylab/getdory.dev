@@ -1,48 +1,117 @@
 ---
-title: 生成 SQL
-description: 学习如何用 Dory AI Chat 和 SQL Console 把业务问题转换成可执行、可验证的 SQL 查询。
+title: 使用 Ask AI 生成 SQL
+description: 在 Dory SQL Console 中使用 Inline Ask AI、右侧 Ask AI 面板和 Copilot Actions，把自然语言问题转换成可审查的 SQL。
 ---
 
-# 生成 SQL
+# 使用 Ask AI 生成 SQL
 
-Dory AI 可以结合当前数据库连接、Schema、表结构和 SQL 上下文生成查询。高质量 SQL 不是靠一句模糊提示得到的，而是通过清晰问题、真实表结构、明确输出和人工验证共同完成。
+Dory 的 SQL 生成不是一个脱离编辑器的“提示词框”。它在 SQL Console 里工作：根据入口不同，AI 可以结合当前连接、数据库、SQL 方言、编辑器内容、选区、最近执行结果、结果结构和 Schema 上下文。生成结果会先回到编辑器或 Copilot 面板中，由你审查后再运行。
 
-## 什么时候使用 AI 生成 SQL
+## 选择入口
 
-- 你知道业务问题，但不熟悉 SQL 写法。
-- 你知道要用哪些表，但不确定 Join 或聚合方式。
-- 你需要快速生成一个可修改的第一版查询。
-- 你希望把结果整理成适合图表的结构。
-- 你需要把 ClickHouse、PostgreSQL、MySQL 等不同 SQL 方言改写到正确语法。
+| 入口 | 适合场景 | 结果如何进入工作流 |
+| --- | --- | --- |
+| 编辑器里的 `/` | 在写 SQL 时临时补一段查询、过滤、聚合或 CTE。 | Dory 会把你的问题写成 SQL 注释，并把生成的 SQL 插入当前光标位置。 |
+| 工具栏 **Ask AI** | 空白 Tab 或当前查询需要第一版 SQL。 | 生成的 SQL 会进入当前 SQL Tab，继续格式化、修改和执行。 |
+| 右侧 Ask AI 面板 | 想解释当前 SQL、基于结果继续问、修复报错或让 AI 生成可运行查询。 | 面板会带上当前编辑器和结果上下文；需要替换 SQL 时可应用到编辑器。 |
+| Copilot Actions | 已经有 SQL 或执行结果，需要修复错误、优化性能、改写或转成聚合查询。 | 先预览生成的 SQL，再选择替换当前 SQL 或新建 Tab。 |
 
-## 1. 先准备上下文
+如果你还不知道应该使用哪张表，先从 [Explore Unknown Tables](/zh/docs/workflows/explore-unknown-tables) 或 Explorer 的表结构页开始。
 
-生成 SQL 前，先确认：
+## Inline Ask AI
 
-- 已连接正确数据库。
-- Explorer 能看到目标表和字段。
-- 已明确目标指标和时间范围。
-- 已知道结果要用于表格、趋势图、柱状图还是排查明细。
+在 SQL 编辑器的空行输入 `/`，或点击工具栏里的 **Ask AI**。如果当前行已有 SQL，`/` 会作为普通字符输入，避免打断正在写的语句。
 
-如果你不确定目标表，先阅读 [Explore Unknown Tables](/zh/docs/workflows/explore-unknown-tables)。
+Inline Ask 会读取：
 
-## 2. 使用高质量提示词
+- 当前 SQL Tab 的完整编辑器内容。
+- 当前数据库和 SQL 方言。
+- 编辑器中已经出现、或问题中明确提到的表名。
+- 你的自然语言请求。
 
-推荐模板：
+提交后，Dory 会生成只包含 SQL 的结果，不会自动执行。插入的内容会带一行注释，方便你回看这段 SQL 是基于什么请求生成的：
 
 ```text
-目标：统计最近 30 天每日活跃用户数。
-数据库：ClickHouse。
-表：events。
-关键字段：user_id、event_time、event_name。
-过滤条件：只统计 event_name = 'app_open'。
-输出：date、dau 两列，按 date 升序，适合画折线图。
-要求：避免扫描无关时间范围。
+统计最近 30 天每天新增用户，按日期升序，只返回 date 和 users
 ```
 
-这个模板包含目标、数据库类型、表、字段、过滤条件、输出结构和性能要求，比“帮我写 DAU SQL”更可靠。
+生成后类似：
 
-## 3. 在 SQL Console 中验证
+```sql
+-- 统计最近 30 天每天新增用户，按日期升序，只返回 date 和 users
+select
+  date(created_at) as date,
+  count(*) as users
+from users
+where created_at >= current_date - interval '30 days'
+group by 1
+order by 1 asc;
+```
+
+实际语法会按当前连接类型调整，例如 PostgreSQL、MySQL、SQLite、ClickHouse、Doris、DuckDB 或 MariaDB。
+
+## 右侧 Ask AI 面板
+
+按 `Cmd/Ctrl + I` 打开 SQL Console 右侧 Ask AI 面板。这个面板更适合对话式工作，因为它不仅能看到当前 SQL，还能看到 Copilot Context：
+
+- 当前编辑器文本和选区。
+- 推断出的数据库、Schema 和表。
+- 最近执行 SQL 的结果结构、列类型、行数、限制和结果画像。
+- 当前连接的 SQL 方言和可用 Schema 上下文。
+
+你可以直接问：
+
+```text
+解释当前 SQL 的每一步，并指出可能导致重复计数的位置。
+```
+
+也可以让它基于结果继续生成下一条查询：
+
+```text
+根据刚才结果，把这个查询改成按周聚合，并保留同样的过滤条件。
+```
+
+如果问题需要查数据，Ask AI 面板会优先生成只读 SQL，并通过受控的 `sqlRunner` 执行。它不会编造结果；如果 SQL 被拒绝、报错或只能返回样本，面板会基于错误和返回元数据继续修正或说明限制。
+
+## Copilot Actions
+
+当你已经有 SQL 或刚执行出错时，使用右侧面板的 Actions：
+
+| Action | 何时使用 |
+| --- | --- |
+| Fix SQL errors | 执行失败后，把错误信息、方言和原 SQL 一起交给 AI 修复。 |
+| Optimize performance | SQL 能跑但慢，需要减少扫描、调整过滤、保留输出结构。 |
+| Rewrite SQL | 想换一种写法、换方言或让查询更清晰。 |
+| Convert to aggregation | 当前结果太明细，需要生成适合分析或图表的聚合 SQL。 |
+
+Actions 会先生成可审查的 SQL 预览。确认后再替换当前编辑器内容，或放到新 Tab。
+
+## 写出更有效的问题
+
+好的请求不需要很长，但要让 Dory 知道结果形状和边界：
+
+```text
+用 events 表统计最近 14 天的 DAU。
+字段：user_id、event_time、event_name。
+只统计 event_name = 'app_open'。
+返回 date、dau 两列，按 date 升序。
+不要 SELECT *，只扫描时间范围内的数据。
+```
+
+如果你正在编辑已有 SQL，可以更短：
+
+```text
+在当前 SQL 基础上增加按国家分组，并只保留 Top 20。
+```
+
+如果你正在处理报错：
+
+```text
+这条 SQL 在 PostgreSQL 中报错：column "created_date" does not exist。
+请基于当前 Schema 修正字段名，并保留原来的统计口径。
+```
+
+## 审查后再运行
 
 AI 生成 SQL 后，不要直接把它当作最终结果。建议按顺序检查：
 
@@ -50,25 +119,11 @@ AI 生成 SQL 后，不要直接把它当作最终结果。建议按顺序检查
 2. 时间范围是否正确。
 3. 聚合口径是否符合业务定义。
 4. 是否需要去重，例如 `count(distinct user_id)` 或 `uniq(user_id)`。
-5. 是否保留了 `LIMIT` 或合理过滤条件。
+5. 是否保留了合理过滤条件和 `LIMIT`。
 6. SQL 方言是否匹配当前数据库。
+7. 是否只读取需要的列，而不是 `SELECT *`。
 
-## 4. 让 AI 修正错误
-
-如果执行报错，把错误信息和当前 SQL 一起给 AI：
-
-```text
-这条 SQL 在 PostgreSQL 中报错：column "created_date" does not exist。
-请根据当前 Schema 修正字段名，并解释修改原因。
-```
-
-如果结果不符合预期，描述问题：
-
-```text
-这条 SQL 返回的用户数明显偏大。请检查是否存在重复计数，并给出使用用户 ID 去重的版本。
-```
-
-## 5. 生成图表友好的 SQL
+## 生成图表友好的 SQL
 
 如果查询结果要进入 [Charts & Results](/zh/docs/core-features/charts-results)，可以直接要求 AI 输出稳定列名：
 
@@ -80,15 +135,15 @@ AI 生成 SQL 后，不要直接把它当作最终结果。建议按顺序检查
 
 ### AI 生成的 SQL 可以直接在生产库执行吗？
 
-不建议。AI 生成结果必须人工审核，尤其是生产库、大表、无时间范围查询和包含写操作的 SQL。
+不建议。Inline Ask 和 Actions 默认只生成 SQL，不会自动运行；真正执行前仍需要人工审核。尤其要检查生产库、大表、无时间范围查询和任何非只读语句。
 
 ### AI 经常引用不存在的字段怎么办？
 
-先在 Explorer 中打开目标表，确认字段。然后在提示中明确列出可用字段或让 AI 基于当前表结构重新生成。
+先在 Explorer 中打开目标表，确认字段。然后在提示中明确表名和字段，或让 Dory 基于当前表结构重新生成。右侧 Ask AI 面板拥有最完整的 Schema 和结果上下文；Inline Ask 更适合你已经知道要用哪些表时快速补 SQL。
 
 ### 如何让 AI 生成更快的 SQL？
 
-说明数据库类型、分区字段、时间范围、需要的列和性能目标。例如“只扫描最近 7 天，不要 SELECT *”。
+说明分区字段、时间范围、需要的列和性能目标。例如“只扫描最近 7 天，不要 SELECT *，保留 date 和 dau 两列”。右侧 Actions 里的 Optimize performance 更适合在已有 SQL 上做性能改写。
 
 ## 下一步
 

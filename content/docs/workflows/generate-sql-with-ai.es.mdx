@@ -1,82 +1,150 @@
 ---
-title: Genera SQL con Dory AI
-description: Utilice Dory AI Chat y SQL Console para convertir preguntas comerciales en consultas SQL ejecutables y revisables.
+title: Generar SQL con Ask AI
+description: Use Inline Ask AI, el panel Ask AI de SQL Console y Copilot Actions para convertir preguntas en lenguaje natural en SQL revisable.
 ---
 
-# Genera SQL con Dory AI
+# Generar SQL con Ask AI
 
-Dory AI puede generar SQL utilizando la conexión actual, el esquema, los metadatos de la tabla y el contexto SQL. Un buen resultado proviene de una pregunta clara, un contexto de esquema real, una forma de resultado esperado y una revisión humana.
+La generación SQL de Dory vive dentro de SQL Console, no en un cuadro de texto aislado. Ask AI puede usar la conexión activa, la base de datos, el esquema, el texto del editor, la selección, las tablas inferidas y la forma del resultado reciente. El SQL generado vuelve primero al editor o al panel Copilot para que puedas revisarlo antes de ejecutarlo.
 
-## Cuándo utilizar la generación AI SQL
+## Elija un punto de entrada
 
-- Conoces la cuestión empresarial pero no la SQL exacta.
-- Conoces las tablas pero necesitas ayuda con las uniones o la agregación.
-- Necesita un primer borrador de consulta para perfeccionar.
-- Quiere resultados listos para gráficos.
-- Debe adaptar la sintaxis para ClickHouse, PostgreSQL, MySQL u otra base de datos compatible.
+| Entrada | Mejor para | Cómo entra en el flujo |
+| --- | --- | --- |
+| `/` en el editor | Agregar una consulta, filtro, agregación o CTE mientras escribe SQL. | Dory inserta un comentario con la solicitud y el SQL generado en el cursor. |
+| **Ask AI** en la barra de herramientas | Empezar desde una pestaña vacía o crear la primera versión de una consulta. | El SQL generado queda en la pestaña SQL activa para revisión, formato y ejecución. |
+| Panel Ask AI lateral | Explicar el SQL actual, continuar desde resultados, corregir errores o hacer preguntas de seguimiento. | El panel lleva contexto del editor y del resultado; los cambios SQL pueden aplicarse al editor. |
+| Copilot Actions | Corregir, optimizar, reescribir o agregar SQL existente. | Se muestra una vista previa del SQL generado; luego puede reemplazar el SQL actual o abrirlo en una pestaña nueva. |
 
-## 1. Preparar el contexto
+Si aún no sabe qué tabla usar, empiece con [Explorar tablas desconocidas](/es/docs/workflows/explore-unknown-tables) o con la vista de estructura de tabla en Explorer.
 
-Antes de preguntarle a AI, confirme que la base de datos esté conectada, que Explorer pueda leer las tablas de destino, que la métrica sea clara, que el rango de tiempo esté definido y que se conozca la forma de salida esperada.
+## Inline Ask AI
 
-Si aún no conoce la tabla correcta, comience con [Explorar tablas desconocidas](/es/docs/workflows/explore-unknown-tables).
+Escriba `/` en una línea vacía del editor SQL, o haga clic en **Ask AI** en la barra de herramientas. Si la línea actual ya contiene SQL, `/` se inserta como un carácter normal para no interrumpir la sentencia.
 
-## 2. Utilice un mensaje específico
+Inline Ask usa:
+
+- El texto completo del editor en la pestaña SQL actual.
+- La base de datos, el esquema y el dialecto SQL actuales.
+- Las tablas mencionadas en la solicitud o ya presentes en el editor.
+- Contexto real de esquema para hasta 12 tablas candidatas.
+
+Después de enviar, Dory solo genera SQL. No ejecuta la consulta. El bloque insertado incluye un comentario para que pueda ver qué solicitud lo creó:
 
 ```text
-Goal: count daily active users for the last 30 days.
-Database: ClickHouse.
-Table: events.
-Fields: user_id, event_time, event_name.
-Filter: event_name = 'app_open'.
-Output: date and dau, ordered by date ascending, suitable for a line chart.
-Requirement: avoid scanning unrelated time ranges.
+Contar usuarios nuevos por día durante los últimos 30 días, ascendente por fecha, devolver solo date y users.
 ```
 
-Esto es mucho más confiable que "escribir una consultaDAU".
+El resultado generado se parece a:
 
-## 3. Validar en la consola SQL
+```sql
+-- Contar usuarios nuevos por día durante los últimos 30 días, ascendente por fecha, devolver solo date y users.
+select
+  date(created_at) as date,
+  count(*) as users
+from users
+where created_at >= current_date - interval '30 days'
+group by 1
+order by 1 asc;
+```
+
+La sintaxis real se adapta al tipo de conexión activa, como PostgreSQL, MySQL, SQLite, ClickHouse, Doris, DuckDB o MariaDB.
+
+## Panel Ask AI
+
+Presione `Cmd/Ctrl + I` para abrir el panel Ask AI de SQL Console. Úselo cuando necesite una conversación en vez de una inserción puntual. El panel recibe Copilot Context:
+
+- Texto actual del editor y selección.
+- Base de datos, esquema y tablas inferidas.
+- Columnas, tipos, filas, límites y perfil del resultado reciente.
+- Dialecto SQL actual y contexto de esquema disponible.
+
+Puede preguntar:
+
+```text
+Explica cada paso del SQL actual e indica dónde puede ocurrir conteo duplicado.
+```
+
+O continuar desde el resultado actual:
+
+```text
+Reescribe esto como una agregación semanal y conserva los mismos filtros.
+```
+
+Cuando la pregunta necesita datos, el panel Ask AI primero genera SQL de solo lectura y puede ejecutarlo mediante el `sqlRunner` controlado de Dory. No inventa resultados. Si el SQL se rechaza, falla o solo devuelve una muestra, el panel usa el error y los metadatos del resultado para reparar la consulta o explicar la limitación.
+
+## Copilot Actions
+
+Cuando ya tiene SQL o una ejecución fallida, use Actions en el panel lateral:
+
+| Action | Úselo cuando |
+| --- | --- |
+| Fix SQL errors | La ejecución falló y AI debe usar el error, el dialecto y el SQL original para repararlo. |
+| Optimize performance | La consulta funciona pero escanea demasiado, necesita mejores filtros o debe conservar la misma salida con menor costo. |
+| Rewrite SQL | Quiere SQL más claro, otro estilo o un ajuste de dialecto. |
+| Convert to aggregation | Las filas detalladas deben convertirse en salida agregada para análisis o gráficos. |
+
+Actions genera primero una vista previa revisable. Usted decide si reemplaza el contenido actual del editor o abre el resultado en una pestaña nueva.
+
+## Escriba mejores solicitudes
+
+Una buena solicitud es corta, pero específica sobre la forma del resultado y los límites:
+
+```text
+Usa la tabla events para contar DAU de los últimos 14 días.
+Campos: user_id, event_time, event_name.
+Cuenta solo event_name = 'app_open'.
+Devuelve date y dau, ordenado por date ascendente.
+No uses SELECT *; escanea solo el rango de tiempo necesario.
+```
+
+Si está editando SQL existente, puede ser más breve:
+
+```text
+Con base en el SQL actual, agrega agrupación por país y conserva solo el top 20.
+```
+
+Para errores:
+
+```text
+Este SQL falla en PostgreSQL con: column "created_date" does not exist.
+Corrige el nombre del campo usando el esquema actual y conserva la misma definición de métrica.
+```
+
+## Revise antes de ejecutar
 
 Revise el SQL generado antes de tratarlo como correcto:
 
-1. ¿Son reales los nombres de tablas y columnas?
-2. ¿Es correcto el rango de tiempo?
+1. ¿Existen realmente las tablas y columnas?
+2. ¿El rango de tiempo es correcto?
 3. ¿La agregación coincide con la definición de negocio?
 4. ¿La consulta necesita deduplicación?
-5. ¿Hay filtros o límites presentes?
+5. ¿Hay filtros o límites adecuados?
 6. ¿La sintaxis coincide con la base de datos actual?
+7. ¿Selecciona solo las columnas necesarias en vez de usar `SELECT *`?
 
-## 4. Pídale a AI que corrija errores
-
-Incluya el SQL y el mensaje de error:
-
-```text
-This SQL fails in PostgreSQL with: column "created_date" does not exist.
-Fix it using the current schema and explain the change.
-```
-
-## 5. Generar SQL listo para el gráfico
+## Generar SQL listo para gráficos
 
 ```text
-Rewrite this query for a bar chart. Return only category and value, order by value descending, and limit to the top 10.
+Reescribe esta consulta para un gráfico de barras. Devuelve solo category y value, ordena por value descendente y limita al top 10.
 ```
 
 ## FAQ
 
 ### ¿Se puede ejecutar SQL generado por IA directamente en producción?
 
-No lo ejecutes a ciegas. Revise cuidadosamente el SQL generado, especialmente para tablas grandes, filtros de tiempo faltantes y cualquier operación que no sea de solo lectura.
+No lo ejecute a ciegas. Inline Ask y Actions generan SQL sin ejecutarlo automáticamente. Revíselo con cuidado, especialmente para bases de datos de producción, tablas grandes, filtros de tiempo faltantes y cualquier operación que no sea de solo lectura.
 
-### ¿Por qué la IA hace referencia a las columnas que faltan?
+### ¿Por qué AI referencia columnas inexistentes?
 
-Confirme la tabla en Explorer y solicite a AI que se regenere usando el esquema actual.
+Confirme la tabla en Explorer, luego nombre la tabla y las columnas en la solicitud o pida a Dory que regenere desde la estructura actual. Inline Ask reduce el contexto de esquema cuando la solicitud o el SQL del editor identifican tablas candidatas.
 
-### ¿Cómo puedo hacer que la IA genere SQL más rápido?
+### ¿Cómo hago que AI genere SQL más rápido?
 
-Describa el rango de tiempo esperado, el nivel de agrupación, los filtros y el tipo de base de datos. Pídale a AI que reduzca las filas escaneadas y conserve las mismas columnas de resultados.
+Describa campos de partición, rango de tiempo, columnas necesarias y objetivos de rendimiento. Para SQL existente, use Optimize performance en Copilot Actions.
 
 ## Próximos pasos
 
-- Depurar rendimiento con [Depurar consultas lentas](/es/docs/workflows/debug-slow-queries).
-- Cree elementos visuales con [Crear gráficos a partir de SQL](/es/docs/workflows/build-charts-from-sql).
-- Guarde el trabajo estable con [Guardar y reutilizar análisis](/es/docs/workflows/save-reuse-analysis).
+- Depure rendimiento con [Depurar consultas lentas](/es/docs/workflows/debug-slow-queries).
+- Cree visuales con [Crear gráficos a partir de SQL](/es/docs/workflows/build-charts-from-sql).
+- Guarde trabajo estable con [Guardar y reutilizar análisis](/es/docs/workflows/save-reuse-analysis).

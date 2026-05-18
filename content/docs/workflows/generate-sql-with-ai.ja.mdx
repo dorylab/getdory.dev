@@ -1,82 +1,150 @@
 ---
-title: Dory AI で SQL を生成する
-description: Dory AI Chat と SQL コンソールを使用して、ビジネス上の質問を実行可能でレビュー可能な SQL クエリに変換します。
+title: Ask AI で SQL を生成する
+description: Inline Ask AI、SQL Console の Ask AI パネル、Copilot Actions を使って、自然言語の質問をレビュー可能な SQL に変換します。
 ---
 
-# Dory AI で SQL を生成する
+# Ask AI で SQL を生成する
 
-Dory AI は、現在の接続、スキーマ、テーブル メタデータ、および SQL コンテキストを使用して SQL を生成できます。優れた出力は、明確な質問、実際のスキーマコンテキスト、予想される結果の形状、および人間によるレビューから生まれます。
+Dory の SQL 生成は、独立したプロンプト入力欄ではなく SQL Console の中に組み込まれています。Ask AI は、現在の接続、データベース、スキーマ、エディター本文、選択範囲、推定されたテーブル、直近の結果形状を利用できます。生成された SQL はまずエディターまたは Copilot パネルに戻るため、実行前に確認できます。
 
-## AI SQL 生成を使用する場合
+## 入口を選ぶ
 
-- ビジネス上の質問はわかっていますが、正確な SQL はわかっていません。
-- テーブルについては知っていますが、結合や集計についてサポートが必要です。
-- 絞り込むには最初のドラフト クエリが必要です。
-- チャート対応の出力が必要です。
-- ClickHouse、PostgreSQL、MySQL、またはその他のサポートされているデータベースに構文を適合させる必要があります。
+| 入口 | 適した場面 | ワークフローへの入り方 |
+| --- | --- | --- |
+| エディターの `/` | SQL を書きながら、クエリ、フィルター、集計、CTE を追加する。 | Dory が依頼内容をコメントとして残し、生成 SQL をカーソル位置に挿入します。 |
+| ツールバーの **Ask AI** | 空のタブから始める、または最初のクエリ案を作る。 | 生成 SQL がアクティブな SQL タブに入り、確認、整形、実行を続けられます。 |
+| 右側の Ask AI パネル | 現在の SQL の説明、結果からの続き、エラー修正、フォローアップ質問。 | パネルはエディターと結果のコンテキストを持ち、SQL の変更をエディターへ適用できます。 |
+| Copilot Actions | 既存 SQL の修正、最適化、書き換え、集計化。 | 生成 SQL のプレビューを確認してから、現在の SQL を置き換えるか新しいタブで開きます。 |
 
-## 1. コンテキストを準備する
+どのテーブルを使うべきかわからない場合は、[不明なテーブルの探索](/ja/docs/workflows/explore-unknown-tables) または Explorer のテーブル構造ビューから始めてください。
 
-AI に質問する前に、データベースが接続されていること、Explorer がターゲット テーブルを読み取ることができること、メトリクスが明確であること、時間範囲が定義されていること、および予想される出力形状がわかっていることを確認します。
+## Inline Ask AI
 
-適切なテーブルがまだわからない場合は、[不明なテーブルの探索](/ja/docs/workflows/explore-unknown-tables) から始めてください。
+SQL エディターの空行で `/` を入力するか、ツールバーの **Ask AI** をクリックします。現在行にすでに SQL がある場合、`/` は通常の文字として入力され、作業中の文を妨げません。
 
-## 2. 特定のプロンプトを使用する
+Inline Ask は次の情報を使います。
+
+- 現在の SQL タブのエディター全文。
+- 現在のデータベース、スキーマ、SQL 方言。
+- プロンプト内、またはエディター内に出てくるテーブル。
+- 最大 12 個の候補テーブルの実スキーマコンテキスト。
+
+送信後、Dory は SQL だけを生成します。クエリは実行しません。挿入されるブロックには、どの依頼から生成されたかがわかるコメントが含まれます。
 
 ```text
-Goal: count daily active users for the last 30 days.
-Database: ClickHouse.
-Table: events.
-Fields: user_id, event_time, event_name.
-Filter: event_name = 'app_open'.
-Output: date and dau, ordered by date ascending, suitable for a line chart.
-Requirement: avoid scanning unrelated time ranges.
+過去 30 日間の新規ユーザー数を日別に数え、date と users だけを日付昇順で返す
 ```
 
-これは、「DAUクエリを作成する」よりもはるかに信頼性が高くなります。
+生成結果は次のような形です。
 
-## 3.SQL コンソールで検証する
-
-生成された SQL を正しいものとして扱う前に、それを確認してください。
-
-1. テーブル名と列名は本物ですか?
-2. 時間範囲は正しいですか?
-3. 集計はビジネス定義と一致していますか?
-4. クエリには重複排除が必要ですか?
-5. フィルターまたは制限は存在しますか?
-6. 構文は現在のデータベースと一致していますか?
-
-## 4. AI にエラーの修正を依頼する
-
-SQL とエラー メッセージを含めます。
-
-```text
-This SQL fails in PostgreSQL with: column "created_date" does not exist.
-Fix it using the current schema and explain the change.
+```sql
+-- 過去 30 日間の新規ユーザー数を日別に数え、date と users だけを日付昇順で返す
+select
+  date(created_at) as date,
+  count(*) as users
+from users
+where created_at >= current_date - interval '30 days'
+group by 1
+order by 1 asc;
 ```
 
-## 5. チャート対応の SQL を生成する
+実際の構文は、PostgreSQL、MySQL、SQLite、ClickHouse、Doris、DuckDB、MariaDB など、アクティブな接続タイプに合わせて調整されます。
+
+## Ask AI パネル
+
+`Cmd/Ctrl + I` で SQL Console の Ask AI パネルを開きます。単発の挿入ではなく会話しながら進めたい場合に使います。このパネルは Copilot Context を受け取ります。
+
+- 現在のエディター本文と選択範囲。
+- 推定されたデータベース、スキーマ、テーブル。
+- 直近結果の列、型、行数、制限、結果プロファイル。
+- 現在の SQL 方言と利用可能なスキーマコンテキスト。
+
+たとえば次のように質問できます。
 
 ```text
-Rewrite this query for a bar chart. Return only category and value, order by value descending, and limit to the top 10.
+現在の SQL の各ステップを説明し、重複カウントが起きそうな箇所を指摘してください。
+```
+
+現在の結果から続けることもできます。
+
+```text
+同じフィルターを保ったまま、週次集計に書き換えてください。
+```
+
+データ取得が必要な質問では、Ask AI パネルはまず読み取り専用 SQL を生成し、Dory の制御された `sqlRunner` で実行できます。結果は捏造しません。SQL が拒否された、失敗した、またはサンプルしか返らない場合は、エラーと結果メタデータを使って修正するか制限を説明します。
+
+## Copilot Actions
+
+既存 SQL がある場合や実行に失敗した場合は、右側パネルの Actions を使います。
+
+| Action | 使う場面 |
+| --- | --- |
+| Fix SQL errors | 実行に失敗し、エラー、方言、元の SQL を使って修正したい。 |
+| Optimize performance | クエリは動くがスキャン量が多い、より強いフィルターが必要、または同じ出力を低コストで保ちたい。 |
+| Rewrite SQL | より読みやすい SQL、別の書き方、方言調整が必要。 |
+| Convert to aggregation | 明細行を、分析やグラフに使いやすい集計出力へ変えたい。 |
+
+Actions はまずレビュー可能な SQL プレビューを生成します。現在のエディター内容を置き換えるか、新しいタブで開くかを選べます。
+
+## よい依頼を書く
+
+よい依頼は短くても構いませんが、結果形状と範囲を具体的にします。
+
+```text
+events テーブルを使って、過去 14 日間の DAU を数えてください。
+フィールド: user_id, event_time, event_name。
+event_name = 'app_open' だけを数えます。
+date と dau を返し、date 昇順にしてください。
+SELECT * は使わず、必要な時間範囲だけをスキャンしてください。
+```
+
+既存 SQL を編集中なら、もっと短くできます。
+
+```text
+現在の SQL を基に、国別グループを追加し、上位 20 件だけ残してください。
+```
+
+エラーの場合:
+
+```text
+この SQL は PostgreSQL で column "created_date" does not exist と失敗します。
+現在のスキーマを使ってフィールド名を修正し、同じ指標定義を保ってください。
+```
+
+## 実行前に確認する
+
+生成された SQL を正しいものとして扱う前に確認してください。
+
+1. テーブル名と列名は実在するか。
+2. 時間範囲は正しいか。
+3. 集計はビジネス定義と一致しているか。
+4. 重複排除が必要か。
+5. 適切なフィルターや制限があるか。
+6. 構文は現在のデータベースに合っているか。
+7. `SELECT *` ではなく必要な列だけを選択しているか。
+
+## グラフ向け SQL を生成する
+
+```text
+このクエリを棒グラフ向けに書き換えてください。category と value だけを返し、value の降順で上位 10 件に制限してください。
 ```
 
 ## FAQ
 
-### AI で生成された SQL は本番環境で直接実行できますか?
+### AI 生成 SQL を本番環境で直接実行できますか?
 
-やみくもに実行しないでください。生成された SQL を、特に大きなテーブル、欠落している時間フィルター、および読み取り専用以外の操作について注意深く確認してください。
+盲目的に実行しないでください。Inline Ask と Actions は SQL を生成しますが、自動実行はしません。本番データベース、大きなテーブル、時間フィルター不足、読み取り専用でない操作は特に注意して確認してください。
 
-### AI が欠落している列を参照するのはなぜですか?
+### AI が存在しない列を参照するのはなぜですか?
 
-Explorer でテーブルを確認し、現在のスキーマを使用して AI に再生成を依頼します。
+Explorer でテーブルを確認し、依頼内でテーブル名と列名を明示するか、現在のテーブル構造から再生成するよう Dory に依頼してください。Inline Ask は、プロンプトまたはエディター SQL から候補テーブルを特定できる場合にスキーマコンテキストを絞り込みます。
 
-### AI で SQL をより速く生成するにはどうすればよいですか?
+### AI にもっと速い SQL を生成させるには?
 
-予想される時間範囲、グループ化レベル、フィルター、データベースの種類について説明します。 AI に、スキャンされる行を減らし、同じ結果列を保持するように依頼します。
+パーティションフィールド、時間範囲、必要な列、性能目標を説明してください。既存 SQL の場合は、Copilot Actions の Optimize performance を使います。
 
 ## 次のステップ
 
-- [Debug Slow Queries](/ja/docs/workflows/debug-slow-queries) を使用してパフォーマンスをデバッグします。
-- [Build Charts from SQL](/ja/docs/workflows/build-charts-from-sql) を使用してビジュアルを構築します。
+- [遅いクエリのデバッグ](/ja/docs/workflows/debug-slow-queries) でパフォーマンスを調査します。
+- [SQL からチャートを作成](/ja/docs/workflows/build-charts-from-sql) で可視化します。
 - [分析の保存と再利用](/ja/docs/workflows/save-reuse-analysis) で安定した作業を保存します。
