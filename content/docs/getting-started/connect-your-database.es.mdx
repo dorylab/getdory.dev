@@ -13,6 +13,8 @@ Dory puede conectarse a múltiples tipos de bases de datos. Después de agregar 
 - PostgreSQL y Neón
 - MySQL y MariaDB
 - SQLite
+- SQL Server
+- Oracle
 - DuckDB y MotherDuck
 
 ## Antes de conectarse
@@ -40,6 +42,8 @@ Prepare la siguiente información:
 - Para ClickHouse, confirmeHTTP/puerto nativo, privilegios de usuario y si las tablas de monitoreo están disponibles.
 - Para PostgreSQL y Neon, confirme la visibilidad del esquema y los requisitos deSSL.
 - Para MySQL y MariaDB, confirme el acceso al host, el puerto, el nombre de la base de datos y el juego de caracteres.
+- Para SQL Server, confirme la base de datos, los permisos de esquema y los requisitos de SSL.
+- Para Oracle, confirme el service name, los permisos de esquema y los requisitos de sintaxis de Oracle SQL.
 - Para SQLite y DuckDB, use una ruta de archivo absoluta y asegúrese de que Dory pueda leer el archivo.
 - Para implementaciones de Docker, monte los archivos de bases de datos locales en el contenedor antes de conectarse a ellos.
 

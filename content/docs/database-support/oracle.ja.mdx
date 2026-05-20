@@ -1,0 +1,40 @@
+---
+title: Oracle
+description: Oracle Database を Dory に接続し、Oracle SQL を実行し、オブジェクトを探索し、Oracle スキーマ コンテキストで AI 支援を使用します。
+---
+
+# Oracle
+
+<img src="/icons/databases/oracle.svg" alt="Oracle logo" width="48" height="48" />
+
+Dory は Oracle Database をサポートしています。エンタープライズ システム、ERP データ、財務ワークフロー、レポート基盤、長期運用の本番データベースに利用できます。Oracle に接続し、スキーマとオブジェクトを参照し、Oracle SQL を実行し、Oracle の文脈に基づく AI 支援を使用できます。
+
+## 主な利用シーン
+
+- ERP、財務、監査、顧客、運用データをクエリする。
+- スキーマ、テーブル、ビュー、インデックス、主キー、関数、プロシージャを探索する。
+- レポートや調査用の Oracle SQL を AI で生成する。
+- Oracle クエリで `LIMIT` など他のデータベース方言を誤用しないようにする。
+- 再利用する Oracle クエリを保存する。
+
+## サポート機能
+
+| 機能 | Oracle サポート |
+| --- | --- |
+| Connections | Host、Port、Service Name、Username、Password、SSL、SSH Tunnel。 |
+| Explorer | スキーマ、テーブル、ビュー、列、インデックス、キー、関数、プロシージャ。 |
+| SQL Console | Oracle SQL の編集、実行、結果表示。 |
+| AI Chat | スキーマに基づく Oracle SQL 生成、説明、エラー修正。 |
+| Charts & Results | クエリ結果の可視化分析。 |
+| Saved Queries | 再利用可能な Oracle クエリの保存。 |
+
+## クエリのヒント
+
+行数制限には `FETCH FIRST n ROWS ONLY` または `OFFSET ... FETCH NEXT ...` を使用します。AI に Oracle SQL を依頼するときは、対象が Oracle であることを明示すると、`dual`、識別子の大文字小文字、名前付きパラメータ、Oracle catalog views を考慮しやすくなります。
+
+## 関連ドキュメント
+
+- [データベースに接続する](/ja/docs/getting-started/connect-your-database)
+- [SQL Console](/ja/docs/core-features/sql-console)
+- [Explorer](/ja/docs/core-features/explorer)
+- [クラウド データベース](/ja/docs/database-support/cloud-databases)

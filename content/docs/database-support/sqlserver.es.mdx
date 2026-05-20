@@ -1,0 +1,40 @@
+---
+title: SQL Server
+description: Conecte Microsoft SQL Server a Dory, ejecute T-SQL, explore objetos de base de datos y use asistencia de IA con contexto de esquema.
+---
+
+# SQL Server
+
+<img src="/icons/databases/sqlserver.svg" alt="SQL Server logo" width="48" height="48" />
+
+Dory admite Microsoft SQL Server para aplicaciones empresariales, informes operativos, herramientas internas y diagnóstico en producción. Puede conectar SQL Server, inspeccionar esquemas y objetos en Explorer, ejecutar T-SQL en SQL Console y usar AI Chat con contexto de base de datos.
+
+## Casos de uso
+
+- Consultar tablas operativas, datos de informes, registros de clientes y datos financieros.
+- Explorar bases de datos, esquemas, tablas, vistas, funciones y procedimientos.
+- Generar T-SQL para informes, diagnóstico y validaciones de datos.
+- Corregir errores SQL con IA usando el contexto real de SQL Server.
+- Guardar consultas operativas reutilizables.
+
+## Capacidades compatibles
+
+| Capacidad | Soporte para SQL Server |
+| --- | --- |
+| Connections | Host, puerto, base de datos, usuario, contraseña, SSL, SSH Tunnel y URL de conexión de SQL Server. |
+| Explorer | Bases de datos, esquemas, tablas, vistas, columnas, funciones y procedimientos. |
+| SQL Console | Edición, ejecución y resultados de T-SQL. |
+| AI Chat | Generación, explicación y corrección de T-SQL con contexto de esquema. |
+| Charts & Results | Análisis visual de resultados. |
+| Saved Queries | Guardado de consultas reutilizables de SQL Server. |
+
+## Consejos de consulta
+
+Use sintaxis de SQL Server como `TOP` u `OFFSET ... FETCH` para limitar filas. Cuando solicite consultas de metadatos a la IA, indique que la base de datos objetivo es SQL Server para que use `INFORMATION_SCHEMA` o catalog views de SQL Server.
+
+## Documentos relacionados
+
+- [Conecte su base de datos](/es/docs/getting-started/connect-your-database)
+- [SQL Console](/es/docs/core-features/sql-console)
+- [Explorer](/es/docs/core-features/explorer)
+- [Bases de datos en la nube](/es/docs/database-support/cloud-databases)

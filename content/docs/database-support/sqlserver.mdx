@@ -1,0 +1,47 @@
+---
+title: SQL Server
+description: Connect Microsoft SQL Server to Dory, run T-SQL, browse database objects, and use AI assistance with schema context.
+---
+
+# SQL Server
+
+<img src="/icons/databases/sqlserver.svg" alt="SQL Server logo" width="48" height="48" />
+
+Dory supports Microsoft SQL Server for enterprise applications, operational reporting, internal tools, and production troubleshooting. You can connect SQL Server, inspect schemas and objects in Explorer, run T-SQL in SQL Console, and use AI Chat with database context.
+
+## Best-Fit Use Cases
+
+- Query operational tables, reporting marts, customer records, and finance data.
+- Explore unfamiliar databases, schemas, tables, views, functions, and procedures.
+- Generate T-SQL for reports, troubleshooting, and data checks.
+- Fix SQL errors with AI using the actual SQL Server error context.
+- Save reusable operational queries.
+
+## Supported Capabilities
+
+| Capability | SQL Server support |
+| --- | --- |
+| Connections | Host, port, database, username, password, SSL, SSH tunnel, and SQL Server connection URLs. |
+| Explorer | Databases, schemas, tables, views, columns, functions, and procedures. |
+| SQL Console | T-SQL editing, execution, and results. |
+| AI Chat | Schema-grounded T-SQL generation, explanation, and error fixing. |
+| Charts & Results | Visual analysis for query results. |
+| Saved Queries | Save reusable SQL Server queries. |
+
+## Query Tips
+
+Use SQL Server syntax such as `TOP` or `OFFSET ... FETCH` for row limits. When asking AI for metadata queries, mention that the target database is SQL Server so it can use `INFORMATION_SCHEMA` or SQL Server catalog views instead of PostgreSQL or MySQL-specific syntax.
+
+## Connection Requirements
+
+- Host, port, database name, username, and password.
+- Network access from the Dory runtime.
+- SSL or SSH Tunnel settings when required by your environment.
+- Permissions to read schema metadata and target objects.
+
+## Related Docs
+
+- [Connect Your Database](/en/docs/getting-started/connect-your-database)
+- [SQL Console](/en/docs/core-features/sql-console)
+- [Explorer](/en/docs/core-features/explorer)
+- [Cloud Databases](/en/docs/database-support/cloud-databases)

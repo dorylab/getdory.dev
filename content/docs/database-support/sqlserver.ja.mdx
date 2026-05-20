@@ -1,0 +1,40 @@
+---
+title: SQL Server
+description: Microsoft SQL Server を Dory に接続し、T-SQL を実行し、データベース オブジェクトを参照し、スキーマ コンテキストで AI 支援を使用します。
+---
+
+# SQL Server
+
+<img src="/icons/databases/sqlserver.svg" alt="SQL Server logo" width="48" height="48" />
+
+Dory は Microsoft SQL Server をサポートしています。エンタープライズ アプリケーション、運用レポート、社内ツール、本番環境の調査に利用できます。接続後、Explorer でスキーマとオブジェクトを確認し、SQL Console で T-SQL を実行し、AI Chat をデータベース コンテキスト付きで使用できます。
+
+## 主な利用シーン
+
+- 業務テーブル、レポート用データ、顧客レコード、財務データをクエリする。
+- データベース、スキーマ、テーブル、ビュー、関数、プロシージャを探索する。
+- レポート、調査、データ確認用の T-SQL を AI で生成する。
+- SQL Server のエラー コンテキストを使って AI でクエリを修正する。
+- 再利用する運用クエリを保存する。
+
+## サポート機能
+
+| 機能 | SQL Server サポート |
+| --- | --- |
+| Connections | Host、Port、Database、Username、Password、SSL、SSH Tunnel、SQL Server 接続 URL。 |
+| Explorer | データベース、スキーマ、テーブル、ビュー、列、関数、プロシージャ。 |
+| SQL Console | T-SQL の編集、実行、結果表示。 |
+| AI Chat | スキーマに基づく T-SQL 生成、説明、エラー修正。 |
+| Charts & Results | クエリ結果の可視化分析。 |
+| Saved Queries | 再利用可能な SQL Server クエリの保存。 |
+
+## クエリのヒント
+
+行数制限には `TOP` または `OFFSET ... FETCH` を使用します。AI にメタデータ クエリを依頼するときは、対象が SQL Server であることを明示すると、`INFORMATION_SCHEMA` や SQL Server catalog views を使いやすくなります。
+
+## 関連ドキュメント
+
+- [データベースに接続する](/ja/docs/getting-started/connect-your-database)
+- [SQL Console](/ja/docs/core-features/sql-console)
+- [Explorer](/ja/docs/core-features/explorer)
+- [クラウド データベース](/ja/docs/database-support/cloud-databases)

@@ -150,7 +150,7 @@
     "databaseSupport": {
       "badge": "数据库支持",
       "title": "连接你已经在使用的数据栈。",
-      "description": "支持 PostgreSQL、MySQL、SQLite、MariaDB、Neon 与 ClickHouse。\n一个现代化工作台，用于查询、探索与分析你的数据。",
+      "description": "支持 PostgreSQL、MySQL、SQL Server、Oracle、SQLite、MariaDB、DuckDB 与 ClickHouse。\n一个现代化工作台，用于查询、探索与分析你的数据。",
       "panelTitle": "支持的数据库",
       "highlightTitle": "⭐ ClickHouse 深度体验",
       "highlightFeatures": [
@@ -158,7 +158,7 @@
         "查询分析面板",
         "适合团队的工作区"
       ],
-      "comingNextLabel": "即将支持"
+      "comingNextLabel": "更多"
     },
     "moreFeatures": {
       "badge": "更多功能",
@@ -232,8 +232,8 @@
         "databases": {
           "question": "Dory 支持哪些数据库？",
           "answer": {
-            "paragraph1": "Dory 当前已支持 ClickHouse、PostgreSQL、Neon、MySQL、MariaDB 和 SQLite，其中 ClickHouse 提供深度集成体验。",
-            "paragraph2": "DuckDB 已在规划中，我们会持续扩展支持范围，为现代数据库提供一致的 AI 原生工作空间。"
+            "paragraph1": "Dory 当前已支持 ClickHouse、PostgreSQL、MySQL、MariaDB、SQL Server、Oracle、SQLite 和 DuckDB，其中 ClickHouse 提供深度集成体验。",
+            "paragraph2": "我们会持续扩展支持范围，为现代数据库提供一致的 AI 原生工作空间。"
           }
         },
         "openSource": {

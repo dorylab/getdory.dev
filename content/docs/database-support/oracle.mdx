@@ -1,0 +1,47 @@
+---
+title: Oracle
+description: Connect Oracle Database to Dory, run Oracle SQL, explore objects, and use AI assistance with Oracle schema context.
+---
+
+# Oracle
+
+<img src="/icons/databases/oracle.svg" alt="Oracle logo" width="48" height="48" />
+
+Dory supports Oracle Database for enterprise systems, ERP data, finance workflows, reporting platforms, and long-running production databases. You can connect Oracle, browse schemas and objects, run Oracle SQL, preview data, and use AI assistance grounded in Oracle context.
+
+## Best-Fit Use Cases
+
+- Query ERP, finance, audit, customer, and operational datasets.
+- Explore schemas, tables, views, indexes, primary keys, functions, and procedures.
+- Generate Oracle SQL for reporting and investigation.
+- Avoid cross-database syntax mistakes such as using `LIMIT` in Oracle queries.
+- Save recurring Oracle queries for reuse.
+
+## Supported Capabilities
+
+| Capability | Oracle support |
+| --- | --- |
+| Connections | Host, port, service name, username, password, SSL, and SSH tunnel. |
+| Explorer | Schemas, tables, views, columns, indexes, keys, functions, and procedures. |
+| SQL Console | Oracle SQL editing, execution, and results. |
+| AI Chat | Schema-grounded Oracle SQL generation, explanation, and error fixing. |
+| Charts & Results | Visual analysis for query results. |
+| Saved Queries | Save reusable Oracle queries. |
+
+## Query Tips
+
+Use Oracle row limiting syntax such as `FETCH FIRST n ROWS ONLY` or `OFFSET ... FETCH NEXT ...`. When asking AI to write Oracle SQL, state that the target database is Oracle so it can account for `dual`, identifier casing, named parameters, and Oracle catalog views.
+
+## Connection Requirements
+
+- Host, port, service name, username, and password.
+- Network access from the Dory runtime.
+- SSL or SSH Tunnel settings when required by your environment.
+- Permissions to read schema metadata and target objects.
+
+## Related Docs
+
+- [Connect Your Database](/en/docs/getting-started/connect-your-database)
+- [SQL Console](/en/docs/core-features/sql-console)
+- [Explorer](/en/docs/core-features/explorer)
+- [Cloud Databases](/en/docs/database-support/cloud-databases)

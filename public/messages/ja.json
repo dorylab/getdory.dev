@@ -150,7 +150,7 @@
     "databaseSupport": {
       "badge": "データベース対応",
       "title": "すでに使用しているデータスタックを接続します。",
-      "description": "PostgreSQL、MySQL、SQLite、MariaDB、Neon、ClickHouse をサポートします。\nデータのクエリ、探索、分析のための最新のワークスペース。",
+      "description": "PostgreSQL、MySQL、SQL Server、Oracle、SQLite、MariaDB、DuckDB、ClickHouse をサポートします。\nデータのクエリ、探索、分析のための最新のワークスペース。",
       "panelTitle": "対応データベース",
       "highlightTitle": "⭐ ClickHouse の高度な体験",
       "highlightFeatures": [
@@ -158,7 +158,7 @@
         "クエリ分析ダッシュボード",
         "チームで使えるワークスペース"
       ],
-      "comingNextLabel": "今後対応予定"
+      "comingNextLabel": "その他"
     },
     "moreFeatures": {
       "badge": "その他の機能",
@@ -232,8 +232,8 @@
         "databases": {
           "question": "Dory はどのデータベースをサポートしていますか?",
           "answer": {
-            "paragraph1": "Dory は現在、ClickHouse、PostgreSQL、Neon、MySQL、MariaDB、SQLite をサポートしており、ClickHouse に深く統合されたエクスペリエンスを備えています。",
-            "paragraph2": "DuckDB は計画されており、最新のデータベース全体で一貫した AI ネイティブのワークスペースを提供するためのサポートを拡大し続けます。"
+            "paragraph1": "Dory は現在、ClickHouse、PostgreSQL、MySQL、MariaDB、SQL Server、Oracle、SQLite、DuckDB をサポートしており、ClickHouse に深く統合されたエクスペリエンスを備えています。",
+            "paragraph2": "最新のデータベース全体で一貫した AI ネイティブのワークスペースを提供するためのサポートを拡大し続けます。"
           }
         },
         "openSource": {

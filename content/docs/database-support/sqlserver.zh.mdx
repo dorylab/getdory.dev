@@ -1,0 +1,47 @@
+---
+title: SQL Server
+description: 使用 Dory 连接 Microsoft SQL Server，运行 T-SQL、浏览数据库对象，并结合 Schema 上下文使用 AI 辅助。
+---
+
+# SQL Server
+
+<img src="/icons/databases/sqlserver.svg" alt="SQL Server logo" width="48" height="48" />
+
+Dory 支持连接 Microsoft SQL Server，适合企业应用、运营报表、内部系统和生产问题排查。连接后，你可以在 Explorer 中查看数据库对象，在 SQL Console 中运行 T-SQL，并让 AI Chat 基于真实 Schema 生成、解释或修复查询。
+
+## 适合的 SQL Server 使用场景
+
+- 查询业务表、报表库、客户记录和财务数据。
+- 浏览数据库、Schema、表、视图、函数和存储过程。
+- 用 AI 生成报表 SQL、排查 SQL 或数据校验 SQL。
+- 将 SQL Server 错误上下文交给 AI 辅助修复查询。
+- 保存常用运营查询，方便后续复用。
+
+## 支持能力
+
+| 能力 | SQL Server 支持情况 |
+| --- | --- |
+| Connections | 支持 Host、Port、Database、Username、Password、SSL、SSH Tunnel 和 SQL Server 连接 URL。 |
+| Explorer | 支持浏览数据库、Schema、表、视图、字段、函数和存储过程。 |
+| SQL Console | 支持 T-SQL 编写、运行和结果查看。 |
+| AI Chat | 可基于 Schema 生成 T-SQL、解释查询和修复错误。 |
+| Charts & Results | 支持对查询结果做可视化分析。 |
+| Saved Queries | 支持保存常用 SQL Server 查询。 |
+
+## 查询建议
+
+SQL Server 的分页和限制行数通常使用 `TOP` 或 `OFFSET ... FETCH`。如果让 AI 生成元数据查询，请明确目标数据库是 SQL Server，这样它会优先使用 `INFORMATION_SCHEMA` 或 SQL Server catalog views，避免生成 PostgreSQL 或 MySQL 专用语法。
+
+## 连接前需要准备
+
+- Host、Port、Database、Username 和 Password。
+- Dory 运行环境到 SQL Server 的网络访问。
+- 如环境要求，准备 SSL 或 SSH Tunnel 配置。
+- 当前账号需要具备读取 Schema 元数据和目标对象的权限。
+
+## 相关文档
+
+- [连接数据库](/zh/docs/getting-started/connect-your-database)
+- [SQL Console](/zh/docs/core-features/sql-console)
+- [Explorer](/zh/docs/core-features/explorer)
+- [Cloud Databases](/zh/docs/database-support/cloud-databases)

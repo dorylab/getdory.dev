@@ -1,0 +1,40 @@
+---
+title: Oracle
+description: Conecte Oracle Database a Dory, ejecute Oracle SQL, explore objetos y use asistencia de IA con contexto de esquema de Oracle.
+---
+
+# Oracle
+
+<img src="/icons/databases/oracle.svg" alt="Oracle logo" width="48" height="48" />
+
+Dory admite Oracle Database para sistemas empresariales, datos ERP, flujos financieros, plataformas de informes y bases de datos de producción de larga duración. Puede conectar Oracle, explorar esquemas y objetos, ejecutar Oracle SQL y usar asistencia de IA basada en contexto de Oracle.
+
+## Casos de uso
+
+- Consultar datos ERP, financieros, de auditoría, clientes y operaciones.
+- Explorar esquemas, tablas, vistas, índices, claves primarias, funciones y procedimientos.
+- Generar Oracle SQL para informes e investigación.
+- Evitar errores de dialecto como usar `LIMIT` en consultas de Oracle.
+- Guardar consultas Oracle reutilizables.
+
+## Capacidades compatibles
+
+| Capacidad | Soporte para Oracle |
+| --- | --- |
+| Connections | Host, puerto, service name, usuario, contraseña, SSL y SSH Tunnel. |
+| Explorer | Esquemas, tablas, vistas, columnas, índices, claves, funciones y procedimientos. |
+| SQL Console | Edición, ejecución y resultados de Oracle SQL. |
+| AI Chat | Generación, explicación y corrección de Oracle SQL con contexto de esquema. |
+| Charts & Results | Análisis visual de resultados. |
+| Saved Queries | Guardado de consultas Oracle reutilizables. |
+
+## Consejos de consulta
+
+Use sintaxis de Oracle como `FETCH FIRST n ROWS ONLY` u `OFFSET ... FETCH NEXT ...` para limitar filas. Cuando solicite SQL a la IA, indique que la base de datos objetivo es Oracle para que tenga en cuenta `dual`, mayúsculas y minúsculas de identificadores, parámetros con nombre y catalog views de Oracle.
+
+## Documentos relacionados
+
+- [Conecte su base de datos](/es/docs/getting-started/connect-your-database)
+- [SQL Console](/es/docs/core-features/sql-console)
+- [Explorer](/es/docs/core-features/explorer)
+- [Bases de datos en la nube](/es/docs/database-support/cloud-databases)

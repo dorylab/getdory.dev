@@ -45,9 +45,12 @@ const databaseSupportItems = [
   { name: "ClickHouse", icon: "/icons/databases/clickhouse.svg" },
   { name: "PostgreSQL", icon: "/icons/databases/postgresql.svg" },
   { name: "MySQL", icon: "/icons/databases/mysql.svg" },
+  { name: "SQL Server", icon: "/icons/databases/sqlserver.svg" },
+  { name: "Oracle", icon: "/icons/databases/oracle.svg" },
   { name: "SQLite", icon: "/icons/databases/sqlite.svg" },
   { name: "MariaDB", icon: "/icons/databases/mariadb.svg" },
-  { name: "Neon", icon: "/icons/databases/neon.svg" },
+  { name: "DuckDB", icon: "/icons/databases/duckdb.svg" },
+  { name: "More", icon: "/icons/databases/more.svg" },
 ] as const;
 const moreFeatureKeys = [
   "secure",

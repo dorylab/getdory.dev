@@ -13,6 +13,8 @@ Dory は複数の種類のデータベースに接続できます。接続が追
 - PostgreSQL と Neon
 - MySQL と MariaDB
 - SQLite
+- SQL Server
+- Oracle
 - DuckDB と MotherDuck
 
 ## 接続する前に
@@ -40,6 +42,8 @@ Dory は複数の種類のデータベースに接続できます。接続が追
 ・ ClickHouseの場合、HTTP/nativeポート、ユーザー権限、監視テーブルの有無を確認してください。
 - PostgreSQL および Neon の場合、スキーマの可視性とSSLの要件を確認します。
 ・MySQL、MariaDBの場合は、ホストアクセス、ポート、データベース名、文字セットを確認してください。
+- SQL Server の場合は、データベース、スキーマ権限、SSL 要件を確認してください。
+- Oracle の場合は、service name、スキーマ権限、Oracle SQL の構文要件を確認してください。
 - SQLite と DuckDB の場合は、絶対ファイル パスを使用し、Dory がファイルを読み取れることを確認してください。
 - Docker デプロイメントの場合は、接続する前にローカル データベース ファイルをコンテナーにマウントします。
 

@@ -390,7 +390,7 @@
     "databaseSupport": {
       "badge": "DATABASE SUPPORT",
       "title": "Connect the data stack you already use.",
-      "description": "Supports PostgreSQL, MySQL, SQLite, MariaDB, Neon, and ClickHouse.\nA modern workspace for querying, exploring, and analyzing your data.",
+      "description": "Supports PostgreSQL, MySQL, SQL Server, Oracle, SQLite, MariaDB, DuckDB, and ClickHouse.\nA modern workspace for querying, exploring, and analyzing your data.",
       "panelTitle": "Supported Databases",
       "highlightTitle": "⭐ Advanced Experience for ClickHouse",
       "highlightFeatures": [
@@ -398,7 +398,7 @@
         "Query analytics dashboard",
         "Team-ready workspace"
       ],
-      "comingNextLabel": "Coming Next"
+      "comingNextLabel": "More"
     },
     "moreFeatures": {
       "badge": "More features",
@@ -472,8 +472,8 @@
         "databases": {
           "question": "What databases does Dory support?",
           "answer": {
-            "paragraph1": "Dory currently supports ClickHouse, PostgreSQL, Neon, MySQL, MariaDB, and SQLite, with a deeply integrated experience for ClickHouse.",
-            "paragraph2": "DuckDB is planned, and we will continue expanding support to provide a consistent AI-native workspace across modern databases."
+            "paragraph1": "Dory currently supports ClickHouse, PostgreSQL, MySQL, MariaDB, SQL Server, Oracle, SQLite, and DuckDB, with a deeply integrated experience for ClickHouse.",
+            "paragraph2": "We will continue expanding support to provide a consistent AI-native workspace across modern databases."
           }
         },
         "openSource": {

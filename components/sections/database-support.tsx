@@ -18,6 +18,16 @@ const databaseDefinitions = [
     icon: "/icons/databases/mysql.svg",
   },
   {
+    key: "sqlserver",
+    name: "SQL Server",
+    icon: "/icons/databases/sqlserver.svg",
+  },
+  {
+    key: "oracle",
+    name: "Oracle",
+    icon: "/icons/databases/oracle.svg",
+  },
+  {
     key: "sqlite",
     name: "SQLite",
     icon: "/icons/databases/sqlite.svg",
@@ -28,22 +38,22 @@ const databaseDefinitions = [
     icon: "/icons/databases/mariadb.svg",
   },
   {
-    key: "neon",
-    name: "Neon",
-    icon: "/icons/databases/neon.svg",
-  },
-  {
     key: "clickhouse",
     name: "ClickHouse",
     icon: "/icons/databases/clickhouse.svg",
+  },
+  {
+    key: "duckdb",
+    name: "DuckDB",
+    icon: "/icons/databases/duckdb.svg",
   },
 ] as const;
 
 const plannedDatabases = [
   {
-    key: "duckdb",
-    name: "DuckDB",
-    icon: "/icons/databases/duckdb.svg",
+    key: "more",
+    name: "More",
+    icon: "/icons/databases/more.svg",
   },
 ] as const;
 
