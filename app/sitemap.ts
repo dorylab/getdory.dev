@@ -3,6 +3,7 @@ import { existsSync } from 'node:fs';
 
 import { getBlogSlugs } from '@/lib/blog';
 import { defaultLanguage, locales } from '@/lib/i18n';
+import { policySlugs } from '@/lib/policies';
 import { source } from '@/lib/source';
 
 const siteUrl = 'https://getdory.dev';
@@ -135,7 +136,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { pathname: '', priority: 1 },
     { pathname: docsBasePath, priority: 0.95 },
     { pathname: '/download', priority: 0.7 },
-    { pathname: '/blog', priority: 0.7 }
+    { pathname: '/blog', priority: 0.7 },
+    { pathname: '/policies', priority: 0.35 },
+    ...policySlugs.map((slug) => ({
+      pathname: `/policies/${slug}`,
+      priority: 0.3,
+    })),
   ] as const;
 
   const marketingEntries = marketingPaths.flatMap(({ pathname, priority }) => {

@@ -53,6 +53,15 @@ const footerColumns: FooterColumn[] = [
     ],
   },
   {
+    title: "Legal",
+    links: [
+      { label: "Policies", href: "/policies" },
+      { label: "Privacy policy", href: "/policies/privacy-policy" },
+      { label: "Terms of service", href: "/policies/terms-of-service" },
+      { label: "Rules and policies", href: "/policies/rules-and-policies" },
+    ],
+  },
+  {
     title: "Connect",
     links: [
       { label: "GitHub", href: siteConfig.links.github, external: true },
@@ -76,7 +85,7 @@ export default async function FooterSection({ className, locale: localeProp }: F
       )}
     >
       <div className="relative mx-auto w-full max-w-[1300px]">
-        <div className="grid grid-cols-2 gap-x-8 gap-y-10 pb-10 sm:grid-cols-4">
+        <div className="grid grid-cols-2 gap-x-8 gap-y-10 pb-10 sm:grid-cols-3 lg:grid-cols-5">
           {footerColumns.map((column) => (
             <div key={column.title}>
               <h3 className="text-sm font-semibold text-dory-ink">{column.title}</h3>

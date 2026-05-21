@@ -57,7 +57,7 @@ export const siteConfig = {
   links: {
     twitter: "https://x.com/dorystudio",
     github: "https://github.com/dorylab/dory",
-    email: "mailto:contact@dorystudio.com",
+    email: "mailto:contact@getdory.dev",
   },
   stats: {
     figma: 7693,
