@@ -54,30 +54,30 @@
 
 :root {
   --spacing-page: 1300px;
-  --dory-brand: #26251e;
-  --dory-brand-hover: #172033;
+  --dory-brand: #171615;
+  --dory-brand-hover: #272522;
   --dory-brand-foreground: #ffffff;
-  --dory-brand-secondary: #24496f;
+  --dory-brand-secondary: #2f6cff;
   --dory-brand-secondary-foreground: #ffffff;
-  --dory-brand-accent: #6b7f9f;
-  --dory-brand-accent-strong: #2f4668;
-  --dory-brand-panel: #0f172a;
-  --dory-brand-panel-2: #172033;
-  --dory-brand-muted: #6b7f9f;
-  --dory-brand-soft: #e9eef7;
-  --dory-brand-soft-2: #f4f6fb;
-  --dory-brand-line: rgba(8, 17, 31, 0.12);
-  --dory-brand-line-strong: rgba(8, 17, 31, 0.22);
-  --dory-page: #f7f7f3;
-  --dory-page-wash: #fbfbf7;
+  --dory-brand-accent: #6f6b63;
+  --dory-brand-accent-strong: #2f6cff;
+  --dory-brand-panel: #111110;
+  --dory-brand-panel-2: #1a1917;
+  --dory-brand-muted: #77736b;
+  --dory-brand-soft: #ece9df;
+  --dory-brand-soft-2: #f1eee6;
+  --dory-brand-line: rgba(23, 22, 21, 0.12);
+  --dory-brand-line-strong: rgba(23, 22, 21, 0.22);
+  --dory-page: #f5f3ed;
+  --dory-page-wash: #fbfaf6;
   --dory-page-panel: #ffffff;
   --dory-landing-foreground: #26251e;
-  --dory-landing-muted: #42526b;
-  --dory-warm-accent: #d2b46f;
+  --dory-landing-muted: #6f6b63;
+  --dory-warm-accent: #d9c48b;
   --dory-danger-accent: #ef6b5b;
   --dory-success-accent: #24496f;
-  --dory-grid-soft: rgba(8, 17, 31, 0.035);
-  --dory-grid-faint: rgba(8, 17, 31, 0.026);
+  --dory-grid-soft: rgba(23, 22, 21, 0.035);
+  --dory-grid-faint: rgba(23, 22, 21, 0.026);
   --dory-brand-glow:
     radial-gradient(circle at 24% 28%, rgba(36, 73, 111, 0.16), transparent 30%),
     radial-gradient(circle at 78% 42%, rgba(210, 180, 111, 0.16), transparent 28%);
@@ -91,11 +91,11 @@
   --dory-release-fade:
     linear-gradient(to top, var(--dory-brand), color-mix(in oklab, var(--dory-brand) 74%, transparent), transparent);
   --dory-shadow-sm: 0 1px 0 rgba(8, 17, 31, 0.04);
-  --dory-shadow-brand: 0 16px 36px rgba(8, 17, 31, 0.16);
-  --dory-shadow-card: 0 18px 40px rgba(8, 17, 31, 0.08);
-  --dory-shadow-panel: 0 34px 100px rgba(8, 17, 31, 0.22);
-  --dory-shadow-floating: 0 18px 44px rgba(8, 17, 31, 0.1);
-  --dory-shadow-landing: 0 20px 60px rgba(8, 17, 31, 0.06);
+  --dory-shadow-brand: 0 16px 36px rgba(23, 22, 21, 0.14);
+  --dory-shadow-card: 0 18px 40px rgba(23, 22, 21, 0.07);
+  --dory-shadow-panel: 0 34px 100px rgba(23, 22, 21, 0.2);
+  --dory-shadow-floating: 0 18px 44px rgba(23, 22, 21, 0.09);
+  --dory-shadow-landing: 0 20px 60px rgba(23, 22, 21, 0.05);
   --color-brand: var(--dory-brand);
   --color-brand-foreground: var(--dory-brand-foreground);
   --color-brand-200: var(--dory-brand-hover);
@@ -192,30 +192,30 @@
 :root[class~='dark'],
 :root[data-theme='dark'],
 .dark {
-  --dory-brand: #e9eef7;
+  --dory-brand: #f1eee7;
   --dory-brand-hover: #ffffff;
   --dory-brand-foreground: #08111f;
-  --dory-brand-secondary: #9fb1cf;
+  --dory-brand-secondary: #88b6ff;
   --dory-brand-secondary-foreground: #08111f;
-  --dory-brand-accent: #9fb1cf;
-  --dory-brand-accent-strong: #c8d4e8;
-  --dory-brand-panel: #08111f;
-  --dory-brand-panel-2: #111827;
-  --dory-brand-muted: #9eabc0;
+  --dory-brand-accent: #aaa59b;
+  --dory-brand-accent-strong: #88b6ff;
+  --dory-brand-panel: #0b0b0a;
+  --dory-brand-panel-2: #141312;
+  --dory-brand-muted: #aaa59b;
   --dory-brand-soft: rgba(233, 238, 247, 0.1);
   --dory-brand-soft-2: rgba(233, 238, 247, 0.06);
   --dory-brand-line: rgba(233, 238, 247, 0.16);
   --dory-brand-line-strong: rgba(233, 238, 247, 0.28);
-  --dory-page: #0d1117;
-  --dory-page-wash: #111827;
+  --dory-page: #0b0b0a;
+  --dory-page-wash: #141312;
   --dory-page-panel: rgb(17, 17, 17);
   --dory-landing-foreground: #eaf2ff;
-  --dory-landing-muted: #9eabc0;
+  --dory-landing-muted: #aaa59b;
   --dory-warm-accent: #e6d3ad;
   --dory-danger-accent: #ef8d82;
   --dory-success-accent: #c8d4e8;
-  --dory-grid-soft: rgba(233, 238, 247, 0.045);
-  --dory-grid-faint: rgba(148, 163, 184, 0.06);
+  --dory-grid-soft: rgba(241, 238, 231, 0.045);
+  --dory-grid-faint: rgba(241, 238, 231, 0.055);
   --dory-brand-glow:
     radial-gradient(circle at 24% 28%, rgba(159, 177, 207, 0.14), transparent 30%),
     radial-gradient(circle at 78% 42%, rgba(230, 211, 173, 0.12), transparent 28%);
