@@ -24,13 +24,13 @@ import { Link } from "@/i18n/navigation";
 import { getLatestReleaseDownloads } from "@/lib/github-release";
 import { generateMarketingMetadata } from "@/lib/marketing-og";
 import { cn } from "@/lib/utils";
-import ActionsPreview from "@/public/actions.png";
+import ActionsPreview from "@/public/actions-focus.png";
 import AiTablePreview from "@/public/ai-table-overview.png";
 import AskPreview from "@/public/ask.png";
 import ChatbotPreview from "@/public/chatbot.png";
-import ContextPreview from "@/public/context.png";
+import ContextPreview from "@/public/context-focus.png";
 import ConsolePreview from "@/public/easy-to-use-sql-console.png";
-import HeroPreview from "@/public/hero-preview.png";
+import HeroPreview from "@/public/hero.png";
 
 type PageProps = {
   params: Promise<{ lang: string }>;
