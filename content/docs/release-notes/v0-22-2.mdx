@@ -1,0 +1,20 @@
+---
+title: v0.22.2
+description: Dory release notes for v0.22.2.
+---
+
+# v0.22.2
+
+[View source on GitHub](https://github.com/dorylab/dory/blob/main/release-notes/v0.22.2.md)
+
+## What's Changed
+
+### AI Features & Reliability
+- Enabled AI actions (e.g., table summaries, schema explanations, tab title generation) to use the cloud proxy on desktop clients, improving consistency and reliability across platforms.
+- Fixed an error in AI model execution that caused failures during tab title generation and other AI-driven insights—now handles model errors gracefully and surfaces clearer feedback.
+
+### Query Audit Stability
+- Resolved two critical issues preventing the query audit feature from opening or functioning correctly on desktop, including entitlement checks and UI initialization errors in the sidebar navigation.
+
+### Internal
+- Refactored AI execution pathways to consistently route through the cloud AI proxy, simplifying logic and unifying behavior across web and desktop environments.
