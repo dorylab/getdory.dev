@@ -113,18 +113,12 @@ function ProductFrame({
         className,
       )}
     >
-      <div className="flex h-8 items-center gap-1.5 border-b border-white/10 px-3">
-        <span className="size-2.5 rounded-full bg-[#ff5f57]" />
-        <span className="size-2.5 rounded-full bg-[#ffbd2e]" />
-        <span className="size-2.5 rounded-full bg-[#28c840]" />
-        <span className="ml-3 text-xs text-white/45">Dory workspace</span>
-      </div>
       <Image
         src={src}
         alt={alt}
         priority={priority}
         className={cn(
-          "aspect-[1.62/1] w-full rounded-b-[16px] bg-black object-cover object-left-top",
+          "aspect-[1.62/1] w-full rounded-[16px] bg-black object-cover object-left-top",
           imageClassName,
         )}
       />
@@ -228,7 +222,7 @@ export default async function Page({ params }: PageProps) {
             <div className="pointer-events-none absolute inset-x-[-12%] top-0 h-[700px] bg-[radial-gradient(circle_at_50%_0%,rgba(47,108,255,0.12),transparent_34%),linear-gradient(to_bottom,rgba(255,255,255,0.5),transparent_58%)] dark:bg-[radial-gradient(circle_at_50%_0%,rgba(136,182,255,0.12),transparent_34%),linear-gradient(to_bottom,rgba(255,255,255,0.04),transparent_58%)]" />
 
             <div className="relative z-10 mx-auto max-w-5xl">
-              <h1 className="mx-auto max-w-[980px] text-[clamp(3.8rem,10.4vw,9.2rem)] leading-[0.88] font-medium tracking-normal text-balance [word-break:keep-all]">
+              <h1 className="mx-auto max-w-[980px] text-[clamp(2.9rem,6.9vw,6.5rem)] leading-[1.18] font-medium tracking-normal text-balance [word-break:keep-all]">
                 {t("agentHome.hero.title")}
               </h1>
               <p className="mx-auto mt-8 max-w-3xl text-lg leading-8 text-dory-muted md:text-xl md:leading-9">
@@ -257,7 +251,7 @@ export default async function Page({ params }: PageProps) {
               src={HeroPreview}
               alt={t("agentHome.hero.imageAlt")}
               priority
-              className="relative z-10 mx-auto mt-14 max-w-[1180px] translate-y-8 shadow-[0_28px_90px_rgba(16,16,15,0.16)] md:translate-y-12"
+              className="relative z-10 mx-auto mt-4 max-w-[1180px] translate-y-4 shadow-[0_28px_90px_rgba(16,16,15,0.16)] md:translate-y-6"
             />
           </section>
 
