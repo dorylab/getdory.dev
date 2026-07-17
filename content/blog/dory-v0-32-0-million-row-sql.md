@@ -1,98 +1,166 @@
 ---
-title: "Dory v0.32.0: Explore Millions of SQL Rows Without the Slowdown"
-description: "Dory v0.32.0 introduces no-limit SQL queries, Parquet-backed result sets, and a DuckDB-powered architecture for smooth exploration of millions of rows."
+title: "How Dory Lets You Explore Millions of SQL Rows Without Freezing Your Browser"
+description: "Dory v0.32.0 lets you run SQL without an automatic row limit, persist complete results in Parquet, and explore millions of rows through DuckDB without overloading your browser."
 ---
 
-# Dory v0.32.0: Explore Millions of SQL Rows Without the Slowdown
+# How Dory Lets You Explore Millions of SQL Rows Without Freezing Your Browser
 
 ![Dory v0.32.0 routes large SQL result sets through a DuckDB-inspired compute core into Parquet-backed, smoothly browsable data](/images/blog/dory-v0-32-0-no-limit-sql-cover-en.png)
 
-Dory v0.32.0 is now available.
+Most SQL clients work well until a query returns more data than their result table was designed to handle.
 
-This release addresses a simple but persistent problem in data work: **why should you have to choose between complete query results and a responsive experience?**
+A few hundred rows are easy. A few thousand are usually fine. But once a result reaches hundreds of thousands—or millions—of rows, the experience often starts to break down:
 
-With v0.32.0, you can run **no-limit SQL queries** and keep the complete result. Even when a query returns millions of rows, you can continue to browse, filter, sort, chart, and export the data directly in Dory.
+- The result takes a long time to appear.
+- Browser memory usage increases.
+- Scrolling becomes sluggish.
+- Filtering and sorting stop feeling interactive.
+- The client truncates the result before you can analyze or export it.
 
-You no longer need to truncate the data just to keep the interface responsive, or move the result to another tool before you can continue your analysis.
+The usual workaround is to add a smaller `LIMIT`, export the data, or move it into another tool.
 
-## Go beyond the first 200 rows
+Dory v0.32.0 takes a different approach.
 
-A default row limit is useful protection when you are exploring a large table. But when you intentionally need the complete result, that protection can become a barrier.
+You can now run SQL queries without a row limit, keep the complete result, and continue browsing, searching, filtering, sorting, charting, and exporting millions of rows directly inside Dory.
 
-You can now select **No limit** in Dory's query settings. Dory will stop adding a `LIMIT` clause automatically and run the SQL as you wrote it.
+## Run SQL queries without an automatic LIMIT
 
-Whether you are exporting every order, investigating anomalies scattered across a large table, or preparing a complete dataset for further analysis, you no longer need to work around the result limit.
+Row limits are useful during everyday database exploration. They prevent an accidental query from pulling an unnecessarily large amount of data.
 
-You can keep a sensible default limit for everyday exploration and switch to No limit when the job calls for complete data. The choice between speed and completeness is now yours.
+But sometimes you actually need the complete result.
 
-## Millions of rows, still smooth to explore
+You might need to:
 
-Returning a million rows is one thing. Making those rows genuinely usable is the harder problem.
+- Export every matching order.
+- Investigate anomalies across a large event table.
+- Search an entire query result for a specific value.
+- Build a chart from the full dataset.
+- Save the result for further analysis.
 
-Traditional result tables often try to load too much data into the browser at once. As the result grows, the wait gets longer, memory usage increases, and scrolling, filtering, and sorting become less responsive.
+Dory now includes a **No limit** option in the query settings.
 
-Dory v0.32.0 changes how large result sets are loaded. When you open one, Dory reads and renders only the portion you are currently viewing, then prepares nearby data as you scroll.
+When it is enabled, Dory stops automatically adding a `LIMIT` clause and executes the SQL exactly as written.
 
-To you, it still behaves like one complete table:
+You can keep a safe default limit for normal exploration, then switch to **No limit** only when the task requires complete data.
 
-- Scroll through and navigate result sets with millions of rows.
-- Filter, search, and sort the complete result.
-- Build charts from the full dataset, not just the first few hundred rows.
-- Export filtered data as CSV or Parquet at any time.
+## Returning millions of rows is only half the problem
 
-The dataset can grow without changing how you work. You see the complete result while the browser handles only the small portion needed for the current view.
+A database may be capable of returning millions of rows, but sending all of them directly into a browser table creates a new bottleneck.
 
-## Your result remains available after the query finishes
+Traditional result grids often try to hold too much data in browser memory. As the result grows, rendering becomes slower and interactive operations become more expensive.
 
-SQL results have traditionally been temporary. Close a tab, refresh the page, or switch workspaces, and you may need to run the query again.
+Dory v0.32.0 changes how large SQL result sets are stored and explored.
 
-In v0.32.0, Dory stores the complete result set in Parquet. After the query finishes, the result remains in your workspace so you can reopen it and continue where you left off.
+Instead of loading the entire result into the browser, Dory:
+
+1. Executes the complete SQL query.
+2. Streams the result into a Parquet file.
+3. Uses DuckDB to query the stored result.
+4. Sends only the rows required for the current view to the interface.
+5. Prepares nearby data as you navigate through the result.
+
+The browser never needs to hold millions of rows at once.
+
+From the user's perspective, however, the result still behaves like one complete table.
+
+You can:
+
+- Navigate result sets containing millions of rows.
+- Search and filter across the complete result.
+- Sort by any available column.
+- Create charts from the full dataset.
+- Export the complete or filtered result as CSV or Parquet.
+
+The size of the dataset changes, but the workflow does not.
+
+## Filter and sort the full result with DuckDB
+
+Virtualized rendering can make scrolling through a large table smoother, but rendering alone does not solve the complete problem.
+
+Filtering or sorting millions of rows in browser memory would still be slow and resource-intensive.
+
+Dory therefore runs these operations through DuckDB.
+
+When you filter, search, or sort a large result, Dory does not first transfer the entire dataset into the browser. DuckDB performs the operation directly against the Parquet-backed result set, and Dory returns only the page of data required by the current view.
+
+This architecture keeps interactive operations responsive while preserving access to the complete dataset.
+
+You do not need to install, configure, or manage DuckDB separately. It runs as part of Dory's internal data layer.
+
+## SQL results no longer disappear when the session ends
+
+In many SQL clients, a query result is temporary.
+
+Close the tab, refresh the application, or restart your computer, and you may need to run the query again. That becomes especially inconvenient when the original query was expensive or took several minutes to complete.
+
+Dory now stores complete query results as persistent ResultSets backed by Parquet.
+
+After a query finishes, you can reopen the result and continue working without querying the source database again.
 
 That means you can:
 
-- Run a query today and continue the analysis tomorrow.
-- Move between SQL tabs without losing existing results.
-- Preserve filter, sort, and selection state.
-- Continue creating charts or exports from an existing result.
+- Run a large query today and continue tomorrow.
+- Switch between SQL tabs without losing previous results.
+- Reopen historical results after restarting Dory.
+- Preserve filter, sort, and table state.
+- Create new charts or exports from an existing result.
+- Analyze data without repeatedly loading the source database.
 
-A query result is no longer a disposable response. It becomes a reusable data asset that you can keep exploring.
+A query result is no longer just temporary output. It becomes a reusable data asset inside your workspace.
 
-## DuckDB is becoming a core part of Dory's architecture
+## Why Dory uses Parquet for SQL result sets
 
-To make this experience possible, we have brought DuckDB into the core of Dory's application architecture in v0.32.0.
+Parquet is a columnar file format designed for analytical workloads.
 
-DuckDB is more than a behind-the-scenes query accelerator, and more than another database that Dory can connect to. It is becoming a shared computation layer that connects database results, files, and the analysis capabilities we build next.
+It provides several useful properties for large query results:
 
-Today, Dory stores complete result sets in Parquet and uses DuckDB to read and compute over them.
+- Efficient compression.
+- Fast access to selected columns.
+- Strong compatibility with analytical engines.
+- Portable storage that can be queried again later.
+- Better performance for filtering and aggregation than row-oriented text formats such as CSV.
 
-When you filter, sort, or search a result with millions of rows, Dory does not send the entire dataset to the browser first. DuckDB performs the operation directly on the Parquet result set, and Dory returns only the data needed for the current view.
+Dory stores the complete result in Parquet, while DuckDB provides the computation layer used to explore it.
 
-That is what allows large result sets to remain fast to browse, analyze, chart, and export after they have been saved.
+This separation also allows the interface to remain lightweight. The result can contain millions of rows, but Dory only retrieves the small slice needed for the current table view.
 
-There is nothing new to configure. You do not need to manage DuckDB or Parquet files yourself. They work inside Dory so complete results and a responsive interface can exist together.
+## DuckDB is becoming a core part of Dory
 
-More importantly, this architecture lays the foundation for the next stage of file analysis in Dory. DuckDB is designed to query formats such as Parquet and CSV directly. Building on this foundation, we will expand Dory's support for local files and additional file formats, so you can open files, run SQL, combine data, and start analyzing without importing everything into a database first.
+DuckDB was already available as one of the databases Dory could connect to. In v0.32.0, it takes on a broader role inside Dory's architecture.
 
-Million-row result sets are among the first capabilities delivered by this new architecture. Over time, database results and file data will share a more consistent analysis experience in Dory.
+It is becoming a shared computation layer for:
 
-## One uninterrupted path from query to analysis
+- SQL query results.
+- Parquet datasets.
+- CSV and other local files.
+- Filtering, sorting, and searching.
+- Charts and analytical transformations.
+- Future agent-driven data workflows.
 
-Dory v0.32.0 connects the large-result workflow from end to end:
+Today, this architecture makes million-row ResultSets practical.
 
-1. Run the complete SQL query with **No limit**.
-2. See a preview and live progress while the query runs.
-3. Store the complete result set automatically in Parquet.
-4. Explore millions of rows smoothly in Dory.
-5. Keep filtering, sorting, charting, or exporting the result.
+Next, it will allow database results and local files to share the same analysis experience. You will be able to open a file, query it with SQL, combine it with other data, and begin exploring without first importing everything into a traditional database.
 
-You no longer need to interrupt your work because a result is too large, or move data between several tools before you can reach an answer.
+## One workflow from SQL query to complete analysis
 
-And with DuckDB at the core of Dory's application architecture, this workflow will not stop at database queries. Next, we will bring the same direct, responsive analysis experience to more file-based data.
+The full large-result workflow in Dory now looks like this:
+
+1. Write and run a SQL query.
+2. Select **No limit** when you need the complete result.
+3. Watch the preview and progress while the query runs.
+4. Let Dory store the complete result automatically in Parquet.
+5. Explore millions of rows through the ResultSet interface.
+6. Search, filter, sort, chart, or export the data.
+7. Reopen the saved result later without rerunning the query.
+
+There is no separate export-and-import step and no need to move into another application just because the query returned more data than expected.
 
 ## Dory v0.32.0 is available now
 
-Data should not become unusable just because there is more of it.
+Large SQL results should not become unusable simply because they contain more rows.
 
-Dory v0.32.0 lets you keep complete results without giving up a fast, responsive analysis experience. It also marks DuckDB's arrival at the core of Dory's architecture, preparing the foundation for the next generation of file analysis in Dory.
+Dory v0.32.0 lets you keep complete query results while maintaining a responsive exploration experience. It also establishes DuckDB and Parquet as the foundation for a broader local data analysis layer inside Dory.
 
-The next time you face a large table, turn off the `LIMIT` and see what is waiting in the complete result.
+The next time you need more than the first 200 rows, turn off the `LIMIT` and explore the complete result.
+
+Learn more and download Dory at [getdory.dev](https://getdory.dev/).
