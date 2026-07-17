@@ -370,7 +370,7 @@
     "categoryLabel": "Categoría",
     "releaseNotes": "Notas de la versión",
     "releaseNotesDescription": "Vea lo que se incluye en cada versión de Dory, incluidas nuevas funciones, mejoras y correcciones.",
-    "postCount": "{count, plural, one {# note}otro{# notes}}",
+    "postCount": "{count, plural, one {# nota} other {# notas}}",
     "latestRelease": "Última versión",
     "readLatest": "Leer la última nota",
     "readPost": "Leer publicación",

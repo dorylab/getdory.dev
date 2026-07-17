@@ -370,7 +370,7 @@
     "categoryLabel": "カテゴリ",
     "releaseNotes": "リリースノート",
     "releaseNotesDescription": "新機能、改善点、修正など、Dory の各リリースに含まれる内容を確認してください。",
-    "postCount": "{count, plural, one {# note}その他{# notes}}",
+    "postCount": "{count, plural, other {# 件のノート}}",
     "latestRelease": "最新リリース",
     "readLatest": "最新のノートを読む",
     "readPost": "投稿を読む",
