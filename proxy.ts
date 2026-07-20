@@ -17,6 +17,8 @@ const { rewrite: rewriteLocalizedDocsToMarkdown } = rewritePath(
 const defaultLanguagePaths = [
   '/',
   '/docs',
+  '/for-humans',
+  '/for-agents',
   '/download',
   '/download/redirect',
   '/blog'
