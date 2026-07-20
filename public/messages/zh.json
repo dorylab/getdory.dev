@@ -55,38 +55,92 @@
       "humans": {
         "label": "人类用户",
         "title": "完整的 SQL 工作台，由 AI 进一步增强。",
-        "description": "无需离开工作区，就能探索数据库、编写 SQL、检查完整结果集，并与 AI 协作。",
+        "description": "无需离开工作区，就能浏览数据库、编写和保存 SQL、检查完整结果集，并与 AI Agent 持续协作。",
+        "metaTitle": "Dory 人类用户版 — AI SQL Client 与数据库工作台",
+        "metaDescription": "使用 Dory 浏览数据库、编写和保存 SQL、重开查询历史、检查完整 ResultSet、创建图表、导出数据，并继续 Agent 的工作。",
         "workspace": {
-          "title": "现代 SQL Client 应有的能力，这里都有。",
-          "description": "Dory 首先是一个熟悉、完整的数据库工作台，而不是把真实工作藏起来的聊天框。",
-          "imageAlt": "包含 Schema、SQL 编辑器、结果集和 AI 面板的 Dory 工作区",
-          "features": [
-            "连接 PostgreSQL、MySQL、ClickHouse、SQLite、DuckDB 等数据库",
-            "浏览数据库、Schema、表、字段和索引",
-            "打开多个 SQL Tab，并行组织不同任务",
-            "亲自运行、编辑和保存每一条查询"
-          ]
+          "title": "熟悉的 SQL 工作方式，这里都有。",
+          "description": "Dory 首先是面向日常查询与分析的数据库工作台，而不是把真实工作藏起来的聊天框。",
+          "imageAlt": "使用 Play 数据源的 Dory 工作区，包含 Schema 浏览器、SQL 编辑器、多 Tab、ResultSet 和 AI 上下文",
+          "capabilitiesTitle": "日常数据库工作需要的能力，一个工作区就够了。",
+          "capabilitiesDescription": "从浏览数据、编写 SQL，到保存查询、查看历史、创建图表和导出结果，Dory 可以承担完整的日常查询工作。",
+          "capabilities": [
+            {
+              "title": "数据浏览",
+              "description": "浏览数据库、Schema、表、字段和索引；预览表数据，并检查单元格和整行的完整内容。"
+            },
+            {
+              "title": "SQL 编辑器",
+              "description": "使用 Schema-aware 自动补全和格式化，执行选中 SQL 或多条语句，并查看多个 ResultSet。"
+            },
+            {
+              "title": "Saved Queries",
+              "description": "保存名称、说明和 SQL，通过文件夹组织常用查询，并在需要时快速重新打开。"
+            },
+            {
+              "title": "Query History",
+              "description": "查看过去执行的 SQL、时间、耗时和状态；结果仍可用时恢复当时的 ResultSet。"
+            },
+            {
+              "title": "完整结果导出",
+              "description": "将完整或筛选后的 ResultSet 导出为 CSV 或 Parquet，继续用于后续处理。"
+            },
+            {
+              "title": "多 Tab 工作流",
+              "description": "同时打开多个查询和结果 Tab，在一个工作区中组织并行分析任务。"
+            },
+            {
+              "title": "结果图表",
+              "description": "从真实 ResultSet 创建图表，并保留图表与生成它的查询之间的关系。"
+            },
+            {
+              "title": "AI 协作",
+              "description": "让 AI 读取当前 SQL、Schema 和结果，解释、修复、优化或创建下一个有用的 Tab。"
+            }
+          ],
+          "connectionLabel": "连接日常使用的数据环境",
+          "connectionItems": [
+            "PostgreSQL、MySQL、ClickHouse、SQLite、DuckDB 等数据库",
+            "SSL",
+            "SSH Tunnel",
+            "本地 SQLite 与 DuckDB 文件",
+            "云数据库"
+          ],
+          "savedQueriesAlt": "Dory 使用 Play 数据源展示 Saved Queries",
+          "historyAlt": "Dory Query History 展示成功的 Play 查询和可恢复结果"
         },
         "results": {
           "title": "查询结束后，结果依然有用。",
           "description": "Dory 会把完整查询结果保存为持久产物。即使有数百万行，也能继续探索，而不必重新执行昂贵的 SQL。",
           "imageAlt": "支持搜索、筛选和行操作的 Dory 完整结果集",
+          "chartAlt": "从 Dory 真实查询结果创建的图表",
           "features": [
             "探索数百万行数据，无需全部加载进内存",
             "对完整结果集进行筛选、搜索和排序",
             "无需重新查询即可打开历史结果",
-            "需要时导出完整数据"
+            "创建与真实查询结果保持关联的图表",
+            "将完整或筛选后的结果导出为 CSV 或 Parquet"
           ]
         },
         "ai": {
           "title": "AI 看得到你正在做的工作。",
-          "description": "围绕当前 SQL、Schema 和结果提问。让 AI 解释查询、修复错误、寻找异常或创建下一个有用的 Tab，然后检查它做出的每一处修改。",
-          "imageAlt": "结合当前 SQL 和结果上下文工作的 Dory AI"
+          "description": "Dory 会把当前 SQL、Schema 和结果上下文交给 AI。让它解释查询、修复错误、优化 SQL 或创建下一个有用的 Tab，然后在工作区中检查每一处修改。",
+          "contextLabel": "基于真实工作区上下文",
+          "actionsLabel": "Action 会变成可编辑的工作",
+          "contextAlt": "Dory Copilot Context 展示当前 SQL、Schema 和 ResultSet",
+          "actionsAlt": "Dory Copilot Actions 展示修复、解释、优化和创建 SQL Tab"
         },
         "handoff": {
           "title": "不必从 Agent 的聊天记录重新开始。",
           "description": "完成的 Agent Run 会以 SQL Tab、结果集、结论和 Activity 打开。你可以修改 SQL、补充分析，再把更新后的工作区交回 Agent。",
-          "imageAlt": "由 Agent Run 创建且可以编辑的 Dory 工作区"
+          "features": [
+            "查看结构化 Findings 和完整执行 Activity",
+            "重新打开每一个持久化 SQL Tab 与 ResultSet",
+            "通过 Open Workspace 编辑、重跑并继续分析"
+          ],
+          "listAlt": "包含已完成数据库调查的 Dory Agent Runs 列表",
+          "detailAlt": "Dory Agent Run Summary 与结构化 Activity",
+          "workspaceAlt": "从 Agent Run 打开的可编辑 Dory 工作区"
         },
         "control": {
           "title": "获得 AI 协助，但不交出控制权。",

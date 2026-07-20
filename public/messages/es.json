@@ -55,38 +55,92 @@
       "humans": {
         "label": "Para personas",
         "title": "Un espacio SQL completo, mejorado con IA.",
-        "description": "Explora bases de datos, escribe SQL, revisa conjuntos de resultados completos y colabora con IA sin salir de tu espacio de trabajo.",
+        "description": "Explora bases de datos, escribe y guarda SQL, revisa resultados completos y continúa el trabajo con agentes de IA sin salir del espacio.",
+        "metaTitle": "Dory para personas — Cliente SQL con IA y espacio de bases de datos",
+        "metaDescription": "Explora bases de datos, escribe y guarda SQL, reabre el historial, revisa ResultSets completos, crea gráficos, exporta datos y continúa el trabajo de agentes en Dory.",
         "workspace": {
-          "title": "Todo lo que esperas de un cliente SQL moderno.",
-          "description": "Dory empieza con un espacio de base de datos familiar y completo, no con un chat que oculta el trabajo real.",
-          "imageAlt": "Espacio Dory con explorador de esquemas, editor SQL, resultados y panel de IA",
-          "features": [
-            "Conecta PostgreSQL, MySQL, ClickHouse, SQLite, DuckDB y más",
-            "Explora bases de datos, esquemas, tablas, columnas e índices",
-            "Abre varias pestañas SQL y organiza tareas en paralelo",
-            "Ejecuta, edita y guarda cada consulta"
-          ]
+          "title": "La forma conocida de trabajar con SQL, en un solo lugar.",
+          "description": "Dory empieza como un espacio familiar para consultas y análisis diarios, no como un chat que oculta el trabajo real.",
+          "imageAlt": "Espacio Dory con la fuente Play, explorador de esquemas, editor SQL, pestañas, ResultSet y contexto de IA",
+          "capabilitiesTitle": "Todo lo necesario para el trabajo diario con bases de datos, en un espacio.",
+          "capabilitiesDescription": "Desde explorar datos y escribir SQL hasta guardar consultas, revisar el historial, crear gráficos y exportar resultados, Dory cubre el flujo completo de consulta.",
+          "capabilities": [
+            {
+              "title": "Exploración de datos",
+              "description": "Explora bases, esquemas, tablas, columnas e índices. Previsualiza datos e inspecciona el contenido completo de celdas y filas."
+            },
+            {
+              "title": "Editor SQL",
+              "description": "Usa autocompletado basado en el esquema y formato SQL; ejecuta una selección o varias sentencias con múltiples ResultSets."
+            },
+            {
+              "title": "Saved Queries",
+              "description": "Guarda nombre, descripción y SQL. Organiza consultas en carpetas y vuelve a abrirlas cuando regreses al trabajo."
+            },
+            {
+              "title": "Query History",
+              "description": "Revisa SQL anterior, hora, duración y estado. Restaura el ResultSet cuando haya un resultado guardado."
+            },
+            {
+              "title": "Exportaciones completas",
+              "description": "Exporta el ResultSet completo o filtrado como CSV o Parquet para continuar el flujo de trabajo."
+            },
+            {
+              "title": "Flujo con varias pestañas",
+              "description": "Mantén abiertas varias pestañas de consultas y resultados para organizar análisis paralelos en un espacio."
+            },
+            {
+              "title": "Gráficos de resultados",
+              "description": "Crea gráficos desde un ResultSet real y conserva la relación con la consulta que lo produjo."
+            },
+            {
+              "title": "Colaboración con IA",
+              "description": "Da a la IA el SQL, esquema y resultado actuales para explicar, corregir, optimizar o crear la siguiente pestaña."
+            }
+          ],
+          "connectionLabel": "Preparado para las conexiones que ya usas",
+          "connectionItems": [
+            "PostgreSQL, MySQL, ClickHouse, SQLite, DuckDB y más",
+            "SSL",
+            "SSH Tunnel",
+            "Archivos locales SQLite y DuckDB",
+            "Bases de datos en la nube"
+          ],
+          "savedQueriesAlt": "Saved Queries de Dory con la fuente de datos Play",
+          "historyAlt": "Query History de Dory con consultas Play correctas y resultados recuperables"
         },
         "results": {
           "title": "Resultados que siguen siendo útiles al terminar la consulta.",
           "description": "Dory guarda los resultados completos como artefactos duraderos, para que incluso millones de filas sigan disponibles sin volver a ejecutar SQL costoso.",
           "imageAlt": "Resultado completo de Dory con búsqueda, filtros y acciones de fila",
+          "chartAlt": "Gráfico creado desde un resultado real de consulta en Dory",
           "features": [
             "Explora millones de filas sin cargar todo en memoria",
             "Filtra, busca y ordena el conjunto de resultados completo",
             "Vuelve a abrir resultados históricos sin repetir la consulta",
-            "Exporta los datos completos cuando los necesites"
+            "Crea gráficos que permanecen unidos al resultado real",
+            "Exporta el resultado completo o filtrado como CSV o Parquet"
           ]
         },
         "ai": {
           "title": "La IA ve el trabajo que estás haciendo.",
-          "description": "Pregunta sobre el SQL, el esquema y los resultados actuales. Explica consultas, corrige errores, encuentra anomalías o crea la siguiente pestaña útil, y después revisa cada cambio.",
-          "imageAlt": "IA de Dory trabajando con el SQL y los resultados visibles"
+          "description": "Dory entrega a la IA el SQL, el esquema y el resultado actuales. Pídele explicar consultas, corregir errores, optimizar SQL o crear la siguiente pestaña y revisa cada cambio en el espacio.",
+          "contextLabel": "Basado en el espacio real",
+          "actionsLabel": "Las acciones se convierten en trabajo editable",
+          "contextAlt": "Contexto de Dory Copilot con el SQL, esquema y ResultSet actuales",
+          "actionsAlt": "Acciones de Dory Copilot para corregir, explicar, optimizar y crear una pestaña SQL"
         },
         "handoff": {
           "title": "No vuelvas a empezar desde una conversación del agente.",
           "description": "Los Agent Runs terminados se abren como pestañas SQL, resultados, hallazgos y actividad. Edita el SQL, amplía el análisis y devuelve el espacio actualizado a un agente.",
-          "imageAlt": "Espacio editable de Dory creado por un Agent Run"
+          "features": [
+            "Revisa Findings estructurados y toda la Activity de ejecución",
+            "Vuelve a abrir cada pestaña SQL y ResultSet persistido",
+            "Usa Open Workspace para editar, ejecutar y ampliar el trabajo"
+          ],
+          "listAlt": "Lista de Agent Runs de Dory con investigaciones de bases de datos terminadas",
+          "detailAlt": "Summary y Activity estructurada de un Agent Run en Dory",
+          "workspaceAlt": "Espacio editable de Dory abierto desde un Agent Run"
         },
         "control": {
           "title": "Asistencia de IA sin renunciar al control.",

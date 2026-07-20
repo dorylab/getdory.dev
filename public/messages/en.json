@@ -295,38 +295,92 @@
       "humans": {
         "label": "For Humans",
         "title": "A complete SQL workspace, enhanced by AI.",
-        "description": "Explore databases, write SQL, inspect complete result sets, and collaborate with AI without leaving your workspace.",
+        "description": "Browse databases, write and save SQL, inspect complete result sets, and continue work with AI agents without leaving the workspace.",
+        "metaTitle": "Dory for Humans — AI SQL Client and Database Workspace",
+        "metaDescription": "Browse databases, write and save SQL, reopen query history, inspect complete result sets, create charts, export data, and continue agent work in Dory.",
         "workspace": {
-          "title": "Everything you expect from a modern SQL client.",
-          "description": "Dory starts with a familiar, capable database workspace—not a chat box that hides the underlying work.",
-          "imageAlt": "Dory SQL workspace with schema explorer, editor, result set, and AI panel",
-          "features": [
-            "Connect PostgreSQL, MySQL, ClickHouse, SQLite, DuckDB, and more",
-            "Browse databases, schemas, tables, columns, and indexes",
-            "Open multiple SQL tabs and keep parallel tasks organized",
-            "Run, edit, and save every query yourself"
-          ]
+          "title": "The SQL workflow you already know, all in one place.",
+          "description": "Dory starts as a familiar database workspace for daily querying and analysis—not a chat box that hides the underlying work.",
+          "imageAlt": "Dory workspace using the Play data source with schema browser, SQL editor, tabs, result set, and AI context",
+          "capabilitiesTitle": "Everything daily database work needs, in one workspace.",
+          "capabilitiesDescription": "From browsing data and writing SQL to saved queries, history, charts, and exports, Dory carries the complete query workflow.",
+          "capabilities": [
+            {
+              "title": "Data browsing",
+              "description": "Browse databases, schemas, tables, columns, and indexes. Preview table data and inspect complete cells or rows."
+            },
+            {
+              "title": "SQL editor",
+              "description": "Use schema-aware autocomplete and formatting, then run a selection or multiple statements with multiple result sets."
+            },
+            {
+              "title": "Saved Queries",
+              "description": "Save a name, description, and SQL. Organize queries in folders and reopen them when the work returns."
+            },
+            {
+              "title": "Query History",
+              "description": "Review past SQL, time, duration, and status. Restore the result set when a saved result is available."
+            },
+            {
+              "title": "Complete exports",
+              "description": "Export the complete or filtered ResultSet as CSV or Parquet for the next step in your workflow."
+            },
+            {
+              "title": "Multi-tab workflow",
+              "description": "Keep multiple query and result tabs open, so parallel analysis stays organized in one workspace."
+            },
+            {
+              "title": "Result charts",
+              "description": "Create charts from a real ResultSet and keep the visualization attached to the query that produced it."
+            },
+            {
+              "title": "AI collaboration",
+              "description": "Give AI the current SQL, schema, and result context to explain, fix, optimize, or create the next useful tab."
+            }
+          ],
+          "connectionLabel": "Ready for the connections you already use",
+          "connectionItems": [
+            "PostgreSQL, MySQL, ClickHouse, SQLite, DuckDB, and more",
+            "SSL",
+            "SSH Tunnel",
+            "Local SQLite and DuckDB files",
+            "Cloud databases"
+          ],
+          "savedQueriesAlt": "Saved Queries in Dory using the Play data source",
+          "historyAlt": "Dory Query History showing successful Play queries and restorable results"
         },
         "results": {
           "title": "Results that remain useful after the query finishes.",
           "description": "Dory stores complete query results as durable artifacts, so even million-row outputs remain available to explore without rerunning expensive SQL.",
           "imageAlt": "Dory complete result set with search, filters, and row actions",
+          "chartAlt": "Chart created from a real Dory query result",
           "features": [
             "Explore millions of rows without loading everything into memory",
             "Filter, search, and sort across the complete result set",
             "Reopen historical results without rerunning the query",
-            "Export complete data when you need it"
+            "Create charts that remain attached to the query result",
+            "Export the complete or filtered result as CSV or Parquet"
           ]
         },
         "ai": {
           "title": "AI sees the work you are doing.",
-          "description": "Ask about the current SQL, schema, and result context. Explain unfamiliar queries, fix errors, find anomalies, or create the next useful tab—then inspect every change.",
-          "imageAlt": "Dory AI working with the visible SQL and result context"
+          "description": "Dory gives AI the current SQL, schema, and result context. Explain unfamiliar queries, fix errors, optimize SQL, or create the next useful tab—then inspect every change in the workspace.",
+          "contextLabel": "Grounded in the workspace",
+          "actionsLabel": "Actions become editable work",
+          "contextAlt": "Dory Copilot context showing the current SQL, schema, and result set",
+          "actionsAlt": "Dory Copilot actions for fixing, explaining, optimizing, and creating a SQL tab"
         },
         "handoff": {
           "title": "Never start over from an agent transcript.",
           "description": "Completed Agent Runs open as SQL tabs, result sets, findings, and activity. Edit the SQL, add analysis, and hand the updated workspace back to an agent.",
-          "imageAlt": "Editable Dory workspace created by an Agent Run"
+          "features": [
+            "Review structured findings and execution activity",
+            "Reopen every persisted SQL tab and ResultSet",
+            "Use Open Workspace to edit, rerun, and extend the work"
+          ],
+          "listAlt": "Dory Agent Runs list with completed database investigations",
+          "detailAlt": "Dory Agent Run summary and structured activity",
+          "workspaceAlt": "Editable Dory workspace opened from an Agent Run"
         },
         "control": {
           "title": "AI assistance without giving up control.",

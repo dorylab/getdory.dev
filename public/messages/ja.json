@@ -55,38 +55,92 @@
       "humans": {
         "label": "人向け",
         "title": "AI で強化された、完全な SQL ワークスペース。",
-        "description": "ワークスペースを離れずに、データベースの探索、SQL の作成、完全な結果セットの確認、AI との共同作業を行えます。",
+        "description": "ワークスペースを離れずに、データベースを参照し、SQL を作成・保存し、完全な結果セットを確認して、AI Agent と作業を継続できます。",
+        "metaTitle": "Dory for Humans — AI SQL クライアントとデータベースワークスペース",
+        "metaDescription": "Dory でデータベースを参照し、SQL を作成・保存し、クエリ履歴を開き直し、完全な ResultSet の確認、チャート作成、エクスポート、Agent との引き継ぎを行えます。",
         "workspace": {
-          "title": "モダンな SQL クライアントに必要なものを、すべて。",
-          "description": "Dory は、実際の作業を隠すチャットボックスではなく、使い慣れた高機能なデータベースワークスペースから始まります。",
-          "imageAlt": "スキーマ、SQL エディター、結果セット、AI パネルを備えた Dory ワークスペース",
-          "features": [
-            "PostgreSQL、MySQL、ClickHouse、SQLite、DuckDB などに接続",
-            "データベース、スキーマ、テーブル、カラム、インデックスを参照",
-            "複数の SQL タブで並行タスクを整理",
-            "すべてのクエリを自分で実行、編集、保存"
-          ]
+          "title": "使い慣れた SQL ワークフローを、ひとつの場所に。",
+          "description": "Dory は、実際の作業を隠すチャットボックスではなく、日常のクエリと分析に使えるデータベースワークスペースから始まります。",
+          "imageAlt": "Play データソースを使う Dory ワークスペース。スキーマブラウザー、SQL エディター、複数タブ、ResultSet、AI コンテキストを表示",
+          "capabilitiesTitle": "日常のデータベース作業に必要な機能を、ひとつのワークスペースに。",
+          "capabilitiesDescription": "データ参照、SQL 作成、クエリ保存、履歴、チャート、エクスポートまで、Dory が日常のクエリ作業を支えます。",
+          "capabilities": [
+            {
+              "title": "データ参照",
+              "description": "データベース、スキーマ、テーブル、カラム、インデックスを参照。テーブルデータをプレビューし、セルや行の全内容を確認できます。"
+            },
+            {
+              "title": "SQL エディター",
+              "description": "スキーマ対応の補完とフォーマットを使い、選択範囲や複数ステートメントを実行して複数の ResultSet を確認できます。"
+            },
+            {
+              "title": "Saved Queries",
+              "description": "名前、説明、SQL を保存し、フォルダーで整理。必要なときにすぐ開き直せます。"
+            },
+            {
+              "title": "Query History",
+              "description": "過去の SQL、実行時刻、所要時間、ステータスを確認。保存結果があれば当時の ResultSet を復元できます。"
+            },
+            {
+              "title": "完全な結果のエクスポート",
+              "description": "完全またはフィルター済みの ResultSet を CSV / Parquet で書き出し、次の作業に利用できます。"
+            },
+            {
+              "title": "マルチタブワークフロー",
+              "description": "複数のクエリタブと結果タブを同時に開き、並行する分析をひとつのワークスペースで整理できます。"
+            },
+            {
+              "title": "結果チャート",
+              "description": "実際の ResultSet からチャートを作成し、元になったクエリとの関係を保てます。"
+            },
+            {
+              "title": "AI コラボレーション",
+              "description": "現在の SQL、スキーマ、結果を AI に渡し、説明、修正、最適化、次のタブ作成を任せられます。"
+            }
+          ],
+          "connectionLabel": "いつもの接続環境に対応",
+          "connectionItems": [
+            "PostgreSQL、MySQL、ClickHouse、SQLite、DuckDB など",
+            "SSL",
+            "SSH Tunnel",
+            "ローカル SQLite / DuckDB ファイル",
+            "クラウドデータベース"
+          ],
+          "savedQueriesAlt": "Play データソースを使った Dory の Saved Queries",
+          "historyAlt": "成功した Play クエリと復元可能な結果を表示する Dory Query History"
         },
         "results": {
           "title": "クエリ完了後も、結果を活用し続ける。",
           "description": "Dory は完全なクエリ結果を永続的な成果物として保存します。数百万行でも、高コストな SQL を再実行せずに探索を続けられます。",
           "imageAlt": "検索、フィルター、行操作を備えた Dory の完全な結果セット",
+          "chartAlt": "Dory の実際のクエリ結果から作成したチャート",
           "features": [
             "すべてをメモリに読み込まずに数百万行を探索",
             "完全な結果セット全体をフィルター、検索、並べ替え",
             "クエリを再実行せずに過去の結果を開く",
-            "必要なときに完全なデータをエクスポート"
+            "実際のクエリ結果に紐づくチャートを作成",
+            "完全またはフィルター済みの結果を CSV / Parquet でエクスポート"
           ]
         },
         "ai": {
           "title": "AI は、いま取り組んでいる作業を理解します。",
-          "description": "現在の SQL、スキーマ、結果のコンテキストについて質問できます。クエリの説明、エラー修正、異常検出、次のタブ作成を任せた後も、変更内容をすべて確認できます。",
-          "imageAlt": "表示中の SQL と結果コンテキストを使う Dory AI"
+          "description": "Dory は現在の SQL、スキーマ、結果コンテキストを AI に渡します。クエリの説明、エラー修正、SQL 最適化、次のタブ作成を任せた後も、変更内容をワークスペースで確認できます。",
+          "contextLabel": "実際のワークスペースに基づくコンテキスト",
+          "actionsLabel": "Action は編集可能な作業になる",
+          "contextAlt": "現在の SQL、スキーマ、ResultSet を表示する Dory Copilot Context",
+          "actionsAlt": "修正、説明、最適化、SQL タブ作成を行う Dory Copilot Actions"
         },
         "handoff": {
           "title": "Agent の会話ログからやり直す必要はありません。",
           "description": "完了した Agent Run は、SQL タブ、結果セット、知見、アクティビティとして開きます。SQL を編集し、分析を追加して、更新したワークスペースを Agent に戻せます。",
-          "imageAlt": "Agent Run が作成した編集可能な Dory ワークスペース"
+          "features": [
+            "構造化された Findings と実行 Activity を確認",
+            "永続化されたすべての SQL タブと ResultSet を再び開く",
+            "Open Workspace で編集、再実行、分析の継続が可能"
+          ],
+          "listAlt": "完了したデータベース調査を表示する Dory Agent Runs 一覧",
+          "detailAlt": "Dory Agent Run の Summary と構造化された Activity",
+          "workspaceAlt": "Agent Run から開いた編集可能な Dory ワークスペース"
         },
         "control": {
           "title": "コントロールを手放さずに AI を活用。",
