@@ -1,18 +1,4 @@
-import {
-  ArrowRight,
-  Bot,
-  ChartColumn,
-  Code2,
-  Database,
-  FileClock,
-  Layers3,
-  Play,
-  Search,
-  ShieldCheck,
-  Sparkles,
-  Table2,
-  TerminalSquare,
-} from "lucide-react";
+import { ArrowRight, Bot, Layers3, Play, UserRound } from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import type { StaticImageData } from "next/image";
@@ -28,11 +14,7 @@ import { Link } from "@/i18n/navigation";
 import { getLatestReleaseDownloads } from "@/lib/github-release";
 import { generateMarketingMetadata } from "@/lib/marketing-og";
 import { cn } from "@/lib/utils";
-import AiTablePreview from "@/public/ai-table-overview.png";
-import ConsolePreview from "@/public/easy-to-use-sql-console.png";
 import HeroPreview from "@/public/hero.png";
-import McpPreview from "@/public/mcp.png";
-import ResultPreview from "@/public/result-table.png";
 
 type PageProps = {
   params: Promise<{ lang: string }>;
@@ -58,17 +40,7 @@ export async function generateMetadata({
   return generateMarketingMetadata({ page: "home", lang });
 }
 
-const proofIcons = [Bot, TerminalSquare, FileClock] as const;
-const workspaceIcons = [TerminalSquare, Bot, Layers3] as const;
-const classicIcons = [
-  Code2,
-  Database,
-  Table2,
-  Search,
-  ChartColumn,
-  FileClock,
-] as const;
-const faqKeys = ["plainMcp", "dailyClient", "desktopMcp", "dataSafety"] as const;
+const proofIcons = [UserRound, Layers3, Bot] as const;
 const databaseIcons: Record<string, string> = {
   ClickHouse: "/icons/databases/clickhouse.svg",
   PostgreSQL: "/icons/databases/postgresql.svg",
@@ -82,10 +54,15 @@ const databaseIcons: Record<string, string> = {
   Snowflake: "/icons/databases/more.svg",
 };
 
-function SectionLabel({ children }: { children: ReactNode }) {
+function SectionLabel({ children, inverse = false }: { children: ReactNode; inverse?: boolean }) {
   return (
-    <div className="mb-5 inline-flex items-center gap-2 border border-dory-line bg-dory-surface-soft px-3 py-1.5 text-xs font-medium tracking-normal text-dory-muted">
-      <Sparkles className="size-3.5" />
+    <div
+      className={cn(
+        "mb-5 inline-flex items-center gap-2 text-xs font-medium tracking-[0.16em] uppercase",
+        inverse ? "text-[#f7f1e8]/58" : "text-dory-muted",
+      )}
+    >
+      <span className={cn("size-1.5", inverse ? "bg-[#d9c48b]" : "bg-dory-ink")} />
       {children}
     </div>
   );
@@ -99,7 +76,7 @@ function ProductFrame({
   imageClassName,
   children,
 }: {
-  src: StaticImageData;
+  src: StaticImageData | string;
   alt: string;
   priority?: boolean;
   className?: string;
@@ -116,6 +93,8 @@ function ProductFrame({
       <Image
         src={src}
         alt={alt}
+        width={3024}
+        height={1900}
         priority={priority}
         className={cn(
           "aspect-[1.62/1] w-full rounded-[16px] bg-black object-cover object-left-top",
@@ -131,19 +110,31 @@ function SectionHeader({
   label,
   title,
   description,
+  inverse = false,
 }: {
   label: ReactNode;
   title: ReactNode;
   description?: ReactNode;
+  inverse?: boolean;
 }) {
   return (
     <div className="max-w-3xl">
-      <SectionLabel>{label}</SectionLabel>
-      <h2 className="text-4xl leading-[1.02] font-medium text-balance md:text-6xl">
+      <SectionLabel inverse={inverse}>{label}</SectionLabel>
+      <h2
+        className={cn(
+          "text-[clamp(2.55rem,5vw,5.2rem)] leading-[0.96] font-medium tracking-[-0.045em] text-balance",
+          inverse && "text-[#f7f1e8]",
+        )}
+      >
         {title}
       </h2>
       {description ? (
-        <p className="mt-5 max-w-2xl text-base leading-7 text-dory-muted md:text-lg md:leading-8">
+        <p
+          className={cn(
+            "mt-6 max-w-2xl text-base leading-7 md:text-lg md:leading-8",
+            inverse ? "text-[#f7f1e8]/64" : "text-dory-muted",
+          )}
+        >
           {description}
         </p>
       ) : null}
@@ -151,50 +142,55 @@ function SectionHeader({
   );
 }
 
-function IconItem({
-  icon: IconComponent,
-  title,
-  description,
-  index,
-}: TextItem & {
-  icon: Icon;
-  index?: number;
-}) {
+function ProofItem({ icon: IconComponent, item, index }: { icon: Icon; item: TextItem; index: number }) {
   return (
-    <article className="border border-dory-line bg-dory-surface p-5 md:p-6">
-      <div className="mb-8 flex items-center justify-between text-sm text-dory-muted">
-        <IconComponent className="size-5" />
-        {typeof index === "number" ? <span>0{index + 1}</span> : null}
+    <div className="grid min-h-44 grid-rows-[auto_1fr] border-l border-dory-line px-5 py-6 first:border-l-0 md:px-7">
+      <div className="flex items-center justify-between text-dory-muted">
+        <IconComponent className="size-4.5" />
+        <span className="text-xs tabular-nums">0{index + 1}</span>
       </div>
-      <h3 className="text-xl leading-tight font-medium text-balance md:text-2xl">
-        {title}
-      </h3>
-      <p className="mt-3 text-sm leading-6 text-dory-muted">{description}</p>
-    </article>
+      <div className="self-end pt-8">
+        <h3 className="text-lg font-medium">{item.title}</h3>
+        <p className="mt-2 text-sm leading-6 text-dory-muted">{item.description}</p>
+      </div>
+    </div>
   );
 }
 
-function MiniImage({
-  src,
-  alt,
-  className,
-}: {
-  src: StaticImageData;
-  alt: string;
-  className?: string;
-}) {
+function DatabaseSupport({ groups, note }: { groups: DatabaseGroup[]; note: string }) {
   return (
-    <div
-      className={cn(
-        "overflow-hidden border border-dory-line bg-[#11100f] p-1.5",
-        className,
-      )}
-    >
-      <Image
-        src={src}
-        alt={alt}
-        className="aspect-[1.42/1] w-full bg-black object-cover object-left-top"
-      />
+    <div className="grid gap-4">
+      {groups.map((group, groupIndex) => (
+        <div
+          key={group.label}
+          className={cn(
+            "border border-dory-line bg-dory-surface p-5",
+            groupIndex === 0 &&
+              "bg-[linear-gradient(135deg,rgba(217,196,139,0.18),transparent_55%),var(--dory-surface-strong)]",
+          )}
+        >
+          <div className="mb-4 flex items-center justify-between gap-4">
+            <h3 className="text-xl font-medium">{group.label}</h3>
+            {groupIndex === 0 ? <span className="text-xs font-medium text-dory-muted">{note}</span> : null}
+          </div>
+          <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+            {group.items.map((name) => (
+              <div key={name} className="flex min-h-16 items-center gap-3 border border-dory-line bg-dory-page p-3">
+                <span className="flex size-10 shrink-0 items-center justify-center border border-dory-line bg-dory-surface">
+                  <Image
+                    src={databaseIcons[name] ?? "/icons/databases/more.svg"}
+                    alt=""
+                    width={28}
+                    height={28}
+                    className="h-7 w-7 object-contain"
+                  />
+                </span>
+                <span className="min-w-0 text-sm font-medium md:text-base">{name}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
@@ -207,12 +203,8 @@ export default async function Page({ params }: PageProps) {
   ]);
 
   const proofItems = t.raw("agentHome.proof.items") as TextItem[];
-  const workspaceColumns = t.raw("agentHome.workspace.columns") as TextItem[];
-  const classicFeatures = t.raw("agentHome.classic.features") as TextItem[];
-  const mcpSteps = t.raw("agentHome.mcp.steps") as string[];
-  const databaseGroups = t.raw(
-    "agentHome.database.groups",
-  ) as DatabaseGroup[];
+  const workflowSteps = t.raw("agentHome.workflow.steps") as TextItem[];
+  const databaseGroups = t.raw("agentHome.database.groups") as DatabaseGroup[];
 
   return (
     <MarketingLayout lang={lang}>
@@ -222,7 +214,8 @@ export default async function Page({ params }: PageProps) {
             <div className="pointer-events-none absolute inset-x-[-12%] top-0 h-[700px] bg-[radial-gradient(circle_at_50%_0%,rgba(47,108,255,0.12),transparent_34%),linear-gradient(to_bottom,rgba(255,255,255,0.5),transparent_58%)] dark:bg-[radial-gradient(circle_at_50%_0%,rgba(136,182,255,0.12),transparent_34%),linear-gradient(to_bottom,rgba(255,255,255,0.04),transparent_58%)]" />
 
             <div className="relative z-10 mx-auto max-w-5xl">
-              <h1 className="mx-auto max-w-[980px] text-[clamp(2.9rem,6.9vw,6.5rem)] leading-[1.18] font-medium tracking-normal text-balance [word-break:keep-all]">
+              <SectionLabel>{t("agentHome.hero.kicker")}</SectionLabel>
+              <h1 className="mx-auto max-w-[1040px] text-[clamp(3rem,7.2vw,7rem)] leading-[0.92] font-medium tracking-[-0.06em] text-balance [word-break:keep-all]">
                 {t("agentHome.hero.title")}
               </h1>
               <p className="mx-auto mt-8 max-w-3xl text-lg leading-8 text-dory-muted md:text-xl md:leading-9">
@@ -251,214 +244,70 @@ export default async function Page({ params }: PageProps) {
               src={HeroPreview}
               alt={t("agentHome.hero.imageAlt")}
               priority
-              className="relative z-10 mx-auto mt-4 max-w-[1180px] translate-y-4 shadow-[0_28px_90px_rgba(16,16,15,0.16)] md:translate-y-6"
+              className="relative z-10 mx-auto mt-12 max-w-[1180px] translate-y-4 shadow-[0_28px_90px_rgba(16,16,15,0.16)] md:translate-y-6"
             />
           </section>
 
-          <section className="grid gap-10 border-b border-dory-line py-14 md:grid-cols-[0.82fr_1.18fr] md:py-20">
-            <SectionHeader
-              label={t("agentHome.proof.label")}
-              title={t("agentHome.proof.title")}
-              description={t("agentHome.proof.description")}
-            />
-            <div className="grid gap-4 md:grid-cols-3">
-              {proofItems.map((item, index) => (
-                <IconItem
-                  key={item.title}
-                  icon={proofIcons[index] ?? Sparkles}
-                  title={item.title}
-                  description={item.description}
-                />
-              ))}
-            </div>
+          <section className="grid border-b border-dory-line py-4 md:grid-cols-3 md:py-0">
+            {proofItems.map((item, index) => (
+              <ProofItem key={item.title} item={item} icon={proofIcons[index] ?? Layers3} index={index} />
+            ))}
           </section>
 
-          <section className="grid gap-10 border-b border-dory-line py-16 md:py-24">
-            <div className="grid gap-6 md:grid-cols-[0.78fr_1.22fr] md:items-end">
+          <section
+            id="shared-workflow"
+            className="relative scroll-mt-20 overflow-hidden border-b border-dory-line bg-[#171615] px-6 py-20 text-[#f7f1e8] md:px-10 md:py-28"
+          >
+            <div className="pointer-events-none absolute top-[-240px] right-[-180px] size-[560px] rounded-full bg-[#24496f]/25 blur-[120px]" />
+            <div className="relative">
               <SectionHeader
-                label={t("agentHome.workspace.label")}
-                title={t("agentHome.workspace.title")}
-              />
-              <p className="max-w-2xl text-base leading-7 text-dory-muted md:justify-self-end md:text-lg md:leading-8">
-                {t("agentHome.workspace.description")}
-              </p>
-            </div>
-
-            <div className="grid gap-4 lg:grid-cols-3">
-              {workspaceColumns.map((item, index) => (
-                <IconItem
-                  key={item.title}
-                  icon={workspaceIcons[index] ?? Sparkles}
-                  title={item.title}
-                  description={item.description}
-                  index={index}
-                />
-              ))}
-            </div>
-          </section>
-
-          <section className="grid gap-10 border-b border-dory-line py-16 md:grid-cols-[0.78fr_1.22fr] md:py-24">
-            <div>
-              <SectionHeader
-                label={t("agentHome.mcp.label")}
-                title={t("agentHome.mcp.title")}
-                description={t("agentHome.mcp.description")}
+                inverse
+                label={t("agentHome.workflow.label")}
+                title={t("agentHome.workflow.title")}
+                description={t("agentHome.workflow.description")}
               />
 
-              <div className="mt-8 grid gap-3">
-                {mcpSteps.map((step) => (
-                  <div
-                    key={step}
-                    className="flex items-start gap-3 border-b border-dory-line py-3 text-sm leading-6 text-dory-muted last:border-b-0"
+              <div className="mt-16 grid border-y border-white/14 md:grid-cols-4">
+                {workflowSteps.map((step, index) => (
+                  <article
+                    key={step.title}
+                    className="group relative border-b border-white/14 py-7 md:min-h-64 md:border-r md:border-b-0 md:px-6 md:first:pl-0 md:last:border-r-0 md:last:pr-0"
                   >
-                    <ShieldCheck className="mt-0.5 size-4 shrink-0 text-dory-ink" />
-                    <span>{step}</span>
-                  </div>
+                    <div className="flex items-center justify-between text-xs text-[#f7f1e8]/42">
+                      <span>0{index + 1}</span>
+                      {index < workflowSteps.length - 1 ? <ArrowRight className="hidden size-4 md:block" /> : null}
+                    </div>
+                    <div className="mt-16">
+                      <h3 className="text-xl font-medium">{step.title}</h3>
+                      <p className="mt-3 text-sm leading-6 text-[#f7f1e8]/58">{step.description}</p>
+                    </div>
+                  </article>
                 ))}
               </div>
-            </div>
 
-            <div className="grid gap-4">
-              <div className="border border-dory-line bg-[#171615] p-5 text-[#f7f1e8] shadow-[0_26px_90px_rgba(16,16,15,0.18)]">
-                <div className="mb-5 flex items-center justify-between text-xs text-[#f7f1e8]/55">
-                  <span>{t("agentHome.mcp.codeLabel")}</span>
-                  <TerminalSquare className="size-4" />
-                </div>
-                <pre className="overflow-x-auto text-sm leading-7">
-                  <code>{`codex mcp add dory --url http://127.0.0.1:3318/api/mcp\nclaude mcp add --transport http dory http://127.0.0.1:3318/api/mcp`}</code>
-                </pre>
-              </div>
-
-              <ProductFrame
-                src={McpPreview}
-                alt={t("agentHome.mcp.imageAlt")}
-                className="rounded-[18px] p-1.5 shadow-none"
-                imageClassName="aspect-[1.62/1]"
-              />
-            </div>
-          </section>
-
-          <section className="grid gap-10 border-b border-dory-line py-16 md:py-24">
-            <div className="grid gap-6 md:grid-cols-[0.8fr_1.2fr] md:items-end">
-              <SectionHeader
-                label={t("agentHome.classic.label")}
-                title={t("agentHome.classic.title")}
-              />
-              <p className="max-w-2xl text-base leading-7 text-dory-muted md:justify-self-end md:text-lg md:leading-8">
-                {t("agentHome.classic.description")}
+              <p className="mt-10 max-w-4xl text-xl leading-8 text-[#f7f1e8]/82 md:text-3xl md:leading-11">
+                {t("agentHome.workflow.statement")}
               </p>
             </div>
-
-            <div className="grid gap-6 lg:grid-cols-[1.24fr_0.76fr]">
-              <ProductFrame
-                src={ConsolePreview}
-                alt={t("agentHome.classic.imageAlt")}
-                className="min-w-0 shadow-[0_28px_90px_rgba(16,16,15,0.16)]"
-              />
-              <div className="grid border-y border-dory-line sm:grid-cols-2 lg:grid-cols-1 lg:border-y-0">
-                {classicFeatures.map((feature, index) => {
-                  const IconComponent = classicIcons[index] ?? Sparkles;
-
-                  return (
-                    <div
-                      key={feature.title}
-                      className="border-b border-dory-line py-5 sm:border-r sm:p-5 sm:[&:nth-child(2n)]:border-r-0 lg:border-r-0 lg:px-0 lg:first:pt-0 lg:last:border-b-0"
-                    >
-                      <IconComponent className="mb-5 size-5 text-dory-muted" />
-                      <h3 className="text-lg font-medium">{feature.title}</h3>
-                      <p className="mt-2 text-sm leading-6 text-dory-muted">
-                        {feature.description}
-                      </p>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            <div className="grid gap-6 md:grid-cols-2">
-              <MiniImage src={ResultPreview} alt={t("agentHome.classic.resultsAlt")} />
-              <MiniImage src={AiTablePreview} alt={t("agentHome.classic.chartsAlt")} />
-            </div>
           </section>
 
-          <section className="grid gap-10 border-b border-dory-line py-16 md:grid-cols-[0.72fr_1.28fr] md:py-24">
+          <section className="grid gap-10 border-b border-dory-line py-20 md:grid-cols-[0.72fr_1.28fr] md:py-28">
             <SectionHeader
               label={t("agentHome.database.label")}
               title={t("agentHome.database.title")}
               description={t("agentHome.database.description")}
             />
 
-            <div className="grid gap-4">
-              {databaseGroups.map((group, groupIndex) => (
-                <div
-                  key={group.label}
-                  className={cn(
-                    "border border-dory-line bg-dory-surface p-5",
-                    groupIndex === 0 &&
-                      "bg-[linear-gradient(135deg,rgba(217,196,139,0.18),transparent_55%),var(--dory-surface-strong)]",
-                  )}
-                >
-                  <div className="mb-4 flex items-center justify-between gap-4">
-                    <h3 className="text-xl font-medium">{group.label}</h3>
-                    {groupIndex === 0 ? (
-                      <span className="text-xs font-medium text-dory-muted">
-                        {t("agentHome.database.clickhouseNote")}
-                      </span>
-                    ) : null}
-                  </div>
-                  <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-                    {group.items.map((name) => (
-                      <div
-                        key={name}
-                        className="flex min-h-16 items-center gap-3 border border-dory-line bg-dory-page p-3"
-                      >
-                        <span className="flex size-10 shrink-0 items-center justify-center border border-dory-line bg-dory-surface">
-                          <Image
-                            src={databaseIcons[name] ?? "/icons/databases/more.svg"}
-                            alt=""
-                            width={28}
-                            height={28}
-                            className="h-7 w-7 object-contain"
-                          />
-                        </span>
-                        <span className="min-w-0 text-sm font-medium md:text-base">
-                          {name}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
+            <DatabaseSupport groups={databaseGroups} note={t("agentHome.database.clickhouseNote")} />
           </section>
 
-          <section className="grid gap-10 border-b border-dory-line py-16 md:grid-cols-[0.72fr_1.28fr] md:py-24">
-            <SectionHeader
-              label={t("agentHome.faq.label")}
-              title={t("agentHome.faq.title")}
-            />
-
-            <div className="divide-y divide-dory-line border-y border-dory-line">
-              {faqKeys.map((key) => (
-                <div key={key} className="py-6">
-                  <h3 className="text-xl font-medium">
-                    {t(`agentHome.faq.items.${key}.question`)}
-                  </h3>
-                  <p className="mt-3 max-w-3xl text-sm leading-6 text-dory-muted md:text-base md:leading-7">
-                    {t(`agentHome.faq.items.${key}.answer`)}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          <section className="grid gap-8 pt-16 md:grid-cols-[1fr_auto] md:items-end md:pt-24">
+          <section className="grid gap-10 pt-20 md:grid-cols-[1fr_auto] md:items-end md:pt-28">
             <div>
               <SectionLabel>{t("agentHome.cta.label")}</SectionLabel>
-              <h2 className="max-w-[760px] text-5xl leading-[0.9] font-medium text-balance md:text-8xl">
+              <h2 className="max-w-[800px] text-[clamp(3.5rem,7vw,7rem)] leading-[0.88] font-medium tracking-[-0.06em] text-balance">
                 {t("agentHome.cta.title")}
               </h2>
-              <p className="mt-6 max-w-2xl text-base leading-7 text-dory-muted md:text-lg md:leading-8">
+              <p className="mt-7 max-w-2xl text-base leading-7 text-dory-muted md:text-lg md:leading-8">
                 {t("agentHome.cta.description")}
               </p>
             </div>

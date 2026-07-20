@@ -52,6 +52,155 @@
           }
         ]
       },
+      "humans": {
+        "label": "Para personas",
+        "title": "Un espacio SQL completo, mejorado con IA.",
+        "description": "Explora bases de datos, escribe SQL, revisa conjuntos de resultados completos y colabora con IA sin salir de tu espacio de trabajo.",
+        "workspace": {
+          "title": "Todo lo que esperas de un cliente SQL moderno.",
+          "description": "Dory empieza con un espacio de base de datos familiar y completo, no con un chat que oculta el trabajo real.",
+          "imageAlt": "Espacio Dory con explorador de esquemas, editor SQL, resultados y panel de IA",
+          "features": [
+            "Conecta PostgreSQL, MySQL, ClickHouse, SQLite, DuckDB y más",
+            "Explora bases de datos, esquemas, tablas, columnas e índices",
+            "Abre varias pestañas SQL y organiza tareas en paralelo",
+            "Ejecuta, edita y guarda cada consulta"
+          ]
+        },
+        "results": {
+          "title": "Resultados que siguen siendo útiles al terminar la consulta.",
+          "description": "Dory guarda los resultados completos como artefactos duraderos, para que incluso millones de filas sigan disponibles sin volver a ejecutar SQL costoso.",
+          "imageAlt": "Resultado completo de Dory con búsqueda, filtros y acciones de fila",
+          "features": [
+            "Explora millones de filas sin cargar todo en memoria",
+            "Filtra, busca y ordena el conjunto de resultados completo",
+            "Vuelve a abrir resultados históricos sin repetir la consulta",
+            "Exporta los datos completos cuando los necesites"
+          ]
+        },
+        "ai": {
+          "title": "La IA ve el trabajo que estás haciendo.",
+          "description": "Pregunta sobre el SQL, el esquema y los resultados actuales. Explica consultas, corrige errores, encuentra anomalías o crea la siguiente pestaña útil, y después revisa cada cambio.",
+          "imageAlt": "IA de Dory trabajando con el SQL y los resultados visibles"
+        },
+        "handoff": {
+          "title": "No vuelvas a empezar desde una conversación del agente.",
+          "description": "Los Agent Runs terminados se abren como pestañas SQL, resultados, hallazgos y actividad. Edita el SQL, amplía el análisis y devuelve el espacio actualizado a un agente.",
+          "imageAlt": "Espacio editable de Dory creado por un Agent Run"
+        },
+        "control": {
+          "title": "Asistencia de IA sin renunciar al control.",
+          "description": "Los agentes trabajan a través del espacio y la capa de conexión inspeccionables de Dory.",
+          "items": [
+            "Elige a qué conexiones puede acceder cada agente",
+            "Mantén las credenciales de base de datos en Dory",
+            "Usa flujos SQL de solo lectura",
+            "Revisa el SQL generado antes de continuar",
+            "Ejecuta localmente con Dory Desktop"
+          ]
+        }
+      },
+      "workflow": {
+        "label": "Flujo compartido",
+        "title": "Un espacio. Trabajo continuo.",
+        "description": "Dory conserva la investigación, para que personas y agentes puedan alternarse sin perder el trabajo entre entregas.",
+        "steps": [
+          {
+            "title": "El agente investiga",
+            "description": "El agente explora esquemas y ejecuta SQL a través de Dory."
+          },
+          {
+            "title": "Dory conserva",
+            "description": "Consultas, resultados, hallazgos y actividad se vuelven artefactos duraderos."
+          },
+          {
+            "title": "La persona edita",
+            "description": "Abre el Run como un espacio SQL real y cambia cualquier elemento creado."
+          },
+          {
+            "title": "El agente continúa",
+            "description": "Devuelve el espacio actualizado al mismo agente o a uno diferente."
+          }
+        ],
+        "statement": "Personas y agentes no intercambian capturas, SQL copiado ni resúmenes del chat. Trabajan sobre el mismo espacio subyacente."
+      },
+      "agents": {
+        "label": "Para agentes",
+        "title": "Da a los agentes de código un espacio de base de datos real.",
+        "description": "Permite que exploren esquemas, ejecuten SQL, conserven resultados y creen trabajo que las personas puedan revisar y continuar.",
+        "connections": {
+          "title": "Una capa de conexión para cada agente.",
+          "description": "Configura una base de datos una sola vez en Dory y deja que Codex, Claude Code y otros agentes compatibles trabajen mediante la misma capa controlada.",
+          "imageAlt": "Configuración MCP de Dory para Codex, Claude Code y otros agentes",
+          "agents": ["Codex", "Claude Code", "Otros agentes"],
+          "doryLayer": "Dory MCP o CLI",
+          "databaseLayer": "Conexiones de base de datos controladas"
+        },
+        "tools": {
+          "title": "Herramientas de alto nivel, no decenas de primitivas.",
+          "description": "Un catálogo pequeño y enfocado representa flujos de datos reales, reduciendo la confusión y las llamadas innecesarias.",
+          "items": [
+            "Listar conexiones disponibles",
+            "Explorar esquemas y tablas",
+            "Ejecutar SQL de solo lectura",
+            "Crear y gestionar pestañas del espacio",
+            "Acceder a consultas guardadas"
+          ]
+        },
+        "artifacts": {
+          "title": "Los agentes crean trabajo, no solo respuestas.",
+          "description": "Cada consulta útil puede convertirse en una pestaña SQL editable, un resultado persistente o parte de un espacio mayor.",
+          "modes": [
+            {
+              "title": "Solo ejecutar",
+              "description": "Devuelve el resultado directamente cuando no hace falta un espacio."
+            },
+            {
+              "title": "Crear pestaña",
+              "description": "Inicia una nueva unidad de análisis inspeccionable."
+            },
+            {
+              "title": "Continuar pestaña",
+              "description": "Añade el siguiente paso al trabajo que ya está en curso."
+            },
+            {
+              "title": "Reemplazar contenido",
+              "description": "Actualiza una pestaña manteniendo el contexto del Run."
+            }
+          ]
+        },
+        "runs": {
+          "title": "Cada Agent Run deja un rastro inspeccionable.",
+          "description": "El trabajo se conserva como un Run estructurado con SQL, resultados completos, hallazgos y actividad legible; no desaparece al terminar el chat.",
+          "features": [
+            "Revisa consultas, fallos e intentos intermedios",
+            "Abre resultados completos y hallazgos generados",
+            "Edita el SQL generado en un espacio real",
+            "Continúa la misma tarea con otro agente"
+          ],
+          "listAlt": "Lista de Agent Runs de Dory con estado, fuente de datos y resultados",
+          "detailAlt": "Detalle de Agent Run de Dory con resumen, hallazgos y actividad",
+          "workspaceAlt": "Agent Run de Dory abierto como espacio SQL editable"
+        },
+        "runtime": {
+          "label": "Ejecuta en cualquier lugar",
+          "title": "Desktop, sin interfaz o remoto.",
+          "items": [
+            {
+              "title": "Dory Desktop",
+              "description": "Reutiliza conexiones locales, historial y permisos para trabajo interactivo con agentes."
+            },
+            {
+              "title": "Dory CLI",
+              "description": "Ejecuta sin interfaz junto a un agente o en un entorno de desarrollo mediante stdio."
+            },
+            {
+              "title": "Remote HTTP",
+              "description": "Centraliza el acceso a bases de datos tras una instancia Dory compartida para entornos remotos."
+            }
+          ]
+        }
+      },
       "workspace": {
         "label": "Workspace compartido",
         "title": "Un workspace para humanos y agentes",

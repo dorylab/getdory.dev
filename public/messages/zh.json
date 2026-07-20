@@ -52,6 +52,155 @@
           }
         ]
       },
+      "humans": {
+        "label": "人类用户",
+        "title": "完整的 SQL 工作台，由 AI 进一步增强。",
+        "description": "无需离开工作区，就能探索数据库、编写 SQL、检查完整结果集，并与 AI 协作。",
+        "workspace": {
+          "title": "现代 SQL Client 应有的能力，这里都有。",
+          "description": "Dory 首先是一个熟悉、完整的数据库工作台，而不是把真实工作藏起来的聊天框。",
+          "imageAlt": "包含 Schema、SQL 编辑器、结果集和 AI 面板的 Dory 工作区",
+          "features": [
+            "连接 PostgreSQL、MySQL、ClickHouse、SQLite、DuckDB 等数据库",
+            "浏览数据库、Schema、表、字段和索引",
+            "打开多个 SQL Tab，并行组织不同任务",
+            "亲自运行、编辑和保存每一条查询"
+          ]
+        },
+        "results": {
+          "title": "查询结束后，结果依然有用。",
+          "description": "Dory 会把完整查询结果保存为持久产物。即使有数百万行，也能继续探索，而不必重新执行昂贵的 SQL。",
+          "imageAlt": "支持搜索、筛选和行操作的 Dory 完整结果集",
+          "features": [
+            "探索数百万行数据，无需全部加载进内存",
+            "对完整结果集进行筛选、搜索和排序",
+            "无需重新查询即可打开历史结果",
+            "需要时导出完整数据"
+          ]
+        },
+        "ai": {
+          "title": "AI 看得到你正在做的工作。",
+          "description": "围绕当前 SQL、Schema 和结果提问。让 AI 解释查询、修复错误、寻找异常或创建下一个有用的 Tab，然后检查它做出的每一处修改。",
+          "imageAlt": "结合当前 SQL 和结果上下文工作的 Dory AI"
+        },
+        "handoff": {
+          "title": "不必从 Agent 的聊天记录重新开始。",
+          "description": "完成的 Agent Run 会以 SQL Tab、结果集、结论和 Activity 打开。你可以修改 SQL、补充分析，再把更新后的工作区交回 Agent。",
+          "imageAlt": "由 Agent Run 创建且可以编辑的 Dory 工作区"
+        },
+        "control": {
+          "title": "获得 AI 协助，但不交出控制权。",
+          "description": "Agent 通过 Dory 可检查的工作区和连接层执行任务。",
+          "items": [
+            "选择 Agent 可以访问哪些数据库连接",
+            "让数据库凭据留在 Dory 中",
+            "使用只读 SQL 工作流",
+            "继续之前检查生成的 SQL",
+            "通过 Dory Desktop 在本地运行"
+          ]
+        }
+      },
+      "workflow": {
+        "label": "共享工作流",
+        "title": "同一个工作区，持续推进。",
+        "description": "Dory 保存调查过程本身，让人和 Agent 可以轮流接手，而不会在交接中丢失工作。",
+        "steps": [
+          {
+            "title": "Agent 开始调查",
+            "description": "Agent 通过 Dory 探索 Schema 并运行 SQL。"
+          },
+          {
+            "title": "Dory 保存工作",
+            "description": "查询、结果集、结论和 Activity 都成为持久产物。"
+          },
+          {
+            "title": "人类检查和编辑",
+            "description": "把 Run 打开成真正的 SQL 工作区，修改其中任何内容。"
+          },
+          {
+            "title": "Agent 继续推进",
+            "description": "把更新后的工作区交给同一个或另一个 Agent。"
+          }
+        ],
+        "statement": "人类和 Agent 不需要交换截图、复制的 SQL 或聊天摘要。他们使用的是同一个底层工作区。"
+      },
+      "agents": {
+        "label": "Agent",
+        "title": "给编程 Agent 一个真正的数据库工作区。",
+        "description": "让 Agent 探索 Schema、运行 SQL、保存结果，并创建人类可以检查和继续的工作。",
+        "connections": {
+          "title": "所有 Agent 共用一个连接层。",
+          "description": "只需在 Dory 中配置一次数据库，Codex、Claude Code 和其他兼容 Agent 就能通过同一个受控连接层工作。",
+          "imageAlt": "面向 Codex、Claude Code 和其他 Agent 的 Dory MCP 设置",
+          "agents": ["Codex", "Claude Code", "其他 Agent"],
+          "doryLayer": "Dory MCP 或 CLI",
+          "databaseLayer": "受控的数据库连接"
+        },
+        "tools": {
+          "title": "高层工具，而不是几十个底层 Action。",
+          "description": "一组精简、稳定的工具直接对应真实数据工作流，减少工具混淆和无效调用。",
+          "items": [
+            "列出可用连接",
+            "探索 Schema 和表",
+            "运行只读 SQL",
+            "创建和管理工作区 Tab",
+            "访问已保存查询"
+          ]
+        },
+        "artifacts": {
+          "title": "Agent 创建工作，而不只是答案。",
+          "description": "每条有价值的查询都可以变成可编辑的 SQL Tab、持久结果集，或更大工作区的一部分。",
+          "modes": [
+            {
+              "title": "仅运行",
+              "description": "不需要工作区时，直接返回结果。"
+            },
+            {
+              "title": "创建新 Tab",
+              "description": "开始一个新的、可检查的分析单元。"
+            },
+            {
+              "title": "继续现有 Tab",
+              "description": "把下一步追加到正在进行的工作。"
+            },
+            {
+              "title": "替换 Tab 内容",
+              "description": "更新目标 Tab，同时保留 Run 上下文。"
+            }
+          ]
+        },
+        "runs": {
+          "title": "每次 Agent Run 都留下可检查的轨迹。",
+          "description": "Agent 工作会以包含 SQL、完整结果、结论和可读 Activity 的结构化 Run 保存，不会在聊天结束时消失。",
+          "features": [
+            "检查查询、失败记录和中间尝试",
+            "打开完整结果集和生成的结论",
+            "在真正的工作区里编辑生成的 SQL",
+            "让另一个 Agent 继续同一任务"
+          ],
+          "listAlt": "包含状态、数据源和产物信息的 Dory Agent Runs 列表",
+          "detailAlt": "包含摘要、结论和 Activity 的 Dory Agent Run 详情",
+          "workspaceAlt": "作为可编辑 SQL 工作区打开的 Dory Agent Run"
+        },
+        "runtime": {
+          "label": "随处运行",
+          "title": "Desktop、无界面或远程。",
+          "items": [
+            {
+              "title": "Dory Desktop",
+              "description": "复用本地连接、工作区历史和权限，适合交互式 Agent 工作。"
+            },
+            {
+              "title": "Dory CLI",
+              "description": "在 Agent 旁边或开发环境中通过 stdio 无界面运行。"
+            },
+            {
+              "title": "Remote HTTP",
+              "description": "通过共享 Dory 实例集中管理远程环境的数据库访问。"
+            }
+          ]
+        }
+      },
       "workspace": {
         "label": "共享工作台",
         "title": "人类和 Agent 共用一个工作台",

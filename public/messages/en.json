@@ -292,6 +292,155 @@
           }
         ]
       },
+      "humans": {
+        "label": "For Humans",
+        "title": "A complete SQL workspace, enhanced by AI.",
+        "description": "Explore databases, write SQL, inspect complete result sets, and collaborate with AI without leaving your workspace.",
+        "workspace": {
+          "title": "Everything you expect from a modern SQL client.",
+          "description": "Dory starts with a familiar, capable database workspace—not a chat box that hides the underlying work.",
+          "imageAlt": "Dory SQL workspace with schema explorer, editor, result set, and AI panel",
+          "features": [
+            "Connect PostgreSQL, MySQL, ClickHouse, SQLite, DuckDB, and more",
+            "Browse databases, schemas, tables, columns, and indexes",
+            "Open multiple SQL tabs and keep parallel tasks organized",
+            "Run, edit, and save every query yourself"
+          ]
+        },
+        "results": {
+          "title": "Results that remain useful after the query finishes.",
+          "description": "Dory stores complete query results as durable artifacts, so even million-row outputs remain available to explore without rerunning expensive SQL.",
+          "imageAlt": "Dory complete result set with search, filters, and row actions",
+          "features": [
+            "Explore millions of rows without loading everything into memory",
+            "Filter, search, and sort across the complete result set",
+            "Reopen historical results without rerunning the query",
+            "Export complete data when you need it"
+          ]
+        },
+        "ai": {
+          "title": "AI sees the work you are doing.",
+          "description": "Ask about the current SQL, schema, and result context. Explain unfamiliar queries, fix errors, find anomalies, or create the next useful tab—then inspect every change.",
+          "imageAlt": "Dory AI working with the visible SQL and result context"
+        },
+        "handoff": {
+          "title": "Never start over from an agent transcript.",
+          "description": "Completed Agent Runs open as SQL tabs, result sets, findings, and activity. Edit the SQL, add analysis, and hand the updated workspace back to an agent.",
+          "imageAlt": "Editable Dory workspace created by an Agent Run"
+        },
+        "control": {
+          "title": "AI assistance without giving up control.",
+          "description": "Agents work through Dory's inspectable workspace and connection layer.",
+          "items": [
+            "Choose which database connections agents can access",
+            "Keep database credentials inside Dory",
+            "Use read-only SQL workflows",
+            "Inspect generated SQL before continuing",
+            "Run locally with Dory Desktop"
+          ]
+        }
+      },
+      "workflow": {
+        "label": "Shared workflow",
+        "title": "One workspace. Continuous work.",
+        "description": "Dory preserves the investigation itself, so people and agents can take turns without losing the work between them.",
+        "steps": [
+          {
+            "title": "Agent investigates",
+            "description": "The agent explores schemas and runs SQL through Dory."
+          },
+          {
+            "title": "Dory preserves",
+            "description": "Queries, result sets, findings, and activity become durable artifacts."
+          },
+          {
+            "title": "Human edits",
+            "description": "Open the run as a real SQL workspace and change anything it created."
+          },
+          {
+            "title": "Agent continues",
+            "description": "Return the updated workspace to the same agent or a different one."
+          }
+        ],
+        "statement": "Humans and agents do not exchange screenshots, copied SQL, or chat summaries. They work on the same underlying workspace."
+      },
+      "agents": {
+        "label": "For Agents",
+        "title": "Give coding agents a real database workspace.",
+        "description": "Let agents explore schemas, run SQL, preserve results, and create work that humans can inspect and continue.",
+        "connections": {
+          "title": "One connection layer for every agent.",
+          "description": "Configure a database once in Dory, then let Codex, Claude Code, and other compatible agents work through the same governed connection layer.",
+          "imageAlt": "Dory MCP settings for Codex, Claude Code, and other agents",
+          "agents": ["Codex", "Claude Code", "Other agents"],
+          "doryLayer": "Dory MCP or CLI",
+          "databaseLayer": "Governed database connections"
+        },
+        "tools": {
+          "title": "High-level tools, not dozens of primitives.",
+          "description": "A small, focused catalog maps directly to real data workflows, reducing tool confusion and unnecessary calls.",
+          "items": [
+            "List available connections",
+            "Explore schemas and tables",
+            "Run read-only SQL",
+            "Create and manage workspace tabs",
+            "Access saved queries"
+          ]
+        },
+        "artifacts": {
+          "title": "Agents create work, not just answers.",
+          "description": "Every useful query can become an editable SQL tab, a persistent result set, or part of a larger workspace.",
+          "modes": [
+            {
+              "title": "Run only",
+              "description": "Return a direct result when no workspace is needed."
+            },
+            {
+              "title": "Create new tab",
+              "description": "Start a new, inspectable unit of analysis."
+            },
+            {
+              "title": "Continue existing tab",
+              "description": "Append the next step to work already in progress."
+            },
+            {
+              "title": "Replace tab content",
+              "description": "Update a target tab while preserving the run context."
+            }
+          ]
+        },
+        "runs": {
+          "title": "Every agent run leaves an inspectable trail.",
+          "description": "Agent work is preserved as a structured run with SQL, complete results, findings, and readable activity—not lost when the chat ends.",
+          "features": [
+            "Review the queries, failures, and intermediate attempts",
+            "Open complete result sets and generated findings",
+            "Edit the generated SQL in a real workspace",
+            "Continue the same task with another agent"
+          ],
+          "listAlt": "Dory Agent Runs list with status, data source, and generated output",
+          "detailAlt": "Dory Agent Run detail with summary, findings, and activity",
+          "workspaceAlt": "Dory Agent Run opened as an editable SQL workspace"
+        },
+        "runtime": {
+          "label": "Run anywhere",
+          "title": "Desktop, headless, or remote.",
+          "items": [
+            {
+              "title": "Dory Desktop",
+              "description": "Reuse local connections, workspace history, and permissions for interactive agent work."
+            },
+            {
+              "title": "Dory CLI",
+              "description": "Run headlessly beside an agent or inside a development environment over stdio."
+            },
+            {
+              "title": "Remote HTTP",
+              "description": "Centralize database access behind a shared Dory instance for remote environments."
+            }
+          ]
+        }
+      },
       "workspace": {
         "label": "Shared workspace",
         "title": "One workspace for humans and agents",

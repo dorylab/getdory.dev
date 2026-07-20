@@ -1,4 +1,3 @@
-import { BookOpen, House, Newspaper } from 'lucide-react';
 import { defineI18nUI } from 'fumadocs-ui/i18n';
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
 
@@ -56,42 +55,48 @@ export function baseOptions(locale: string): BaseLayoutProps {
   const localePrefix = locale === defaultLanguage ? '' : `/${locale}`;
   const navCopy = {
     en: {
-      home: 'Home',
+      forHumans: 'For Humans',
+      forAgents: 'For Agents',
       docs: 'Docs',
       blog: 'Blog',
       download: 'Download'
     },
     zh: {
-      home: '首页',
+      forHumans: '人类用户',
+      forAgents: 'Agent',
       docs: '文档',
       blog: '博客',
       download: '下载'
     },
     ja: {
-      home: 'ホーム',
+      forHumans: '人向け',
+      forAgents: 'エージェント向け',
       docs: 'ドキュメント',
       blog: 'ブログ',
       download: 'ダウンロード'
     },
     es: {
-      home: 'Inicio',
+      forHumans: 'Para personas',
+      forAgents: 'Para agentes',
       docs: 'Documentación',
       blog: 'Blog',
       download: 'Descargar'
     }
   }[locale] ?? {
-    home: 'Home',
+    forHumans: 'For Humans',
+    forAgents: 'For Agents',
     docs: 'Docs',
     blog: 'Blog',
     download: 'Download'
   };
+  const homeUrl = localePrefix || '/';
 
   return {
     i18n: false,
     githubUrl: undefined,
     nav: {
       transparentMode: 'always',
-      url: localePrefix || '/',
+      url: homeUrl,
       title: (
         <span className="flex items-center gap-2 font-semibold">
           <img
@@ -106,24 +111,27 @@ export function baseOptions(locale: string): BaseLayoutProps {
     links: [
       {
         type: 'main',
-        text: navCopy.home,
-        url: localePrefix || '/',
-        active: 'url',
-        icon: <House />
+        text: navCopy.forHumans,
+        url: `${localePrefix}/for-humans`,
+        active: 'nested-url'
+      },
+      {
+        type: 'main',
+        text: navCopy.forAgents,
+        url: `${localePrefix}/for-agents`,
+        active: 'nested-url'
       },
       {
         type: 'main',
         text: navCopy.docs,
         url: `${localePrefix}/docs`,
-        active: 'nested-url',
-        icon: <BookOpen />
+        active: 'nested-url'
       },
       {
         type: 'main',
         text: navCopy.blog,
         url: `${localePrefix}/blog`,
-        active: 'nested-url',
-        icon: <Newspaper />
+        active: 'nested-url'
       },
       {
         type: 'icon',

@@ -6,7 +6,7 @@ import { defaultLanguage, type Language } from '@/lib/i18n';
 export type MarketingOgPage = 'home' | 'blog' | 'download';
 
 const siteName = 'Dory';
-const homeOgImageVersion = '20260527-actions-large';
+const homeOgImageVersion = '20260720-humans-agents';
 const homeTitles: Partial<Record<Language, string>> = {
   en: 'Dory - SQL workspace for humans and agents',
   zh: 'Dory - 面向人类和 Agent 的 SQL 工作台',
