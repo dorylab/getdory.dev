@@ -22,6 +22,9 @@ import FooterSection from "@/components/sections/footer";
 import { Link } from "@/i18n/navigation";
 import { getMarketingOgImage } from "@/lib/marketing-og";
 import { cn } from "@/lib/utils";
+import ActionsPreview from "@/public/actions-focus.png";
+import AskPreview from "@/public/ask-focus.png";
+import ContextPreview from "@/public/context-focus.png";
 import ResultPreview from "@/public/result-table.png";
 
 type PageProps = { params: Promise<{ lang: string }> };
@@ -114,6 +117,32 @@ export default async function ForHumansPage({ params }: PageProps) {
   const handoffFeatures = t.raw("agentHome.humans.handoff.features") as string[];
   const workflowSteps = t.raw("agentHome.workflow.steps") as TextItem[];
   const trustItems = t.raw("agentHome.humans.control.items") as string[];
+  const aiCards = [
+    {
+      id: "ask",
+      image: AskPreview,
+      label: t("aiNative.tabs.ask.label"),
+      title: t("aiNative.tabs.ask.title"),
+      description: t("aiNative.tabs.ask.description"),
+      imageAlt: t("aiNative.tabs.ask.imageAlt"),
+    },
+    {
+      id: "actions",
+      image: ActionsPreview,
+      label: t("aiNative.tabs.actions.label"),
+      title: t("aiNative.tabs.actions.title"),
+      description: t("aiNative.tabs.actions.description"),
+      imageAlt: t("aiNative.tabs.actions.imageAlt"),
+    },
+    {
+      id: "context",
+      image: ContextPreview,
+      label: t("aiNative.tabs.context.label"),
+      title: t("aiNative.tabs.context.title"),
+      description: t("aiNative.tabs.context.description"),
+      imageAlt: t("aiNative.tabs.context.imageAlt"),
+    },
+  ] as const;
 
   return (
     <MarketingLayout lang={lang}>
@@ -151,10 +180,63 @@ export default async function ForHumansPage({ params }: PageProps) {
           </header>
 
           <section className="border-b border-dory-line py-16 md:py-24">
+            <div className="grid gap-7 lg:grid-cols-[1.05fr_0.95fr] lg:items-end lg:gap-12">
+              <div>
+                <h2
+                  className={cn(
+                    "max-w-[760px] text-[clamp(3rem,6vw,5.25rem)] leading-[0.96] font-medium tracking-[-0.05em] text-balance",
+                    isCjk &&
+                      "max-w-[700px] text-[clamp(2.75rem,5.4vw,4.8rem)] leading-[1.04] tracking-[-0.045em]",
+                  )}
+                >
+                  {t.rich("aiNative.heading", {
+                    ask: (chunks) => <span className="text-dory-ink">{chunks} </span>,
+                    act: (chunks) => <span className="text-dory-ink">{chunks} </span>,
+                    stay: (chunks) => <span className="text-dory-muted">{chunks}</span>,
+                  })}
+                </h2>
+              </div>
+              <p className="max-w-xl text-base leading-7 text-pretty text-dory-muted md:text-lg md:leading-8 lg:justify-self-end lg:pb-1">
+                {t("aiNative.description")}
+              </p>
+            </div>
+
+            <div className="mt-10 grid border-t border-l border-dory-line lg:grid-cols-3">
+              {aiCards.map((card, index) => (
+                <article
+                  key={card.id}
+                  className="flex min-h-[520px] flex-col border-r border-b border-dory-line bg-dory-surface p-5 sm:p-7 lg:min-h-[610px]"
+                >
+                  <div className="flex items-center justify-between gap-4 text-xs text-dory-muted">
+                    <span className="tabular-nums">{String(index + 1).padStart(2, "0")}</span>
+                    <span>{card.label}</span>
+                  </div>
+                  <h3 className="mt-10 text-2xl leading-tight font-medium tracking-[-0.025em] md:text-[1.7rem]">
+                    {card.title}
+                  </h3>
+                  <p className="mt-4 text-sm leading-6 text-pretty text-dory-muted md:text-base md:leading-7">
+                    {card.description}
+                  </p>
+                  <figure className="mt-auto pt-9">
+                    <div className="aspect-square overflow-hidden border border-black/10 bg-[#11100f] p-2 dark:border-white/12">
+                      <Image
+                        src={card.image}
+                        alt={card.imageAlt}
+                        sizes="(max-width: 1023px) 100vw, 400px"
+                        placeholder="blur"
+                        className="h-full w-full bg-[#11100f] object-cover object-top"
+                      />
+                    </div>
+                  </figure>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="border-b border-dory-line py-16 md:py-24">
             <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-center lg:gap-12">
               <div className="lg:pr-2">
-                <span className="text-xs text-dory-muted">01 / 05</span>
-                <h2 className="mt-4 max-w-lg text-3xl leading-[1.06] font-medium tracking-[-0.035em] md:text-4xl lg:text-5xl">
+                <h2 className="max-w-lg text-3xl leading-[1.06] font-medium tracking-[-0.035em] md:text-4xl lg:text-5xl">
                   {t("agentHome.humans.workspace.title")}
                 </h2>
                 <p className="mt-4 max-w-xl text-base leading-7 text-pretty text-dory-muted md:text-lg md:leading-8">
@@ -169,7 +251,7 @@ export default async function ForHumansPage({ params }: PageProps) {
             </div>
 
             <div className="mt-16 border-t border-dory-line pt-10 md:mt-20 md:pt-12">
-              <div className="grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-start lg:gap-12">
+              <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start lg:gap-12">
                 <div className="lg:pt-2">
                   <p className="font-mono text-[11px] tracking-[0.12em] text-dory-muted uppercase">
                     {t("agentHome.humans.workspace.completionLabel")}
@@ -186,7 +268,7 @@ export default async function ForHumansPage({ params }: PageProps) {
                     {t("agentHome.humans.workspace.completionDescription")}
                   </p>
 
-                  <div className="mt-8 border-y border-dory-line">
+                  <div className="mt-8 border-t border-dory-line">
                     {completionFeatures.map((item, index) => (
                       <article key={item.title} className="grid grid-cols-[28px_1fr] gap-3 border-b border-dory-line py-4 last:border-b-0">
                         <span className="pt-0.5 font-mono text-[10px] text-dory-muted">
@@ -293,8 +375,7 @@ export default async function ForHumansPage({ params }: PageProps) {
               />
             </div>
             <div className="lg:pl-2">
-              <span className="text-xs text-dory-muted">02 / 05</span>
-              <h2 className="mt-4 text-3xl leading-[1.06] font-medium tracking-[-0.035em] md:text-4xl lg:text-5xl">
+              <h2 className="text-3xl leading-[1.06] font-medium tracking-[-0.035em] md:text-4xl lg:text-5xl">
                 {t("agentHome.humans.results.title")}
               </h2>
               <p className="mt-4 text-base leading-7 text-pretty text-dory-muted md:text-lg md:leading-8">
@@ -306,58 +387,9 @@ export default async function ForHumansPage({ params }: PageProps) {
 
           <section className="border-b border-dory-line py-16 md:py-24">
             <div className="max-w-4xl">
-              <div className="flex items-center gap-3 text-dory-muted">
-                <Bot className="size-5" />
-                <span className="text-xs">03 / 05</span>
-              </div>
               <h2
                 className={cn(
-                  "mt-5 max-w-[820px] text-[clamp(2.125rem,3.2vw,2.875rem)] leading-[1.12] font-medium tracking-[-0.03em] text-balance",
-                  isCjk &&
-                    "max-w-[760px] text-[clamp(2rem,3vw,2.625rem)] leading-[1.16] tracking-[-0.025em]",
-                )}
-              >
-                {t("agentHome.humans.ai.title")}
-              </h2>
-              <p className="mt-4 max-w-3xl text-base leading-7 text-pretty text-dory-muted md:text-lg md:leading-8">
-                {t("agentHome.humans.ai.description")}
-              </p>
-            </div>
-
-            <div className="mt-10 grid gap-6 border border-dory-line bg-[linear-gradient(135deg,rgba(47,108,255,0.08),transparent_55%)] p-5 sm:p-8 md:grid-cols-[1fr_0.72fr] md:p-10 dark:bg-[linear-gradient(135deg,rgba(136,182,255,0.08),transparent_55%)]">
-              <figure className="md:pt-10">
-                <figcaption className="mb-4 text-xs tracking-[0.12em] text-dory-muted uppercase">
-                  {t("agentHome.humans.ai.contextLabel")}
-                </figcaption>
-                <ProductFrame
-                  src="/images/core-features/dory-copilot-context.png"
-                  alt={t("agentHome.humans.ai.contextAlt")}
-                  width={684}
-                  height={1250}
-                  className="mx-auto max-w-[500px] rounded-[16px] p-1.5 shadow-none"
-                />
-              </figure>
-              <figure>
-                <figcaption className="mb-4 text-xs tracking-[0.12em] text-dory-muted uppercase">
-                  {t("agentHome.humans.ai.actionsLabel")}
-                </figcaption>
-                <ProductFrame
-                  src="/images/core-features/dory-copilot-actions.png"
-                  alt={t("agentHome.humans.ai.actionsAlt")}
-                  width={684}
-                  height={1898}
-                  className="mx-auto max-h-[760px] max-w-[430px] rounded-[16px] p-1.5 shadow-none"
-                />
-              </figure>
-            </div>
-          </section>
-
-          <section className="border-b border-dory-line py-16 md:py-24">
-            <div className="max-w-4xl">
-              <span className="text-xs text-dory-muted">04 / 05</span>
-              <h2
-                className={cn(
-                  "mt-4 max-w-[820px] text-[clamp(2.125rem,3.2vw,2.875rem)] leading-[1.12] font-medium tracking-[-0.03em] text-balance",
+                  "max-w-[820px] text-[clamp(2.125rem,3.2vw,2.875rem)] leading-[1.12] font-medium tracking-[-0.03em] text-balance",
                   isCjk &&
                     "max-w-[760px] text-[clamp(2rem,3vw,2.625rem)] leading-[1.16] tracking-[-0.025em]",
                 )}
@@ -394,8 +426,7 @@ export default async function ForHumansPage({ params }: PageProps) {
           <section className="border-b border-dory-line py-16 md:py-24">
             <div className="grid gap-8 md:grid-cols-[0.72fr_1.28fr] md:gap-12">
               <div>
-                <span className="text-xs text-dory-muted">05 / 05</span>
-                <p className="mt-4 text-[11px] font-medium tracking-[0.16em] text-dory-muted uppercase">
+                <p className="text-[11px] font-medium tracking-[0.16em] text-dory-muted uppercase">
                   {t("agentHome.workflow.label")}
                 </p>
                 <h2 className="mt-3 text-3xl leading-[1.06] font-medium tracking-[-0.035em] md:text-4xl lg:text-5xl">

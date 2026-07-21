@@ -381,14 +381,6 @@
             "Export the complete or filtered result as CSV or Parquet"
           ]
         },
-        "ai": {
-          "title": "AI sees the work you are doing.",
-          "description": "Dory gives AI the current SQL, schema, and result context. Explain unfamiliar queries, fix errors, optimize SQL, or create the next useful tab—then inspect every change in the workspace.",
-          "contextLabel": "Grounded in the workspace",
-          "actionsLabel": "Actions become editable work",
-          "contextAlt": "Dory Copilot context showing the current SQL, schema, and result set",
-          "actionsAlt": "Dory Copilot actions for fixing, explaining, optimizing, and creating a SQL tab"
-        },
         "handoff": {
           "title": "Never start over from an agent transcript.",
           "description": "Completed Agent Runs open as SQL tabs, result sets, findings, and activity. Edit the SQL, add analysis, and hand the updated workspace back to an agent.",
@@ -659,6 +651,7 @@
           "label": "Ask",
           "title": "Ask anything. No made-up columns.",
           "description": "Schema-aware autocomplete and SQL generation keep the AI honest — every suggestion is based on real tables, real fields, and real joins.",
+          "imageAlt": "Dory Ask AI turning a natural-language request into SQL and a chart",
           "pills": {
             "pill1": "Schema-aware",
             "pill2": "No made-up fields",
@@ -669,6 +662,7 @@
           "label": "Actions",
           "title": "Do more than chat — take action.",
           "description": "Run transformations, save and share queries, and trigger common analytics tasks right from the workflow — no copy-paste, no tab hopping.",
+          "imageAlt": "Dory AI actions for fixing, optimizing, rewriting, and aggregating SQL",
           "pills": {
             "pill1": "No tab hopping",
             "pill2": "Save & share",
@@ -679,6 +673,7 @@
           "label": "Context",
           "title": "Context that keeps you in control.",
           "description": "Dory tracks what you’re working on — tables, relationships, and recent queries — so results stay consistent across Ask, Action, and Context.",
+          "imageAlt": "Dory AI context showing the current editor SQL and selection",
           "pills": {
             "pill1": "Tables & relationships",
             "pill2": "Consistent results",

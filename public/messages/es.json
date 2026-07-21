@@ -141,14 +141,6 @@
             "Exporta el resultado completo o filtrado como CSV o Parquet"
           ]
         },
-        "ai": {
-          "title": "La IA ve el trabajo que estás haciendo.",
-          "description": "Dory entrega a la IA el SQL, el esquema y el resultado actuales. Pídele explicar consultas, corregir errores, optimizar SQL o crear la siguiente pestaña y revisa cada cambio en el espacio.",
-          "contextLabel": "Basado en el espacio real",
-          "actionsLabel": "Las acciones se convierten en trabajo editable",
-          "contextAlt": "Contexto de Dory Copilot con el SQL, esquema y ResultSet actuales",
-          "actionsAlt": "Acciones de Dory Copilot para corregir, explicar, optimizar y crear una pestaña SQL"
-        },
         "handoff": {
           "title": "No vuelvas a empezar desde una conversación del agente.",
           "description": "Los Agent Runs terminados se abren como pestañas SQL, resultados, hallazgos y actividad. Edita el SQL, amplía el análisis y devuelve el espacio actualizado a un agente.",
@@ -419,6 +411,7 @@
           "label": "Preguntar",
           "title": "Pregunta cualquier cosa. Sin columnas inventadas.",
           "description": "El autocompletado con reconocimiento de esquemas y la generaciónSQLmantienen la IA honesta: cada sugerencia se basa en tablas reales, campos reales y uniones reales.",
+          "imageAlt": "Dory Ask AI convierte una solicitud en lenguaje natural en SQL y un gráfico",
           "pills": {
             "pill1": "Consciente de esquemas",
             "pill2": "Sin campos inventados",
@@ -429,6 +422,7 @@
           "label": "Comportamiento",
           "title": "Haga más que chatear: actúe.",
           "description": "Ejecute transformaciones, guarde y comparta consultas y active tareas de análisis comunes directamente desde el flujo de trabajo, sin copiar y pegar ni saltar entre pestañas.",
+          "imageAlt": "Acciones de IA de Dory para corregir, optimizar, reescribir y agregar SQL",
           "pills": {
             "pill1": "Sin saltos de pestañas",
             "pill2": "Guardar y compartir",
@@ -439,6 +433,7 @@
           "label": "Contexto",
           "title": "Contexto que te mantiene en control.",
           "description": "Dory realiza un seguimiento de en qué estás trabajando (tablas, relaciones y consultas recientes) para que los resultados se mantengan consistentes en Pregunta, Acción y Contexto.",
+          "imageAlt": "Contexto de IA de Dory con el SQL del editor y la selección actuales",
           "pills": {
             "pill1": "Tablas y relaciones",
             "pill2": "Resultados consistentes",

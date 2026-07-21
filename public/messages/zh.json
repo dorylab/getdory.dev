@@ -141,14 +141,6 @@
             "将完整或筛选后的结果导出为 CSV 或 Parquet"
           ]
         },
-        "ai": {
-          "title": "AI 看得到你正在做的工作。",
-          "description": "Dory 会把当前 SQL、Schema 和结果上下文交给 AI。让它解释查询、修复错误、优化 SQL 或创建下一个有用的 Tab，然后在工作区中检查每一处修改。",
-          "contextLabel": "基于真实工作区上下文",
-          "actionsLabel": "Action 会变成可编辑的工作",
-          "contextAlt": "Dory Copilot Context 展示当前 SQL、Schema 和 ResultSet",
-          "actionsAlt": "Dory Copilot Actions 展示修复、解释、优化和创建 SQL Tab"
-        },
         "handoff": {
           "title": "不必从 Agent 的聊天记录重新开始。",
           "description": "完成的 Agent Run 会以 SQL Tab、结果集、结论和 Activity 打开。你可以修改 SQL、补充分析，再把更新后的工作区交回 Agent。",
@@ -419,6 +411,7 @@
           "label": "提问",
           "title": "提问任何问题。没有虚构的字段。",
           "description": "模式感知的自动补全和 SQL 生成让 AI 保持真实 —— 每个建议都基于真实的表、字段与关联。",
+          "imageAlt": "Dory Ask AI 将自然语言请求转成 SQL 与图表",
           "pills": {
             "pill1": "模式感知",
             "pill2": "无虚构字段",
@@ -429,6 +422,7 @@
           "label": "行动",
           "title": "不仅仅对话 —— 直接执行操作。",
           "description": "从工作流内运行转换、保存和分享查询，并触发常见分析任务 —— 无需复制粘贴、无需切换标签。",
+          "imageAlt": "Dory AI Actions 提供修复、优化、重写和聚合 SQL 操作",
           "pills": {
             "pill1": "不跳标签",
             "pill2": "保存与分享",
@@ -439,6 +433,7 @@
           "label": "上下文",
           "title": "保持掌控的上下文。",
           "description": "Dory 跟踪你正在处理的表、关系和最近的查询，让 Ask、Action 和 Context 之间的结果保持一致。",
+          "imageAlt": "Dory AI Context 展示当前编辑器 SQL 与选中内容",
           "pills": {
             "pill1": "表与关系",
             "pill2": "结果一致",
