@@ -5,10 +5,13 @@
     "clickhouse",
     "postgresql",
     "neon",
+    "supabase",
     "mysql",
     "mariadb",
     "sqlserver",
     "oracle",
+    "snowflake",
+    "cloudflare-d1",
     "sqlite",
     "duckdb",
     "cloud-databases"

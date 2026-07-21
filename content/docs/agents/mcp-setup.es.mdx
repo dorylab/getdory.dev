@@ -1,0 +1,91 @@
+---
+title: MCP Setup
+description: Conecta Dory a clientes MCP mediante Desktop, stdio, HTTP o un hosted bridge.
+---
+
+# MCP Setup
+
+Elige según dónde residan los datos de Dory y cómo inicie procesos el cliente MCP.
+
+| Configuración | Adecuada para | Transport | Autenticación |
+| --- | --- | --- | --- |
+| Desktop MCP | Agentes locales que reutilizan conexiones de Desktop | HTTP | Grant administrado por Dory Desktop |
+| Standalone stdio | Codex/Claude local, CI o servidor de un usuario | stdio | Credencial del runtime local |
+| HTTP headless runtime | Endpoint MCP estable o compartido | HTTP | Bearer Token |
+| Hosted Dory bridge | Despliegue Dory Web existente | stdio a hosted HTTP | Token personal autorizado en navegador |
+
+![Agent Access y configuración MCP de Dory](/mcp.png)
+
+## Desktop MCP
+
+Usa esta opción cuando Dory Desktop y el cliente agente estén en la misma máquina.
+
+1. Abre **Settings → Agent Access** en Dory Desktop.
+2. Activa MCP.
+3. Añade el endpoint mostrado al cliente.
+
+```bash
+codex mcp add dory --url http://127.0.0.1:3318/api/mcp
+codex mcp list
+```
+
+```bash
+claude mcp add --transport http dory http://127.0.0.1:3318/api/mcp
+claude mcp list
+```
+
+Dory Desktop crea y renueva el grant local. No crees un Bearer Token manual para este flujo normal.
+
+## Standalone Stdio
+
+Requiere Node.js 20 o posterior. El cliente inicia Dory en la misma máquina.
+
+```bash
+npx -y @getdory/cli init --data standalone
+npx -y @getdory/cli doctor --data standalone
+codex mcp add dory -- npx -y @getdory/cli mcp serve --stdio --data standalone
+codex mcp list
+```
+
+Para Claude Code usa `claude mcp add dory -- npx -y @getdory/cli mcp serve --stdio --data standalone`. El cliente inicia y detiene el proceso stdio.
+
+## HTTP Headless Runtime
+
+Crea un Token de solo lectura y arranca el servidor:
+
+```bash
+export DORY_MCP_TOKEN="$(
+  npx -y @getdory/cli mcp token create \
+    --data standalone --name "agent-http" --scope read | jq -r '.token'
+)"
+
+npx -y @getdory/cli mcp serve \
+  --http --host 127.0.0.1 --port 3318 \
+  --token "$DORY_MCP_TOKEN" --data standalone
+```
+
+```bash
+codex mcp add \
+  --url http://127.0.0.1:3318/api/mcp \
+  --bearer-token-env-var DORY_MCP_TOKEN \
+  dory
+```
+
+Un bind remoto requiere `--host 0.0.0.0`, `--allow-remote`, un Token existente y TLS delante de Dory. No publiques HTTP sin cifrar directamente.
+
+## Hosted Dory Bridge
+
+Úsalo cuando Dory Web ya exponga `/api/mcp`.
+
+```bash
+npx -y @getdory/cli mcp login --url https://your-dory-host
+npx -y @getdory/cli mcp status --url https://your-dory-host
+codex mcp add dory-hosted -- npx -y @getdory/cli mcp bridge --url https://your-dory-host
+codex mcp list
+```
+
+El login autoriza en el navegador y guarda una credencial MCP personal. Elimínala con `mcp logout` o revócala desde Agent Access.
+
+## Verifica la conexión
+
+Pide al cliente que enumere herramientas, cree un work context pequeño y liste conexiones visibles. No empieces ejecutando SQL en producción. Consulta [MCP Tools & Dory Actions](/es/docs/agents/tools-actions).

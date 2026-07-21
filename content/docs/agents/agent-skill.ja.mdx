@@ -1,0 +1,31 @@
+---
+title: Dory Agent Skill
+description: 互換エージェントが Schema-first の Dory ワークフローに従うよう Skill をインストールします。
+---
+
+# Dory Agent Skill
+
+Dory Agent Skill は、互換エージェントに Dory MCP tools の使い方と、Schema-first、読み取り専用、ワークスペース保存の流れを教えます。
+
+## インストール
+
+```bash
+npx skills add https://github.com/dorylab/skills --skill dory
+```
+
+Open Agent Skills format に対応し、Codex、ChatGPT、Claude、その他の互換システムで使用できます。
+
+## Skill が教えること
+
+- データベース タスクごとに Agent Run を一つ作る。
+- 名前や join を推測せず、実際の Schema を確認する。
+- 範囲を限定した読み取り専用 SQL を既定にする。
+- 有用な SQL と結果スナップショットを Dory に保存する。
+- findings、steps、前提、人間への引き継ぎで終了する。
+- Dory が使えない場合に接続、Schema、workspace、結果を捏造しない。
+
+## Skill がインストールしないもの
+
+Skill は `@getdory/cli`、MCP Server、エージェント設定をインストールしません。ライブ DB アクセスには [MCP Setup](/ja/docs/agents/mcp-setup)が必要です。
+
+接続後は「利用可能な接続を確認し、大きなクエリなしで一つのテーブルを説明する」などの小さなタスクで確認します。最新の指示は [Dory Skill source](https://github.com/dorylab/dory/blob/main/skills/dory/SKILL.md)を参照してください。

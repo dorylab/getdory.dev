@@ -1,45 +1,35 @@
 ---
-title: Overview
-description: Review Dory support for ClickHouse, PostgreSQL, Neon, MySQL, MariaDB, SQL Server, Oracle, SQLite, DuckDB, MotherDuck, and cloud database connections.
+title: Databases
+description: Review Dory database support for human SQL workflows and agent workspaces.
 ---
 
-# Overview
+# Databases
 
-Dory is an AI-native data workspace for modern databases. You can connect supported databases, browse schema, write SQL, generate queries with AI, inspect results, build charts, and save reusable queries.
+Dory is a multi-database SQL client and agent workspace. Every supported connection participates in the same core flow: connect, explore schema, run SQL, inspect results, and preserve work. ClickHouse also includes deeper operations surfaces.
 
-## Database Support Overview
+## Support Matrix
 
-| Database | Best fit | Dory support |
+| Database | Status | Workspace support |
 | --- | --- | --- |
-| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/clickhouse.svg" alt="" width="20" height="20" />[ClickHouse](/en/docs/database-support/clickhouse)</span> | Event, log, observability, and high-throughput analytics | SQL, Explorer, AI, Monitoring, and Privileges. |
-| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/postgresql.svg" alt="" width="20" height="20" />[PostgreSQL](/en/docs/database-support/postgresql)</span> | Operational apps, internal tools, and analytics | Schema browsing, SQL, AI assistance, and result analysis. |
-| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/neon.svg" alt="" width="20" height="20" />[Neon](/en/docs/database-support/neon)</span> | Serverless PostgreSQL and cloud development | PostgreSQL-compatible connection support. |
-| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/mysql.svg" alt="" width="20" height="20" />[MySQL](/en/docs/database-support/mysql)</span> | Web application databases and reporting | Querying, AI assistance, and production-safe exploration. |
-| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/mariadb.svg" alt="" width="20" height="20" />[MariaDB](/en/docs/database-support/mariadb)</span> | MariaDB application databases and reporting | Dedicated connection support for SQL, Explorer, and AI assistance. |
-| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/sqlserver.svg" alt="" width="20" height="20" />[SQL Server](/en/docs/database-support/sqlserver)</span> | Enterprise applications, reporting, and operational systems | T-SQL execution, Explorer, AI assistance, and schema-aware workflows. |
-| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/oracle.svg" alt="" width="20" height="20" />[Oracle](/en/docs/database-support/oracle)</span> | Enterprise systems, ERP, finance, and long-running production databases | Oracle SQL execution, object exploration, AI assistance, and schema context. |
-| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/sqlite.svg" alt="" width="20" height="20" />[SQLite](/en/docs/database-support/sqlite)</span> | Local files, prototypes, demos, and lightweight analysis | Absolute-path local `.sqlite` / `.db` file connections. |
-| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/duckdb.svg" alt="" width="20" height="20" />[DuckDB](/en/docs/database-support/duckdb)</span> | Local analytical files and MotherDuck workflows | Local DuckDB files and MotherDuck tokens. |
-| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/more.svg" alt="" width="20" height="20" />[Cloud Databases](/en/docs/database-support/cloud-databases)</span> | Managed databases and team deployments | TLS, allowlists, SSH tunnels, and secret-management guidance. |
+| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/clickhouse.svg" alt="" width="20" height="20" />[ClickHouse](/en/docs/database-support/clickhouse)</span> | Deeply integrated | SQL, Explorer, AI, Agent workflows, Monitoring, and Privileges. |
+| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/postgresql.svg" alt="" width="20" height="20" />[PostgreSQL](/en/docs/database-support/postgresql)</span> | Supported | SQL, Schema Explorer, results, AI, and agents. |
+| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/neon.svg" alt="" width="20" height="20" />[Neon](/en/docs/database-support/neon)</span> | Supported | PostgreSQL-compatible serverless workflows. |
+| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/supabase.svg" alt="" width="20" height="20" />[Supabase](/en/docs/database-support/supabase)</span> | Supported | Native connection flow over Supabase PostgreSQL. |
+| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/mysql.svg" alt="" width="20" height="20" />[MySQL](/en/docs/database-support/mysql)</span> | Supported | SQL, Explorer, results, AI, and agents. |
+| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/mariadb.svg" alt="" width="20" height="20" />[MariaDB](/en/docs/database-support/mariadb)</span> | Supported | Dedicated MariaDB connection and SQL dialect. |
+| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/sqlserver.svg" alt="" width="20" height="20" />[SQL Server](/en/docs/database-support/sqlserver)</span> | Supported | T-SQL, schema browsing, results, AI, and agents. |
+| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/oracle.svg" alt="" width="20" height="20" />[Oracle](/en/docs/database-support/oracle)</span> | Supported | Oracle SQL, objects, results, AI, and agents. |
+| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/snowflake.svg" alt="" width="20" height="20" />[Snowflake](/en/docs/database-support/snowflake)</span> | Supported | Databases, schemas, tables, views, SQL, and previews. |
+| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/cloudflare.svg" alt="" width="20" height="20" />[Cloudflare D1](/en/docs/database-support/cloudflare-d1)</span> | Supported | D1 REST connection, SQL Console, schema, and results. |
+| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/sqlite.svg" alt="" width="20" height="20" />[SQLite](/en/docs/database-support/sqlite)</span> | Supported | Local files when the Dory runtime can read the path. |
+| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/duckdb.svg" alt="" width="20" height="20" />[DuckDB](/en/docs/database-support/duckdb)</span> | Supported | Local DuckDB files and MotherDuck. |
 
-## Typical Dory Database Workflow
+## Human and Agent Flow
 
-1. Create a connection in [Connections](/en/docs/core-features/connections).
-2. Browse databases, schemas, tables, and columns in [Explorer](/en/docs/core-features/explorer).
-3. Write and run SQL in [SQL Console](/en/docs/core-features/sql-console).
-4. Use [AI Chat](/en/docs/core-features/ai-chat) to generate, explain, fix, or optimize queries.
-5. Validate results and build charts in [Charts & Results](/en/docs/core-features/charts-results).
-6. Save reusable SQL in [Saved Queries](/en/docs/core-features/saved-queries).
+1. Create and test a connection in [Connections](/en/docs/core-features/connections).
+2. Inspect real objects in [Explorer](/en/docs/core-features/explorer).
+3. Write SQL in [SQL Console](/en/docs/core-features/sql-console) or connect an agent through [MCP Setup](/en/docs/agents/mcp-setup).
+4. Review SQL and results in the shared workspace.
+5. Save reusable SQL or keep the evidence in an Agent Run.
 
-## Choose a Connection Method
-
-- Use the desktop app for local development and direct access from your machine.
-- Use Docker or self-hosting when a team needs shared access.
-- Use file paths for SQLite and DuckDB only when the Dory runtime can read those files.
-- Use SSH Tunnel or cloud networking settings when databases are not publicly reachable.
-
-## Next Steps
-
-- [Connect Your Database](/en/docs/getting-started/connect-your-database)
-- [Cloud Databases](/en/docs/database-support/cloud-databases)
-- [Deploy](/en/docs/deploy)
+For managed services, private networks, TLS, allowlists, and SSH tunnels, see [Cloud Databases](/en/docs/database-support/cloud-databases).

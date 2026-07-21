@@ -1,0 +1,43 @@
+---
+title: Snowflake
+description: Conecta Snowflake a Dory para SQL, exploración de esquema, vistas previas, AI y Agent Workspaces.
+---
+
+# Snowflake
+
+Dory admite Snowflake como conexión nativa en Desktop y Web autohospedada.
+
+## Flujos compatibles
+
+- Crear y probar conexiones Snowflake.
+- Explorar databases, schemas, tables, views y columns.
+- Previsualizar datos con identificadores y paginación de Snowflake.
+- Ejecutar Snowflake SQL en SQL Console.
+- Conservar SQL, resultados y contexto de Agent Run.
+
+## Requisitos
+
+Prepara account identifier, warehouse, database, schema, username y role opcional. El identificador se parece a `xy12345.us-east-1` u `org-account`; no pegues el hostname completo de `snowflakecomputing.com`.
+
+Dory admite contraseña y una private key PEM pegada. No usa rutas locales al archivo de clave. El usuario o service user necesita acceso al warehouse, database, schema, tables y views seleccionados.
+
+## Valida la sesión
+
+```sql
+select
+  current_database() as database_name,
+  current_schema() as schema_name,
+  current_role() as role_name,
+  current_warehouse() as warehouse_name;
+```
+
+Confirma después los objetos esperados en Explorer.
+
+## Seguridad y límites
+
+- Usa un usuario dedicado de mínimo privilegio.
+- Elige un warehouse apropiado y controles de recursos.
+- La autenticación actual no incluye SSO, OAuth, MFA, workload identity federation ni rutas locales de key file.
+- Para agentes usa `dory_run_readonly_sql` y scope `read` de Dory.
+
+Continúa con [Análisis mediante agente](/es/docs/workflows/agent-database-analysis) o [Cloud Databases](/es/docs/database-support/cloud-databases).

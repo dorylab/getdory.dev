@@ -1,40 +1,51 @@
 ---
 title: Quick Start
-description: Start Dory through the online demo, local installation, or Docker.
+description: Try Dory as a SQL workspace or connect an agent through MCP.
 ---
 
 # Quick Start
 
-This page helps you get Dory running quickly. Choose the path that matches your goal.
+Choose the shortest path to the outcome you want.
 
-## Option 1: Try the Online Demo
+## Try the Live SQL Workspace
 
-Use the online demo when you want to explore Dory without installing anything.
+Open the [Dory live demo](https://app.getdory.dev), select **Sign in as demo**, and use the included data to explore schema, run SQL, inspect results, and create a chart. No installation is required.
 
-1. Open [Dory Demo](https://app.getdory.dev).
-2. Try Explorer, SQL Console, AI Chat, and charting with the available demo data.
-3. Use the demo to understand the workflow before connecting your own database.
+## Start a Local SQL Workspace
 
-## Option 2: Install Locally
-
-Use local installation when you want Dory on your own machine and need to connect local or development databases.
+Install Dory Desktop:
 
 ```bash
-brew install dory
+brew install dorylab/dory/dory
 ```
 
-After installation, open Dory and create your first workspace.
+You can also download macOS or Windows builds from [GitHub Releases](https://github.com/dorylab/dory/releases). Then:
 
-## Option 3: Run with Docker
+1. Open Dory.
+2. Create a connection with read-only credentials.
+3. Continue with [Connect Your Database](/en/docs/getting-started/connect-your-database).
 
-Use Docker when you want a repeatable self-hosted environment or want to test deployment settings.
+## Connect a Local Agent
+
+If Dory Desktop is installed, open **Settings → Agent Access**, enable MCP, and add the displayed endpoint to your client. The default endpoint is:
+
+```text
+http://127.0.0.1:3318/api/mcp
+```
+
+For Codex CLI:
 
 ```bash
-docker run -p 3000:3000 dorylab/dory
+codex mcp add dory --url http://127.0.0.1:3318/api/mcp
+codex mcp list
 ```
 
-For production deployment, read [Docker](/en/docs/deploy/docker) before exposing the service to a team.
+Dory manages the Desktop grant, so normal Desktop users do not need to copy a bearer token. For standalone, headless, or hosted setups, use [MCP Setup](/en/docs/agents/mcp-setup).
 
-## Next Step
+## Run Dory Web
 
-After Dory is running, continue with [Connect Your Database](/en/docs/getting-started/connect-your-database).
+Use the Web Docker image when a team needs browser access. Start with the production-aware [Docker guide](/en/docs/deploy/docker), which covers required secrets, persistence, and the public URL.
+
+## Expected Outcome
+
+You should finish with either a working SQL workspace or a connected MCP client. Continue with [First Query in 3 Minutes](/en/docs/getting-started/first-query-in-3-minutes) or [Agent Runs](/en/docs/agents/agent-runs).

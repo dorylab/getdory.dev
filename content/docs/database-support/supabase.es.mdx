@@ -1,0 +1,36 @@
+---
+title: Supabase
+description: Conecta Supabase PostgreSQL a Dory para esquema, SQL, AI, resultados y Agent Workspaces.
+---
+
+# Supabase
+
+Dory ofrece una conexión Supabase dedicada sobre el driver y dialecto PostgreSQL.
+
+## Requisitos
+
+Copia una connection string PostgreSQL desde Supabase. Dory acepta URLs directas y de session pooler.
+
+```text
+postgresql://postgres.project-ref:password@aws-0-region.pooler.supabase.com:5432/postgres?sslmode=require
+```
+
+Para un espacio SQL interactivo se recomienda direct o session pooler. Transaction pooler puede probarse, pero puede no ser adecuado para sesiones largas.
+
+## Flujos compatibles
+
+- Validar la connection string de Supabase.
+- Explorar schemas, tables, views y columns PostgreSQL.
+- Ejecutar SQL y revisar resultados.
+- Usar AI Chat con esquema y agentes externos.
+- Conservar SQL y resultados en pestañas o Agent Runs.
+
+## Conecta y verifica
+
+1. Crea una conexión **Supabase**.
+2. Pega la URL direct o session pooler.
+3. Prueba y guarda.
+4. Confirma el schema `public` en Explorer.
+5. Ejecuta una consulta limitada antes de explorar producción.
+
+Usa un role de mínimo privilegio, conserva `sslmode=require`, no pongas la contraseña en SQL o prompts y usa [scope MCP read](/es/docs/agents/tools-actions). También se aplica la [guía PostgreSQL](/es/docs/database-support/postgresql).

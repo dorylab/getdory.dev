@@ -9,7 +9,7 @@ Las notas de la versión resumen los cambios del producto, correcciones, actuali
 
 ## Rango de versiones
 
-- Última versión sincronizada: [v0.32.1](/es/docs/release-notes/v0-32-1)
+- Última versión sincronizada: [v0.32.1](/docs/release-notes/v0-32-1)
 - Versión sincronizada más antigua: [v0.3.7](/es/docs/release-notes/v0-3-7)
 - Fuente: [Notas de la versión de GitHub](https://github.com/dorylab/dory/tree/main/release-notes)
 
@@ -17,45 +17,45 @@ Las notas de la versión resumen los cambios del producto, correcciones, actuali
 
 | Versión | Resumen |
 | --- | --- |
-| [v0.32.1](/es/docs/release-notes/v0-32-1) | Fixed SQL console hydration issues and improved editor fallback rendering, resolving cases where the SQL editor failed to load or display... |
-| [v0.32.0](/es/docs/release-notes/v0-32-0) | Docker images now include artifacts and resultset package manifests, ensuring consistent and reproducible builds with all required runtim... |
-| [v0.31.0](/es/docs/release-notes/v0-31-0) | Parquet-backed SQL result sets: Results are now stored in Parquet format for efficient storage, streaming, and analysis. |
-| [v0.30.0](/es/docs/release-notes/v0-30-0) | Added comprehensive documentation for the Dory CLI and MCP (Model Control Protocol) usage. |
-| [v0.29.0](/es/docs/release-notes/v0-29-0) | SQL result set persistence: Query results are now saved as artifacts in Parquet format, enabling durable storage and reuse across sessions. |
-| [v0.28.0](/es/docs/release-notes/v0-28-0) | Added native Supabase connection support, including dedicated connection form, validation, and TLS configuration handling. |
-| [v0.27.0](/es/docs/release-notes/v0-27-0) | Added full Snowflake connection support, including dedicated driver, form fields, database type icon with beta badge, and backend payload... |
-| [v0.26.0](/es/docs/release-notes/v0-26-0) | Added full Snowflake connection support, including dedicated driver, form fields, and UI integration across the web app. |
-| [v0.25.1](/es/docs/release-notes/v0-25-1) | Replaced pagination page picker with a direct page input field for faster navigation in table previews and query results. |
-| [v0.25.0](/es/docs/release-notes/v0-25-0) | Introduced Codex Agent, a new local AI bridge with MCP support, replacing the previous local AI bridge setup. Includes CLI-driven install... |
-| [v0.24.2](/es/docs/release-notes/v0-24-2) | Enabled improved authentication flow for user joins, enhancing login and session management in the web application. |
-| [v0.24.1](/es/docs/release-notes/v0-24-1) | Enabled logging of proxy authentication attempts in the web app, aiding administrators in monitoring and troubleshooting auth flows. |
-| [v0.24.0](/es/docs/release-notes/v0-24-0) | Introduced a persistent agent workspace drawer with improved layout, desktop bridge detection, and prevention of accidental dismissal |
-| [v0.23.4](/es/docs/release-notes/v0-23-4) | Added table actions (e.g., rename, drop) directly in the SQL console sidebar and tab interface, enabling quick schema modifications witho... |
-| [v0.23.3](/es/docs/release-notes/v0-23-3) | Added support for Cloudflare D1 as a new database connection type, including dedicated form fields, UI icons, and SQL console integration. |
-| [v0.23.2](/es/docs/release-notes/v0-23-2) | Table previews now show unfiltered row counts (e.g., “Showing 100 of 12,345 rows”) instead of only filtered totals, giving clearer contex... |
-| [v0.23.1](/es/docs/release-notes/v0-23-1) | Fixed incorrect sort state cycling in the SQL console result table’s virtualized table component, ensuring stable and predictable column ... |
-| [v0.23.0](/es/docs/release-notes/v0-23-0) | Added desktop-local action authentication with snapshot fallback for improved offline reliability during sign-in and session recovery. |
-| [v0.22.2](/es/docs/release-notes/v0-22-2) | Enabled AI actions (e.g., table summaries, schema explanations, tab title generation) to use the cloud proxy on desktop clients, improvin... |
-| [v0.22.1](/es/docs/release-notes/v0-22-1) | Enhanced table structure tooltip: Column details (e.g., data type, nullability, description) are now merged into the structure tooltip in... |
-| [v0.22.0](/es/docs/release-notes/v0-22-0) | Guest sign-in experience: Added loading state during guest authentication and initialized user ID plumbing across auth flows and session ... |
-| [v0.21.5](/es/docs/release-notes/v0-21-5) | Resolved MCP-related errors preventing proper initialization and auto-opening of the MCP proxy in Electron and web environments. |
-| [v0.21.4](/es/docs/release-notes/v0-21-4) | Fixed an error that prevented users from opening email verification links during sign-in, sign-up, and email verification flows. |
-| [v0.21.3](/es/docs/release-notes/v0-21-3) | Added support for anonymous user access, enabling unauthenticated usage of the web app. |
-| [v0.21.2](/es/docs/release-notes/v0-21-2) | Added SSL/TLS support for database connections: Users can now configure TLS settings (including certificate validation, client certificat... |
-| [v0.21.1](/es/docs/release-notes/v0-21-1) | Fixed Mermaid diagram rendering issues in AI-generated responses. |
-| [v0.21.0](/es/docs/release-notes/v0-21-0) | Query Audit for Pro users: Added a new Query Audit page to track and review executed queries, accessible only to Pro-tier subscribers. Th... |
-| [v0.20.1](/es/docs/release-notes/v0-20-1) | Query Audit Logs: Introduced a new Query Audit page to track and review executed SQL queries across your organization, including metadata... |
-| [v0.19.4](/es/docs/release-notes/v0-19-4) | No commits found in range v0.19.3..HEAD. |
-| [v0.19.3](/es/docs/release-notes/v0-19-3) | Stabilized and persisted the desktop server port used for PGlite storage, ensuring consistent behavior across application launches. |
-| [v0.19.2](/es/docs/release-notes/v0-19-2) | Fix: Resolved a build failure caused by an issue in the organization-specific layout file in the web application. |
-| [v0.19.1](/es/docs/release-notes/v0-19-1) | Added desktop MCP (Model Control Protocol) grants with automatic token UI hiding for improved security and streamlined agent access. |
-| [v0.19.0](/es/docs/release-notes/v0-19-0) | Added Docker Compose support with docker-compose.yml and environment example file, simplifying local and production deployments. |
-| [v0.17.3](/es/docs/release-notes/v0-17-3) | Fixed Docker build failure by correcting the Dockerfile configuration. |
-| [v0.17.2](/es/docs/release-notes/v0-17-2) | Fixed chart rendering issues by removing nested responsive containers, improving layout stability and performance in chart result displays. |
-| [v0.17.1](/es/docs/release-notes/v0-17-1) | Cloud AI provider resolution: Organization-level AI provider configuration now uses cloud-based system status to determine available prov... |
-| [v0.17.0](/es/docs/release-notes/v0-17-0) | Added Bring Your Own Key (BYOK) support for AI providers, enabling organizations to configure and manage their own AI credentials securely. |
-| [v0.16.0](/es/docs/release-notes/v0-16-0) | Added Oracle database support to the SQL console and database explorer, enabling connection, schema browsing, and SQL query execution for... |
-| [v0.15.0](/es/docs/release-notes/v0-15-0) | SQL Server support: Added full connectivity and metadata integration for Microsoft SQL Server, including dedicated driver, connection for... |
+| [v0.32.1](/docs/release-notes/v0-32-1) | Fixed SQL console hydration issues and improved editor fallback rendering, resolving cases where the SQL editor failed to load or display... |
+| [v0.32.0](/docs/release-notes/v0-32-0) | Docker images now include artifacts and resultset package manifests, ensuring consistent and reproducible builds with all required runtim... |
+| [v0.31.0](/docs/release-notes/v0-31-0) | Parquet-backed SQL result sets: Results are now stored in Parquet format for efficient storage, streaming, and analysis. |
+| [v0.30.0](/docs/release-notes/v0-30-0) | Added comprehensive documentation for the Dory CLI and MCP (Model Control Protocol) usage. |
+| [v0.29.0](/docs/release-notes/v0-29-0) | SQL result set persistence: Query results are now saved as artifacts in Parquet format, enabling durable storage and reuse across sessions. |
+| [v0.28.0](/docs/release-notes/v0-28-0) | Added native Supabase connection support, including dedicated connection form, validation, and TLS configuration handling. |
+| [v0.27.0](/docs/release-notes/v0-27-0) | Added full Snowflake connection support, including dedicated driver, form fields, database type icon with beta badge, and backend payload... |
+| [v0.26.0](/docs/release-notes/v0-26-0) | Added full Snowflake connection support, including dedicated driver, form fields, and UI integration across the web app. |
+| [v0.25.1](/docs/release-notes/v0-25-1) | Replaced pagination page picker with a direct page input field for faster navigation in table previews and query results. |
+| [v0.25.0](/docs/release-notes/v0-25-0) | Introduced Codex Agent, a new local AI bridge with MCP support, replacing the previous local AI bridge setup. Includes CLI-driven install... |
+| [v0.24.2](/docs/release-notes/v0-24-2) | Enabled improved authentication flow for user joins, enhancing login and session management in the web application. |
+| [v0.24.1](/docs/release-notes/v0-24-1) | Enabled logging of proxy authentication attempts in the web app, aiding administrators in monitoring and troubleshooting auth flows. |
+| [v0.24.0](/docs/release-notes/v0-24-0) | Introduced a persistent agent workspace drawer with improved layout, desktop bridge detection, and prevention of accidental dismissal |
+| [v0.23.4](/docs/release-notes/v0-23-4) | Added table actions (e.g., rename, drop) directly in the SQL console sidebar and tab interface, enabling quick schema modifications witho... |
+| [v0.23.3](/docs/release-notes/v0-23-3) | Added support for Cloudflare D1 as a new database connection type, including dedicated form fields, UI icons, and SQL console integration. |
+| [v0.23.2](/docs/release-notes/v0-23-2) | Table previews now show unfiltered row counts (e.g., “Showing 100 of 12,345 rows”) instead of only filtered totals, giving clearer contex... |
+| [v0.23.1](/docs/release-notes/v0-23-1) | Fixed incorrect sort state cycling in the SQL console result table’s virtualized table component, ensuring stable and predictable column ... |
+| [v0.23.0](/docs/release-notes/v0-23-0) | Added desktop-local action authentication with snapshot fallback for improved offline reliability during sign-in and session recovery. |
+| [v0.22.2](/docs/release-notes/v0-22-2) | Enabled AI actions (e.g., table summaries, schema explanations, tab title generation) to use the cloud proxy on desktop clients, improvin... |
+| [v0.22.1](/docs/release-notes/v0-22-1) | Enhanced table structure tooltip: Column details (e.g., data type, nullability, description) are now merged into the structure tooltip in... |
+| [v0.22.0](/docs/release-notes/v0-22-0) | Guest sign-in experience: Added loading state during guest authentication and initialized user ID plumbing across auth flows and session ... |
+| [v0.21.5](/docs/release-notes/v0-21-5) | Resolved MCP-related errors preventing proper initialization and auto-opening of the MCP proxy in Electron and web environments. |
+| [v0.21.4](/docs/release-notes/v0-21-4) | Fixed an error that prevented users from opening email verification links during sign-in, sign-up, and email verification flows. |
+| [v0.21.3](/docs/release-notes/v0-21-3) | Added support for anonymous user access, enabling unauthenticated usage of the web app. |
+| [v0.21.2](/docs/release-notes/v0-21-2) | Added SSL/TLS support for database connections: Users can now configure TLS settings (including certificate validation, client certificat... |
+| [v0.21.1](/docs/release-notes/v0-21-1) | Fixed Mermaid diagram rendering issues in AI-generated responses. |
+| [v0.21.0](/docs/release-notes/v0-21-0) | Query Audit for Pro users: Added a new Query Audit page to track and review executed queries, accessible only to Pro-tier subscribers. Th... |
+| [v0.20.1](/docs/release-notes/v0-20-1) | Query Audit Logs: Introduced a new Query Audit page to track and review executed SQL queries across your organization, including metadata... |
+| [v0.19.4](/docs/release-notes/v0-19-4) | No commits found in range v0.19.3..HEAD. |
+| [v0.19.3](/docs/release-notes/v0-19-3) | Stabilized and persisted the desktop server port used for PGlite storage, ensuring consistent behavior across application launches. |
+| [v0.19.2](/docs/release-notes/v0-19-2) | Fix: Resolved a build failure caused by an issue in the organization-specific layout file in the web application. |
+| [v0.19.1](/docs/release-notes/v0-19-1) | Added desktop MCP (Model Control Protocol) grants with automatic token UI hiding for improved security and streamlined agent access. |
+| [v0.19.0](/docs/release-notes/v0-19-0) | Added Docker Compose support with docker-compose.yml and environment example file, simplifying local and production deployments. |
+| [v0.17.3](/docs/release-notes/v0-17-3) | Fixed Docker build failure by correcting the Dockerfile configuration. |
+| [v0.17.2](/docs/release-notes/v0-17-2) | Fixed chart rendering issues by removing nested responsive containers, improving layout stability and performance in chart result displays. |
+| [v0.17.1](/docs/release-notes/v0-17-1) | Cloud AI provider resolution: Organization-level AI provider configuration now uses cloud-based system status to determine available prov... |
+| [v0.17.0](/docs/release-notes/v0-17-0) | Added Bring Your Own Key (BYOK) support for AI providers, enabling organizations to configure and manage their own AI credentials securely. |
+| [v0.16.0](/docs/release-notes/v0-16-0) | Added Oracle database support to the SQL console and database explorer, enabling connection, schema browsing, and SQL query execution for... |
+| [v0.15.0](/docs/release-notes/v0-15-0) | SQL Server support: Added full connectivity and metadata integration for Microsoft SQL Server, including dedicated driver, connection for... |
 | [v0.14.1](/es/docs/release-notes/v0-14-1) | Se corrigieron fallos de acciones de SQL Copilot causados por la ausencia de contexto de esquema, se mejoró el botón AI Fix y se extrajo BorderBeamButton al paquete UI compartido. |
 | [v0.14.0](/es/docs/release-notes/v0-14-0) | Se agregó compatibilidad con archivos locales, selección de archivos de escritorio nativos, mejoras en la experiencia de usuario de Open Files, actualizaciones de localización y correcciones de confiabilidad de la compilación de Docker. |
 | [v0.13.1](/es/docs/release-notes/v0-13-1) | Compilaciones de imágenes de Docker simplificadas al eliminar la dependencia de lanzamiento de Yarn del proceso de compilación, lo que reduce la construcción. |

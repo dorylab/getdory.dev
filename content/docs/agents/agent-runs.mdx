@@ -1,0 +1,44 @@
+---
+title: Agent Runs & Human Handoff
+description: Understand how Dory preserves agent SQL, results, findings, and execution steps for human review.
+---
+
+# Agent Runs & Human Handoff
+
+An Agent Run is the durable work context for one agent task. It connects the user's request, inspected schema, executed SQL, workspace tabs, result snapshots, findings, and execution steps.
+
+## One Run per Task
+
+Create one Agent Run for a coherent request such as “investigate the checkout drop” or “compare schema before a migration.” Reuse its `workId` throughout that task so the evidence stays together.
+
+## Recommended Lifecycle
+
+1. **Create work:** call `dory_create_work` with a short, human-readable title.
+2. **Choose a connection:** list connections unless a valid `connectionId` is already known.
+3. **Explore schema:** confirm tables, columns, types, join keys, date fields, and likely table size.
+4. **Run read-only SQL:** start with limits, narrow filters, and explicit columns.
+5. **Preserve evidence:** create, append to, or replace a workspace tab when SQL and results should be reviewed later.
+6. **Finish work:** record findings, steps, assumptions, and blockers with `dory_finish_work`.
+
+## What to Preserve
+
+Create or update a workspace tab when the task has multiple SQL steps, supports a decision, explores unfamiliar schema, or should be continued by a person. Use tab names that describe the question, not the implementation.
+
+Saved Queries are different: use them only when the SQL should become a durable, reusable asset. One-off analysis belongs in the Agent Run workspace.
+
+## Human Review Checklist
+
+When the run is handed back, a reviewer should be able to:
+
+- see which connection and tables were used;
+- inspect the exact SQL and returned rows;
+- understand time ranges, filters, assumptions, and truncation;
+- edit and rerun SQL in the normal SQL workspace;
+- create filters or charts from the preserved result;
+- save stable SQL as a Saved Query when it is reusable.
+
+## Blocked Runs
+
+If a connection, permission, or schema requirement is missing, finish the run with an error status and a concrete blocking reason. Never invent connection IDs, schemas, workspace URLs, or query results.
+
+Continue with [Review and Continue Agent Work](/en/docs/workflows/review-agent-work) for the end-to-end review flow.

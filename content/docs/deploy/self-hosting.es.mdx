@@ -7,6 +7,8 @@ description: Planifique los límites de tiempo de ejecución, almacenamiento, re
 
 El autohospedaje es para equipos que necesitan un punto de entrada web compartido, acceso a red privada, credenciales de base de datos dedicadas, administración de claves de IA y datos de aplicaciones persistentes.
 
+Si no necesitas Web UI, usa [Headless Runtime](/es/docs/agents/cli-headless) en lugar de desplegar toda la aplicación Web.
+
 ## Escenarios más adecuados
 
 - Ejecute Dory en una red privada, una nube privada o un servidor autoadministrado.
@@ -29,7 +31,7 @@ El autohospedaje es para equipos que necesitan un punto de entrada web compartid
 
 | Rol de base de datos | lo que almacena | donde configurar |
 | --- | --- | --- |
-| Base de datos de la aplicación | Usuarios, organizaciones, conexiones, consultas guardadas, configuraciones y tokens MCP de Dory. | [Variables de entorno](/es/docs/deploy/variables-de-entorno) |
+| Base de datos de la aplicación | Usuarios, organizaciones, conexiones, consultas guardadas, configuraciones y tokens MCP de Dory. | [Variables de entorno](/es/docs/deploy/environment-variables) |
 | Bases de datos conectadas | Bases de datos empresariales o analíticas consultadas a través de Dory. | [Conecte su base de datos](/es/docs/getting-started/connect-your-database) |
 
 No deje datos de la aplicación dentro de un sistema de archivos contenedor desechable para producción. PGlite necesita un volumen persistente; Postgres necesita una base de datos de respaldo dedicada.
@@ -71,6 +73,6 @@ No deje datos de la aplicación dentro de un sistema de archivos contenedor dese
 ## Documentos relacionados
 
 - [Docker](/es/docs/deploy/docker)
-- [Variables de entorno](/es/docs/deploy/variables-de-entorno)
+- [Variables de entorno](/es/docs/deploy/environment-variables)
 - [Auth](/es/docs/deploy/auth-sso)
 - [Bases de datos en la nube](/es/docs/database-support/cloud-databases)

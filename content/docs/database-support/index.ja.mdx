@@ -1,45 +1,29 @@
 ---
-title: 概要
-description: ClickHouse、PostgreSQL、Neon、MySQL、MariaDB、SQL Server、Oracle、SQLite、DuckDB、MotherDuck、およびクラウド データベース接続に対する Dory のサポートを確認してください。
+title: データベース
+description: 人間の SQL と Agent Workspaces に対応する Dory データベース サポートです。
 ---
 
-＃ 概要
+# データベース
 
-Dory は、最新のデータベース用の AI ネイティブ データ ワークスペースです。サポートされているデータベースに接続し、スキーマを参照し、SQL を書き込み、AI を使用してクエリを生成し、結果を検査し、グラフを作成し、再利用可能なクエリを保存することができます。
+Dory は複数データベース対応の SQL クライアント兼 Agent workspace です。すべての接続で Schema 探索、SQL、結果、作業保存を利用でき、ClickHouse には深い運用機能があります。
 
-## データベースサポートの概要
+## サポート マトリックス
 
-| データベース | ベストフィット | ドリーのサポート |
+| データベース | 状態 | 主な機能 |
 | --- | --- | --- |
-| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/clickhouse.svg" alt="" width="20" height="20" />[ClickHouse](/ja/docs/database-support/clickhouse)</span> | イベント、ログ、可観測性、および高スループット分析 | SQL、エクスプローラー、AI、監視、および権限。 |
-| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/postgresql.svg" alt="" width="20" height="20" />[PostgreSQL](/ja/docs/database-support/postgresql)</span> | 運用アプリ、内部ツール、分析 | スキーマの参照、SQL、AI 支援、結果分析。 |
-| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/neon.svg" alt="" width="20" height="20" />[Neon](/ja/docs/database-support/neon)</span> | サーバーレス PostgreSQL とクラウド開発 | PostgreSQL と互換性のある接続のサポート。 |
-| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/mysql.svg" alt="" width="20" height="20" />[MySQL](/ja/docs/database-support/mysql)</span> | Web アプリケーションのデータベースとレポート作成 | クエリ、AI 支援、本番環境に安全な探索。 |
-| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/mariadb.svg" alt="" width="20" height="20" />[MariaDB](/ja/docs/database-support/mariadb)</span> | MariaDB アプリケーション データベースとレポート | SQL、Explorer、AI 支援の専用接続サポート。 |
-| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/sqlserver.svg" alt="" width="20" height="20" />[SQL Server](/ja/docs/database-support/sqlserver)</span> | エンタープライズ アプリ、レポート、運用システム | T-SQL 実行、Explorer、AI 支援、スキーマ対応ワークフロー。 |
-| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/oracle.svg" alt="" width="20" height="20" />[Oracle](/ja/docs/database-support/oracle)</span> | エンタープライズ システム、ERP、財務、長期運用データベース | Oracle SQL 実行、オブジェクト探索、AI 支援、スキーマ コンテキスト。 |
-| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/sqlite.svg" alt="" width="20" height="20" />[SQLite](/ja/docs/database-support/sqlite)</span> | ローカル ファイル、プロトタイプ、デモ、軽量分析 | 絶対パスのローカル`.sqlite `/`.db `ファイル接続。 |
-| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/duckdb.svg" alt="" width="20" height="20" />[DuckDB](/ja/docs/database-support/duckdb)</span> | ローカル分析ファイルと MotherDuck ワークフロー | ローカル DuckDB ファイルと MotherDuck トークン。 |
-| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/more.svg" alt="" width="20" height="20" />[クラウド データベース](/ja/docs/database-support/cloud-databases)</span> | 管理されたデータベースとチーム展開 | TLS、ホワイトリスト、SSHトンネル、およびシークレット管理ガイダンス。 |
+| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/clickhouse.svg" alt="" width="20" height="20" />[ClickHouse](/ja/docs/database-support/clickhouse)</span> | 深い統合 | SQL、Explorer、AI、Agent、Monitoring、Privileges。 |
+| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/postgresql.svg" alt="" width="20" height="20" />[PostgreSQL](/ja/docs/database-support/postgresql)</span> | 対応 | SQL、Schema、結果、AI、Agent。 |
+| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/neon.svg" alt="" width="20" height="20" />[Neon](/ja/docs/database-support/neon)</span> | 対応 | PostgreSQL 互換 Serverless。 |
+| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/supabase.svg" alt="" width="20" height="20" />[Supabase](/ja/docs/database-support/supabase)</span> | 対応 | Supabase PostgreSQL の専用接続。 |
+| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/mysql.svg" alt="" width="20" height="20" />[MySQL](/ja/docs/database-support/mysql)</span> | 対応 | SQL、Explorer、結果、AI、Agent。 |
+| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/mariadb.svg" alt="" width="20" height="20" />[MariaDB](/ja/docs/database-support/mariadb)</span> | 対応 | MariaDB 接続と SQL dialect。 |
+| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/sqlserver.svg" alt="" width="20" height="20" />[SQL Server](/ja/docs/database-support/sqlserver)</span> | 対応 | T-SQL、Schema、結果、AI、Agent。 |
+| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/oracle.svg" alt="" width="20" height="20" />[Oracle](/ja/docs/database-support/oracle)</span> | 対応 | Oracle SQL、object、結果、AI、Agent。 |
+| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/snowflake.svg" alt="" width="20" height="20" />[Snowflake](/ja/docs/database-support/snowflake)</span> | 対応 | Database、Schema、table、view、SQL、preview。 |
+| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/cloudflare.svg" alt="" width="20" height="20" />[Cloudflare D1](/ja/docs/database-support/cloudflare-d1)</span> | 対応 | D1 REST、SQL Console、Schema、結果。 |
+| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/sqlite.svg" alt="" width="20" height="20" />[SQLite](/ja/docs/database-support/sqlite)</span> | 対応 | Runtime から読めるローカル ファイル。 |
+| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/duckdb.svg" alt="" width="20" height="20" />[DuckDB](/ja/docs/database-support/duckdb)</span> | 対応 | ローカル DuckDB と MotherDuck。 |
 
-## 一般的な Dory データベースのワークフロー
+[Connections](/ja/docs/core-features/connections)で作成し、[Explorer](/ja/docs/core-features/explorer)で実際の Schema を確認します。人間は [SQL Console](/ja/docs/core-features/sql-console)、エージェントは [MCP Setup](/ja/docs/agents/mcp-setup)から同じ接続を利用できます。
 
-1. [接続](/ja/docs/core-features/connections) に接続を作成します。
-2. [エクスプローラー](/ja/docs/core-features/explorer) でデータベース、スキーマ、テーブル、列を参照します。
-3. [SQL Console](/ja/docs/core-features/sql-console) で SQL を記述して実行します。
-4. [AI Chat](/ja/docs/core-features/ai-chat) を使用して、クエリを生成、説明、修正、または最適化します。
-5. 結果を検証し、[グラフと結果](/ja/docs/core-features/charts-results) でグラフを作成します。
-6. 再利用可能な SQL を [保存されたクエリ](/ja/docs/core-features/saved-queries) に保存します。
-
-## 接続方法を選択します
-
-- ローカル開発およびマシンからの直接アクセスにはデスクトップ アプリを使用します。
-- チームが共有アクセスを必要とする場合は、Docker またはセルフホスティングを使用します。
-- SQLite および DuckDB のファイル パスは、Dory ランタイムがこれらのファイルを読み取れる場合にのみ使用します。
-- データベースがパブリックにアクセスできない場合は、SSHトンネルまたはクラウド ネットワーク設定を使用します。
-
-## 次のステップ
-
-- [データベースに接続する](/ja/docs/getting-started/connect-your-database)
-- [クラウド データベース](/ja/docs/database-support/cloud-databases)
-- [デプロイ](/ja/docs/deploy)
+TLS、IP allowlist、SSH Tunnel は [Cloud Databases](/ja/docs/database-support/cloud-databases)を参照してください。

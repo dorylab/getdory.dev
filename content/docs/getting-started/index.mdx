@@ -1,33 +1,32 @@
 ---
-title: Overview
-description: Install Dory, connect a database, and complete your first reviewed query.
+title: Getting Started
+description: Choose a Dory runtime and complete a first SQL or agent workflow.
 ---
 
-# Overview
+# Getting Started
 
-The first Dory session has a short path: launch the app, connect a reachable data source, run a limited query, and review the result.
+Dory can run as an interactive SQL workspace or as the database execution layer behind an agent. Choose the runtime that matches the work you want to do.
 
-## Setup Path
+## Choose a Runtime
 
-1. [Quick Start](/en/docs/getting-started/quick-start): choose hosted demo, desktop app, or Docker.
-2. [Installation](/en/docs/getting-started/installation): install the desktop app or start a self-hosted runtime.
-3. [Connect Your Database](/en/docs/getting-started/connect-your-database): create a connection and confirm schema visibility.
-4. [First Query in 3 Minutes](/en/docs/getting-started/first-query-in-3-minutes): run a limited query, review results, and use AI for the next step.
+| Runtime | Best for | Continue with |
+| --- | --- | --- |
+| Dory Desktop | Daily SQL work and local agents that should reuse Desktop connections | [Install Dory](/en/docs/getting-started/installation), then [connect a database](/en/docs/getting-started/connect-your-database). |
+| Dory Web | Browser access, shared teams, and self-hosted deployments | [Quick Start](/en/docs/getting-started/quick-start) or [Deploy](/en/docs/deploy). |
+| Dory CLI | Local agents, CI, and automation without opening the desktop app | [MCP Setup](/en/docs/agents/mcp-setup) and [CLI & Headless Runtime](/en/docs/agents/cli-headless). |
+| Headless Runtime | Stable HTTP MCP endpoints and agent-only servers | [CLI & Headless Runtime](/en/docs/agents/cli-headless). |
 
-## What Comes After Setup
+## First Human Workflow
 
-After the first query works, use the rest of the documentation by intent:
+1. [Install or open Dory](/en/docs/getting-started/quick-start).
+2. [Connect a database](/en/docs/getting-started/connect-your-database).
+3. Run a limited, reviewed query with [First Query in 3 Minutes](/en/docs/getting-started/first-query-in-3-minutes).
+4. Inspect the result, create a chart, or save the query.
 
-| Need | Read |
-| --- | --- |
-| Understand a product surface | [Core Features](/en/docs/core-features) |
-| Follow a task-oriented process | [Workflows](/en/docs/workflows) |
-| Check database-specific behavior | [Database Support](/en/docs/database-support) |
-| Configure deployment or auth | [Deploy](/en/docs/deploy) |
-| Look up settings, shortcuts, snippets, MCP, or FAQ | [Reference](/en/docs/reference) |
+## First Agent Workflow
 
-## Minimum Production Advice
+1. Choose Desktop MCP, standalone stdio, headless HTTP, or a hosted bridge in [MCP Setup](/en/docs/agents/mcp-setup).
+2. Ask the agent to inspect schema and run read-only SQL.
+3. Open the resulting Agent Run in Dory and continue from the saved SQL tabs and result snapshots.
 
-- Use read-only credentials for production databases.
-- Confirm network access from the runtime that runs Dory, especially in Docker.
-- Review AI-generated SQL before running it.
+Use read-only database credentials for production data and review generated SQL before expanding access.

@@ -103,9 +103,14 @@ LIMIT 20;
 
 连接真实数据库并加载 Schema 后，效果通常会明显提升。
 
+## 交给外部 Agent 继续
+
+连接 MCP 后，可以让 Agent 探索同一个 Schema，并用只读 SQL 继续分析。Dory 会把生成的 SQL、结果快照和 findings 保存在 Agent Run 中，方便你打开工作、验证结果、修改查询并亲自重新运行。
+
 ## 下一步推荐
 
 - 深入使用 [SQL Console](/zh/docs/core-features/sql-console)
 - 学习 [AI Chat](/zh/docs/core-features/ai-chat)
+- 连接 [Agent Workspaces](/zh/docs/agents)
 - 浏览 [Explorer](/zh/docs/core-features/explorer)
 - 查看 [Saved Queries](/zh/docs/core-features/saved-queries)

@@ -9,7 +9,7 @@ description: 製品の変更、修正、データベース サポートの更新
 
 ## バージョン範囲
 
-- 最新の同期バージョン: [v0.32.1](/ja/docs/release-notes/v0-32-1)
+- 最新の同期バージョン: [v0.32.1](/docs/release-notes/v0-32-1)
 - 最も古い同期バージョン: [v0.3.7](/ja/docs/release-notes/v0-3-7)
 - 出典: [GitHub リリースノート](https://github.com/dorylab/dory/tree/main/release-notes)
 
@@ -17,100 +17,100 @@ description: 製品の変更、修正、データベース サポートの更新
 
 | バージョン | まとめ |
 | --- | --- |
-| [v0.32.1](/ja/docs/release-notes/v0-32-1) | Fixed SQL console hydration issues and improved editor fallback rendering, resolving cases where the SQL editor failed to load or display... |
-| [v0.32.0](/ja/docs/release-notes/v0-32-0) | Docker images now include artifacts and resultset package manifests, ensuring consistent and reproducible builds with all required runtim... |
-| [v0.31.0](/ja/docs/release-notes/v0-31-0) | Parquet-backed SQL result sets: Results are now stored in Parquet format for efficient storage, streaming, and analysis. |
-| [v0.30.0](/ja/docs/release-notes/v0-30-0) | Added comprehensive documentation for the Dory CLI and MCP (Model Control Protocol) usage. |
-| [v0.29.0](/ja/docs/release-notes/v0-29-0) | SQL result set persistence: Query results are now saved as artifacts in Parquet format, enabling durable storage and reuse across sessions. |
-| [v0.28.0](/ja/docs/release-notes/v0-28-0) | Added native Supabase connection support, including dedicated connection form, validation, and TLS configuration handling. |
-| [v0.27.0](/ja/docs/release-notes/v0-27-0) | Added full Snowflake connection support, including dedicated driver, form fields, database type icon with beta badge, and backend payload... |
-| [v0.26.0](/ja/docs/release-notes/v0-26-0) | Added full Snowflake connection support, including dedicated driver, form fields, and UI integration across the web app. |
-| [v0.25.1](/ja/docs/release-notes/v0-25-1) | Replaced pagination page picker with a direct page input field for faster navigation in table previews and query results. |
-| [v0.25.0](/ja/docs/release-notes/v0-25-0) | Introduced Codex Agent, a new local AI bridge with MCP support, replacing the previous local AI bridge setup. Includes CLI-driven install... |
-| [v0.24.2](/ja/docs/release-notes/v0-24-2) | Enabled improved authentication flow for user joins, enhancing login and session management in the web application. |
-| [v0.24.1](/ja/docs/release-notes/v0-24-1) | Enabled logging of proxy authentication attempts in the web app, aiding administrators in monitoring and troubleshooting auth flows. |
-| [v0.24.0](/ja/docs/release-notes/v0-24-0) | Introduced a persistent agent workspace drawer with improved layout, desktop bridge detection, and prevention of accidental dismissal |
-| [v0.23.4](/ja/docs/release-notes/v0-23-4) | Added table actions (e.g., rename, drop) directly in the SQL console sidebar and tab interface, enabling quick schema modifications witho... |
-| [v0.23.3](/ja/docs/release-notes/v0-23-3) | Added support for Cloudflare D1 as a new database connection type, including dedicated form fields, UI icons, and SQL console integration. |
-| [v0.23.2](/ja/docs/release-notes/v0-23-2) | Table previews now show unfiltered row counts (e.g., “Showing 100 of 12,345 rows”) instead of only filtered totals, giving clearer contex... |
-| [v0.23.1](/ja/docs/release-notes/v0-23-1) | Fixed incorrect sort state cycling in the SQL console result table’s virtualized table component, ensuring stable and predictable column ... |
-| [v0.23.0](/ja/docs/release-notes/v0-23-0) | Added desktop-local action authentication with snapshot fallback for improved offline reliability during sign-in and session recovery. |
-| [v0.22.2](/ja/docs/release-notes/v0-22-2) | Enabled AI actions (e.g., table summaries, schema explanations, tab title generation) to use the cloud proxy on desktop clients, improvin... |
-| [v0.22.1](/ja/docs/release-notes/v0-22-1) | Enhanced table structure tooltip: Column details (e.g., data type, nullability, description) are now merged into the structure tooltip in... |
-| [v0.22.0](/ja/docs/release-notes/v0-22-0) | Guest sign-in experience: Added loading state during guest authentication and initialized user ID plumbing across auth flows and session ... |
-| [v0.21.5](/ja/docs/release-notes/v0-21-5) | Resolved MCP-related errors preventing proper initialization and auto-opening of the MCP proxy in Electron and web environments. |
-| [v0.21.4](/ja/docs/release-notes/v0-21-4) | Fixed an error that prevented users from opening email verification links during sign-in, sign-up, and email verification flows. |
-| [v0.21.3](/ja/docs/release-notes/v0-21-3) | Added support for anonymous user access, enabling unauthenticated usage of the web app. |
-| [v0.21.2](/ja/docs/release-notes/v0-21-2) | Added SSL/TLS support for database connections: Users can now configure TLS settings (including certificate validation, client certificat... |
-| [v0.21.1](/ja/docs/release-notes/v0-21-1) | Fixed Mermaid diagram rendering issues in AI-generated responses. |
-| [v0.21.0](/ja/docs/release-notes/v0-21-0) | Query Audit for Pro users: Added a new Query Audit page to track and review executed queries, accessible only to Pro-tier subscribers. Th... |
-| [v0.20.1](/ja/docs/release-notes/v0-20-1) | Query Audit Logs: Introduced a new Query Audit page to track and review executed SQL queries across your organization, including metadata... |
-| [v0.19.4](/ja/docs/release-notes/v0-19-4) | No commits found in range v0.19.3..HEAD. |
-| [v0.19.3](/ja/docs/release-notes/v0-19-3) | Stabilized and persisted the desktop server port used for PGlite storage, ensuring consistent behavior across application launches. |
-| [v0.19.2](/ja/docs/release-notes/v0-19-2) | Fix: Resolved a build failure caused by an issue in the organization-specific layout file in the web application. |
-| [v0.19.1](/ja/docs/release-notes/v0-19-1) | Added desktop MCP (Model Control Protocol) grants with automatic token UI hiding for improved security and streamlined agent access. |
-| [v0.19.0](/ja/docs/release-notes/v0-19-0) | Added Docker Compose support with docker-compose.yml and environment example file, simplifying local and production deployments. |
-| [v0.17.3](/ja/docs/release-notes/v0-17-3) | Fixed Docker build failure by correcting the Dockerfile configuration. |
-| [v0.17.2](/ja/docs/release-notes/v0-17-2) | Fixed chart rendering issues by removing nested responsive containers, improving layout stability and performance in chart result displays. |
-| [v0.17.1](/ja/docs/release-notes/v0-17-1) | Cloud AI provider resolution: Organization-level AI provider configuration now uses cloud-based system status to determine available prov... |
-| [v0.17.0](/ja/docs/release-notes/v0-17-0) | Added Bring Your Own Key (BYOK) support for AI providers, enabling organizations to configure and manage their own AI credentials securely. |
-| [v0.16.0](/ja/docs/release-notes/v0-16-0) | Added Oracle database support to the SQL console and database explorer, enabling connection, schema browsing, and SQL query execution for... |
-| [v0.15.0](/ja/docs/release-notes/v0-15-0) | SQL Server support: Added full connectivity and metadata integration for Microsoft SQL Server, including dedicated driver, connection for... |
+| [v0.32.1](/docs/release-notes/v0-32-1) | Fixed SQL console hydration issues and improved editor fallback rendering, resolving cases where the SQL editor failed to load or display... |
+| [v0.32.0](/docs/release-notes/v0-32-0) | Docker images now include artifacts and resultset package manifests, ensuring consistent and reproducible builds with all required runtim... |
+| [v0.31.0](/docs/release-notes/v0-31-0) | Parquet-backed SQL result sets: Results are now stored in Parquet format for efficient storage, streaming, and analysis. |
+| [v0.30.0](/docs/release-notes/v0-30-0) | Added comprehensive documentation for the Dory CLI and MCP (Model Control Protocol) usage. |
+| [v0.29.0](/docs/release-notes/v0-29-0) | SQL result set persistence: Query results are now saved as artifacts in Parquet format, enabling durable storage and reuse across sessions. |
+| [v0.28.0](/docs/release-notes/v0-28-0) | Added native Supabase connection support, including dedicated connection form, validation, and TLS configuration handling. |
+| [v0.27.0](/docs/release-notes/v0-27-0) | Added full Snowflake connection support, including dedicated driver, form fields, database type icon with beta badge, and backend payload... |
+| [v0.26.0](/docs/release-notes/v0-26-0) | Added full Snowflake connection support, including dedicated driver, form fields, and UI integration across the web app. |
+| [v0.25.1](/docs/release-notes/v0-25-1) | Replaced pagination page picker with a direct page input field for faster navigation in table previews and query results. |
+| [v0.25.0](/docs/release-notes/v0-25-0) | Introduced Codex Agent, a new local AI bridge with MCP support, replacing the previous local AI bridge setup. Includes CLI-driven install... |
+| [v0.24.2](/docs/release-notes/v0-24-2) | Enabled improved authentication flow for user joins, enhancing login and session management in the web application. |
+| [v0.24.1](/docs/release-notes/v0-24-1) | Enabled logging of proxy authentication attempts in the web app, aiding administrators in monitoring and troubleshooting auth flows. |
+| [v0.24.0](/docs/release-notes/v0-24-0) | Introduced a persistent agent workspace drawer with improved layout, desktop bridge detection, and prevention of accidental dismissal |
+| [v0.23.4](/docs/release-notes/v0-23-4) | Added table actions (e.g., rename, drop) directly in the SQL console sidebar and tab interface, enabling quick schema modifications witho... |
+| [v0.23.3](/docs/release-notes/v0-23-3) | Added support for Cloudflare D1 as a new database connection type, including dedicated form fields, UI icons, and SQL console integration. |
+| [v0.23.2](/docs/release-notes/v0-23-2) | Table previews now show unfiltered row counts (e.g., “Showing 100 of 12,345 rows”) instead of only filtered totals, giving clearer contex... |
+| [v0.23.1](/docs/release-notes/v0-23-1) | Fixed incorrect sort state cycling in the SQL console result table’s virtualized table component, ensuring stable and predictable column ... |
+| [v0.23.0](/docs/release-notes/v0-23-0) | Added desktop-local action authentication with snapshot fallback for improved offline reliability during sign-in and session recovery. |
+| [v0.22.2](/docs/release-notes/v0-22-2) | Enabled AI actions (e.g., table summaries, schema explanations, tab title generation) to use the cloud proxy on desktop clients, improvin... |
+| [v0.22.1](/docs/release-notes/v0-22-1) | Enhanced table structure tooltip: Column details (e.g., data type, nullability, description) are now merged into the structure tooltip in... |
+| [v0.22.0](/docs/release-notes/v0-22-0) | Guest sign-in experience: Added loading state during guest authentication and initialized user ID plumbing across auth flows and session ... |
+| [v0.21.5](/docs/release-notes/v0-21-5) | Resolved MCP-related errors preventing proper initialization and auto-opening of the MCP proxy in Electron and web environments. |
+| [v0.21.4](/docs/release-notes/v0-21-4) | Fixed an error that prevented users from opening email verification links during sign-in, sign-up, and email verification flows. |
+| [v0.21.3](/docs/release-notes/v0-21-3) | Added support for anonymous user access, enabling unauthenticated usage of the web app. |
+| [v0.21.2](/docs/release-notes/v0-21-2) | Added SSL/TLS support for database connections: Users can now configure TLS settings (including certificate validation, client certificat... |
+| [v0.21.1](/docs/release-notes/v0-21-1) | Fixed Mermaid diagram rendering issues in AI-generated responses. |
+| [v0.21.0](/docs/release-notes/v0-21-0) | Query Audit for Pro users: Added a new Query Audit page to track and review executed queries, accessible only to Pro-tier subscribers. Th... |
+| [v0.20.1](/docs/release-notes/v0-20-1) | Query Audit Logs: Introduced a new Query Audit page to track and review executed SQL queries across your organization, including metadata... |
+| [v0.19.4](/docs/release-notes/v0-19-4) | No commits found in range v0.19.3..HEAD. |
+| [v0.19.3](/docs/release-notes/v0-19-3) | Stabilized and persisted the desktop server port used for PGlite storage, ensuring consistent behavior across application launches. |
+| [v0.19.2](/docs/release-notes/v0-19-2) | Fix: Resolved a build failure caused by an issue in the organization-specific layout file in the web application. |
+| [v0.19.1](/docs/release-notes/v0-19-1) | Added desktop MCP (Model Control Protocol) grants with automatic token UI hiding for improved security and streamlined agent access. |
+| [v0.19.0](/docs/release-notes/v0-19-0) | Added Docker Compose support with docker-compose.yml and environment example file, simplifying local and production deployments. |
+| [v0.17.3](/docs/release-notes/v0-17-3) | Fixed Docker build failure by correcting the Dockerfile configuration. |
+| [v0.17.2](/docs/release-notes/v0-17-2) | Fixed chart rendering issues by removing nested responsive containers, improving layout stability and performance in chart result displays. |
+| [v0.17.1](/docs/release-notes/v0-17-1) | Cloud AI provider resolution: Organization-level AI provider configuration now uses cloud-based system status to determine available prov... |
+| [v0.17.0](/docs/release-notes/v0-17-0) | Added Bring Your Own Key (BYOK) support for AI providers, enabling organizations to configure and manage their own AI credentials securely. |
+| [v0.16.0](/docs/release-notes/v0-16-0) | Added Oracle database support to the SQL console and database explorer, enabling connection, schema browsing, and SQL query execution for... |
+| [v0.15.0](/docs/release-notes/v0-15-0) | SQL Server support: Added full connectivity and metadata integration for Microsoft SQL Server, including dedicated driver, connection for... |
 | [v0.14.1](/ja/docs/release-notes/v0-14-1) | スキーマコンテキスト不足による SQL Copilot アクションの失敗を修正し、AI Fix ボタンを改善して、BorderBeamButton を共有 UI パッケージに抽出しました。 |
-| [v0.14.0](/ja/docs/リリースノート/v0-14-0) | ローカル ファイルのサポート、ネイティブ デスクトップ ファイルの選択、Open Files UX の改良、ローカリゼーションの更新、Docker ビルドの信頼性の修正が追加されました。 |
-| [v0.13.1](/ja/docs/リリースノート/v0-13-1) | ビルド プロセスから Yarn リリースの依存関係を削除することで、Docker イメージのビルドが簡素化され、ビルドが削減されます。 |
-| [v0.13.0](/ja/docs/リリースノート/v0-13-0) | MCP(モデル コンテキスト プロトコル) サーバーのサポートを追加しました |
-| [v0.12.2](/ja/docs/リリースノート/v0-12-2) | ネットワークに依存しない匿名サインイン フローを含む、デスクトップ アプリの完全なオフライン サポートを追加しました。 |
-| [v0.12.1](/ja/docs/リリースノート/v0-12-1) | DuckDB サポートを追加しました |
-| [v0.12.0](/ja/docs/リリースノート/v0-12-0) | DuckDB サポートを追加しました |
-| [v0.11.4](/ja/docs/リリースノート/v0-11-4) | SQL コンソール コパイロットの信頼性の向上 |
-| [v0.11.3](/ja/docs/リリースノート/v0-11-3) | パフォーマンスとパフォーマンスの向上のために、チャート レンダリング コンポーネント (chart-canvas.tsx、charts-result/index.tsx) が更新されました。 |
-| [v0.11.2](/ja/docs/リリースノート/v0-11-2) | デスクトップアプリと Web アプリの両方の読み込み画面とスプラッシュ画面の背景色が洗練され、視認性が向上しました。 |
-| [v0.11.1](/ja/docs/リリースノート/v0-11-1) | SQL コンソール コパイロット パネルの [インサイト] タブの高さを安定させ、作業中にレイアウトがずれるのを防ぎます。 |
-| [v0.11.0](/ja/docs/リリースノート/v0-11-0) | ユーザー側の変更は記録されません。 |
-| [v0.10.0](/ja/docs/リリースノート/v0-10-0) | 仮想化された結果テーブルで、処理中に UI がフリーズする原因となる無限の並べ替え更新ループを解決しました。 |
-| [v0.9.0](/ja/docs/リリースノート/v0-9-0) | AI 使用状況の追跡 |
-| [v0.8.3](/ja/docs/リリースノート/v0-8-3) | ユーザーのサインアップまたは認証フロー中に組織の自動作成を妨げるエラーを修正しました。 |
-| [v0.8.2](/ja/docs/リリースノート/v0-8-2) | チャットメッセージの表示を修正 |
-| [v0.8.1](/ja/docs/リリースノート/v0-8-1) | チャットボットの国際化 |
-| [v0.8.0](/ja/docs/リリースノート/v0-8-0) | SQL 生成機能を SQL コンソールに追加しました。ユーザーは自然言語で質問し、質問できるようになりました。 |
-| [v0.7.13](/ja/docs/リリースノート/v0-7-13) | SQL コンソールの最初のクリックで Copilot のクイック アクションが機能しない問題を修正しました。 |
-| [v0.7.12](/ja/docs/リリースノート/v0-7-12) | データベースとスキーマのリストを手動で再ロードするための更新ボタンを SQL コンソールのサイドバーに追加しました。 |
-| [v0.7.11](/ja/docs/リリースノート/v0-7-11) | Web アプリのブートストラップ スクリプト (bootstrap.mjs) の終了エラーを修正し、実行中の予期しないエラーを防止しました。 |
-| [v0.7.10](/ja/docs/リリースノート/v0-7-10) | ゲスト ログイン機能が削除され、新しいデモ サインイン フローが導入され、ユーザーがすばやく探索できるようになりました。 |
-| [v0.7.9](/ja/docs/リリースノート/v0-7-9) | SQL 安全性チェックが強化され、PRAGMAおよびDESCRIBEステートメントを読み取り専用モードで使用できるようになり、より広範な互換性が可能になります。 |
-| [v0.7.8](/ja/docs/リリースノート/v0-7-8) | ユーザー側の変更は記録されません。 |
-| [v0.7.7](/ja/docs/リリースノート/v0-7-7) | このバージョンのリリース ノート ファイル release-notes/v0.7.6.md を追加しました。 |
-| [v0.7.6](/ja/docs/リリースノート/v0-7-6) | ユーザー側の変更は記録されません。 |
-| [v0.7.5](/ja/docs/リリースノート/v0-7-5) | 主要なチャットAPIエンドポイント (/api/chat、/api/chat/sql-runner) と SQL ツール ロジックにパフォーマンスガードを追加しました。 |
-| [v0.7.4](/ja/docs/リリースノート/v0-7-4) | データ プレビューのページネーション |
-| [v0.7.3](/ja/docs/リリースノート/v0-7-3) | ユーザー側の変更は記録されません。 |
-| [v0.7.2](/ja/docs/リリースノート/v0-7-2) | ユーザー側の変更は記録されません。 |
-| [v0.7.1](/ja/docs/リリースノート/v0-7-1) | メール認証の切り替え |
-| [v0.7.0](/ja/docs/リリースノート/v0-7-0) | 新しいオートメーションAPI |
-| [v0.6.3](/ja/docs/リリースノート/v0-6-3) | ユーザー側の変更は記録されません。 |
-| [v0.6.2](/ja/docs/リリースノート/v0-6-2) | デスクトップと両方で日本語 (ja)、スペイン語 (es)、および簡体字中国語 (zh_CN) の完全サポートが追加されました。 |
-| [v0.6.1](/ja/docs/リリースノート/v0-6-1) | ユーザー側の変更は記録されません。 |
-| [v0.6.0](/ja/docs/リリースノート/v0-6-0) | アプリケーション全体に実験的な SQLite サポートを追加しました。 |
-| [v0.5.6](/ja/docs/リリースノート/v0-5-6) | SQL コンソールの結果テーブルに自動列幅調整 (autofit) が追加され、読みやすさが向上しました。 |
-| [v0.5.5](/ja/docs/リリースノート/v0-5-5) | SQL コンソール結果テーブルの仮想化された列幅の自動計算と自動調整動作を追加しました。 |
-| [v0.5.4](/ja/docs/リリースノート/v0-5-4) | SQL コンソールの結果テーブルに自動列幅調整 (autofit) が追加され、読みやすさが向上しました。 |
-| [v0.5.3](/ja/docs/リリースノート/v0-5-3) | ユーザー側の変更は記録されません。 |
-| [v0.5.2](/ja/docs/リリースノート/v0-5-2) | SQL コンソールのサイドバーに現在選択されているテーブルの視覚的な強調表示が追加され、ナビゲーションが改善されました... |
-| [v0.5.1](/ja/docs/リリースノート/v0-5-1) | ユーザー側の変更は記録されません。 |
-| [v0.5.0](/ja/docs/リリースノート/v0-5-0) | 接続フォーム、メタデータ探索、テーブル情報レポートなど、基本的な MySQL 接続サポートを追加しました。 |
-| [v0.4.11](/ja/docs/リリースノート/v0-4-11) | Homebrew の自動タップ更新を追加しました: macOS 安定版リリースでは dorylab/homebre への自動更新がトリガーされるようになりました。 |
-| [v0.4.10](/ja/docs/リリースノート/v0-4-10) | macOS および Windows のパッケージ化パイプラインでのワークフローのエラーが解決されました。 |
-| [v0.4.9](/ja/docs/リリースノート/v0-4-9) | macOS と Windows のパッケージングおよびメイン リリース パイプラインでのワークフローのエラーを修正し、信頼性を確保しました。 |
-| [v0.4.8](/ja/docs/リリースノート/v0-4-8) | 専用のベータ環境のサポートが追加され、今後の機能の安全なテストとプレビューが可能になります。 |
-| [v0.4.7](/ja/docs/リリースノート/v0-4-7) | 自動更新の信頼性を向上させるために、デスクトップ アプリに定期的な更新チェックを追加しました。 |
-| [v0.4.6](/ja/docs/リリースノート/v0-4-6) | 組織のサポート |
-| [v0.4.3](/ja/docs/リリースノート/v0-4-3) | 組織プラグインの統合 |
-| [v0.4.2](/ja/docs/リリースノート/v0-4-2) | 権限管理ページ (ロール、ユーザー、およびメイン権限ビュー) でのビルドの失敗を修正しました。 |
-| [v0.4.1](/ja/docs/リリースノート/v0-4-1) | UIの一貫性 |
-| [v0.4.0](/ja/docs/リリースノート/v0-4-0) | PostgreSQL のサポートが追加されました |
-| [v0.3.11](/ja/docs/リリースノート/v0-3-11) | ワークスペースのエクスポートとインポート |
-| [v0.3.10](/ja/docs/リリースノート/v0-3-10) | 保存されたクエリがフォルダーをサポートするようになりました |
-| [v0.3.9](/ja/docs/リリースノート/v0-3-9) | 更新チェックが失敗したときに表示される重複したエラー ダイアログを修正しました。失敗ごとに 1 つのダイアログのみが表示されるようになりました。 |
-| [v0.3.8](/ja/docs/リリースノート/v0-3-8) | データベース API 間の保守性と一貫性を向上させるために、接続の実装がリファクタリングされました (例: |
-| [v0.3.7](/ja/docs/リリースノート/v0-3-7) | 読み取り専用の SQL ステートメントを生成する際の無限の再試行を防ぐために、SQL コパイロットの再試行ロジックを修正しました。 |
+| [v0.14.0](/ja/docs/release-notes/v0-14-0) | ローカル ファイルのサポート、ネイティブ デスクトップ ファイルの選択、Open Files UX の改良、ローカリゼーションの更新、Docker ビルドの信頼性の修正が追加されました。 |
+| [v0.13.1](/ja/docs/release-notes/v0-13-1) | ビルド プロセスから Yarn リリースの依存関係を削除することで、Docker イメージのビルドが簡素化され、ビルドが削減されます。 |
+| [v0.13.0](/ja/docs/release-notes/v0-13-0) | MCP(モデル コンテキスト プロトコル) サーバーのサポートを追加しました |
+| [v0.12.2](/ja/docs/release-notes/v0-12-2) | ネットワークに依存しない匿名サインイン フローを含む、デスクトップ アプリの完全なオフライン サポートを追加しました。 |
+| [v0.12.1](/ja/docs/release-notes/v0-12-1) | DuckDB サポートを追加しました |
+| [v0.12.0](/ja/docs/release-notes/v0-12-0) | DuckDB サポートを追加しました |
+| [v0.11.4](/ja/docs/release-notes/v0-11-4) | SQL コンソール コパイロットの信頼性の向上 |
+| [v0.11.3](/ja/docs/release-notes/v0-11-3) | パフォーマンスとパフォーマンスの向上のために、チャート レンダリング コンポーネント (chart-canvas.tsx、charts-result/index.tsx) が更新されました。 |
+| [v0.11.2](/ja/docs/release-notes/v0-11-2) | デスクトップアプリと Web アプリの両方の読み込み画面とスプラッシュ画面の背景色が洗練され、視認性が向上しました。 |
+| [v0.11.1](/ja/docs/release-notes/v0-11-1) | SQL コンソール コパイロット パネルの [インサイト] タブの高さを安定させ、作業中にレイアウトがずれるのを防ぎます。 |
+| [v0.11.0](/ja/docs/release-notes/v0-11-0) | ユーザー側の変更は記録されません。 |
+| [v0.10.0](/ja/docs/release-notes/v0-10-0) | 仮想化された結果テーブルで、処理中に UI がフリーズする原因となる無限の並べ替え更新ループを解決しました。 |
+| [v0.9.0](/ja/docs/release-notes/v0-9-0) | AI 使用状況の追跡 |
+| [v0.8.3](/ja/docs/release-notes/v0-8-3) | ユーザーのサインアップまたは認証フロー中に組織の自動作成を妨げるエラーを修正しました。 |
+| [v0.8.2](/ja/docs/release-notes/v0-8-2) | チャットメッセージの表示を修正 |
+| [v0.8.1](/ja/docs/release-notes/v0-8-1) | チャットボットの国際化 |
+| [v0.8.0](/ja/docs/release-notes/v0-8-0) | SQL 生成機能を SQL コンソールに追加しました。ユーザーは自然言語で質問し、質問できるようになりました。 |
+| [v0.7.13](/ja/docs/release-notes/v0-7-13) | SQL コンソールの最初のクリックで Copilot のクイック アクションが機能しない問題を修正しました。 |
+| [v0.7.12](/ja/docs/release-notes/v0-7-12) | データベースとスキーマのリストを手動で再ロードするための更新ボタンを SQL コンソールのサイドバーに追加しました。 |
+| [v0.7.11](/ja/docs/release-notes/v0-7-11) | Web アプリのブートストラップ スクリプト (bootstrap.mjs) の終了エラーを修正し、実行中の予期しないエラーを防止しました。 |
+| [v0.7.10](/ja/docs/release-notes/v0-7-10) | ゲスト ログイン機能が削除され、新しいデモ サインイン フローが導入され、ユーザーがすばやく探索できるようになりました。 |
+| [v0.7.9](/ja/docs/release-notes/v0-7-9) | SQL 安全性チェックが強化され、PRAGMAおよびDESCRIBEステートメントを読み取り専用モードで使用できるようになり、より広範な互換性が可能になります。 |
+| [v0.7.8](/ja/docs/release-notes/v0-7-8) | ユーザー側の変更は記録されません。 |
+| [v0.7.7](/ja/docs/release-notes/v0-7-7) | このバージョンのリリース ノート ファイル release-notes/v0.7.6.md を追加しました。 |
+| [v0.7.6](/ja/docs/release-notes/v0-7-6) | ユーザー側の変更は記録されません。 |
+| [v0.7.5](/ja/docs/release-notes/v0-7-5) | 主要なチャットAPIエンドポイント (/api/chat、/api/chat/sql-runner) と SQL ツール ロジックにパフォーマンスガードを追加しました。 |
+| [v0.7.4](/ja/docs/release-notes/v0-7-4) | データ プレビューのページネーション |
+| [v0.7.3](/ja/docs/release-notes/v0-7-3) | ユーザー側の変更は記録されません。 |
+| [v0.7.2](/ja/docs/release-notes/v0-7-2) | ユーザー側の変更は記録されません。 |
+| [v0.7.1](/ja/docs/release-notes/v0-7-1) | メール認証の切り替え |
+| [v0.7.0](/ja/docs/release-notes/v0-7-0) | 新しいオートメーションAPI |
+| [v0.6.3](/ja/docs/release-notes/v0-6-3) | ユーザー側の変更は記録されません。 |
+| [v0.6.2](/ja/docs/release-notes/v0-6-2) | デスクトップと両方で日本語 (ja)、スペイン語 (es)、および簡体字中国語 (zh_CN) の完全サポートが追加されました。 |
+| [v0.6.1](/ja/docs/release-notes/v0-6-1) | ユーザー側の変更は記録されません。 |
+| [v0.6.0](/ja/docs/release-notes/v0-6-0) | アプリケーション全体に実験的な SQLite サポートを追加しました。 |
+| [v0.5.6](/ja/docs/release-notes/v0-5-6) | SQL コンソールの結果テーブルに自動列幅調整 (autofit) が追加され、読みやすさが向上しました。 |
+| [v0.5.5](/ja/docs/release-notes/v0-5-5) | SQL コンソール結果テーブルの仮想化された列幅の自動計算と自動調整動作を追加しました。 |
+| [v0.5.4](/ja/docs/release-notes/v0-5-4) | SQL コンソールの結果テーブルに自動列幅調整 (autofit) が追加され、読みやすさが向上しました。 |
+| [v0.5.3](/ja/docs/release-notes/v0-5-3) | ユーザー側の変更は記録されません。 |
+| [v0.5.2](/ja/docs/release-notes/v0-5-2) | SQL コンソールのサイドバーに現在選択されているテーブルの視覚的な強調表示が追加され、ナビゲーションが改善されました... |
+| [v0.5.1](/ja/docs/release-notes/v0-5-1) | ユーザー側の変更は記録されません。 |
+| [v0.5.0](/ja/docs/release-notes/v0-5-0) | 接続フォーム、メタデータ探索、テーブル情報レポートなど、基本的な MySQL 接続サポートを追加しました。 |
+| [v0.4.11](/ja/docs/release-notes/v0-4-11) | Homebrew の自動タップ更新を追加しました: macOS 安定版リリースでは dorylab/homebre への自動更新がトリガーされるようになりました。 |
+| [v0.4.10](/ja/docs/release-notes/v0-4-10) | macOS および Windows のパッケージ化パイプラインでのワークフローのエラーが解決されました。 |
+| [v0.4.9](/ja/docs/release-notes/v0-4-9) | macOS と Windows のパッケージングおよびメイン リリース パイプラインでのワークフローのエラーを修正し、信頼性を確保しました。 |
+| [v0.4.8](/ja/docs/release-notes/v0-4-8) | 専用のベータ環境のサポートが追加され、今後の機能の安全なテストとプレビューが可能になります。 |
+| [v0.4.7](/ja/docs/release-notes/v0-4-7) | 自動更新の信頼性を向上させるために、デスクトップ アプリに定期的な更新チェックを追加しました。 |
+| [v0.4.6](/ja/docs/release-notes/v0-4-6) | 組織のサポート |
+| [v0.4.3](/ja/docs/release-notes/v0-4-3) | 組織プラグインの統合 |
+| [v0.4.2](/ja/docs/release-notes/v0-4-2) | 権限管理ページ (ロール、ユーザー、およびメイン権限ビュー) でのビルドの失敗を修正しました。 |
+| [v0.4.1](/ja/docs/release-notes/v0-4-1) | UIの一貫性 |
+| [v0.4.0](/ja/docs/release-notes/v0-4-0) | PostgreSQL のサポートが追加されました |
+| [v0.3.11](/ja/docs/release-notes/v0-3-11) | ワークスペースのエクスポートとインポート |
+| [v0.3.10](/ja/docs/release-notes/v0-3-10) | 保存されたクエリがフォルダーをサポートするようになりました |
+| [v0.3.9](/ja/docs/release-notes/v0-3-9) | 更新チェックが失敗したときに表示される重複したエラー ダイアログを修正しました。失敗ごとに 1 つのダイアログのみが表示されるようになりました。 |
+| [v0.3.8](/ja/docs/release-notes/v0-3-8) | データベース API 間の保守性と一貫性を向上させるために、接続の実装がリファクタリングされました (例: |
+| [v0.3.7](/ja/docs/release-notes/v0-3-7) | 読み取り専用の SQL ステートメントを生成する際の無限の再試行を防ぐために、SQL コパイロットの再試行ロジックを修正しました。 |

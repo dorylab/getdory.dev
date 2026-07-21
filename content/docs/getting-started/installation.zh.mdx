@@ -1,44 +1,50 @@
 ---
-title: 安装说明
-description: 通过 Homebrew、GitHub Releases 或 Docker 安装 Dory。
+title: 安装
+description: 安装 Dory Desktop、运行 Dory Web，或启动 Dory CLI 与 Headless Runtime。
 ---
 
-# 安装说明
+# 安装
 
-## 桌面版安装
+Dory 为交互式 SQL 工作、共享 Web 部署和纯 Agent Runtime 提供不同入口。
 
-### macOS Homebrew
+## Dory Desktop
+
+在 macOS 上通过 Homebrew 安装：
 
 ```bash
 brew install dorylab/dory/dory
 ```
 
-### Release 下载
+也可以从 [GitHub Releases](https://github.com/dorylab/dory/releases) 下载 macOS 和 Windows 安装包。Desktop 适合日常 SQL 工作、本地数据库文件和 Desktop MCP。
 
-如果你需要打包好的 macOS 或 Windows 桌面版，可以直接使用 GitHub Releases：
+## Dory Web
 
-- `https://github.com/dorylab/dory/releases`
+需要浏览器界面和团队共享工作台时使用 `dorylab/dory` 镜像。实际部署必须配置应用密钥、持久化存储和正确的公网 URL，请按照 [Docker](/zh/docs/deploy/docker)文档操作，不要只运行裸容器命令。
 
-## Docker 安装
+## Dory CLI
 
-公开仓库当前提供了以下 Docker 启动示例：
+`@getdory/cli` 可以在不打开桌面应用的情况下运行 Dory，需要 Node.js 20 或更高版本。
 
 ```bash
-docker run -d --name dory \
-  -p 3000:3000 \
-  -e DS_SECRET_KEY="$(openssl rand -base64 32 | tr -d '\n')" \
-  -e BETTER_AUTH_SECRET="$(openssl rand -hex 32)" \
-  -e BETTER_AUTH_URL="http://localhost:3000" \
-  -e DORY_AI_PROVIDER=openai \
-  -e DORY_AI_MODEL=gpt-4o-mini \
-  -e DORY_AI_API_KEY=your_api_key_here \
-  -e DORY_AI_URL=https://api.openai.com/v1 \
-  dorylab/dory:latest
+npx -y @getdory/cli --help
 ```
 
-## 基本配置说明
+长期运行的服务器可以全局安装：
 
-- `DS_SECRET_KEY` 与 `BETTER_AUTH_SECRET` 应为每次部署单独生成。
-- `BETTER_AUTH_URL` 需要与用户访问 Dory 的公开地址一致。
-- 如需启用 AI 功能，必须配置对应的 AI 环境变量。
-- 若你计划长期部署，请继续阅读 [Docker](/zh/docs/deploy/docker) 和 [自托管](/zh/docs/deploy/self-hosting)。
+```bash
+npm install -g @getdory/cli
+dory --help
+```
+
+CLI 支持 `standalone`、`desktop` 和 `self-hosted` 数据模式。继续阅读 [CLI & Headless Runtime](/zh/docs/agents/cli-headless)。
+
+## Headless Docker
+
+Agent 或自动化需要 HTTP MCP 但不需要 Web UI 时，使用 `dorylab/dory-headless`。Token、持久卷与 TLS 配置请参阅 [CLI & Headless Runtime](/zh/docs/agents/cli-headless)。
+
+## 验证安装
+
+- Desktop 可以打开并进入 [Connections](/zh/docs/core-features/connections)。
+- Web 拥有持久化应用存储和正确的登录 URL。
+- CLI 初始化后可以通过 `dory doctor --data standalone` 检查。
+- Headless HTTP 使用 Bearer Token 保护，且未在没有 TLS 的情况下暴露到公网。

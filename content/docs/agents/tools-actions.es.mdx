@@ -1,0 +1,47 @@
+---
+title: MCP Tools & Dory Actions
+description: Usa workflow tools y Dory Actions de lectura o escritura de forma segura.
+---
+
+# MCP Tools & Dory Actions
+
+Dory ofrece un conjunto pequeño de workflow tools, en lugar de una herramienta MCP por cada operación del producto.
+
+## Workflow Tools
+
+| Tool | Propósito |
+| --- | --- |
+| `dory_create_work` | Crear o reutilizar el contexto del Agent Run. |
+| `dory_finish_work` | Guardar findings, steps y estado. |
+| `dory_list_connections` | Enumerar conexiones visibles. |
+| `dory_explore_schema` | Buscar, listar, describir, previsualizar, perfilar u obtener DDL. |
+| `dory_run_readonly_sql` | Ejecutar SQL de solo lectura y conservarlo en una pestaña. |
+| `dory_workspace_tabs` | Listar, crear, añadir, reemplazar, eliminar o abrir pestañas. |
+| `dory_saved_queries` | Administrar SQL reutilizable. |
+| `dory_read` | Listar, describir o ejecutar Dory Actions de bajo riesgo. |
+| `dory_write` | Ejecutar Dory Actions de escritura solicitadas y aprobadas. |
+
+## Orden recomendado
+
+1. Llama `dory_create_work`.
+2. Pasa `work.workId` a las herramientas de la tarea.
+3. Enumera conexiones si `connectionId` no está verificado.
+4. Explora el esquema antes de escribir SQL.
+5. Usa `dory_run_readonly_sql` con LIMIT y filtros estrechos.
+6. Conserva consultas y resultados útiles en pestañas.
+7. Llama `dory_finish_work` tanto en éxito como en bloqueo.
+
+## Dory Actions
+
+Usa `dory_read` para listar, describir, probar y otras operaciones de bajo riesgo; usa `dory_write` para crear, actualizar o eliminar. Antes de escribir, describe el contrato:
+
+```json
+{
+  "operation": "describe",
+  "actionId": "connection.create"
+}
+```
+
+Ejecuta la escritura solo cuando el usuario la pidió, la entrada está completa y el cliente posee scope `write`.
+
+`dory_run_readonly_sql` impide mutaciones en la base objetivo, aunque puede crear metadatos de Agent Run, pestañas y resultados en Dory. Prefiere scope `read` y reserva `write` para clientes de confianza.

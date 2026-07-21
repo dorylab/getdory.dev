@@ -1,0 +1,39 @@
+---
+title: Review and Continue Agent Work
+description: Open an Agent Run in Dory, verify the evidence, edit SQL, rerun it, and turn useful work into charts or saved queries.
+---
+
+# Review and Continue Agent Work
+
+Use this workflow after an agent has explored schema or run SQL through Dory MCP.
+
+## 1. Open the Agent Run
+
+Start from the workspace URL or work ID returned by the agent. Confirm that the run title matches the request and that its status is completed or clearly blocked.
+
+## 2. Read Findings and Steps
+
+Review the agent's findings before opening individual tabs. Look for the selected connection, inspected tables, executed SQL, time range, filters, sampling, truncation, and unresolved assumptions.
+
+## 3. Inspect the Exact SQL
+
+Open each relevant SQL tab. Compare names and joins with Explorer, confirm the selected database, and check that the query is read-only and appropriately bounded.
+
+## 4. Validate the Result
+
+Inspect real returned rows, column types, nulls, duplicates, totals, and unexpected categories. A fluent finding is not a substitute for validating the evidence.
+
+## 5. Edit and Rerun
+
+Change the SQL directly in the Dory workspace when assumptions or filters need correction. Rerun a small version first, then expand only after the result shape is correct.
+
+## 6. Continue the Work
+
+- Add filters or a chart when the result supports visual review.
+- Save stable, reusable SQL as a Saved Query.
+- Keep one-off investigation details in the Agent Run.
+- Start a new Agent Run if the follow-up becomes a different question.
+
+## Review Complete
+
+The handoff is complete when the person can explain what was queried, trust the evidence, reproduce the result, and continue without asking the agent to rebuild the analysis.

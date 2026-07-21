@@ -1,47 +1,35 @@
 ---
-title: 概览
-description: 查看 Dory 支持的 ClickHouse、PostgreSQL、Neon、MySQL、MariaDB、SQL Server、Oracle、SQLite、DuckDB 和云数据库连接能力。
+title: 数据库
+description: 查看 Dory 对人类 SQL 工作流和 Agent Workspaces 的数据库支持。
 ---
 
-# 概览
+# 数据库
 
-Dory 是面向现代数据库的 AI 原生数据工作台。你可以连接常见数据库，在同一工作区中完成 Schema 浏览、SQL 查询、AI 生成 SQL、结果分析、图表和保存查询。
+Dory 是多数据库 SQL 客户端和 Agent 工作台。所有支持的连接都可以完成连接、探索 Schema、运行 SQL、检查结果和保留工作；ClickHouse 还提供更深入的运维界面。
 
-## 数据库支持概览
+## 支持矩阵
 
-| 数据库 | 适合场景 | Dory 支持重点 |
+| 数据库 | 状态 | 工作台能力 |
 | --- | --- | --- |
-| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/clickhouse.svg" alt="" width="20" height="20" />[ClickHouse](/zh/docs/database-support/clickhouse)</span> | 事件、日志、可观测性和高吞吐分析 | 深度支持 SQL、Explorer、AI、Monitoring 和 Privileges。 |
-| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/postgresql.svg" alt="" width="20" height="20" />[PostgreSQL](/zh/docs/database-support/postgresql)</span> | 业务系统、内部工具和通用分析 | 支持 Schema 浏览、SQL 查询、AI 辅助和结果分析。 |
-| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/neon.svg" alt="" width="20" height="20" />[Neon](/zh/docs/database-support/neon)</span> | Serverless PostgreSQL 和云端开发环境 | 使用 PostgreSQL 能力连接 Neon 项目、分支和数据库。 |
-| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/mysql.svg" alt="" width="20" height="20" />[MySQL](/zh/docs/database-support/mysql)</span> | Web 应用数据库、运营分析和报表 | 支持常规连接、查询、AI 辅助和安全探索。 |
-| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/mariadb.svg" alt="" width="20" height="20" />[MariaDB](/zh/docs/database-support/mariadb)</span> | MariaDB 应用数据库和报表查询 | 作为独立连接类型支持 SQL、Explorer 和 AI 辅助。 |
-| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/sqlserver.svg" alt="" width="20" height="20" />[SQL Server](/zh/docs/database-support/sqlserver)</span> | 企业应用、报表和运营系统 | 支持 T-SQL 执行、Explorer、AI 辅助和 Schema 感知工作流。 |
-| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/oracle.svg" alt="" width="20" height="20" />[Oracle](/zh/docs/database-support/oracle)</span> | 企业系统、ERP、财务和长期运行的生产库 | 支持 Oracle SQL 执行、对象探索、AI 辅助和 Schema 上下文。 |
-| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/sqlite.svg" alt="" width="20" height="20" />[SQLite](/zh/docs/database-support/sqlite)</span> | 本地文件、原型、演示和轻量分析 | 支持通过绝对路径连接本地 `.sqlite` / `.db` 文件。 |
-| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/duckdb.svg" alt="" width="20" height="20" />[DuckDB](/zh/docs/database-support/duckdb)</span> | 本地分析文件、数据探索和 MotherDuck | 支持本地 DuckDB 文件和 MotherDuck Token。 |
-| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/more.svg" alt="" width="20" height="20" />[Cloud Databases](/zh/docs/database-support/cloud-databases)</span> | 托管数据库、内网数据库和团队部署 | 覆盖 TLS、IP 白名单、SSH Tunnel 和密钥管理。 |
+| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/clickhouse.svg" alt="" width="20" height="20" />[ClickHouse](/zh/docs/database-support/clickhouse)</span> | 深度集成 | SQL、Explorer、AI、Agent、Monitoring、Privileges。 |
+| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/postgresql.svg" alt="" width="20" height="20" />[PostgreSQL](/zh/docs/database-support/postgresql)</span> | 支持 | SQL、Schema Explorer、结果、AI、Agent。 |
+| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/neon.svg" alt="" width="20" height="20" />[Neon](/zh/docs/database-support/neon)</span> | 支持 | PostgreSQL 兼容的 Serverless 工作流。 |
+| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/supabase.svg" alt="" width="20" height="20" />[Supabase](/zh/docs/database-support/supabase)</span> | 支持 | 基于 Supabase PostgreSQL 的原生连接。 |
+| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/mysql.svg" alt="" width="20" height="20" />[MySQL](/zh/docs/database-support/mysql)</span> | 支持 | SQL、Explorer、结果、AI、Agent。 |
+| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/mariadb.svg" alt="" width="20" height="20" />[MariaDB](/zh/docs/database-support/mariadb)</span> | 支持 | 独立 MariaDB 连接与 SQL 方言。 |
+| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/sqlserver.svg" alt="" width="20" height="20" />[SQL Server](/zh/docs/database-support/sqlserver)</span> | 支持 | T-SQL、Schema、结果、AI、Agent。 |
+| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/oracle.svg" alt="" width="20" height="20" />[Oracle](/zh/docs/database-support/oracle)</span> | 支持 | Oracle SQL、对象、结果、AI、Agent。 |
+| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/snowflake.svg" alt="" width="20" height="20" />[Snowflake](/zh/docs/database-support/snowflake)</span> | 支持 | Database、Schema、Table、View、SQL、Preview。 |
+| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/cloudflare.svg" alt="" width="20" height="20" />[Cloudflare D1](/zh/docs/database-support/cloudflare-d1)</span> | 支持 | D1 REST 连接、SQL Console、Schema、结果。 |
+| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/sqlite.svg" alt="" width="20" height="20" />[SQLite](/zh/docs/database-support/sqlite)</span> | 支持 | Dory Runtime 能读取的本地文件。 |
+| <span class="dory-db-name"><img class="dory-db-icon" src="/icons/databases/duckdb.svg" alt="" width="20" height="20" />[DuckDB](/zh/docs/database-support/duckdb)</span> | 支持 | 本地 DuckDB 文件与 MotherDuck。 |
 
-## Dory 的数据库工作流
+## 人类与 Agent 工作流
 
-无论连接哪种数据库，典型流程都类似：
+1. 在 [Connections](/zh/docs/core-features/connections) 中创建并测试连接。
+2. 在 [Explorer](/zh/docs/core-features/explorer) 中检查真实对象。
+3. 在 [SQL Console](/zh/docs/core-features/sql-console) 编写 SQL，或通过 [MCP Setup](/zh/docs/agents/mcp-setup)连接 Agent。
+4. 在共享工作台审阅 SQL 和结果。
+5. 将可复用 SQL 保存为 Saved Query，或把证据留在 Agent Run 中。
 
-1. 在 [Connections](/zh/docs/core-features/connections) 中创建连接。
-2. 使用 [Explorer](/zh/docs/core-features/explorer) 浏览数据库、Schema、表和字段。
-3. 在 [SQL Console](/zh/docs/core-features/sql-console) 中编写和运行 SQL。
-4. 使用 [AI Chat](/zh/docs/core-features/ai-chat) 生成、解释、修复或优化查询。
-5. 在 [Charts & Results](/zh/docs/core-features/charts-results) 中验证结果并生成图表。
-6. 将高价值 SQL 保存到 [Saved Queries](/zh/docs/core-features/saved-queries)。
-
-## 选择数据库连接方式
-
-- 远程数据库：准备 Host、Port、Database、Username、Password 和 SSL 设置。
-- 云数据库：确认网络白名单、TLS 要求和连接串格式。
-- 内网数据库：根据网络环境配置 SSH Tunnel。
-- 本地文件数据库：SQLite 和 DuckDB 需要填写 Dory 进程可访问的绝对路径。
-
-## 下一步
-
-- 第一次使用请从 [连接数据库](/zh/docs/getting-started/connect-your-database) 开始。
-- 如果你主要使用 ClickHouse，请阅读 [ClickHouse](/zh/docs/database-support/clickhouse)。
-- 如果你要部署给团队，请阅读 [Cloud Databases](/zh/docs/database-support/cloud-databases)。
+托管服务、私有网络、TLS、IP allowlist 和 SSH Tunnel 请参阅[Cloud Databases](/zh/docs/database-support/cloud-databases)。

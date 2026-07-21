@@ -9,11 +9,11 @@ description: Dory 安装、支持数据库、AI SQL 生成、Saved Queries、MCP
 
 ## Dory 是什么？
 
-Dory 是面向 AI 的 SQL 工作区，可以连接数据库、探索 Schema、编写 SQL、用 AI 生成分析、保存可复用查询，并为支持 MCP 的 Agent 提供受控数据库上下文。
+Dory 是面向人类和 Agent 的 AI 原生 SQL 客户端。它把日常 SQL 工作台与 MCP 数据库执行层结合起来，让 Agent SQL、结果和上下文始终可由人类编辑和审阅。
 
 ## Dory 支持哪些数据库？
 
-Dory 文档覆盖 ClickHouse、PostgreSQL、Neon、MySQL、MariaDB、SQL Server、Oracle、SQLite、DuckDB、MotherDuck，以及提供兼容连接端点的托管数据库。驱动细节见 [Database Support](/zh/docs/database-support)。
+Dory 支持 ClickHouse、PostgreSQL、Neon、Supabase、MySQL、MariaDB、SQL Server、Oracle、Snowflake、Cloudflare D1、SQLite、DuckDB 和 MotherDuck。当前驱动说明见[Databases](/zh/docs/database-support)。
 
 ## Dory 可以替代 BI 工具吗？
 
@@ -55,11 +55,15 @@ Saved Queries 存在 Dory 中，并与当前组织、用户、连接和文件夹
 
 ## MCP 会暴露数据库密码吗？
 
-不会。MCP 工具只暴露受控的元数据读取和只读分析能力，不返回数据库密码或连接密钥。建议每个客户端使用独立 MCP token，并及时撤销不再使用的 token。
+不会。MCP 工具不返回数据库密码或连接密钥，但可以读取当前身份和 scope 允许的 Schema 与查询数据，因此 MCP 访问本身也是数据访问。Desktop MCP 管理本地授权；Token 方式应为每个客户端使用独立凭据并及时撤销。
 
 ## MCP Agent 能写入数据库吗？
 
-Dory MCP 设计为执行只读 SQL。生产连接仍建议使用数据库层面的只读账号，因为数据库权限是最终安全边界。
+`dory_run_readonly_sql` 会拒绝修改目标数据库。拥有 Dory `write` scope 的客户端仍可通过 `dory_write` 执行用户批准的 Dory 资源变更，例如创建连接。生产环境应使用只读数据库凭据，因为数据库权限仍是最终安全边界。
+
+## 什么是 Agent Run？
+
+Agent Run 是一个 Agent 任务的持久上下文，会保存请求、SQL 标签页、结果快照、findings 和 steps，供人类在 Dory 中审阅和继续。参阅 [Agent Runs 与人类交接](/zh/docs/agents/agent-runs)。
 
 ## Docker 部署为什么连不上 SQLite 或 DuckDB 文件？
 

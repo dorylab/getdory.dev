@@ -1,0 +1,42 @@
+---
+title: Agent Runs 与人类交接
+description: 了解 Dory 如何保存 Agent SQL、结果、findings 和执行步骤，供人类审阅。
+---
+
+# Agent Runs 与人类交接
+
+Agent Run 是一个 Agent 任务的持久工作上下文。它把用户请求、已检查 Schema、执行过的 SQL、工作区标签页、结果快照、findings 和 steps 关联在一起。
+
+## 每个任务使用一个 Agent Run
+
+为“调查结账转化下降”或“迁移前比较 Schema”这类完整请求创建一个 Agent Run，并在任务中持续使用同一个 `workId`，让证据保存在一起。
+
+## 推荐生命周期
+
+1. **Create work：**调用 `dory_create_work`，使用简短、易读的标题。
+2. **选择连接：**除非已有验证过的 `connectionId`，否则先列出连接。
+3. **探索 Schema：**确认表、字段、类型、Join Key、时间字段和大致数据量。
+4. **运行只读 SQL：**从 LIMIT、窄过滤条件和明确字段开始。
+5. **保留证据：**需要后续审阅时创建、追加或替换工作区标签页。
+6. **Finish work：**使用 `dory_finish_work` 记录 findings、steps、假设和阻塞原因。
+
+## 应该保留什么
+
+多步 SQL、支撑决策的分析、陌生 Schema 探索或需要人类继续的工作，都应保存在工作区标签页中。标签页名称应描述问题，而不是实现细节。
+
+Saved Queries 用于可长期复用的 SQL。一次性分析应留在 Agent Run 工作区中。
+
+## 人类审阅清单
+
+- 能看到使用了哪个连接和哪些表；
+- 能检查准确 SQL 和真实返回行；
+- 能理解时间范围、过滤条件、假设和截断情况；
+- 能在普通 SQL 工作台中编辑和重新运行；
+- 能基于保存的结果创建筛选或图表；
+- 稳定的 SQL 可以另存为 Saved Query。
+
+## 被阻塞的 Agent Run
+
+如果缺少连接、权限或 Schema，应使用 error 状态结束 Agent Run，并记录具体阻塞原因。不要虚构 connection ID、Schema、workspace URL 或查询结果。
+
+完整交接流程请参阅[审阅并继续 Agent 工作](/zh/docs/workflows/review-agent-work)。

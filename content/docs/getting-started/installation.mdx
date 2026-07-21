@@ -1,44 +1,50 @@
 ---
 title: Installation
-description: Install Dory through Homebrew, GitHub releases, or Docker.
+description: Install Dory Desktop, run Dory Web, or start the Dory CLI and headless runtime.
 ---
 
 # Installation
 
-## Desktop installation
+Dory has separate entry points for interactive SQL work, shared Web deployments, and agent-only runtimes.
 
-### Homebrew on macOS
+## Dory Desktop
+
+Install on macOS with Homebrew:
 
 ```bash
 brew install dorylab/dory/dory
 ```
 
-### Release downloads
+Download macOS and Windows installers from [GitHub Releases](https://github.com/dorylab/dory/releases). Desktop is the recommended choice for daily SQL work, local database files, and Desktop MCP.
 
-Use the GitHub releases page when you want a packaged desktop build for macOS or Windows:
+## Dory Web
 
-- `https://github.com/dorylab/dory/releases`
+Use the `dorylab/dory` image for a browser UI and shared team workspace. A real deployment requires application secrets, persistent storage, and a correct public URL; follow [Docker](/en/docs/deploy/docker) rather than relying on a bare container command.
 
-## Docker installation
+## Dory CLI
 
-The public repository currently documents this Docker launch example:
+`@getdory/cli` runs Dory without opening the desktop app. It requires Node.js 20 or newer.
 
 ```bash
-docker run -d --name dory \
-  -p 3000:3000 \
-  -e DS_SECRET_KEY="$(openssl rand -base64 32 | tr -d '\n')" \
-  -e BETTER_AUTH_SECRET="$(openssl rand -hex 32)" \
-  -e BETTER_AUTH_URL="http://localhost:3000" \
-  -e DORY_AI_PROVIDER=openai \
-  -e DORY_AI_MODEL=gpt-4o-mini \
-  -e DORY_AI_API_KEY=your_api_key_here \
-  -e DORY_AI_URL=https://api.openai.com/v1 \
-  dorylab/dory:latest
+npx -y @getdory/cli --help
 ```
 
-## Minimum configuration notes
+Install it globally for a long-running server:
 
-- `DS_SECRET_KEY` and `BETTER_AUTH_SECRET` should be unique per deployment.
-- `BETTER_AUTH_URL` should match the public URL you use to access Dory.
-- The AI-related environment variables are required if you want Dory's AI features to work.
-- For more deployment guidance, continue to [Docker](/en/docs/deploy/docker) and [Self-Hosting](/en/docs/deploy/self-hosting).
+```bash
+npm install -g @getdory/cli
+dory --help
+```
+
+The CLI supports `standalone`, `desktop`, and `self-hosted` data modes. Continue with [CLI & Headless Runtime](/en/docs/agents/cli-headless).
+
+## Headless Docker
+
+Use `dorylab/dory-headless` when agents or automation need MCP over HTTP without the Web UI. Token creation, persistent volumes, and TLS guidance are covered in [CLI & Headless Runtime](/en/docs/agents/cli-headless).
+
+## Verify the Path You Chose
+
+- Desktop opens and can reach [Connections](/en/docs/core-features/connections).
+- Web has persistent application storage and a working sign-in URL.
+- CLI returns help and passes `dory doctor --data standalone` after initialization.
+- Headless HTTP is protected by a bearer token and is not exposed publicly without TLS.

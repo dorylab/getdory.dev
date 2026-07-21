@@ -1,0 +1,74 @@
+---
+title: CLI & Headless Runtime
+description: Desktop を開かず、エージェント、自動化、MCP Server のために Dory を実行します。
+---
+
+# CLI & Headless Runtime
+
+`@getdory/cli` は MCP Server、自動化、Runtime Service、Dory Actions のためのスタンドアロン エントリーポイントです。Node.js 20 以降が必要です。
+
+## 実行またはインストール
+
+```bash
+npx -y @getdory/cli --help
+```
+
+```bash
+npm install -g @getdory/cli
+dory --help
+```
+
+## Data Modes
+
+| Mode | データ ソース | 用途 |
+| --- | --- | --- |
+| `standalone` | `~/.dory` の独立状態 | Headless、CI、自動化。 |
+| `desktop` | Local Runtime 経由の Dory Desktop データ | Desktop 接続と状態の再利用。 |
+| `self-hosted` | Dory Web の Postgres application database | Web デプロイの Dory 状態を共有。 |
+
+`self-hosted` では Dory Web と同じ `DS_SECRET_KEY`、`BETTER_AUTH_SECRET`、application database が必要です。
+
+## 初期化と診断
+
+```bash
+dory init --data standalone
+dory doctor --data standalone
+dory storage detect --data standalone
+```
+
+MCP クライアントを調査する前に `doctor` で storage、migration、identity、Token、接続を確認します。
+
+## バックグラウンド HTTP Runtime
+
+```bash
+dory runtime install \
+  --mcp-http \
+  --host 127.0.0.1 --port 3318 \
+  --token "$DORY_MCP_TOKEN"
+
+dory runtime status
+```
+
+管理には `runtime restart`、`runtime stop`、`runtime uninstall` を使います。トラブルシューティングでは `dory runtime run` を実行します。
+
+## Headless Docker
+
+```bash
+docker run --rm \
+  -v dory-headless-data:/data/.dory \
+  dorylab/dory-headless:latest \
+  dory mcp token create --data standalone --name docker
+```
+
+```bash
+export DORY_MCP_TOKEN="dory_mcp_..."
+docker run --rm \
+  -p 3318:3318 \
+  -v dory-headless-data:/data/.dory \
+  -e DORY_MCP_TOKEN="$DORY_MCP_TOKEN" \
+  dorylab/dory-headless:latest
+```
+
+エンドポイントは `http://127.0.0.1:3318/api/mcp` です。公開時は TLS を前段に配置します。
+
+すべてのオプションは [`@getdory/cli` package reference](https://github.com/dorylab/dory/blob/main/packages/cli/README.md)を参照してください。

@@ -1,13 +1,14 @@
 {
-  "title": "Workspace",
+  "title": "SQL Workspace",
   "pages": [
     "index",
     "connections",
-    "sql-console",
-    "ai-chat",
     "explorer",
+    "sql-console",
     "charts-results",
+    "ai-chat",
     "saved-queries",
+    "---ClickHouse Operations---",
     "monitoring",
     "privileges"
   ]

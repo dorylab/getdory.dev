@@ -1,0 +1,44 @@
+---
+title: Descripción general
+description: Usa Dory como capa de ejecución para agentes y conserva SQL y resultados editables por personas.
+---
+
+# Agent Workspaces
+
+Dory ofrece a los agentes más que un transporte SQL. El trabajo se convierte en un espacio editable con pestañas SQL, resultados, findings y contexto de ejecución que una persona puede revisar y continuar.
+
+![Espacio de Dory con SQL y resultados editables](/actions.png)
+
+## ¿Por qué usar Dory con agentes?
+
+Un servidor MCP convencional suele devolver filas a un chat. Dory añade:
+
+- un Agent Run con nombre para cada tarea;
+- herramientas Schema-first y SQL de solo lectura;
+- pestañas SQL y resultados asociados al Run;
+- findings y steps que explican las acciones del agente;
+- entrega directa al mismo espacio SQL que usa una persona.
+
+## Ciclo de un Agent Run
+
+1. Crea el contexto con `dory_create_work`.
+2. Selecciona una conexión Dory visible.
+3. Explora el esquema para no adivinar tablas o columnas.
+4. Ejecuta SQL limitado y de solo lectura.
+5. Conserva SQL y resultados útiles en pestañas.
+6. Finaliza con findings y steps mediante `dory_finish_work`.
+7. Abre el Run en Dory para revisar, editar, graficar, volver a ejecutar o guardar.
+
+## Elige la siguiente guía
+
+| Necesidad | Guía |
+| --- | --- |
+| Conectar Codex, Claude Code, CI u otro cliente MCP | [MCP Setup](/es/docs/agents/mcp-setup) |
+| Entender qué guarda un Agent Run | [Agent Runs & Human Handoff](/es/docs/agents/agent-runs) |
+| Ejecutar Dory sin Desktop UI | [CLI & Headless Runtime](/es/docs/agents/cli-headless) |
+| Conocer las herramientas MCP actuales | [MCP Tools & Dory Actions](/es/docs/agents/tools-actions) |
+| Enseñar el flujo recomendado a un agente | [Dory Agent Skill](/es/docs/agents/agent-skill) |
+
+## Modelo de seguridad
+
+Usa credenciales de base de datos de solo lectura. `dory_run_readonly_sql` rechaza SQL mutante, aunque el Agent Run escribe metadatos de Dory, pestañas y resultados. Concede scope `write` solo a clientes de confianza que necesiten cambiar recursos de Dory.

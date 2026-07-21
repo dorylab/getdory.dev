@@ -1,0 +1,86 @@
+---
+title: CLI & Headless Runtime
+description: Run Dory for agents, automation, and MCP servers without opening the Desktop app.
+---
+
+# CLI & Headless Runtime
+
+`@getdory/cli` is Dory's standalone entry point for MCP servers, automation, runtime services, and direct Dory Action execution. It requires Node.js 20 or newer.
+
+## Install or Run with npx
+
+```bash
+npx -y @getdory/cli --help
+```
+
+For a long-running host:
+
+```bash
+npm install -g @getdory/cli
+dory --help
+```
+
+## Data Modes
+
+| Mode | Data source | Use it for |
+| --- | --- | --- |
+| `standalone` | Independent state under `~/.dory` | Headless servers, CI, and automation. |
+| `desktop` | Dory Desktop local data through the local runtime | Reusing Desktop connections and workspace state. |
+| `self-hosted` | A Dory Web Postgres application database | Sharing a Web deployment's Dory state. |
+
+`self-hosted` must use the same `DS_SECRET_KEY`, `BETTER_AUTH_SECRET`, and application database as Dory Web so encrypted connection data can be read.
+
+## Initialize and Diagnose
+
+```bash
+dory init --data standalone
+dory doctor --data standalone
+dory storage detect --data standalone
+```
+
+Use `doctor` before debugging an MCP client. It checks storage, migrations, identity, tokens, and visible connections.
+
+## Install a Background HTTP Runtime
+
+Create a token first, then install the runtime service:
+
+```bash
+dory runtime install \
+  --mcp-http \
+  --host 127.0.0.1 \
+  --port 3318 \
+  --token "$DORY_MCP_TOKEN"
+
+dory runtime status
+```
+
+Use `runtime restart`, `runtime stop`, or `runtime uninstall` to manage the service. For troubleshooting, run `dory runtime run` in the foreground.
+
+## Headless Docker
+
+Use `dorylab/dory-headless` for HTTP MCP without the Web UI. Create the token against the same persistent volume:
+
+```bash
+docker run --rm \
+  -v dory-headless-data:/data/.dory \
+  dorylab/dory-headless:latest \
+  dory mcp token create --data standalone --name docker
+```
+
+Then start the endpoint:
+
+```bash
+export DORY_MCP_TOKEN="dory_mcp_..."
+
+docker run --rm \
+  -p 3318:3318 \
+  -v dory-headless-data:/data/.dory \
+  -e DORY_MCP_TOKEN="$DORY_MCP_TOKEN" \
+  dorylab/dory-headless:latest
+```
+
+The endpoint is `http://127.0.0.1:3318/api/mcp`. Put TLS in front of public deployments.
+
+## Full Command Reference
+
+See the current [`@getdory/cli` package reference](https://github.com/dorylab/dory/blob/main/packages/cli/README.md) for all flags, Dory Actions, update instructions, and platform troubleshooting.

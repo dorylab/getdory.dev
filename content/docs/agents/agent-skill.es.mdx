@@ -1,0 +1,31 @@
+---
+title: Dory Agent Skill
+description: Instala Dory Agent Skill para que agentes compatibles sigan el flujo Schema-first.
+---
+
+# Dory Agent Skill
+
+Dory Agent Skill enseña a los agentes cuándo y cómo usar Dory MCP tools, siguiendo un flujo Schema-first, de solo lectura y con evidencia preservada.
+
+## Instalación
+
+```bash
+npx skills add https://github.com/dorylab/skills --skill dory
+```
+
+Sigue el formato abierto Agent Skills y funciona con Codex, ChatGPT, Claude y otros sistemas compatibles.
+
+## Qué enseña
+
+- crear un Agent Run por tarea de base de datos;
+- inspeccionar el esquema real sin adivinar nombres o joins;
+- usar SQL limitado y de solo lectura por defecto;
+- conservar SQL y resultados útiles en Dory;
+- terminar con findings, steps, supuestos y entrega humana;
+- no inventar conexiones, esquemas, workspaces ni resultados si Dory no está disponible.
+
+## Qué no instala
+
+El Skill no instala `@getdory/cli`, no inicia MCP Server ni configura el cliente. Completa [MCP Setup](/es/docs/agents/mcp-setup) para obtener acceso real.
+
+Verifica con una tarea pequeña, por ejemplo: “enumera las conexiones y describe una tabla sin ejecutar una consulta amplia”. Consulta el [código fuente del Skill](https://github.com/dorylab/dory/blob/main/skills/dory/SKILL.md) para las instrucciones actuales.

@@ -1,0 +1,40 @@
+---
+title: Agent Runs & Human Handoff
+description: Entiende cómo Dory conserva SQL, resultados, findings y steps para revisión humana.
+---
+
+# Agent Runs & Human Handoff
+
+Un Agent Run es el work context persistente de una tarea. Une la solicitud, el esquema inspeccionado, SQL ejecutado, pestañas, resultados, findings y steps.
+
+## Un Run por tarea
+
+Crea un Run para una solicitud coherente, como “investigar la caída del checkout” o “comparar el esquema antes de migrar”. Reutiliza su `workId` para mantener la evidencia unida.
+
+## Ciclo recomendado
+
+1. Llama `dory_create_work` con un título corto y legible.
+2. Enumera conexiones salvo que exista un `connectionId` verificado.
+3. Confirma tablas, columnas, tipos, join keys, fechas y tamaño probable.
+4. Ejecuta SQL de solo lectura con LIMIT, filtros estrechos y columnas explícitas.
+5. Conserva evidencia en pestañas cuando deba revisarse después.
+6. Registra findings, steps, supuestos y bloqueos con `dory_finish_work`.
+
+## Qué conservar
+
+Guarda en pestañas el SQL de varios pasos, análisis que respalda una decisión, exploración de un esquema desconocido o trabajo que continuará una persona. El nombre debe describir la pregunta.
+
+Saved Queries es para SQL reutilizable. Un análisis puntual debe permanecer en el Agent Run.
+
+## Lista de revisión humana
+
+- identificar conexión y tablas utilizadas;
+- revisar SQL exacto y filas devueltas;
+- entender rangos, filtros, supuestos y truncamiento;
+- editar y volver a ejecutar en el espacio SQL normal;
+- crear filtros o gráficos desde el resultado;
+- convertir SQL estable en Saved Query.
+
+Si faltan conexión, permisos o esquema, termina con estado error y una causa concreta. No inventes IDs, esquemas, URLs ni resultados.
+
+Continúa con [Revisar y continuar trabajo de un agente](/es/docs/workflows/review-agent-work).

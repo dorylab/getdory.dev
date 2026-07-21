@@ -1,0 +1,37 @@
+---
+title: Revisar y continuar el trabajo de un agente
+description: Abre un Agent Run, valida la evidencia, edita SQL y convierte el trabajo útil en gráficos o Saved Queries.
+---
+
+# Revisar y continuar el trabajo de un agente
+
+Usa este flujo después de que un agente explore un esquema o ejecute SQL mediante Dory MCP.
+
+## 1. Abre el Agent Run
+
+Usa la workspace URL o work ID devuelto. Confirma que el título coincide y que el estado es completed o explica claramente el bloqueo.
+
+## 2. Lee Findings y Steps
+
+Revisa conexión, tablas, SQL, rango temporal, filtros, muestreo, truncamiento y supuestos pendientes antes de abrir pestañas.
+
+## 3. Inspecciona el SQL exacto
+
+Compara nombres y joins con Explorer, confirma la base seleccionada y que la consulta sea de solo lectura y tenga un alcance razonable.
+
+## 4. Valida el resultado
+
+Revisa filas reales, tipos, nulos, duplicados, totales y categorías inesperadas. Un finding convincente no sustituye la evidencia.
+
+## 5. Edita y vuelve a ejecutar
+
+Corrige SQL directamente en Dory. Ejecuta primero una versión pequeña y amplía solo cuando la forma del resultado sea correcta.
+
+## 6. Continúa
+
+- Añade filtros o gráficos cuando ayuden a revisar.
+- Guarda SQL estable como Saved Query.
+- Mantén la investigación puntual en el Agent Run.
+- Crea otro Agent Run si la continuación es una pregunta distinta.
+
+La entrega termina cuando una persona puede explicar, confiar, reproducir y continuar el análisis.

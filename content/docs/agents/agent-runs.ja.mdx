@@ -1,0 +1,40 @@
+---
+title: Agent Runs & Human Handoff
+description: Dory がエージェントの SQL、結果、findings、steps を人間のレビュー用に保存する仕組みです。
+---
+
+# Agent Runs & Human Handoff
+
+Agent Run は一つのエージェント タスクに対応する永続 work context です。ユーザー要求、確認済み Schema、実行 SQL、タブ、結果スナップショット、findings、steps をまとめます。
+
+## タスクごとに一つの Run
+
+「チェックアウト低下を調査」や「移行前に Schema を比較」など、一つの要求に一つの Agent Run を作成します。同じ `workId` を使い続け、証拠をまとめてください。
+
+## 推奨ライフサイクル
+
+1. `dory_create_work` で人間が読める短いタイトルを付けます。
+2. 検証済み `connectionId` がなければ接続を一覧します。
+3. テーブル、列、型、join key、日付列、規模を確認します。
+4. LIMIT、狭い filter、明示的な列で読み取り専用 SQL を実行します。
+5. レビューが必要な SQL と結果をタブへ保存します。
+6. `dory_finish_work` で findings、steps、前提、blocker を記録します。
+
+## 保存するもの
+
+複数 SQL、意思決定の根拠、未知 Schema の探索、人間が続ける作業はワークスペース タブへ保存します。タブ名は実装ではなく問いを表す名前にします。
+
+Saved Queries は再利用する SQL のためのものです。一度限りの分析は Agent Run に残します。
+
+## 人間のレビュー チェックリスト
+
+- 使用した接続とテーブルを確認できる。
+- 正確な SQL と結果行を確認できる。
+- 時間範囲、filter、前提、切り詰めを理解できる。
+- 通常の SQL ワークスペースで編集・再実行できる。
+- 結果から filter や chart を作成できる。
+- 再利用できる SQL を Saved Query にできる。
+
+接続や権限が不足する場合は error 状態と具体的な理由で終了します。ID、Schema、URL、結果を推測しないでください。
+
+続きは [エージェント作業をレビューして続ける](/ja/docs/workflows/review-agent-work)を参照してください。

@@ -1,27 +1,28 @@
 ---
-title: 概要
-description: Dory のメイン ワークスペース サーフェスへのクイック リンク。
+title: SQL Workspace
+description: Dory の editor、Explorer、結果、AI、保存済み作業を日常の SQL クライアントとして使います。
 ---
 
-＃ 概要
+# SQL Workspace
 
-Dory のメイン ワークスペースには、SQL コンソール、AI チャット、エクスプローラー、結果グラフ、接続管理、および保存されたクエリが含まれています。
+Dory は人間向けの高速で使い慣れた SQL クライアントです。同じ workspace にエージェントの SQL と結果も届くため、チャットを再構築せずに自動化された作業をレビューして続けられます。
 
-## 機能マップ
+## 日常の SQL 機能
 
-| 特徴 | 用途: |
+| 機能 | 用途 |
 | --- | --- |
-| [SQL コンソール](/ja/docs/core-features/sql-console) | スキーマ コンテキストを使用して SQL を書き込み、実行、デバッグ、保存します。 |
-| [AI チャット](/ja/docs/core-features/ai-chat) | SQL を生成し、クエリを説明し、エラーを修正し、データベース コンテキストで分析を続行します。 |
-| [エクスプローラー](/ja/docs/core-features/explorer) | データベース、スキーマ、テーブル、列、サンプル行、オブジェクトの詳細を検査します。 |
-| [チャートと結果](/ja/docs/core-features/charts-results) | 結果テーブルを確認し、グラフに対応した SQL 出力を視覚的な概要に変換します。 |
-| [保存されたクエリ](/ja/docs/core-features/saved-queries) | 自分自身またはチームのために有用な SQL と再利用可能な分析を保存します。 |
-| [接続](/ja/docs/core-features/connections) | データベース接続設定とローカル ファイル パスを管理します。 |
-| [モニタリング](/ja/docs/core-features/monitoring) | ClickHouse クエリ アクティビティ、遅いクエリ、エラー、および操作上の信号を検査します。 |
-| [権限](/ja/docs/core-features/privileges) | ClickHouse ユーザー、ロール、権限、クラスター対応の付与を管理します。 |
+| [Connections](/ja/docs/core-features/connections) | DB credential、network、local file の管理。 |
+| [Explorer](/ja/docs/core-features/explorer) | Database、Schema、table、column、preview の確認。 |
+| [SQL Console](/ja/docs/core-features/sql-console) | 複数タブで SQL を作成、実行、修正、保存。 |
+| [Charts & Results](/ja/docs/core-features/charts-results) | 実際の行、filter、chart の確認。 |
+| [AI Chat](/ja/docs/core-features/ai-chat) | Dory 内で SQL を生成、説明、修正、変換。 |
+| [Saved Queries](/ja/docs/core-features/saved-queries) | 再利用する SQL の保存。 |
 
-## 一般的なタスク
+## ClickHouse Operations
 
-- 未知のテーブルを探索する: [Explore Unknown Tables](/ja/docs/workflows/explore-unknown-tables)
-- Ask AI で SQL のドラフトを作成: [Ask AI で SQL を生成する](/ja/docs/workflows/generate-sql-with-ai)
-- 結果からグラフを作成: [Build Charts from SQL](/ja/docs/workflows/build-charts-from-sql)
+- [Monitoring](/ja/docs/core-features/monitoring)：activity、latency、slow query、error。
+- [Privileges](/ja/docs/core-features/privileges)：user、role、permission、cluster grant。
+
+## AI Chat と外部エージェント
+
+AI Chat は Dory UI 内で現在の接続、タブ、Schema、結果を使います。外部エージェントは MCP または Dory CLI から Agent Run を作成し、人間向けに SQL と結果を保存します。[Agent Workspaces](/ja/docs/agents)を参照してください。

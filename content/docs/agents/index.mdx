@@ -1,0 +1,44 @@
+---
+title: Overview
+description: Use Dory as the database execution layer for agents while keeping SQL and results editable by humans.
+---
+
+# Agent Workspaces
+
+Dory gives agents more than a way to send SQL to a database. Agent work becomes an editable Dory workspace with SQL tabs, result snapshots, findings, and execution context that a person can inspect and continue.
+
+![Dory Agent workspace with editable SQL and results](/actions.png)
+
+## Why Use Dory for Agents?
+
+A plain database MCP server usually returns rows to a chat. That is useful for an answer, but it does not create a durable place for data work. Dory adds:
+
+- a named Agent Run for each task;
+- schema-first, read-only analysis tools;
+- SQL tabs and result snapshots attached to the run;
+- findings and steps that explain what the agent did;
+- a human handoff into the same SQL workspace.
+
+## Agent Run Lifecycle
+
+1. Create a work context with `dory_create_work`.
+2. Select a visible Dory connection.
+3. Explore enough schema to avoid guessing tables or columns.
+4. Run bounded, read-only SQL.
+5. Preserve useful SQL and results in workspace tabs.
+6. Finish the run with findings and concrete steps.
+7. Open the run in Dory to review, edit, chart, rerun, or save the work.
+
+## Choose the Next Guide
+
+| Need | Guide |
+| --- | --- |
+| Connect Codex, Claude Code, CI, or another MCP client | [MCP Setup](/en/docs/agents/mcp-setup) |
+| Understand what an Agent Run stores | [Agent Runs & Human Handoff](/en/docs/agents/agent-runs) |
+| Run Dory without the Desktop UI | [CLI & Headless Runtime](/en/docs/agents/cli-headless) |
+| Learn the current MCP workflow tools | [MCP Tools & Dory Actions](/en/docs/agents/tools-actions) |
+| Teach an agent the recommended Dory workflow | [Dory Agent Skill](/en/docs/agents/agent-skill) |
+
+## Safety Model
+
+Use read-only database credentials for analysis agents. `dory_run_readonly_sql` rejects mutating SQL, but an Agent Run still writes Dory metadata such as work context, tabs, and result snapshots. Grant Dory `write` scope only to trusted clients that need to create, update, or delete Dory resources.

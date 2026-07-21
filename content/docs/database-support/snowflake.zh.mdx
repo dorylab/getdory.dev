@@ -1,0 +1,47 @@
+---
+title: Snowflake
+description: 将 Snowflake 连接到 Dory，使用 SQL、Schema 探索、预览、AI 和 Agent Workspaces。
+---
+
+# Snowflake
+
+Dory 将 Snowflake 作为原生连接类型，支持 Desktop 和自托管 Web Runtime。
+
+## 支持的工作流
+
+- 创建并测试 Snowflake 连接。
+- 浏览 Database、Schema、Table、View 和 Column。
+- 使用 Snowflake 标识符与分页预览数据。
+- 在 SQL Console 运行 Snowflake SQL。
+- 在共享工作台保存 SQL、结果和 Agent Run 上下文。
+
+## 连接要求
+
+准备 Snowflake account identifier、warehouse、database、schema、username 和可选 role。Account identifier 类似 `xy12345.us-east-1` 或 `org-account`，不要粘贴完整的 `snowflakecomputing.com` 主机名。
+
+Dory 支持密码验证和粘贴 PEM private key。Private key 内容作为连接密钥保存，不使用本地密钥文件路径。
+
+Snowflake 用户或 service user 需要访问选定的 warehouse、database、schema、table 和 view。
+
+## 验证 Session
+
+保存并测试连接后运行：
+
+```sql
+select
+  current_database() as database_name,
+  current_schema() as schema_name,
+  current_role() as role_name,
+  current_warehouse() as warehouse_name;
+```
+
+然后在 Explorer 中确认预期对象可见。
+
+## 安全与限制
+
+- 使用专用、最小权限的 Snowflake 用户或 service user。
+- 使用适合交互分析的 warehouse，并设置合理的 Snowflake 资源控制。
+- 当前连接验证不包括 Snowflake SSO、OAuth、MFA、workload identity federation 或本地 key file path。
+- Agent 分析仍应使用 `dory_run_readonly_sql` 和 Dory `read` scope。
+
+继续阅读[使用 Agent 分析数据库](/zh/docs/workflows/agent-database-analysis)或 [Cloud Databases](/zh/docs/database-support/cloud-databases)。

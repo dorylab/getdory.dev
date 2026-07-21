@@ -1,0 +1,58 @@
+---
+title: MCP Tools & Dory Actions
+description: Use Dory workflow tools and read or write Actions safely from MCP clients.
+---
+
+# MCP Tools & Dory Actions
+
+Dory exposes a small workflow-oriented tool set instead of a separate MCP tool for every product operation.
+
+## Workflow Tools
+
+| Tool | Purpose |
+| --- | --- |
+| `dory_create_work` | Create or reuse the Agent Run context. |
+| `dory_finish_work` | Save final findings, steps, and completion status. |
+| `dory_list_connections` | List connections visible to the current identity. |
+| `dory_explore_schema` | Search, list, describe, preview, profile, or fetch DDL. |
+| `dory_run_readonly_sql` | Execute read-only SQL and optionally preserve it in a workspace tab. |
+| `dory_workspace_tabs` | List, create, append, replace, delete, or open workspace tabs. |
+| `dory_saved_queries` | Manage SQL that should become a durable reusable query. |
+| `dory_read` | List, describe, or run low-risk Dory Actions. |
+| `dory_write` | Run write-capable Dory Actions when the user requested and approved the change. |
+
+## Recommended Tool Order
+
+1. Call `dory_create_work`.
+2. Pass its `work.workId` to work-scoped tools.
+3. List connections unless `connectionId` is already verified.
+4. Explore schema before composing SQL.
+5. Use `dory_run_readonly_sql` with limits and narrow filters.
+6. Preserve useful queries and results in workspace tabs.
+7. Call `dory_finish_work` for successful and blocked tasks.
+
+## Dory Actions
+
+Actions expose product operations through a shared contract. Use `dory_read` for listing, describing, testing, and other read-only or low-risk operations. Use `dory_write` for create, update, or delete operations.
+
+Before a write, describe the Action to learn its input contract:
+
+```json
+{
+  "operation": "describe",
+  "actionId": "connection.create"
+}
+```
+
+Only run the write after the user requested the change, the input is complete, and the client has `write` scope.
+
+## Read-only SQL and Workspace Writes
+
+`dory_run_readonly_sql` prevents mutations to the target database. It can still create Dory Agent Run metadata, SQL tabs, and result snapshots. This is expected: the target database remains read-only while the work is preserved in Dory.
+
+## Scopes
+
+- Prefer `read` for analysis clients.
+- Grant `write` only to trusted clients that must change Dory resources.
+- Treat `local_ai:run` separately from database access.
+- Use one credential per client so revocation and auditing remain clear.

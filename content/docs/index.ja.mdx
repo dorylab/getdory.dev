@@ -1,37 +1,44 @@
 ---
-title: いらっしゃいませ
-description: Dory をインストールし、データベースに接続し、コア機能を学習し、一般的なワークフローに従い、チーム展開を構成します。
+title: Dory ドキュメント
+description: 人間と AI エージェントが Dory を共有・編集可能な SQL ワークスペースとして使う方法を説明します。
 ---
 
-＃ いらっしゃいませ
+# Dory ドキュメント
 
-Dory は、データベースの接続、スキーマの理解、SQL の作成、AI 支援の使用、結果のレビュー、再利用可能な分析の保存を行うための AI ネイティブのデータ ワークスペースです。
+Dory は人間とエージェントのための AI ネイティブ SQL クライアントです。人間はデータを照会、探索、可視化でき、AI エージェントは MCP を通じて安全にデータベースを操作し、その作業を同じ編集可能な SQL ワークスペースに残せます。
 
-## 目標から始めましょう
+## 目的から選ぶ
 
-| ゴール | エントリ |
+| 目的 | 開始ページ |
 | --- | --- |
-| ドリーを初めて走らせる | [はじめに](/ja/docs/getting-started) |
-| 特定の種類のデータベースに接続する | [データベースサポート](/ja/docs/database-support) |
-| SQL コンソール、AI チャット、エクスプローラー、チャート、保存されたクエリについて学ぶ | [コア機能](/ja/docs/core-features) |
-| 一般的な分析タスクをエンドツーエンドで完了する | [ワークフロー](/ja/docs/workflows) |
-| チームまたはサーバー環境に展開する | [デプロイ](/ja/docs/deploy) |
-| プロバイダー、ショートカット、MCP、設定、またはトラブルシューティングを構成する | [参考資料](/ja/docs/reference) |
+| 日常の SQL クライアントとして使う | [クイックスタート](/ja/docs/getting-started/quick-start)から、[データベース接続](/ja/docs/getting-started/connect-your-database)、[最初のクエリ](/ja/docs/getting-started/first-query-in-3-minutes)へ進みます。 |
+| Codex、Claude Code、その他のエージェントにデータベースを使わせる | [Agent Workspaces](/ja/docs/agents)で概要を確認し、[MCP セットアップ](/ja/docs/agents/mcp-setup)を選びます。 |
+| エージェントが作成した作業をレビューする | [Agent Run と人間への引き継ぎ](/ja/docs/agents/agent-runs)を参照します。 |
+| チーム向けに Dory をデプロイする | [セルフホスティング](/ja/docs/deploy/self-hosting)から開始します。 |
 
-## 最初の実行を推奨
+## 人間とエージェントの共有ワークスペース
 
-1. [クイックスタート](/ja/docs/getting-started/quick-start)
-2. [インストール](/ja/docs/getting-started/installation)
-3. [データベースに接続する](/ja/docs/getting-started/connect-your-database)
-4. [3 分以内の最初のクエリ](/ja/docs/getting-started/first-query-in-3- minutes)
+- **人間**は SQL の作成、Schema の閲覧、結果の確認、チャート作成、クエリ保存を行います。
+- **エージェント**は MCP から接続一覧、Schema 探索、読み取り専用 SQL、分析の整理を行います。
+- **共有ワークスペース**には SQL タブ、結果スナップショット、チャート、保存済みクエリ、実行コンテキストが残り、人間が確認、編集、再実行、継続できます。
 
-## 共通エントリ
+![Dory はエージェントのデータベース作業を編集可能な SQL ワークスペースに変換します](/actions.png)
 
-- [はじめに](/ja/docs/getting-started): データベースをインストール、起動、接続し、最初のクエリを実行します。
-- [コア機能](/ja/docs/core-features):SQL コンソール、AI チャット、エクスプローラー、チャート、接続、保存されたクエリ。
-- [ワークフロー](/ja/docs/workflows): 未知のテーブルの探索、SQL の生成、遅いクエリのデバッグ、グラフの構築、分析の再利用。
-- [リファレンス](/ja/docs/reference): AI プロバイダー、ショートカット、SQL スニペット、設定、MCP、およびFAQ。
+## Dory と一般的なデータベース MCP Server
 
-## 製品のアップデート
+| 機能 | 一般的な DB MCP Server | Dory |
+| --- | ---: | ---: |
+| SQL 実行と Schema 探索 | あり | あり |
+| 編集可能な SQL タブと永続的な結果 | なし | あり |
+| チャート、フィルター、保存済みクエリ | 限定的 | あり |
+| 人間によるレビューと継続 | 限定的 | あり |
+| 日常の SQL クライアント | なし | あり |
 
-最近の変更点については、[リリース ノート](/ja/docs/release-notes) を参照してください。
+## ドキュメントを探す
+
+- [SQL Workspace](/ja/docs/core-features)：エディター、Explorer、結果、AI Chat、保存済み作業。
+- [Agent Workspaces](/ja/docs/agents)：MCP、Agent Run、Dory CLI、ツール、Dory Agent Skill。
+- [Workflows](/ja/docs/workflows)：人間とエージェント向けのタスクガイド。
+- [Databases](/ja/docs/database-support)：対応データベースと接続ガイド。
+- [Deploy](/ja/docs/deploy)：セルフホスト Web、認証、運用。
+- [Release Notes](/ja/docs/release-notes)：最近の製品変更。

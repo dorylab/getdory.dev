@@ -1,37 +1,44 @@
 ---
-title: Bienvenido
-description: Instale Dory, conecte bases de datos, conozca las funciones principales, siga flujos de trabajo comunes y configure implementaciones en equipo.
+title: Documentación de Dory
+description: Aprende cómo las personas y los agentes de IA usan Dory como un espacio de trabajo SQL compartido y editable.
 ---
 
-# Bienvenido
+# Documentación de Dory
 
-Dory es un espacio de trabajo de datos nativo de IA para conectar bases de datos, comprender esquemas, escribir SQL, utilizar asistencia de IA, revisar resultados y guardar análisis reutilizables.
+Dory es un cliente SQL nativo de IA para personas y agentes. Las personas pueden consultar, explorar y visualizar datos, mientras que los agentes de IA trabajan de forma segura con bases de datos mediante MCP y conservan su trabajo en el mismo espacio SQL editable.
 
-## Comience desde su objetivo
+## Elige tu ruta
 
-| Meta | Entrada |
+| Quiero... | Empieza aquí |
 | --- | --- |
-| Haz que Dory corra por primera vez | [Comenzando](/es/docs/empezando) |
-| Conectar un tipo de base de datos específico | [Soporte de base de datos](/es/docs/database-support) |
-| Aprenda SQL Console, AI Chat, Explorer, gráficos y consultas guardadas | [Características principales](/es/docs/características principales) |
-| Complete tareas de análisis comunes de principio a fin | [Flujos de trabajo](/es/docs/flujos de trabajo) |
-| Implementar para un entorno de equipo o servidor | [Implementar](/es/docs/implementar) |
-| Configurar proveedores, accesos directos, MCP, configuraciones o solución de problemas | [Referencia](/es/docs/referencia) |
+| Usar Dory como cliente SQL diario | Sigue el [Inicio rápido](/es/docs/getting-started/quick-start), [conecta una base de datos](/es/docs/getting-started/connect-your-database) y ejecuta tu [primera consulta](/es/docs/getting-started/first-query-in-3-minutes). |
+| Dar acceso a Codex, Claude Code u otro agente | Empieza en [Agent Workspaces](/es/docs/agents) y elige una [configuración MCP](/es/docs/agents/mcp-setup). |
+| Revisar el trabajo creado por un agente | Aprende el flujo de [Agent Run y entrega a una persona](/es/docs/agents/agent-runs). |
+| Desplegar Dory para un equipo | Empieza con [Self-Hosting](/es/docs/deploy/self-hosting). |
 
-## Primera ejecución recomendada
+## Un espacio para personas y agentes
 
-1. [Inicio rápido](/es/docs/getting-started/quick-start)
-2. [Instalación](/es/docs/getting-started/installation)
-3. [Conecte su base de datos](/es/docs/getting-started/connect-your-database)
-4. [Primera consulta en 3 minutos](/es/docs/getting-started/primera-consulta-en-3-minutos)
+- **Las personas** escriben SQL, exploran esquemas, revisan resultados, crean gráficos y guardan consultas útiles.
+- **Los agentes** enumeran conexiones, exploran esquemas, ejecutan SQL de solo lectura y organizan análisis mediante MCP.
+- **El espacio compartido** conserva pestañas SQL, resultados, gráficos, consultas guardadas y contexto de ejecución para que una persona pueda revisar, editar, volver a ejecutar y continuar el trabajo.
 
-## Entradas comunes
+![Dory convierte el trabajo de un agente en un espacio SQL editable](/actions.png)
 
-- [Comenzando](/es/docs/getting-started): instale, inicie, conecte una base de datos y ejecute la primera consulta.
-- [Funciones principales](/es/docs/core-features): Consola SQL, Chat AI, Explorador, gráficos, conexiones y consultas guardadas.
-- [Flujos de trabajo](/es/docs/workflows): explora tablas desconocidas, genera SQL, depura consultas lentas, crea gráficos y reutiliza análisis.
-- [Referencia](/es/docs/referencia): proveedores de IA, accesos directos, fragmentos de SQL, configuraciones, MCP yFAQ.
+## Dory frente a un servidor MCP de base de datos
 
-## Actualizaciones de productos
+| Capacidad | Servidor MCP convencional | Dory |
+| --- | ---: | ---: |
+| Ejecutar SQL y explorar esquemas | Sí | Sí |
+| Pestañas SQL editables y resultados persistentes | No | Sí |
+| Gráficos, filtros y consultas guardadas | Limitado | Sí |
+| Revisión y continuación por una persona | Limitado | Sí |
+| Cliente SQL para uso diario | No | Sí |
 
-Consulte las [Notas de la versión](/es/docs/release-notes) para conocer los cambios recientes.
+## Explora la documentación
+
+- [SQL Workspace](/es/docs/core-features): editor, Explorer, resultados, AI Chat y trabajo guardado.
+- [Agent Workspaces](/es/docs/agents): MCP, Agent Runs, Dory CLI, herramientas y Dory Agent Skill.
+- [Workflows](/es/docs/workflows): guías prácticas para personas y agentes.
+- [Databases](/es/docs/database-support): motores compatibles y conexiones.
+- [Deploy](/es/docs/deploy): Web autohospedada, autenticación y operaciones.
+- [Release Notes](/es/docs/release-notes): cambios recientes del producto.

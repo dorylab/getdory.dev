@@ -1,0 +1,47 @@
+---
+title: MCP Tools & Dory Actions
+description: MCP クライアントから Dory の workflow tools と Actions を安全に使います。
+---
+
+# MCP Tools & Dory Actions
+
+Dory は製品操作ごとに別の MCP tool を作るのではなく、少数の workflow tools を提供します。
+
+## Workflow Tools
+
+| Tool | 用途 |
+| --- | --- |
+| `dory_create_work` | Agent Run context を作成または再利用。 |
+| `dory_finish_work` | findings、steps、status を保存。 |
+| `dory_list_connections` | 表示可能な接続を一覧。 |
+| `dory_explore_schema` | 検索、一覧、説明、preview、profile、DDL。 |
+| `dory_run_readonly_sql` | 読み取り専用 SQL とタブへの保存。 |
+| `dory_workspace_tabs` | タブの一覧、作成、追記、置換、削除、表示。 |
+| `dory_saved_queries` | 再利用する SQL の管理。 |
+| `dory_read` | 低リスク Dory Actions の一覧、説明、実行。 |
+| `dory_write` | ユーザーが要求・承認した書き込み Actions。 |
+
+## 推奨順序
+
+1. `dory_create_work` を呼びます。
+2. `work.workId` を work-scoped tools に渡します。
+3. `connectionId` が検証済みでなければ一覧します。
+4. SQL 作成前に Schema を調べます。
+5. LIMIT と狭い filter で `dory_run_readonly_sql` を使います。
+6. 有用な SQL と結果をタブに保存します。
+7. 成功時と blocked 時の両方で `dory_finish_work` を呼びます。
+
+## Dory Actions
+
+一覧、説明、テストなどの読み取り・低リスク操作には `dory_read`、作成、更新、削除には `dory_write` を使います。書き込み前に Action の contract を確認します。
+
+```json
+{
+  "operation": "describe",
+  "actionId": "connection.create"
+}
+```
+
+ユーザーが変更を要求し、入力が完全で、クライアントに `write` scope がある場合だけ実行します。
+
+`dory_run_readonly_sql` は対象 DB の変更を防ぎますが、Dory の Agent Run、SQL タブ、結果スナップショットは作成できます。分析クライアントには `read` を優先し、Dory リソースを変更する信頼済みクライアントだけに `write` を付与してください。

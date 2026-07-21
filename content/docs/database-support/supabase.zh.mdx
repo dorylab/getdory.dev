@@ -1,0 +1,43 @@
+---
+title: Supabase
+description: 将 Supabase PostgreSQL 连接到 Dory，使用 Schema、SQL、AI、结果和 Agent Workspaces。
+---
+
+# Supabase
+
+Dory 提供专用 Supabase 连接流程，底层使用 PostgreSQL Driver 与方言。
+
+## 连接要求
+
+从 Supabase Dashboard 复制 PostgreSQL connection string。Dory 接受 direct 和 session pooler URL，例如：
+
+```text
+postgresql://postgres.project-ref:password@aws-0-region.pooler.supabase.com:5432/postgres?sslmode=require
+```
+
+交互式 SQL 工作台推荐 direct 或 session pooler。Transaction pooler URL 可以测试，但其事务行为可能不适合较长的交互 Session。
+
+## 支持的工作流
+
+- 解析并验证 Supabase PostgreSQL connection string。
+- 浏览 PostgreSQL Schema、Table、View 和 Column。
+- 运行 PostgreSQL SQL 并检查结果集。
+- 使用 Schema-aware AI Chat 与外部 Agent。
+- 在普通标签页或 Agent Run 中保留 SQL 和结果。
+
+## 连接并验证
+
+1. 在 Dory 创建 **Supabase** 连接。
+2. 粘贴 direct 或 session pooler connection string。
+3. 测试并保存。
+4. 在 Explorer 中确认预期的 `public` Schema。
+5. 广泛探索生产数据前先运行有限查询。
+
+## 安全建议
+
+- 创建只拥有必要 Schema 和操作权限的数据库 Role。
+- 密码只保存在 Dory 加密连接密钥中，不要写入 Saved Query 或 Agent Prompt。
+- 保留 Supabase 提供的 `sslmode=require` 或 TLS 配置。
+- 分析 Agent 使用 [MCP read scope](/zh/docs/agents/tools-actions)和只读数据库权限。
+
+Supabase 兼容 PostgreSQL，因此大部分 [PostgreSQL 指南](/zh/docs/database-support/postgresql)同样适用。

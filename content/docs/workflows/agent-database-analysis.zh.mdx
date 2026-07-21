@@ -1,0 +1,44 @@
+---
+title: 使用 Agent 分析数据库
+description: 通过 Dory MCP 探索真实 Schema、运行有范围限制的只读 SQL，并保留可审计的 Agent Run。
+---
+
+# 使用 Agent 分析数据库
+
+当 Agent 需要回答数据问题，同时不能猜测 Schema 或让 SQL 与证据消失在聊天记录中时，使用这个工作流。
+
+## 1. 定义有边界的问题
+
+说明业务问题、时间范围、允许的数据敏感度，以及 Agent 是否只能读取数据。不要从“分析所有内容”开始。
+
+## 2. 创建 Agent Run
+
+Agent 使用描述问题的标题调用 `dory_create_work`，后续步骤都使用返回的 `workId`。
+
+## 3. 选择连接
+
+除非你提供了验证过的 `connectionId`，否则 Agent 先调用 `dory_list_connections`。编写 SQL 前确认连接名称和数据库类型。
+
+## 4. 先探索 Schema
+
+使用 `dory_explore_schema` 查找相关表，并确认字段、类型、Join Key、时间字段和大致数据量。只预览理解数据结构所需的少量行。
+
+## 5. 运行安全 SQL
+
+使用 `dory_run_readonly_sql`，明确选择字段、缩小时间范围、合理聚合并限制行数。大日志或事件表应从采样或短时间范围开始。
+
+## 6. 保留证据
+
+把影响决策的 SQL 和结果保存在命名清晰的工作区标签页。一次性探索留在 Agent Run 中，只有可复用 SQL 才创建 Saved Query。
+
+## 7. 完成并审阅
+
+Agent 使用 `dory_finish_work` 记录 findings、steps、假设、截断和采样。在 Dory 中打开 Agent Run，并在用于决策前验证 SQL。
+
+## 完成清单
+
+- Agent 使用了真实 Dory Schema。
+- 所有数据库 SQL 都是只读且范围合理。
+- 准确 SQL 和有用结果保存在 Dory 中。
+- Findings 说明过滤条件、时间范围、假设和限制。
+- 人类无需重建聊天上下文即可继续分析。

@@ -1,27 +1,28 @@
 ---
-title: Overview
-description: Quick links to Dory's main workspace surfaces.
+title: SQL Workspace
+description: Use Dory's editor, Explorer, results, AI assistance, and saved work as a daily SQL client.
 ---
 
-# Overview
+# SQL Workspace
 
-Dory's main workspace includes SQL Console, AI Chat, Explorer, result charts, connection management, and Saved Queries.
+Dory remains a fast, familiar SQL client for people. The same workspace also receives SQL and results created by agents, so you can review and continue automated work without reconstructing it from chat.
 
-## Feature Map
+## Daily SQL Surfaces
 
 | Feature | Use it for |
 | --- | --- |
-| [SQL Console](/en/docs/core-features/sql-console) | Write, run, debug, and save SQL with schema context. |
-| [AI Chat](/en/docs/core-features/ai-chat) | Generate SQL, explain queries, fix errors, and continue analysis with database context. |
-| [Explorer](/en/docs/core-features/explorer) | Inspect databases, schemas, tables, columns, sample rows, and object details. |
-| [Charts & Results](/en/docs/core-features/charts-results) | Review result tables and turn chart-ready SQL output into visual summaries. |
-| [Saved Queries](/en/docs/core-features/saved-queries) | Save useful SQL and reusable analysis for yourself or a team. |
-| [Connections](/en/docs/core-features/connections) | Manage database connection settings and local file paths. |
-| [Monitoring](/en/docs/core-features/monitoring) | Inspect ClickHouse query activity, slow queries, errors, and operational signals. |
-| [Privileges](/en/docs/core-features/privileges) | Manage ClickHouse users, roles, permissions, and cluster-aware grants. |
+| [Connections](/en/docs/core-features/connections) | Manage database credentials, network settings, and local files. |
+| [Explorer](/en/docs/core-features/explorer) | Inspect databases, schemas, tables, columns, previews, and object details. |
+| [SQL Console](/en/docs/core-features/sql-console) | Write, run, debug, and save SQL in multiple tabs. |
+| [Charts & Results](/en/docs/core-features/charts-results) | Inspect real rows, filter results, and build charts. |
+| [AI Chat](/en/docs/core-features/ai-chat) | Generate, explain, fix, or reshape SQL inside Dory. |
+| [Saved Queries](/en/docs/core-features/saved-queries) | Preserve SQL that should become a reusable asset. |
 
-## Common Tasks
+## ClickHouse Operations
 
-- Explore an unfamiliar table: [Explore Unknown Tables](/en/docs/workflows/explore-unknown-tables)
-- Draft SQL with Ask AI: [Generate SQL with Ask AI](/en/docs/workflows/generate-sql-with-ai)
-- Build a chart from results: [Build Charts from SQL](/en/docs/workflows/build-charts-from-sql)
+- [Monitoring](/en/docs/core-features/monitoring): inspect activity, latency, slow queries, and errors.
+- [Privileges](/en/docs/core-features/privileges): manage ClickHouse users, roles, permissions, and cluster grants.
+
+## AI Chat vs. External Agents
+
+AI Chat works inside the current Dory UI with the selected connection, tab, schema, and result context. External agents connect through MCP or Dory CLI, create Agent Runs, and preserve SQL and results for human handoff. See [Agent Workspaces](/en/docs/agents) for the external-agent path.

@@ -9,11 +9,11 @@ This FAQ answers common questions that appear during Dory onboarding, database s
 
 ## What is Dory?
 
-Dory is an AI-native SQL workspace for connecting databases, exploring schema, writing SQL, generating analysis with AI, saving reusable queries, and giving MCP-capable agents controlled database context.
+Dory is an AI-native SQL client for humans and agents. It combines a daily SQL workspace with an MCP database execution layer, so agent SQL, results, and context remain editable and reviewable by people.
 
 ## Which databases does Dory support?
 
-Dory documentation covers ClickHouse, PostgreSQL, Neon, MySQL, MariaDB, SQL Server, Oracle, SQLite, DuckDB, MotherDuck, and other hosted databases that expose compatible connection endpoints. See [Database Support](/en/docs/database-support) for driver-specific guidance.
+Dory supports ClickHouse, PostgreSQL, Neon, Supabase, MySQL, MariaDB, SQL Server, Oracle, Snowflake, Cloudflare D1, SQLite, DuckDB, and MotherDuck. See [Databases](/en/docs/database-support) for current driver-specific guidance.
 
 ## Does Dory replace my BI tool?
 
@@ -55,11 +55,15 @@ Yes, if your Dory workspace and permissions allow the teammate to access the sam
 
 ## Does MCP expose database passwords?
 
-No. MCP tools expose controlled metadata and read/analysis operations. They do not return database passwords or connection secrets. Use one MCP token per client and revoke old tokens when they are no longer needed.
+No. MCP tools do not return database passwords or connection secrets. They can expose schema and query data allowed by the current identity and scope, so treat MCP access as data access. Desktop MCP manages a local grant; token-based setups should use one credential per client and revoke unused credentials.
 
 ## Can an MCP agent write to my database?
 
-Dory MCP is designed for read-only SQL execution. You should still use read-only database credentials for production connections because database permissions are the final safety boundary.
+`dory_run_readonly_sql` rejects mutations to the target database. Clients with Dory `write` scope can still use `dory_write` for approved changes to Dory resources such as connections. Use read-only database credentials in production because database permissions remain the final safety boundary.
+
+## What is an Agent Run?
+
+An Agent Run is the durable context for one agent task. It preserves the request, SQL tabs, result snapshots, findings, and execution steps so a person can review and continue the work in Dory. See [Agent Runs & Human Handoff](/en/docs/agents/agent-runs).
 
 ## Why does my Docker deployment fail to connect to SQLite or DuckDB files?
 

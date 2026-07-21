@@ -1,0 +1,11 @@
+{
+  "title": "Agent Workspaces",
+  "pages": [
+    "index",
+    "mcp-setup",
+    "agent-runs",
+    "cli-headless",
+    "tools-actions",
+    "agent-skill"
+  ]
+}

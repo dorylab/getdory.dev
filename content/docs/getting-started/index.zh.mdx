@@ -1,33 +1,32 @@
 ---
-title: 概览
-description: 安装 Dory、连接数据库，并完成第一条可验证查询。
+title: 开始使用
+description: 选择 Dory 运行形态并完成第一个 SQL 或 Agent 工作流。
 ---
 
-# 概览
+# 开始使用
 
-Dory 的首次使用路径很短：先启动应用，再连接一个可访问的数据源，最后运行一条有限制的查询并检查结果。
+Dory 既可以作为交互式 SQL 工作台，也可以作为 Agent 的数据库执行层。先根据目标选择合适的运行形态。
 
-## 入门路径
+## 选择运行形态
 
-1. [快速开始](/zh/docs/getting-started/quick-start)：选择在线演示、桌面端或 Docker。
-2. [安装说明](/zh/docs/getting-started/installation)：安装桌面端或启动自托管运行环境。
-3. [连接数据库](/zh/docs/getting-started/connect-your-database)：创建连接并确认 Schema 可见。
-4. [3 分钟完成第一条查询](/zh/docs/getting-started/first-query-in-3-minutes)：运行有限制的查询、检查结果，并让 AI 继续辅助下一步。
+| 运行形态 | 适合场景 | 下一步 |
+| --- | --- | --- |
+| Dory Desktop | 日常 SQL 工作，以及复用 Desktop 连接的本地 Agent | [安装 Dory](/zh/docs/getting-started/installation)，然后[连接数据库](/zh/docs/getting-started/connect-your-database)。 |
+| Dory Web | 浏览器访问、团队共享和自托管部署 | 阅读[快速开始](/zh/docs/getting-started/quick-start)或[部署](/zh/docs/deploy)。 |
+| Dory CLI | 不打开桌面应用的本地 Agent、CI 和自动化 | 阅读 [MCP Setup](/zh/docs/agents/mcp-setup)和 [CLI & Headless Runtime](/zh/docs/agents/cli-headless)。 |
+| Headless Runtime | 稳定的 HTTP MCP 端点和纯 Agent 服务器 | 阅读 [CLI & Headless Runtime](/zh/docs/agents/cli-headless)。 |
 
-## 下一步
+## 第一个人类工作流
 
-第一条查询跑通后，按目标阅读：
+1. [安装或打开 Dory](/zh/docs/getting-started/quick-start)。
+2. [连接数据库](/zh/docs/getting-started/connect-your-database)。
+3. 按照[三分钟完成第一个查询](/zh/docs/getting-started/first-query-in-3-minutes)运行受限、可审阅的查询。
+4. 检查结果、创建图表或保存查询。
 
-| 需求 | 阅读 |
-| --- | --- |
-| 理解某个产品界面 | [核心功能](/zh/docs/core-features) |
-| 按任务完成一套流程 | [工作流](/zh/docs/workflows) |
-| 查看不同数据库的差异 | [数据库支持](/zh/docs/database-support) |
-| 配置部署或登录认证 | [部署](/zh/docs/deploy) |
-| 查询设置、快捷键、SQL 片段、MCP 或 FAQ | [参考](/zh/docs/reference) |
+## 第一个 Agent 工作流
 
-## 生产数据前的最低建议
+1. 在 [MCP Setup](/zh/docs/agents/mcp-setup) 中选择 Desktop MCP、standalone stdio、headless HTTP 或 hosted bridge。
+2. 让 Agent 探索 Schema 并运行只读 SQL。
+3. 在 Dory 中打开生成的 Agent Run，从保存的 SQL 标签页和结果快照继续工作。
 
-- 生产数据库优先使用只读账号。
-- Docker 中连接本地文件或内网数据库时，先确认运行环境真的能访问。
-- AI 生成的 SQL 执行前需要人工审查。
+连接生产数据时应使用只读数据库凭据，并在扩大权限前审阅生成的 SQL。

@@ -1,0 +1,44 @@
+---
+title: 概要
+description: Dory をエージェントのデータベース実行レイヤーとして使い、SQL と結果を人間が編集・継続できるようにします。
+---
+
+# Agent Workspaces
+
+Dory では、エージェントの作業が SQL タブ、結果スナップショット、findings、実行コンテキストを含む編集可能なワークスペースになります。人間は同じ場所で確認し、作業を続けられます。
+
+![編集可能な SQL と結果を持つ Dory Agent workspace](/actions.png)
+
+## エージェントに Dory を使う理由
+
+一般的なデータベース MCP Server は結果をチャットへ返します。Dory はさらに次を提供します。
+
+- タスクごとに名前を持つ Agent Run
+- Schema-first の読み取り専用分析ツール
+- Agent Run に関連付けられた SQL タブと結果スナップショット
+- エージェントの操作を説明する findings と steps
+- 同じ SQL ワークスペースへの人間向け引き継ぎ
+
+## Agent Run のライフサイクル
+
+1. `dory_create_work` で work context を作成します。
+2. 表示可能な Dory 接続を選択します。
+3. Schema を調査し、テーブルや列を推測しないようにします。
+4. 範囲を限定した読み取り専用 SQL を実行します。
+5. 有用な SQL と結果をワークスペース タブに保存します。
+6. `dory_finish_work` で findings と steps を記録します。
+7. Dory で開き、確認、編集、チャート作成、再実行、保存を行います。
+
+## 次のガイド
+
+| 目的 | ガイド |
+| --- | --- |
+| Codex、Claude Code、CI、MCP クライアントを接続 | [MCP Setup](/ja/docs/agents/mcp-setup) |
+| Agent Run が保存する内容を理解 | [Agent Runs & Human Handoff](/ja/docs/agents/agent-runs) |
+| Desktop UI なしで Dory を実行 | [CLI & Headless Runtime](/ja/docs/agents/cli-headless) |
+| MCP ツール モデルを理解 | [MCP Tools & Dory Actions](/ja/docs/agents/tools-actions) |
+| 推奨ワークフローをエージェントに提供 | [Dory Agent Skill](/ja/docs/agents/agent-skill) |
+
+## セーフティ モデル
+
+分析エージェントには読み取り専用データベース資格情報を使います。`dory_run_readonly_sql` は対象 DB の変更を拒否しますが、Agent Run、タブ、結果スナップショットなどの Dory メタデータは作成します。Dory リソースの変更が必要な信頼済みクライアントだけに `write` scope を付与してください。

@@ -1,0 +1,44 @@
+---
+title: Analyze a Database with an Agent
+description: Use Dory MCP to explore real schema, run bounded read-only SQL, and preserve an auditable Agent Run.
+---
+
+# Analyze a Database with an Agent
+
+Use this workflow when an agent should answer a data question without guessing schema or losing the SQL and evidence in a chat transcript.
+
+## 1. Define a Bounded Question
+
+State the business question, preferred time range, acceptable data sensitivity, and whether the agent may only read data. Avoid starting with “analyze everything.”
+
+## 2. Create the Agent Run
+
+The agent calls `dory_create_work` with a title that describes the question. It uses the returned `workId` for every later step.
+
+## 3. Select a Connection
+
+The agent calls `dory_list_connections` unless you supplied a verified `connectionId`. Confirm the connection name and database type before SQL is written.
+
+## 4. Explore Schema First
+
+Use `dory_explore_schema` to find relevant tables and confirm columns, types, join keys, date fields, and likely table size. Preview only the rows needed to understand the data shape.
+
+## 5. Run Safe SQL
+
+Use `dory_run_readonly_sql` with explicit columns, narrow date ranges, sensible aggregation, and row limits. For large log or event tables, start with a sample or short time range.
+
+## 6. Preserve Evidence
+
+Save decision-relevant SQL and results in a clearly named workspace tab. Keep one-off exploration in the Agent Run; create a Saved Query only when the SQL should be reused.
+
+## 7. Finish and Review
+
+The agent calls `dory_finish_work` with findings, executed steps, assumptions, and any truncation or sampling. Open the resulting Agent Run in Dory and verify the SQL before using the result in a decision.
+
+## Acceptance Checklist
+
+- The agent used real Dory schema metadata.
+- All database SQL was read-only and appropriately bounded.
+- The exact SQL and useful results are available in Dory.
+- Findings identify filters, time ranges, assumptions, and limitations.
+- A person can continue the analysis without reconstructing it from chat.

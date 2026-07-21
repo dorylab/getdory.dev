@@ -1,0 +1,38 @@
+---
+title: Analizar una base de datos con un agente
+description: Explora el esquema real, ejecuta SQL de solo lectura y conserva un Agent Run auditable con Dory MCP.
+---
+
+# Analizar una base de datos con un agente
+
+Usa este flujo para responder una pregunta sin adivinar el esquema ni perder SQL y evidencia en el chat.
+
+## 1. Limita la pregunta
+
+Indica la pregunta de negocio, rango temporal, sensibilidad aceptable y si el agente solo puede leer. No empieces con “analiza todo”.
+
+## 2. Crea el Agent Run
+
+El agente llama `dory_create_work` con un título que describa la pregunta y usa el `workId` devuelto en todos los pasos.
+
+## 3. Selecciona una conexión
+
+Llama `dory_list_connections` salvo que exista un `connectionId` verificado. Confirma nombre y tipo de base antes de escribir SQL.
+
+## 4. Explora primero el esquema
+
+Usa `dory_explore_schema` para confirmar tablas, columnas, tipos, join keys, fechas y tamaño probable. Previsualiza solo las filas necesarias.
+
+## 5. Ejecuta SQL seguro
+
+Usa `dory_run_readonly_sql` con columnas explícitas, rangos estrechos, agregación adecuada y límites. Empieza las tablas grandes con una muestra o periodo corto.
+
+## 6. Conserva la evidencia
+
+Guarda SQL y resultados relevantes en una pestaña con nombre claro. Mantén exploraciones puntuales en el Agent Run y crea Saved Query solo para SQL reutilizable.
+
+## 7. Finaliza y revisa
+
+El agente llama `dory_finish_work` con findings, steps, supuestos y muestreo. Abre el Agent Run en Dory y verifica el SQL antes de tomar decisiones.
+
+El flujo está completo cuando una persona puede continuar desde SQL y resultados reales sin reconstruir el chat.

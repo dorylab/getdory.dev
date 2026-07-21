@@ -1,37 +1,46 @@
 ---
-title: 欢迎
-description: 安装 Dory、连接数据库、学习核心功能、完成常见工作流并配置团队部署。
+title: Dory 文档
+description: 了解人类和 AI Agent 如何把 Dory 用作共享、可编辑的 SQL 工作台。
 ---
 
-# 欢迎
+# Dory 文档
 
-Dory 是面向现代数据库的 AI 原生数据工作台，用于连接数据库、理解 Schema、编写 SQL、使用 AI 辅助、查看结果并沉淀可复用分析。
+Dory 是面向人类和 Agent 的 AI 原生 SQL 客户端。人类可以查询、探索和可视化数据，AI Agent 则可以通过 MCP 安全访问数据库，并把工作留在同一个可编辑 SQL 工作台中。
 
-## 从目标开始
+## 选择你的路径
 
-| 目标 | 入口 |
+| 我想要…… | 从这里开始 |
 | --- | --- |
-| 第一次启动 Dory | [开始使用](/zh/docs/getting-started) |
-| 连接某一种数据库 | [数据库支持](/zh/docs/database-support) |
-| 学习 SQL Console、AI Chat、Explorer、图表和 Saved Queries | [核心功能](/zh/docs/core-features) |
-| 完成一个端到端分析任务 | [工作流](/zh/docs/workflows) |
-| 团队部署或服务端部署 | [部署](/zh/docs/deploy) |
-| 配置 AI、快捷键、MCP、设置或排查问题 | [参考](/zh/docs/reference) |
+| 把 Dory 作为日常 SQL 客户端 | 阅读[快速开始](/zh/docs/getting-started/quick-start)，然后[连接数据库](/zh/docs/getting-started/connect-your-database)并运行[第一个查询](/zh/docs/getting-started/first-query-in-3-minutes)。 |
+| 让 Codex、Claude Code 或其他 Agent 访问数据库 | 从 [Agent Workspaces](/zh/docs/agents) 开始，再选择一种 [MCP 接入方式](/zh/docs/agents/mcp-setup)。 |
+| 审阅 Agent 创建的工作 | 了解 [Agent Run 与人类交接](/zh/docs/agents/agent-runs)工作流。 |
+| 为团队部署 Dory | 从[自托管](/zh/docs/deploy/self-hosting)开始。 |
 
-## 推荐首次路径
+## 人类和 Agent 共用一个工作台
 
-1. [快速开始](/zh/docs/getting-started/quick-start)
-2. [安装说明](/zh/docs/getting-started/installation)
-3. [连接数据库](/zh/docs/getting-started/connect-your-database)
-4. [3 分钟完成第一条查询](/zh/docs/getting-started/first-query-in-3-minutes)
+人类和 Agent 使用同一套底层数据库动作：
 
-## 常用入口
+- **人类**编写 SQL、浏览 Schema、检查结果表、创建图表并保存有用查询。
+- **Agent** 通过 MCP 列出连接、探索 Schema、运行只读 SQL 并组织分析过程。
+- **共享工作台**保留 SQL 标签页、结果快照、图表、保存查询和执行上下文，让人类可以检查、编辑、重新运行并继续工作。
 
-- [开始使用](/zh/docs/getting-started)：安装、启动、连接数据库并完成第一条查询。
-- [核心功能](/zh/docs/core-features)：SQL Console、AI Chat、Explorer、图表、连接和 Saved Queries。
-- [工作流](/zh/docs/workflows)：探索陌生表、生成 SQL、排查慢查询、构建图表和复用分析。
-- [参考](/zh/docs/reference)：AI Provider、快捷键、SQL 片段、设置、MCP 和 FAQ。
+![Dory 把 Agent 数据库工作沉淀为可编辑 SQL 工作台](/actions.png)
 
-## 产品更新
+## Dory 与普通数据库 MCP Server
 
-查看 [发布说明](/zh/docs/release-notes) 了解最新功能与改进。
+| 能力 | 普通数据库 MCP Server | Dory |
+| --- | ---: | ---: |
+| 运行 SQL、探索 Schema | 支持 | 支持 |
+| 可编辑 SQL 标签页与持久结果 | 不支持 | 支持 |
+| 图表、筛选与保存查询 | 有限 | 支持 |
+| 人类审阅与继续工作 | 有限 | 支持 |
+| 用作日常 SQL 客户端 | 不支持 | 支持 |
+
+## 浏览文档
+
+- [SQL Workspace](/zh/docs/core-features)：编辑器、Explorer、结果、AI Chat 和保存的工作。
+- [Agent Workspaces](/zh/docs/agents)：MCP、Agent Run、Dory CLI、工具和 Dory Agent Skill。
+- [Workflows](/zh/docs/workflows)：面向人类与 Agent 的任务型指南。
+- [Databases](/zh/docs/database-support)：支持的数据库和连接说明。
+- [Deploy](/zh/docs/deploy)：自托管 Web 部署、身份验证和运维。
+- [Release Notes](/zh/docs/release-notes)：近期产品更新。

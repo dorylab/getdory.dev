@@ -37,10 +37,10 @@ const footerColumns: FooterColumn[] = [
   {
     title: "Guides",
     links: [
-      { label: "Installation", href: "/docs/getting-started/installation" },
       { label: "Quick start", href: "/docs/getting-started/quick-start" },
-      { label: "Connections", href: "/docs/core-features/connections" },
-      { label: "SQL Console", href: "/docs/core-features/sql-console" },
+      { label: "SQL Workspace", href: "/docs/core-features" },
+      { label: "Agent Workspaces", href: "/docs/agents" },
+      { label: "MCP setup", href: "/docs/agents/mcp-setup" },
     ],
   },
   {

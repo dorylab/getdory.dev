@@ -1,0 +1,45 @@
+---
+title: Cloudflare D1
+description: 通过 D1 API 将 Cloudflare D1 连接到 Dory，使用 SQL、Schema、结果和 Agent 工作流。
+---
+
+# Cloudflare D1
+
+Dory 通过 Cloudflare REST API 连接 Cloudflare D1，并将其作为普通 SQL 工作台连接使用。
+
+## 连接要求
+
+从 Cloudflare Dashboard 准备以下值：
+
+| 字段 | 值 |
+| --- | --- |
+| Account ID | D1 API Path 使用的 Cloudflare Account Identifier。 |
+| Database ID | D1 Database UUID，而不只是显示名称。 |
+| API Token | 只拥有工作流所需最小 D1 权限的 Cloudflare API Token。 |
+
+API Host 默认是 `api.cloudflare.com`，Token 会作为 Dory 连接密钥保存。
+
+## 支持的工作流
+
+- 测试并保存 D1 API 连接。
+- 浏览 Driver 支持的 D1 Table 和 Metadata。
+- 在 SQL Console 运行 D1 兼容 SQL。
+- 检查结果集并在工作区标签页保留查询。
+- 让 Agent 通过 Dory MCP 探索 Schema 并运行只读 SQL。
+
+## 连接并验证
+
+1. 创建连接时选择 **Cloudflare D1**。
+2. 输入 Account ID、Database ID 和 API Token。
+3. 测试并保存连接。
+4. 在 Explorer 中确认预期表。
+5. 运行 `select name from sqlite_schema where type = 'table' limit 20;` 这类有限查询。
+
+## 安全建议
+
+- 使用 scoped API Token，不使用 Global API Key。
+- 将 Token 限制在所需 Account 和 D1 资源。
+- 不要在 SQL、Saved Query、截图或 Agent Prompt 中暴露 Token。
+- 生产 Agent 工作流应在 Cloudflare 凭据与 Dory MCP 两层保持只读。
+
+通用说明请参阅 [Connections](/zh/docs/core-features/connections)。

@@ -6,6 +6,9 @@
     "generate-sql-with-ai",
     "debug-slow-queries",
     "build-charts-from-sql",
-    "save-reuse-analysis"
+    "save-reuse-analysis",
+    "---Agent Workflows---",
+    "agent-database-analysis",
+    "review-agent-work"
   ]
 }

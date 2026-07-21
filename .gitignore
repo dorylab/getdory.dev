@@ -1,6 +1,10 @@
 .next
 .source
 node_modules
+package-lock.json
+yarn.lock
+.pnp.*
+.yarn/
 out
 dist
 tsconfig.tsbuildinfo

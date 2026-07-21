@@ -1,0 +1,82 @@
+---
+title: CLI & Headless Runtime
+description: 在不打开 Desktop 的情况下，为 Agent、自动化和 MCP Server 运行 Dory。
+---
+
+# CLI & Headless Runtime
+
+`@getdory/cli` 是 MCP Server、自动化、Runtime Service 和直接执行 Dory Actions 的独立入口，需要 Node.js 20 或更高版本。
+
+## 使用 npx 或全局安装
+
+```bash
+npx -y @getdory/cli --help
+```
+
+长期运行的主机可以全局安装：
+
+```bash
+npm install -g @getdory/cli
+dory --help
+```
+
+## Data Modes
+
+| Mode | 数据来源 | 适合场景 |
+| --- | --- | --- |
+| `standalone` | `~/.dory` 下的独立状态 | Headless Server、CI 和自动化。 |
+| `desktop` | 通过 Local Runtime 使用 Dory Desktop 本地数据 | 复用 Desktop 连接和工作区状态。 |
+| `self-hosted` | Dory Web 的 Postgres 应用数据库 | 共享 Web 部署中的 Dory 状态。 |
+
+`self-hosted` 必须使用与 Dory Web 相同的 `DS_SECRET_KEY`、`BETTER_AUTH_SECRET` 和应用数据库，才能读取加密连接数据。
+
+## 初始化与诊断
+
+```bash
+dory init --data standalone
+dory doctor --data standalone
+dory storage detect --data standalone
+```
+
+排查 MCP 客户端前先运行 `doctor`，检查存储、迁移、身份、Token 和可见连接。
+
+## 安装后台 HTTP Runtime
+
+创建 Token 后安装 Runtime Service：
+
+```bash
+dory runtime install \
+  --mcp-http \
+  --host 127.0.0.1 \
+  --port 3318 \
+  --token "$DORY_MCP_TOKEN"
+
+dory runtime status
+```
+
+使用 `runtime restart`、`runtime stop` 或 `runtime uninstall` 管理服务。排错时可运行 `dory runtime run`。
+
+## Headless Docker
+
+不需要 Web UI、只需要 HTTP MCP 时使用 `dorylab/dory-headless`。先在同一个持久卷中创建 Token：
+
+```bash
+docker run --rm \
+  -v dory-headless-data:/data/.dory \
+  dorylab/dory-headless:latest \
+  dory mcp token create --data standalone --name docker
+```
+
+```bash
+export DORY_MCP_TOKEN="dory_mcp_..."
+
+docker run --rm \
+  -p 3318:3318 \
+  -v dory-headless-data:/data/.dory \
+  -e DORY_MCP_TOKEN="$DORY_MCP_TOKEN" \
+  dorylab/dory-headless:latest
+```
+
+端点为 `http://127.0.0.1:3318/api/mcp`。公网部署必须在前面终止 TLS。
+
+完整参数与平台排错请参阅 [`@getdory/cli` package reference](https://github.com/dorylab/dory/blob/main/packages/cli/README.md)。

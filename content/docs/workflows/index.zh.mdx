@@ -1,29 +1,27 @@
 ---
 title: 概览
-description: 使用 Dory 完成陌生表探索、Ask AI 生成 SQL、慢查询排查、图表构建和分析复用的完整流程。
+description: 按照端到端工作流完成人类 SQL 分析、Agent 数据库工作和审阅交接。
 ---
 
-# 概览
+# Workflows
 
-Workflows 收录的是 Dory 中最常见的数据分析任务。每个流程都围绕真实使用场景组织，帮助你把数据库连接、Explorer、SQL Console、AI Chat、Charts & Results 和 Saved Queries 串成可重复的方法。
+Feature 页面解释单个产品功能，这些指南则把功能连接成面向结果的可重复流程。
 
-## 推荐工作流
+## SQL Workspace 工作流
 
-| 工作流 | 适用场景 | 主要功能 |
-| --- | --- | --- |
-| [Explore Unknown Tables](/zh/docs/workflows/explore-unknown-tables) | 面对陌生数据库或不熟悉的 Schema | Explorer、表预览、AI Chat |
-| [使用 Ask AI 生成 SQL](/zh/docs/workflows/generate-sql-with-ai) | 把业务问题转成第一版 SQL | Inline Ask AI、SQL Console Ask AI、Schema 上下文 |
-| [Debug Slow Queries](/zh/docs/workflows/debug-slow-queries) | 定位慢 SQL、扫描过大或 Join 成本高的问题 | SQL Console、AI Chat、ClickHouse Monitoring |
-| [Build Charts from SQL](/zh/docs/workflows/build-charts-from-sql) | 将查询结果整理成图表 | SQL Console、Charts & Results、AI |
-| [Save & Reuse Analysis](/zh/docs/workflows/save-reuse-analysis) | 沉淀常用 SQL 和团队分析资产 | Saved Queries、文件夹、描述和标签 |
+| 工作流 | 结果 |
+| --- | --- |
+| [探索陌生数据表](/zh/docs/workflows/explore-unknown-tables) | 使用 Explorer、预览和 AI Chat 理解陌生 Schema。 |
+| [使用 Ask AI 生成 SQL](/zh/docs/workflows/generate-sql-with-ai) | 在当前工作台把问题转成可审阅 SQL。 |
+| [调试慢查询](/zh/docs/workflows/debug-slow-queries) | 使用 SQL Console、AI 和 ClickHouse Monitoring 调查高成本 SQL。 |
+| [从 SQL 创建图表](/zh/docs/workflows/build-charts-from-sql) | 把查询输出整理为清晰的可视化结果。 |
+| [保存并复用分析](/zh/docs/workflows/save-reuse-analysis) | 将稳定 SQL 沉淀为带说明的可复用资产。 |
 
-## 建议使用顺序
+## Agent 工作流
 
-第一次使用 Dory 时，可以按以下路径学习：
+| 工作流 | 结果 |
+| --- | --- |
+| [使用 Agent 分析数据库](/zh/docs/workflows/agent-database-analysis) | 探索真实 Schema、运行只读 SQL 并保留可审计 Agent Run。 |
+| [审阅并继续 Agent 工作](/zh/docs/workflows/review-agent-work) | 验证 Agent 证据、编辑并重跑 SQL，然后继续工作。 |
 
-1. 先用 [Explore Unknown Tables](/zh/docs/workflows/explore-unknown-tables) 理解数据结构。
-2. 再用 [使用 Ask AI 生成 SQL](/zh/docs/workflows/generate-sql-with-ai) 生成第一版查询。
-3. 在 [SQL Console](/zh/docs/core-features/sql-console) 中运行并修正查询。
-4. 如果查询慢，使用 [Debug Slow Queries](/zh/docs/workflows/debug-slow-queries) 排查。
-5. 输出稳定后，用 [Build Charts from SQL](/zh/docs/workflows/build-charts-from-sql) 做可视化。
-6. 最后通过 [Save & Reuse Analysis](/zh/docs/workflows/save-reuse-analysis) 保存分析资产。
+新用户应先完成[三分钟完成第一个查询](/zh/docs/getting-started/first-query-in-3-minutes)。

@@ -1,33 +1,32 @@
 ---
-title: Descripción general
-description: Instale Dory, conecte una base de datos y complete su primera consulta revisada.
+title: Primeros pasos
+description: Elige una forma de ejecutar Dory y completa tu primer flujo SQL o de agente.
 ---
 
-# Descripción general
+# Primeros pasos
 
-La primera sesión de Dory tiene un camino corto: iniciar la aplicación, conectar una fuente de datos accesible, ejecutar una consulta limitada y revisar el resultado.
+Dory puede funcionar como espacio SQL interactivo o como capa de ejecución de bases de datos para un agente. Elige la modalidad adecuada para tu trabajo.
 
-## Ruta de configuración
+## Elige una modalidad
 
-1. [Inicio rápido](/es/docs/getting-started/quick-start): elija una demostración alojada, una aplicación de escritorio o Docker.
-2. [Instalación](/es/docs/getting-started/installation): instale la aplicación de escritorio o inicie un entorno de ejecución autohospedado.
-3. [Conecte su base de datos](/es/docs/getting-started/connect-your-database): cree una conexión y confirme la visibilidad del esquema.
-4. [Primera consulta en 3 minutos](/es/docs/getting-started/primera-consulta-en-3-minutos): ejecute una consulta limitada, revise los resultados y use IA para el siguiente paso.
+| Modalidad | Adecuada para | Continúa con |
+| --- | --- | --- |
+| Dory Desktop | SQL diario y agentes locales que reutilizan conexiones de Desktop | [Instala Dory](/es/docs/getting-started/installation) y [conecta una base de datos](/es/docs/getting-started/connect-your-database). |
+| Dory Web | Navegador, equipos compartidos y despliegues autohospedados | [Inicio rápido](/es/docs/getting-started/quick-start) o [Deploy](/es/docs/deploy). |
+| Dory CLI | Agentes locales, CI y automatización sin abrir Desktop | [MCP Setup](/es/docs/agents/mcp-setup) y [CLI & Headless Runtime](/es/docs/agents/cli-headless). |
+| Headless Runtime | Endpoints HTTP MCP estables y servidores solo para agentes | [CLI & Headless Runtime](/es/docs/agents/cli-headless). |
 
-## Qué viene después de la configuración
+## Primer flujo para una persona
 
-Después de que funcione la primera consulta, utilice el resto de la documentación intencionalmente:
+1. [Instala o abre Dory](/es/docs/getting-started/quick-start).
+2. [Conecta una base de datos](/es/docs/getting-started/connect-your-database).
+3. Ejecuta una consulta limitada con [Primera consulta en 3 minutos](/es/docs/getting-started/first-query-in-3-minutes).
+4. Revisa el resultado, crea un gráfico o guarda la consulta.
 
-| Necesidad | Leer |
-| --- | --- |
-| Comprender la superficie de un producto | [Características principales](/es/docs/características principales) |
-| Seguir un proceso orientado a tareas | [Flujos de trabajo](/es/docs/flujos de trabajo) |
-| Verifique el comportamiento específico de la base de datos | [Soporte de base de datos](/es/docs/database-support) |
-| Configurar implementación o autenticación | [Implementar](/es/docs/implementar) |
-| Busque configuraciones, accesos directos, fragmentos, MCP oFAQ | [Referencia](/es/docs/referencia) |
+## Primer flujo para un agente
 
-## Consejos de producción mínima
+1. Elige Desktop MCP, standalone stdio, headless HTTP o hosted bridge en [MCP Setup](/es/docs/agents/mcp-setup).
+2. Pide al agente que explore el esquema y ejecute SQL de solo lectura.
+3. Abre el Agent Run en Dory y continúa desde las pestañas SQL y resultados guardados.
 
-- Utilice credenciales de solo lectura para bases de datos de producción.
-- Confirmar el acceso a la red desde el tiempo de ejecución que ejecuta Dory, especialmente en Docker.
-- Revise SQL generado por IA antes de ejecutarlo.
+Usa credenciales de base de datos de solo lectura en producción y revisa el SQL generado antes de ampliar permisos.

@@ -1,0 +1,109 @@
+---
+title: MCP Setup
+description: 通过 Desktop、stdio、HTTP 或 hosted bridge 把 Dory 连接到 MCP 客户端。
+---
+
+# MCP Setup
+
+根据 Dory 数据所在位置，以及 MCP 客户端如何启动进程，选择一种接入方式。
+
+| 方式 | 适合场景 | Transport | 身份验证 |
+| --- | --- | --- | --- |
+| Desktop MCP | 复用 Dory Desktop 连接的本地 Agent | HTTP | Dory Desktop 管理授权 |
+| Standalone stdio | 本地 Codex/Claude、CI、单用户服务器 | stdio | 本地 Runtime 凭据 |
+| HTTP headless runtime | 稳定或共享的 MCP 端点 | HTTP | Bearer Token |
+| Hosted Dory bridge | 已有 Dory Web 部署 | stdio 转 hosted HTTP | 浏览器授权的个人 Token |
+
+![Dory Agent Access 与 MCP 设置](/mcp.png)
+
+## Desktop MCP
+
+适用于 Dory Desktop 和 Agent 客户端运行在同一台机器的场景。
+
+1. 在 Dory Desktop 打开 **Settings → Agent Access**。
+2. 启用 MCP。
+3. 把显示的端点添加到 MCP 客户端。
+
+```bash
+codex mcp add dory --url http://127.0.0.1:3318/api/mcp
+codex mcp list
+```
+
+```bash
+claude mcp add --transport http dory http://127.0.0.1:3318/api/mcp
+claude mcp list
+```
+
+Dory Desktop 会为当前用户创建并刷新本地授权。这个正常 Desktop 流程不需要手动创建 Bearer Token。
+
+## Standalone Stdio
+
+适用于 MCP 客户端可以在同一台机器启动 Dory 的场景，需要 Node.js 20 或更高版本。
+
+```bash
+npx -y @getdory/cli init --data standalone
+npx -y @getdory/cli doctor --data standalone
+```
+
+```bash
+codex mcp add dory -- npx -y @getdory/cli mcp serve --stdio --data standalone
+codex mcp list
+```
+
+```bash
+claude mcp add dory -- npx -y @getdory/cli mcp serve --stdio --data standalone
+claude mcp list
+```
+
+客户端负责启动和停止 stdio 进程，不需要长期运行的服务。
+
+## HTTP Headless Runtime
+
+客户端需要稳定端点时使用 HTTP。先创建只读 Token，再启动服务器：
+
+```bash
+export DORY_MCP_TOKEN="$(
+  npx -y @getdory/cli mcp token create \
+    --data standalone \
+    --name "agent-http" \
+    --scope read | jq -r '.token'
+)"
+```
+
+```bash
+npx -y @getdory/cli mcp serve \
+  --http \
+  --host 127.0.0.1 \
+  --port 3318 \
+  --token "$DORY_MCP_TOKEN" \
+  --data standalone
+```
+
+```bash
+codex mcp add \
+  --url http://127.0.0.1:3318/api/mcp \
+  --bearer-token-env-var DORY_MCP_TOKEN \
+  dory
+```
+
+远程监听需要同时设置 `--host 0.0.0.0`、`--allow-remote` 和现有 Token，并在 Dory 前终止 TLS。不要把明文 HTTP 服务器直接暴露到公网。
+
+## Hosted Dory Bridge
+
+已有 Dory Web 部署提供 `/api/mcp` 时使用：
+
+```bash
+npx -y @getdory/cli mcp login --url https://your-dory-host
+npx -y @getdory/cli mcp status --url https://your-dory-host
+```
+
+```bash
+codex mcp add dory-hosted -- npx -y @getdory/cli mcp bridge --url https://your-dory-host
+codex mcp list
+```
+
+登录会打开浏览器授权，并在本地保存个人 MCP 凭据。可以使用 `mcp logout` 删除，或在 Dory Agent Access 设置中撤销。
+
+## 验证连接
+
+让客户端列出 Dory 工具、创建一个小型 work context 并列出可见连接。不要从生产数据库 SQL 开始测试。工具顺序与权限请参阅 [MCP Tools & Dory Actions](/zh/docs/agents/tools-actions)。

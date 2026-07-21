@@ -1,37 +1,46 @@
 ---
-title: Welcome
-description: Install Dory, connect databases, learn core features, follow common workflows, and configure team deployments.
+title: Dory Docs
+description: Learn how humans and AI agents use Dory as a shared, editable SQL workspace.
 ---
 
-# Welcome
+# Dory Docs
 
-Dory is an AI-native data workspace for connecting databases, understanding schema, writing SQL, using AI assistance, reviewing results, and saving reusable analysis.
+Dory is an AI-native SQL client for humans and agents. Humans can query, explore, and visualize data, while AI agents can safely work with databases through MCP and leave their work in the same editable SQL workspace.
 
-## Start from Your Goal
+## Choose Your Path
 
-| Goal | Entry |
+| I want to... | Start here |
 | --- | --- |
-| Get Dory running for the first time | [Getting Started](/en/docs/getting-started) |
-| Connect a specific database type | [Database Support](/en/docs/database-support) |
-| Learn SQL Console, AI Chat, Explorer, charts, and saved queries | [Core Features](/en/docs/core-features) |
-| Complete common analysis tasks end to end | [Workflows](/en/docs/workflows) |
-| Deploy for a team or server environment | [Deploy](/en/docs/deploy) |
-| Configure providers, shortcuts, MCP, settings, or troubleshooting | [Reference](/en/docs/reference) |
+| Use Dory as my everyday SQL client | [Quick Start](/en/docs/getting-started/quick-start), then [connect a database](/en/docs/getting-started/connect-your-database) and run your [first query](/en/docs/getting-started/first-query-in-3-minutes). |
+| Give Codex, Claude Code, or another agent database access | [Agent Workspaces](/en/docs/agents), then choose an [MCP setup](/en/docs/agents/mcp-setup). |
+| Review work created by an agent | Learn the [Agent Run and human handoff](/en/docs/agents/agent-runs) workflow. |
+| Deploy Dory for a team | Start with [Self-Hosting](/en/docs/deploy/self-hosting). |
 
-## Recommended First Run
+## One Workspace for Humans and Agents
 
-1. [Quick Start](/en/docs/getting-started/quick-start)
-2. [Installation](/en/docs/getting-started/installation)
-3. [Connect Your Database](/en/docs/getting-started/connect-your-database)
-4. [First Query in 3 Minutes](/en/docs/getting-started/first-query-in-3-minutes)
+Humans and agents use the same underlying database actions:
 
-## Common Entries
+- **Humans** write SQL, browse schemas, inspect result tables, create charts, and save useful queries.
+- **Agents** list connections, explore schemas, run read-only SQL, and organize analysis through MCP.
+- **The workspace** preserves SQL tabs, result snapshots, charts, saved queries, and execution context so a person can inspect, edit, rerun, and continue the work.
 
-- [Getting Started](/en/docs/getting-started): install, launch, connect a database, and run the first query.
-- [Core Features](/en/docs/core-features): SQL Console, AI Chat, Explorer, charts, connections, and Saved Queries.
-- [Workflows](/en/docs/workflows): explore unknown tables, generate SQL, debug slow queries, build charts, and reuse analysis.
-- [Reference](/en/docs/reference): AI providers, shortcuts, SQL snippets, settings, MCP, and FAQ.
+![Dory turns agent database work into an editable SQL workspace](/actions.png)
 
-## Product Updates
+## Dory vs. a Plain Database MCP Server
 
-See [Release Notes](/en/docs/release-notes) for recent changes.
+| Capability | Plain database MCP server | Dory |
+| --- | ---: | ---: |
+| Run SQL and inspect schema | Yes | Yes |
+| Editable SQL tabs and persistent results | No | Yes |
+| Charts, filters, and saved queries | Limited | Yes |
+| Human review and continuation | Limited | Yes |
+| Works as a daily SQL client | No | Yes |
+
+## Explore the Docs
+
+- [SQL Workspace](/en/docs/core-features): the editor, Explorer, results, AI Chat, and saved work.
+- [Agent Workspaces](/en/docs/agents): MCP, Agent Runs, Dory CLI, tools, and the Dory Agent Skill.
+- [Workflows](/en/docs/workflows): task-oriented guides for people and agents.
+- [Databases](/en/docs/database-support): supported engines and connection guidance.
+- [Deploy](/en/docs/deploy): self-hosted Web deployments, authentication, and operations.
+- [Release Notes](/en/docs/release-notes): recent product changes.

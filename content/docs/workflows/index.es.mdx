@@ -1,27 +1,27 @@
 ---
 title: Descripción general
-description: Aprenda flujos de trabajo prácticos de Dory para la exploración de esquemas, la generación SQL con Ask AI, la depuración de consultas lentas, la creación de gráficos y el análisis reutilizable.
+description: Flujos completos para análisis SQL, trabajo de agentes y revisión humana.
 ---
 
-# Descripción general
+# Workflows
 
-Los flujos de trabajo documentan las tareas de análisis más comunes en Dory. Cada guía conecta Conexiones, Explorador, Consola SQL, Chat AI, Gráficos y resultados y Consultas guardadas en un proceso repetible.
+Las páginas de funciones explican superficies individuales; estas guías las conectan en resultados repetibles.
 
-## Flujos de trabajo recomendados
+## Flujos de SQL Workspace
 
-| Flujo de trabajo | Caso de uso | Características principales |
-| --- | --- | --- |
-| [Explorar tablas desconocidas](/es/docs/workflows/explorar-tablas-desconocidas) | Comprender esquemas desconocidos | Explorador, vista previa de tabla, chat AI |
-| [Generar SQL con Ask AI](/es/docs/workflows/generate-sql-with-ai) | Convierta preguntas de negocio en SQL | Inline Ask AI, Ask AI de SQL Console, contexto de esquema |
-| [Depurar consultas lentas](/es/docs/workflows/debug-slow-queries) | Investigar caro SQL | Consola SQL, Chat AI, Monitoreo ClickHouse |
-| [Crear gráficos a partir de SQL](/es/docs/workflows/build-charts-from-sql) | Salida de consulta de forma para visualización | Consola SQL, gráficos y resultados, IA |
-| [Análisis de guardar y reutilizar](/es/docs/workflows/save-reuse-analysis) | Preservar consultas útiles y conocimiento del equipo | Consultas guardadas, carpetas, descripciones. |
+| Flujo | Resultado |
+| --- | --- |
+| [Explorar tablas desconocidas](/es/docs/workflows/explore-unknown-tables) | Comprender el esquema con Explorer, vistas previas y AI Chat. |
+| [Generar SQL con Ask AI](/es/docs/workflows/generate-sql-with-ai) | Convertir una pregunta en SQL revisable. |
+| [Depurar consultas lentas](/es/docs/workflows/debug-slow-queries) | Investigar SQL costoso con Console, AI y ClickHouse Monitoring. |
+| [Crear gráficos desde SQL](/es/docs/workflows/build-charts-from-sql) | Preparar resultados para una revisión visual clara. |
+| [Guardar y reutilizar análisis](/es/docs/workflows/save-reuse-analysis) | Convertir SQL estable en un recurso reutilizable. |
 
-## Ruta de aprendizaje sugerida
+## Flujos de agentes
 
-1. Explore el esquema con [Explorar tablas desconocidas](/es/docs/workflows/explore-unknown-tables).
-2. Genere una primera consulta con [Generar SQL con Ask AI](/es/docs/workflows/generate-sql-with-ai).
-3. Ejecute y refine la consulta en [SQL Console](/es/docs/core-features/sql-console).
-4. Depure el rendimiento con [Depurar consultas lentas](/es/docs/workflows/debug-slow-queries).
-5. Visualice una salida estable con [Crear gráficos a partir de SQL](/es/docs/workflows/build-charts-from-sql).
-6. Guarde el trabajo reutilizable con [Guardar y reutilizar análisis](/es/docs/workflows/save-reuse-analysis).
+| Flujo | Resultado |
+| --- | --- |
+| [Analizar una base de datos con un agente](/es/docs/workflows/agent-database-analysis) | Explorar esquema real, ejecutar SQL de solo lectura y conservar un Agent Run. |
+| [Revisar y continuar trabajo de un agente](/es/docs/workflows/review-agent-work) | Validar evidencia, editar SQL y continuar en el espacio normal. |
+
+Los usuarios nuevos deben completar [Primera consulta en 3 minutos](/es/docs/getting-started/first-query-in-3-minutes).

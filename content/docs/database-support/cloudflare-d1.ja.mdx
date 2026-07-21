@@ -1,0 +1,36 @@
+---
+title: Cloudflare D1
+description: D1 API で Cloudflare D1 を Dory に接続し、SQL、Schema、結果、Agent workflow を利用します。
+---
+
+# Cloudflare D1
+
+Dory は Cloudflare REST API 経由で D1 に接続し、通常の SQL workspace connection として扱います。
+
+## 接続要件
+
+| フィールド | 値 |
+| --- | --- |
+| Account ID | D1 API path で使う Cloudflare account identifier。 |
+| Database ID | 表示名ではなく D1 database UUID。 |
+| API Token | 必要最小限の D1 権限を持つ Cloudflare API Token。 |
+
+API host の既定値は `api.cloudflare.com` です。Token は Dory connection secret として保存されます。
+
+## 対応ワークフロー
+
+- D1 API 接続のテストと保存。
+- driver が提供する table と metadata の閲覧。
+- SQL Console での D1 互換 SQL。
+- 結果とクエリの workspace tab への保存。
+- Dory MCP による Schema 探索と読み取り専用 SQL。
+
+## 接続と確認
+
+1. **Cloudflare D1** を選びます。
+2. Account ID、Database ID、API Token を入力します。
+3. テストして保存します。
+4. Explorer で table を確認します。
+5. `select name from sqlite_schema where type = 'table' limit 20;` などの限定クエリを実行します。
+
+Global API Key ではなく scoped API Token を使い、対象 account と D1 resource に制限します。Token を SQL、Saved Query、スクリーンショット、agent prompt に含めないでください。

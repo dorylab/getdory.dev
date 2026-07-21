@@ -1,0 +1,45 @@
+---
+title: Cloudflare D1
+description: Connect Cloudflare D1 to Dory through the D1 API for SQL, schema exploration, results, and agent workflows.
+---
+
+# Cloudflare D1
+
+Dory connects to Cloudflare D1 through the Cloudflare REST API and exposes it as a normal SQL workspace connection.
+
+## Connection Requirements
+
+Prepare these values from the Cloudflare dashboard:
+
+| Field | Value |
+| --- | --- |
+| Account ID | The Cloudflare account identifier used in the D1 API path. |
+| Database ID | The D1 database UUID, not only its display name. |
+| API Token | A Cloudflare API Token with the minimum D1 permissions required for your workflow. |
+
+The API host defaults to `api.cloudflare.com`. The token is stored as the Dory connection secret.
+
+## Supported Workflows
+
+- Test and save a D1 API connection.
+- Browse D1 tables and metadata supported by the driver.
+- Run D1-compatible SQL in the SQL Console.
+- Inspect result sets and preserve queries in workspace tabs.
+- Let agents explore schema and run read-only SQL through Dory MCP.
+
+## Connect and Verify
+
+1. Choose **Cloudflare D1** when creating a connection.
+2. Enter the Account ID, Database ID, and API Token.
+3. Test and save the connection.
+4. Open Explorer and confirm the expected tables.
+5. Run a limited query such as `select name from sqlite_schema where type = 'table' limit 20;`.
+
+## Security Advice
+
+- Use a scoped API Token rather than a global API key.
+- Restrict the token to the required account and D1 resources.
+- Do not expose the API Token in SQL, saved queries, screenshots, or agent prompts.
+- Keep production agent workflows read-only at both the Cloudflare credential and Dory MCP layers.
+
+For general connection handling, see [Connections](/en/docs/core-features/connections).

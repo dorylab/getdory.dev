@@ -1,0 +1,91 @@
+---
+title: MCP Setup
+description: Desktop、stdio、HTTP、hosted bridge で Dory を MCP クライアントへ接続します。
+---
+
+# MCP Setup
+
+Dory データの場所と MCP クライアントの実行方法に合わせて選択します。
+
+| セットアップ | 適した用途 | Transport | 認証 |
+| --- | --- | --- | --- |
+| Desktop MCP | Dory Desktop 接続を再利用するローカル エージェント | HTTP | Dory Desktop が grant を管理 |
+| Standalone stdio | ローカル Codex/Claude、CI、単一ユーザー サーバー | stdio | ローカル Runtime credential |
+| HTTP headless runtime | 安定または共有 MCP エンドポイント | HTTP | Bearer Token |
+| Hosted Dory bridge | 既存 Dory Web デプロイ | stdio から hosted HTTP | ブラウザー認可した個人 Token |
+
+![Dory Agent Access と MCP 設定](/mcp.png)
+
+## Desktop MCP
+
+Dory Desktop とエージェント クライアントが同じマシンにある場合に使います。
+
+1. Dory Desktop の **Settings → Agent Access** を開きます。
+2. MCP を有効にします。
+3. 表示されたエンドポイントを MCP クライアントに追加します。
+
+```bash
+codex mcp add dory --url http://127.0.0.1:3318/api/mcp
+codex mcp list
+```
+
+```bash
+claude mcp add --transport http dory http://127.0.0.1:3318/api/mcp
+claude mcp list
+```
+
+Dory Desktop が現在のユーザーのローカル grant を管理します。通常の Desktop フローで手動 Bearer Token は不要です。
+
+## Standalone Stdio
+
+MCP クライアントが同じマシンで Dory を起動できる場合に使います。Node.js 20 以降が必要です。
+
+```bash
+npx -y @getdory/cli init --data standalone
+npx -y @getdory/cli doctor --data standalone
+codex mcp add dory -- npx -y @getdory/cli mcp serve --stdio --data standalone
+codex mcp list
+```
+
+Claude Code では `claude mcp add dory -- npx -y @getdory/cli mcp serve --stdio --data standalone` を使います。クライアントが stdio プロセスを開始・停止します。
+
+## HTTP Headless Runtime
+
+安定したエンドポイントが必要な場合、読み取り専用 Token を作成してサーバーを開始します。
+
+```bash
+export DORY_MCP_TOKEN="$(
+  npx -y @getdory/cli mcp token create \
+    --data standalone --name "agent-http" --scope read | jq -r '.token'
+)"
+
+npx -y @getdory/cli mcp serve \
+  --http --host 127.0.0.1 --port 3318 \
+  --token "$DORY_MCP_TOKEN" --data standalone
+```
+
+```bash
+codex mcp add \
+  --url http://127.0.0.1:3318/api/mcp \
+  --bearer-token-env-var DORY_MCP_TOKEN \
+  dory
+```
+
+リモート bind には `--host 0.0.0.0`、`--allow-remote`、既存 Token、前段の TLS が必要です。平文 HTTP を直接インターネットへ公開しないでください。
+
+## Hosted Dory Bridge
+
+既存 Dory Web が `/api/mcp` を提供している場合に使います。
+
+```bash
+npx -y @getdory/cli mcp login --url https://your-dory-host
+npx -y @getdory/cli mcp status --url https://your-dory-host
+codex mcp add dory-hosted -- npx -y @getdory/cli mcp bridge --url https://your-dory-host
+codex mcp list
+```
+
+ブラウザー認可で個人 MCP credential がローカル保存されます。`mcp logout` または Dory Agent Access から取り消せます。
+
+## 接続を確認する
+
+Dory ツールの一覧、小さな work context の作成、表示可能な接続の一覧を試します。本番 SQL から開始しないでください。ツール順序は [MCP Tools & Dory Actions](/ja/docs/agents/tools-actions)を参照してください。

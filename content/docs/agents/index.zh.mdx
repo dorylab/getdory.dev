@@ -1,0 +1,44 @@
+---
+title: 概览
+description: 把 Dory 作为 Agent 的数据库执行层，同时让人类可以编辑和继续 SQL 工作。
+---
+
+# Agent Workspaces
+
+Dory 不只是把 SQL 发送到数据库。Agent 的工作会成为可编辑的 Dory 工作区，包含 SQL 标签页、结果快照、findings 和执行上下文，方便人类检查和继续。
+
+![包含可编辑 SQL 与结果的 Dory Agent 工作区](/actions.png)
+
+## 为什么 Agent 要使用 Dory？
+
+普通数据库 MCP Server 通常只把查询结果返回到聊天中。Dory 进一步提供：
+
+- 每个任务对应一个有名称的 Agent Run；
+- Schema-first、只读的分析工具；
+- 与 Agent Run 关联的 SQL 标签页和结果快照；
+- 说明 Agent 操作过程的 findings 和 steps；
+- 从 Agent 工作到人类 SQL 工作台的直接交接。
+
+## Agent Run 生命周期
+
+1. 使用 `dory_create_work` 创建工作上下文。
+2. 选择当前身份可见的 Dory 连接。
+3. 探索足够的 Schema，避免猜测表和字段。
+4. 运行有范围限制的只读 SQL。
+5. 把有用的 SQL 和结果保存在工作区标签页中。
+6. 使用 `dory_finish_work` 写入 findings 和具体步骤。
+7. 在 Dory 中打开 Agent Run，审阅、编辑、制图、重跑或保存工作。
+
+## 继续阅读
+
+| 目标 | 文档 |
+| --- | --- |
+| 连接 Codex、Claude Code、CI 或其他 MCP 客户端 | [MCP Setup](/zh/docs/agents/mcp-setup) |
+| 了解 Agent Run 保存什么 | [Agent Runs 与人类交接](/zh/docs/agents/agent-runs) |
+| 不打开 Desktop UI 运行 Dory | [CLI & Headless Runtime](/zh/docs/agents/cli-headless) |
+| 了解当前 MCP 工具模型 | [MCP Tools & Dory Actions](/zh/docs/agents/tools-actions) |
+| 让 Agent 遵循推荐工作流 | [Dory Agent Skill](/zh/docs/agents/agent-skill) |
+
+## 安全模型
+
+分析 Agent 应使用只读数据库凭据。`dory_run_readonly_sql` 会拒绝修改目标数据库的 SQL，但 Agent Run 仍会写入 Dory 的工作上下文、标签页和结果快照。只有可信客户端确实需要增删改 Dory 资源时，才授予 `write` scope。

@@ -1,40 +1,43 @@
 ---
 title: クイックスタート
-description: オンライン デモ、ローカル インストール、または Docker を通じて Dory を開始します。
+description: Dory を SQL ワークスペースとして試すか、MCP でエージェントを接続します。
 ---
 
 # クイックスタート
 
-このページは、Dory をすばやく実行するのに役立ちます。あなたの目標に合った道を選択してください。
+目的に合う最短の手順を選んでください。
 
-## オプション 1: オンライン デモを試す
+## ライブ SQL ワークスペースを試す
 
-何もインストールせずに Dory を探索したい場合は、オンライン デモを使用してください。
+[Dory ライブデモ](https://app.getdory.dev)を開き、**Sign in as demo** を選びます。インストールなしで Schema 探索、SQL 実行、結果確認、チャート作成を試せます。
 
-1. [Dory デモ](https://app.getdory.dev) を開きます。
-2. 利用可能なデモ データを使用して、エクスプローラー、SQL コンソール、AI チャット、およびグラフ作成を試します。
-3. 独自のデータベースに接続する前に、デモを使用してワークフローを理解します。
-
-## オプション 2: ローカルにインストールする
-
-Dory を自分のマシンにインストールし、ローカル データベースまたは開発データベースに接続する必要がある場合は、ローカル インストールを使用します。
+## ローカル SQL ワークスペースを開始する
 
 ```bash
-brew install dory
+brew install dorylab/dory/dory
 ```
 
-インストール後、Dory を開いて最初のワークスペースを作成します。
+macOS または Windows 版は [GitHub Releases](https://github.com/dorylab/dory/releases)からもダウンロードできます。その後、Dory を開き、読み取り専用資格情報で接続を作成し、[データベース接続](/ja/docs/getting-started/connect-your-database)へ進みます。
 
-## オプション 3: Docker を使用して実行する
+## ローカル エージェントを接続する
 
-反復可能なセルフホスト環境が必要な場合、または展開設定をテストしたい場合は、Docker を使用します。
+Dory Desktop の **Settings → Agent Access** で MCP を有効にし、表示されたエンドポイントをクライアントへ追加します。既定値は次のとおりです。
+
+```text
+http://127.0.0.1:3318/api/mcp
+```
 
 ```bash
-docker run -p 3000:3000 dorylab/dory
+codex mcp add dory --url http://127.0.0.1:3318/api/mcp
+codex mcp list
 ```
 
-運用環境のデプロイメントについては、サービスをチームに公開する前に、[Docker](/ja/docs/deploy/docker) をお読みください。
+Desktop の認可は Dory が管理するため、通常のユーザーは Bearer Token をコピーする必要がありません。standalone、headless、hosted の構成は [MCP セットアップ](/ja/docs/agents/mcp-setup)を参照してください。
 
-## 次のステップ
+## Dory Web を実行する
 
-Dory が実行されたら、[データベースに接続](/ja/docs/getting-started/connect-your-database) に進みます。
+チームがブラウザーから利用する場合は Web Docker イメージを使います。必須シークレット、永続化、公開 URL を扱う [Docker ガイド](/ja/docs/deploy/docker)から開始してください。
+
+## 完了条件
+
+SQL ワークスペースまたは接続済み MCP クライアントが利用できれば完了です。[3 分で最初のクエリ](/ja/docs/getting-started/first-query-in-3-minutes)または [Agent Runs](/ja/docs/agents/agent-runs)へ進みます。

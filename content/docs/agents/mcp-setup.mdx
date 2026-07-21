@@ -1,0 +1,111 @@
+---
+title: MCP Setup
+description: Connect Dory to local or hosted MCP clients through Desktop, stdio, HTTP, or a hosted bridge.
+---
+
+# MCP Setup
+
+Choose one setup based on where Dory data lives and how the MCP client starts processes.
+
+| Setup | Best for | Transport | Authentication |
+| --- | --- | --- | --- |
+| Desktop MCP | Local agents reusing Dory Desktop connections | HTTP | Grant managed by Dory Desktop |
+| Standalone stdio | Local Codex/Claude, CI, or a single-user server | stdio | Local runtime credential |
+| HTTP headless runtime | Stable or shared MCP endpoint | HTTP | Bearer token |
+| Hosted Dory bridge | Existing Dory Web deployment | stdio to hosted HTTP | Browser-authorized personal token |
+
+![Dory Agent Access and MCP settings](/mcp.png)
+
+## Desktop MCP
+
+Use this when Dory Desktop and the agent client run on the same machine.
+
+1. Open **Settings → Agent Access** in Dory Desktop.
+2. Enable MCP access.
+3. Add the displayed endpoint to the MCP client.
+
+```bash
+codex mcp add dory --url http://127.0.0.1:3318/api/mcp
+codex mcp list
+```
+
+```bash
+claude mcp add --transport http dory http://127.0.0.1:3318/api/mcp
+claude mcp list
+```
+
+Dory Desktop creates and refreshes the local grant for the active user. Do not create a manual bearer token for this normal Desktop flow.
+
+## Standalone Stdio
+
+Use this when the MCP client can start Dory on the same machine. Node.js 20 or newer is required.
+
+```bash
+npx -y @getdory/cli init --data standalone
+npx -y @getdory/cli doctor --data standalone
+```
+
+```bash
+codex mcp add dory -- npx -y @getdory/cli mcp serve --stdio --data standalone
+codex mcp list
+```
+
+```bash
+claude mcp add dory -- npx -y @getdory/cli mcp serve --stdio --data standalone
+claude mcp list
+```
+
+The client starts and stops the stdio process. No long-running server is required.
+
+## HTTP Headless Runtime
+
+Use HTTP when clients need a stable endpoint. Create a read-only token, then start the server:
+
+```bash
+export DORY_MCP_TOKEN="$(
+  npx -y @getdory/cli mcp token create \
+    --data standalone \
+    --name "agent-http" \
+    --scope read | jq -r '.token'
+)"
+```
+
+```bash
+npx -y @getdory/cli mcp serve \
+  --http \
+  --host 127.0.0.1 \
+  --port 3318 \
+  --token "$DORY_MCP_TOKEN" \
+  --data standalone
+```
+
+Add the endpoint to Codex CLI:
+
+```bash
+codex mcp add \
+  --url http://127.0.0.1:3318/api/mcp \
+  --bearer-token-env-var DORY_MCP_TOKEN \
+  dory
+```
+
+Remote binds require `--host 0.0.0.0`, `--allow-remote`, an existing token, and TLS in front of Dory. Never expose the plain HTTP server directly to the public internet.
+
+## Hosted Dory Bridge
+
+Use this when an existing Dory Web deployment exposes `/api/mcp`.
+
+```bash
+npx -y @getdory/cli mcp login --url https://your-dory-host
+npx -y @getdory/cli mcp status --url https://your-dory-host
+```
+
+```bash
+codex mcp add dory-hosted -- npx -y @getdory/cli mcp bridge --url https://your-dory-host
+codex mcp list
+```
+
+The login opens browser authorization and stores a personal MCP credential locally. Remove it with `mcp logout` or revoke it in Dory Agent Access settings.
+
+## Verify the Connection
+
+Ask the client to list Dory tools, create a small work context, and list visible connections. Do not start by running SQL against production data. For tool order and permissions, continue with [MCP Tools & Dory Actions](/en/docs/agents/tools-actions).

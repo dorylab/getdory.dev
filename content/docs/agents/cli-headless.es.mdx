@@ -1,0 +1,74 @@
+---
+title: CLI & Headless Runtime
+description: Ejecuta Dory para agentes, automatización y MCP Server sin abrir Desktop.
+---
+
+# CLI & Headless Runtime
+
+`@getdory/cli` es el punto de entrada para MCP Server, automatización, Runtime Service y Dory Actions. Requiere Node.js 20 o posterior.
+
+## Ejecuta o instala
+
+```bash
+npx -y @getdory/cli --help
+```
+
+```bash
+npm install -g @getdory/cli
+dory --help
+```
+
+## Data Modes
+
+| Mode | Fuente | Uso |
+| --- | --- | --- |
+| `standalone` | Estado independiente en `~/.dory` | Headless, CI y automatización. |
+| `desktop` | Datos locales de Desktop mediante Local Runtime | Reutilizar conexiones y estado de Desktop. |
+| `self-hosted` | Base Postgres de Dory Web | Compartir estado con un despliegue Web. |
+
+`self-hosted` debe usar los mismos `DS_SECRET_KEY`, `BETTER_AUTH_SECRET` y base de aplicación que Dory Web.
+
+## Inicializa y diagnostica
+
+```bash
+dory init --data standalone
+dory doctor --data standalone
+dory storage detect --data standalone
+```
+
+Ejecuta `doctor` antes de depurar el cliente MCP para comprobar almacenamiento, migraciones, identidad, Token y conexiones.
+
+## Runtime HTTP en segundo plano
+
+```bash
+dory runtime install \
+  --mcp-http \
+  --host 127.0.0.1 --port 3318 \
+  --token "$DORY_MCP_TOKEN"
+
+dory runtime status
+```
+
+Administra el servicio con `runtime restart`, `runtime stop` o `runtime uninstall`. Para diagnosticar usa `dory runtime run`.
+
+## Headless Docker
+
+```bash
+docker run --rm \
+  -v dory-headless-data:/data/.dory \
+  dorylab/dory-headless:latest \
+  dory mcp token create --data standalone --name docker
+```
+
+```bash
+export DORY_MCP_TOKEN="dory_mcp_..."
+docker run --rm \
+  -p 3318:3318 \
+  -v dory-headless-data:/data/.dory \
+  -e DORY_MCP_TOKEN="$DORY_MCP_TOKEN" \
+  dorylab/dory-headless:latest
+```
+
+El endpoint es `http://127.0.0.1:3318/api/mcp`. Usa TLS delante de cualquier despliegue público.
+
+Consulta la [referencia de `@getdory/cli`](https://github.com/dorylab/dory/blob/main/packages/cli/README.md) para todos los comandos.

@@ -3,12 +3,14 @@
     "---Start---",
     "index",
     "getting-started",
-    "---Product---",
+    "---Workspaces---",
     "core-features",
+    "agents",
     "workflows",
+    "---Connect & Operate---",
     "database-support",
-    "---Operate---",
     "deploy",
+    "---Reference---",
     "reference",
     "release-notes"
   ]

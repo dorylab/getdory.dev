@@ -1,0 +1,36 @@
+---
+title: Cloudflare D1
+description: Conecta Cloudflare D1 mediante la API para SQL, esquema, resultados y flujos de agentes.
+---
+
+# Cloudflare D1
+
+Dory se conecta a Cloudflare D1 mediante la API REST y lo presenta como una conexión normal del espacio SQL.
+
+## Requisitos
+
+| Campo | Valor |
+| --- | --- |
+| Account ID | Identificador de la cuenta usado en la ruta API de D1. |
+| Database ID | UUID de la base D1, no solo su nombre visible. |
+| API Token | Token Cloudflare con los permisos D1 mínimos necesarios. |
+
+El host predeterminado es `api.cloudflare.com`. El Token se guarda como secreto de conexión.
+
+## Flujos compatibles
+
+- Probar y guardar una conexión D1 API.
+- Explorar tablas y metadatos del driver.
+- Ejecutar SQL compatible con D1.
+- Conservar consultas y resultados en pestañas.
+- Permitir Schema y SQL de solo lectura a agentes mediante MCP.
+
+## Conecta y verifica
+
+1. Elige **Cloudflare D1**.
+2. Introduce Account ID, Database ID y API Token.
+3. Prueba y guarda.
+4. Confirma las tablas en Explorer.
+5. Ejecuta `select name from sqlite_schema where type = 'table' limit 20;`.
+
+Usa un scoped API Token, limítalo a la cuenta y D1 necesarios, y no lo expongas en SQL, Saved Queries, capturas o prompts. Mantén los flujos de producción en solo lectura.

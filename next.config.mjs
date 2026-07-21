@@ -15,6 +15,16 @@ const nextConfig = {
         source: '/:lang/blog/sqlserver-support-branch-blog',
         destination: '/:lang/blog/sqlserver-support',
         permanent: true
+      },
+      {
+        source: '/docs/reference/mcp',
+        destination: '/docs/agents/mcp-setup',
+        permanent: true
+      },
+      {
+        source: '/:lang/docs/reference/mcp',
+        destination: '/:lang/docs/agents/mcp-setup',
+        permanent: true
       }
     ];
   },

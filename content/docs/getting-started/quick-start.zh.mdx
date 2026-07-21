@@ -1,52 +1,51 @@
 ---
 title: 快速开始
-description: 从零开始进入可用 Dory 会话的最快路径。
+description: 把 Dory 用作 SQL 工作台，或通过 MCP 连接 Agent。
 ---
 
 # 快速开始
 
-如果你希望用最少的准备快速体验 Dory，按这条路径开始即可。
+根据你的目标选择最短路径。
 
-## 方式 1：体验在线演示
+## 体验在线 SQL 工作台
 
-打开 `https://app.getdory.dev`，选择 **Enter as Demo** 或 **Continue as guest**。
+打开 [Dory 在线 Demo](https://app.getdory.dev)，选择 **Sign in as demo**，使用内置数据探索 Schema、运行 SQL、检查结果并创建图表，无需安装。
 
-在线演示适合快速了解：
+## 启动本地 SQL 工作台
 
-- 数据库连接列表和示例数据。
-- SQL Console 的查询、结果和图表能力。
-- AI Chat 与 Schema 上下文协作方式。
-
-## 方式 2：本地安装
-
-在 macOS 上，可以直接通过 Homebrew 安装桌面版：
+安装 Dory Desktop：
 
 ```bash
 brew install dorylab/dory/dory
 ```
 
-安装完成后打开 Dory，按照登录页提示进入工作区。
+也可以从 [GitHub Releases](https://github.com/dorylab/dory/releases) 下载 macOS 或 Windows 版本。然后：
 
-## 方式 3：Docker 运行
+1. 打开 Dory。
+2. 使用只读凭据创建连接。
+3. 继续阅读[连接数据库](/zh/docs/getting-started/connect-your-database)。
 
-如果你更偏向浏览器访问或团队评估，可以使用 Docker：
+## 连接本地 Agent
 
-```bash
-docker run -d --name dory \
-  -p 3000:3000 \
-  -e DS_SECRET_KEY="$(openssl rand -base64 32 | tr -d '\n')" \
-  -e BETTER_AUTH_SECRET="$(openssl rand -hex 32)" \
-  -e BETTER_AUTH_URL="http://localhost:3000" \
-  -e NEXT_PUBLIC_REQUIRE_EMAIL_VERIFICATION=false \
-  -e DORY_INIT_USER_EMAIL=admin@getdory.dev \
-  -e DORY_INIT_USER_PASSWORD=admin \
-  dorylab/dory:latest
+如果已经安装 Dory Desktop，打开 **Settings → Agent Access**，启用 MCP，并将显示的端点添加到客户端。默认端点是：
+
+```text
+http://127.0.0.1:3318/api/mcp
 ```
 
-启动后访问 `http://localhost:3000`，使用 `admin@getdory.dev` / `admin` 登录。需要 AI 功能时，再补充 [AI Providers](/zh/docs/reference/ai-providers) 中的环境变量。
+Codex CLI 示例：
 
-## 下一步
+```bash
+codex mcp add dory --url http://127.0.0.1:3318/api/mcp
+codex mcp list
+```
 
-1. 完成 [连接数据库](/zh/docs/getting-started/connect-your-database)。
-2. 跑通 [3 分钟跑通第一条查询](/zh/docs/getting-started/first-query-in-3-minutes)。
-3. 再去了解 [SQL Console](/zh/docs/core-features/sql-console) 和 [AI Chat](/zh/docs/core-features/ai-chat)。
+Dory 会管理 Desktop 授权，普通 Desktop 用户无需复制 Bearer Token。standalone、headless 或 hosted 接入方式请阅读 [MCP Setup](/zh/docs/agents/mcp-setup)。
+
+## 运行 Dory Web
+
+团队需要浏览器访问时使用 Web Docker 镜像。请从[Docker 指南](/zh/docs/deploy/docker)开始，其中包含必需密钥、持久化和公网 URL 配置。
+
+## 完成标准
+
+你应当得到可用的 SQL 工作台或已连接的 MCP 客户端。接下来阅读[三分钟完成第一个查询](/zh/docs/getting-started/first-query-in-3-minutes)或 [Agent Runs](/zh/docs/agents/agent-runs)。

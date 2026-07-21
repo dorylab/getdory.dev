@@ -1,0 +1,58 @@
+---
+title: MCP Tools & Dory Actions
+description: 从 MCP 客户端安全使用 Dory 工作流工具与读写 Actions。
+---
+
+# MCP Tools & Dory Actions
+
+Dory 提供少量面向工作流的工具，而不是为每个产品操作提供独立 MCP 工具。
+
+## Workflow Tools
+
+| Tool | 用途 |
+| --- | --- |
+| `dory_create_work` | 创建或复用 Agent Run 上下文。 |
+| `dory_finish_work` | 保存 findings、steps 和完成状态。 |
+| `dory_list_connections` | 列出当前身份可见的连接。 |
+| `dory_explore_schema` | 搜索、列出、描述、预览、分析或获取 DDL。 |
+| `dory_run_readonly_sql` | 执行只读 SQL，并可保存到工作区标签页。 |
+| `dory_workspace_tabs` | 列出、创建、追加、替换、删除或打开标签页。 |
+| `dory_saved_queries` | 管理应长期复用的 SQL。 |
+| `dory_read` | 列出、描述或运行低风险 Dory Actions。 |
+| `dory_write` | 在用户要求并批准变更时运行可写 Dory Actions。 |
+
+## 推荐顺序
+
+1. 调用 `dory_create_work`。
+2. 将返回的 `work.workId` 传给 work-scoped tools。
+3. 除非 `connectionId` 已验证，否则先列出连接。
+4. 编写 SQL 前探索 Schema。
+5. 使用带 LIMIT 和窄过滤的 `dory_run_readonly_sql`。
+6. 在工作区标签页中保留有用的查询和结果。
+7. 成功或阻塞时都调用 `dory_finish_work`。
+
+## Dory Actions
+
+Actions 通过统一 contract 暴露产品操作。列出、描述、测试和其他只读或低风险操作使用 `dory_read`；增删改使用 `dory_write`。
+
+写操作前先描述 Action：
+
+```json
+{
+  "operation": "describe",
+  "actionId": "connection.create"
+}
+```
+
+只有用户明确要求变更、输入完整且客户端拥有 `write` scope 时才运行写操作。
+
+## 只读 SQL 与工作区写入
+
+`dory_run_readonly_sql` 会阻止修改目标数据库，但仍可创建 Dory Agent Run 元数据、SQL 标签页和结果快照。这保证目标数据库只读，同时把工作保存在 Dory 中。
+
+## Scopes
+
+- 分析客户端优先使用 `read`。
+- 只有可信客户端需要修改 Dory 资源时才授予 `write`。
+- 将 `local_ai:run` 与数据库访问权限分开看待。
+- 每个客户端使用独立凭据，方便撤销和审计。

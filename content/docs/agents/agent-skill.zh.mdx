@@ -1,0 +1,35 @@
+---
+title: Dory Agent Skill
+description: 安装 Dory Agent Skill，让兼容 Agent 遵循 Schema-first 工作区流程。
+---
+
+# Dory Agent Skill
+
+Dory Agent Skill 会告诉兼容 Agent 何时以及如何使用 Dory MCP 工具，并明确 Schema-first、只读和保留工作区证据的流程。
+
+## 安装
+
+```bash
+npx skills add https://github.com/dorylab/skills --skill dory
+```
+
+该 Skill 遵循开放的 Agent Skills 格式，可用于 Codex、ChatGPT、Claude 和其他兼容 Agent 系统。
+
+## Skill 教会 Agent 什么
+
+- 每个数据库任务创建一个 Agent Run；
+- 检查真实 Schema，不猜测表名、字段或 Join；
+- 默认运行有范围限制的只读 SQL；
+- 在 Dory 中保留有用的 SQL 和结果快照；
+- 用 findings、steps、假设和人类交接结束工作；
+- Dory 不可用时不虚构连接、Schema、工作区或结果。
+
+## Skill 不会安装什么
+
+Skill 不会安装 `@getdory/cli`、启动 MCP Server 或配置 Agent 客户端。需要实时数据库访问前，请先完成 [MCP Setup](/zh/docs/agents/mcp-setup)。
+
+## 验证工作流
+
+Skill 和 MCP 都可用后，先给 Agent 一个小任务，例如“列出可用连接，并在不运行大范围查询的情况下描述一张表”。确认它会先创建 work context、探索 Schema，并用可审阅的摘要结束 Agent Run。
+
+最新指令与示例请参阅 [Dory Skill 源码](https://github.com/dorylab/dory/blob/main/skills/dory/SKILL.md)。

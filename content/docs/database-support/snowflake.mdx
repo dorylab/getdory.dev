@@ -1,0 +1,47 @@
+---
+title: Snowflake
+description: Connect Snowflake to Dory for SQL, schema exploration, previews, AI assistance, and agent workspaces.
+---
+
+# Snowflake
+
+Dory supports Snowflake as a native connection type across Desktop and self-hosted Web runtimes.
+
+## Supported Workflows
+
+- Create and test Snowflake connections.
+- Browse databases, schemas, tables, views, and columns.
+- Preview table data with Snowflake-aware identifiers and pagination.
+- Run Snowflake SQL in the SQL Console.
+- Keep SQL, results, and Agent Run context in the shared workspace.
+
+## Connection Requirements
+
+Prepare the Snowflake account identifier, warehouse, database, schema, username, and optional role. The account identifier can look like `xy12345.us-east-1` or `org-account`; do not paste the full `snowflakecomputing.com` hostname.
+
+Dory supports password authentication and a pasted PEM private key. The private key content is stored as the connection secret; local private key file paths are not used.
+
+The Snowflake user or service user needs access to the selected warehouse, database, schema, tables, and views.
+
+## Validate the Session
+
+After saving and testing the connection, run:
+
+```sql
+select
+  current_database() as database_name,
+  current_schema() as schema_name,
+  current_role() as role_name,
+  current_warehouse() as warehouse_name;
+```
+
+Then open Explorer and verify that the expected objects are visible.
+
+## Security and Limits
+
+- Prefer a dedicated least-privilege Snowflake user or service user.
+- Use a warehouse sized for interactive analysis and set appropriate Snowflake resource controls.
+- Current connection authentication does not cover Snowflake SSO, OAuth, MFA, workload identity federation, or local key-file paths.
+- Agent analysis should still use `dory_run_readonly_sql` and a Dory credential with `read` scope.
+
+Continue with [Analyze a Database with an Agent](/en/docs/workflows/agent-database-analysis) or [Cloud Databases](/en/docs/database-support/cloud-databases).

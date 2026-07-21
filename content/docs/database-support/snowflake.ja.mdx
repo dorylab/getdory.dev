@@ -1,0 +1,43 @@
+---
+title: Snowflake
+description: Snowflake を Dory に接続し、SQL、Schema、preview、AI、Agent Workspaces を利用します。
+---
+
+# Snowflake
+
+Dory は Desktop とセルフホスト Web の両方で Snowflake をネイティブ接続としてサポートします。
+
+## 対応ワークフロー
+
+- Snowflake 接続の作成とテスト。
+- Database、Schema、table、view、column の閲覧。
+- Snowflake 対応 identifier と pagination による preview。
+- SQL Console での Snowflake SQL。
+- SQL、結果、Agent Run context の保存。
+
+## 接続要件
+
+account identifier、warehouse、database、schema、username、任意の role を準備します。Account identifier は `xy12345.us-east-1` または `org-account` の形式で、完全な `snowflakecomputing.com` host は貼り付けません。
+
+パスワード認証と、貼り付けた PEM private key に対応します。ローカル key file path は使用しません。ユーザーまたは service user には対象 warehouse、database、schema、table、view への権限が必要です。
+
+## Session を確認する
+
+```sql
+select
+  current_database() as database_name,
+  current_schema() as schema_name,
+  current_role() as role_name,
+  current_warehouse() as warehouse_name;
+```
+
+その後 Explorer で期待する object を確認します。
+
+## セキュリティと制限
+
+- 最小権限の専用ユーザーまたは service user を使います。
+- インタラクティブ分析に合う warehouse と resource control を使います。
+- 現在の接続認証には SSO、OAuth、MFA、workload identity federation、ローカル key file path は含まれません。
+- エージェントには `dory_run_readonly_sql` と Dory `read` scope を使います。
+
+[エージェントで分析](/ja/docs/workflows/agent-database-analysis)または [Cloud Databases](/ja/docs/database-support/cloud-databases)へ進みます。
