@@ -13,12 +13,12 @@ Agent Run 是一个 Agent 任务的持久工作上下文。它把用户请求、
 
 ## 推荐生命周期
 
-1. **Create work：**调用 `dory_create_work`，使用简短、易读的标题。
-2. **选择连接：**除非已有验证过的 `connectionId`，否则先列出连接。
-3. **探索 Schema：**确认表、字段、类型、Join Key、时间字段和大致数据量。
-4. **运行只读 SQL：**从 LIMIT、窄过滤条件和明确字段开始。
-5. **保留证据：**需要后续审阅时创建、追加或替换工作区标签页。
-6. **Finish work：**使用 `dory_finish_work` 记录 findings、steps、假设和阻塞原因。
+1. **Create work：** 调用 `dory_create_work`，使用简短、易读的标题。
+2. **选择连接：** 除非已有验证过的 `connectionId`，否则先列出连接。
+3. **探索 Schema：** 确认表、字段、类型、Join Key、时间字段和大致数据量。
+4. **运行只读 SQL：** 从 LIMIT、窄过滤条件和明确字段开始。
+5. **保留证据：** 需要后续审阅时创建、追加或替换工作区标签页。
+6. **Finish work：** 使用 `dory_finish_work` 记录 findings、steps、假设和阻塞原因。
 
 ## 应该保留什么
 

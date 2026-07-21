@@ -10,6 +10,15 @@ const GITHUB_REPO = "dory";
 const GITHUB_RELEASE_NOTES_DIR = "release-notes";
 const GITHUB_API_URL = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${GITHUB_RELEASE_NOTES_DIR}`;
 const GITHUB_TREE_URL = `https://github.com/${GITHUB_OWNER}/${GITHUB_REPO}/tree/main/${GITHUB_RELEASE_NOTES_DIR}`;
+const RELEASE_ASSET_REWRITES = new Map([
+  [
+    "https://github.com/user-attachments/assets/a6f51711-395f-4065-b66d-1d1bbf310369",
+    "/images/blog/dory-v0-32-0-no-limit-sql-cover-en.png",
+  ],
+]);
+const RELEASE_TITLE_OVERRIDES = new Map([
+  ["v0.32.0", "v0.32.0"],
+]);
 
 const INDEX_LOCALES = [
   {
@@ -97,20 +106,59 @@ function compareVersionsDesc(a, b) {
 }
 
 function normalizeBody(markdown) {
-  return markdown
+  let normalized = markdown
     .trim()
     .replace(/\r\n/g, "\n")
     .split("\n")
     .map((line) => line.trimEnd())
     .join("\n");
+
+  for (const [source, replacement] of RELEASE_ASSET_REWRITES) {
+    normalized = normalized.replaceAll(source, replacement);
+  }
+
+  return normalized;
+}
+
+function splitFrontmatter(markdown) {
+  const normalized = normalizeBody(markdown);
+  const match = normalized.match(/^---\n([\s\S]*?)\n---(?:\n|$)/);
+
+  if (!match) {
+    return { frontmatter: null, body: normalized };
+  }
+
+  return {
+    frontmatter: match[1].trim(),
+    body: normalized.slice(match[0].length).trim(),
+  };
 }
 
 function pageContent(release) {
-  return `---\ntitle: ${release.version}\ndescription: Dory release notes for ${release.version}.\n---\n\n# ${release.version}\n\n[View source on GitHub](${release.htmlUrl})\n\n${normalizeBody(release.body)}\n`;
+  const { frontmatter, body } = splitFrontmatter(release.body);
+  let metadata =
+    frontmatter ??
+    `title: ${release.version}\ndescription: Dory release notes for ${release.version}.`;
+  const titleOverride = RELEASE_TITLE_OVERRIDES.get(release.version);
+  if (titleOverride) {
+    metadata = metadata.replace(/^title:.*$/m, `title: ${JSON.stringify(titleOverride)}`);
+  }
+  const sourceLink = `[View source on GitHub](${release.htmlUrl})`;
+  const lines = body.split("\n");
+  const firstContentIndex = lines.findIndex((line) => line.trim().length > 0);
+
+  if (firstContentIndex !== -1 && lines[firstContentIndex].startsWith("# ")) {
+    lines.splice(firstContentIndex + 1, 0, "", sourceLink);
+  } else {
+    lines.unshift(`# ${release.version}`, "", sourceLink, "");
+  }
+
+  return `---\n${metadata}\n---\n\n${lines.join("\n")}\n`;
 }
 
 function summarize(markdown) {
-  const text = normalizeBody(markdown)
+  const { body } = splitFrontmatter(markdown);
+  const text = body
     .split("\n")
     .filter((line) => !line.trim().startsWith("#"))
     .map((line) =>
