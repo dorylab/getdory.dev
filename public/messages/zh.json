@@ -62,6 +62,25 @@
           "title": "熟悉的 SQL 工作方式，这里都有。",
           "description": "Dory 首先是面向日常查询与分析的数据库工作台，而不是把真实工作藏起来的聊天框。",
           "imageAlt": "使用 Play 数据源的 Dory 工作区，包含 Schema 浏览器、SQL 编辑器、多 Tab、ResultSet 和 AI 上下文",
+          "completionLabel": "Monaco Editor × ANTLR4",
+          "completionTitle": "不只是补全关键词，而是理解光标附近的 SQL。",
+          "completionDescription": "Dory 将 Monaco Editor、ANTLR4 驱动的解析器、实时连接元数据和方言感知的语言支持结合起来。建议会跟随你正在编写的语句变化，而不是来自一份固定词表。",
+          "completionFeatures": [
+            {
+              "title": "理解当前语法位置",
+              "description": "解析器会在光标位置判断这里应该出现关键字、表、数据库、Schema 还是字段，再给出对应建议。"
+            },
+            {
+              "title": "使用真实 Schema 上下文",
+              "description": "从当前连接补全真实的表和字段，也能识别 h.title 这类别名限定的字段。"
+            },
+            {
+              "title": "跟随连接切换 SQL 方言",
+              "description": "解析器、Monaco 语言和格式化规则都会随连接切换，覆盖 PostgreSQL、MySQL、ClickHouse、SQLite、DuckDB 等数据库。"
+            }
+          ],
+          "completionImageAlt": "Dory 在 ClickHouse Play 数据源中输入 FROM hack 后智能提示匹配的 Hacker News 表",
+          "completionCaption": "真实表名提示 · ClickHouse Play",
           "capabilitiesTitle": "日常数据库工作需要的能力，一个工作区就够了。",
           "capabilitiesDescription": "从浏览数据、编写 SQL，到保存查询、查看历史、创建图表和导出结果，Dory 可以承担完整的日常查询工作。",
           "capabilities": [

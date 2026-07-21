@@ -62,6 +62,25 @@
           "title": "La forma conocida de trabajar con SQL, en un solo lugar.",
           "description": "Dory empieza como un espacio familiar para consultas y análisis diarios, no como un chat que oculta el trabajo real.",
           "imageAlt": "Espacio Dory con la fuente Play, explorador de esquemas, editor SQL, pestañas, ResultSet y contexto de IA",
+          "completionLabel": "Monaco Editor × ANTLR4",
+          "completionTitle": "Autocompletado que entiende el SQL alrededor del cursor.",
+          "completionDescription": "Dory combina Monaco Editor con un analizador basado en ANTLR4, metadatos en vivo de la conexión y soporte consciente del dialecto. Las sugerencias se adaptan a la sentencia que estás escribiendo en lugar de venir de una lista estática.",
+          "completionFeatures": [
+            {
+              "title": "Sugerencias según la sintaxis",
+              "description": "En la posición actual del cursor, el analizador limita palabras clave, tablas, bases de datos, esquemas o columnas a lo que encaja en la sentencia."
+            },
+            {
+              "title": "Contexto del esquema en vivo",
+              "description": "Completa tablas y columnas reales de la conexión activa, incluidos campos con alias como h.title."
+            },
+            {
+              "title": "Edición consciente del dialecto",
+              "description": "El analizador, el lenguaje de Monaco y el formateador siguen la conexión: PostgreSQL, MySQL, ClickHouse, SQLite, DuckDB y más."
+            }
+          ],
+          "completionImageAlt": "Editor SQL de Dory con la fuente ClickHouse Play sugiriendo tablas de Hacker News después de FROM hack",
+          "completionCaption": "Sugerencias de tablas en vivo · ClickHouse Play",
           "capabilitiesTitle": "Todo lo necesario para el trabajo diario con bases de datos, en un espacio.",
           "capabilitiesDescription": "Desde explorar datos y escribir SQL hasta guardar consultas, revisar el historial, crear gráficos y exportar resultados, Dory cubre el flujo completo de consulta.",
           "capabilities": [

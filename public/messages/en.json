@@ -302,6 +302,25 @@
           "title": "The SQL workflow you already know, all in one place.",
           "description": "Dory starts as a familiar database workspace for daily querying and analysis—not a chat box that hides the underlying work.",
           "imageAlt": "Dory workspace using the Play data source with schema browser, SQL editor, tabs, result set, and AI context",
+          "completionLabel": "Monaco Editor × ANTLR4",
+          "completionTitle": "Autocomplete that understands the SQL around your cursor.",
+          "completionDescription": "Dory combines Monaco Editor with an ANTLR4-powered parser, live connection metadata, and dialect-aware language support. Suggestions adapt to the statement you are writing instead of coming from a static keyword list.",
+          "completionFeatures": [
+            {
+              "title": "Syntax-aware suggestions",
+              "description": "At the current caret position, the parser narrows keywords, tables, databases, schemas, or columns to what fits the statement."
+            },
+            {
+              "title": "Live schema context",
+              "description": "Complete real tables and columns from the active connection, including alias-qualified fields such as h.title."
+            },
+            {
+              "title": "Dialect-aware editing",
+              "description": "Parser, Monaco language, and formatter settings follow the connection—from PostgreSQL and MySQL to ClickHouse, SQLite, DuckDB, and more."
+            }
+          ],
+          "completionImageAlt": "Dory SQL editor on the ClickHouse Play data source suggesting matching Hacker News tables after FROM hack",
+          "completionCaption": "Live table suggestions · ClickHouse Play",
           "capabilitiesTitle": "Everything daily database work needs, in one workspace.",
           "capabilitiesDescription": "From browsing data and writing SQL to saved queries, history, charts, and exports, Dory carries the complete query workflow.",
           "capabilities": [
