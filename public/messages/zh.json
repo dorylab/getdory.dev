@@ -124,16 +124,23 @@
           "historyAlt": "Dory Query History 展示成功的 Play 查询和可恢复结果"
         },
         "results": {
-          "title": "查询结束后，结果依然有用。",
-          "description": "Dory 会把完整查询结果保存为持久产物。即使有数百万行，也能继续探索，而不必重新执行昂贵的 SQL。",
-          "imageAlt": "支持搜索、筛选和行操作的 Dory 完整结果集",
-          "chartAlt": "从 Dory 真实查询结果创建的图表",
+          "label": "Result Set Engine",
+          "title": "百万行数据，依然流畅探索",
+          "description": "查询数百万行数据后，依然可以快速筛选、排序、搜索和分析。Dory 使用 DuckDB 与 Parquet 构建高性能结果层，让大型 Result Set 像本地数据一样流畅浏览。",
+          "imageAlt": "Dory 中支持快速浏览、筛选和行操作的持久化大型 Result Set",
           "features": [
-            "探索数百万行数据，无需全部加载进内存",
-            "对完整结果集进行筛选、搜索和排序",
-            "无需重新查询即可打开历史结果",
-            "创建与真实查询结果保持关联的图表",
-            "将完整或筛选后的结果导出为 CSV 或 Parquet"
+            {
+              "title": "大规模结果集浏览",
+              "description": "一次加载数百万行查询结果，保持流畅滚动和快速定位，无需等待完整数据渲染。"
+            },
+            {
+              "title": "全量筛选、搜索与排序",
+              "description": "直接在结果集上进行过滤、搜索、排序和进一步分析，无需重新执行 SQL。"
+            },
+            {
+              "title": "结果持久化，随时继续探索",
+              "description": "查询结果自动保存，即使关闭 Tab 或重新打开历史记录，也可以继续分析。"
+            }
           ]
         },
         "handoff": {

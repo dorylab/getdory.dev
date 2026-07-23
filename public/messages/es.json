@@ -124,16 +124,23 @@
           "historyAlt": "Query History de Dory con consultas Play correctas y resultados recuperables"
         },
         "results": {
-          "title": "Resultados que siguen siendo útiles al terminar la consulta.",
-          "description": "Dory guarda los resultados completos como artefactos duraderos, para que incluso millones de filas sigan disponibles sin volver a ejecutar SQL costoso.",
-          "imageAlt": "Resultado completo de Dory con búsqueda, filtros y acciones de fila",
-          "chartAlt": "Gráfico creado desde un resultado real de consulta en Dory",
+          "label": "Result Set Engine",
+          "title": "Millones de filas, todavía fluidas de explorar",
+          "description": "Después de consultar millones de filas, puedes seguir filtrando, ordenando, buscando y analizando con rapidez. Dory usa DuckDB y Parquet para construir una capa de resultados de alto rendimiento y hacer que los ResultSets grandes se exploren con la fluidez de los datos locales.",
+          "imageAlt": "ResultSet grande y persistente en Dory con exploración rápida, filtros y acciones de fila",
           "features": [
-            "Explora millones de filas sin cargar todo en memoria",
-            "Filtra, busca y ordena el conjunto de resultados completo",
-            "Vuelve a abrir resultados históricos sin repetir la consulta",
-            "Crea gráficos que permanecen unidos al resultado real",
-            "Exporta el resultado completo o filtrado como CSV o Parquet"
+            {
+              "title": "Exploración de grandes resultados",
+              "description": "Carga millones de filas de resultados con desplazamiento fluido y navegación rápida, sin esperar a que se rendericen todos los datos."
+            },
+            {
+              "title": "Filtrado, búsqueda y ordenación completas",
+              "description": "Filtra, busca, ordena y sigue analizando directamente el ResultSet sin volver a ejecutar el SQL."
+            },
+            {
+              "title": "Resultados persistentes para continuar",
+              "description": "Los resultados se guardan automáticamente para seguir analizando después de cerrar la pestaña o reabrir el historial."
+            }
           ]
         },
         "handoff": {

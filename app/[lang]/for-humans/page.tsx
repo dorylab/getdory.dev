@@ -17,6 +17,7 @@ import type { StaticImageData } from "next/image";
 import { getTranslations } from "next-intl/server";
 
 import { MarketingLayout } from "@/components/marketing-layout";
+import { PaintedProductFrame } from "@/components/painted-product-frame";
 import FooterSection from "@/components/sections/footer";
 import { getMarketingOgImage } from "@/lib/marketing-og";
 import { cn } from "@/lib/utils";
@@ -26,7 +27,6 @@ import AutoCompletePreview from "@/public/auto-complete.png";
 import ContextPreview from "@/public/context-focus.png";
 import HeroPreview from "@/public/hero.png";
 import ResultPreview from "@/public/result-table.png";
-import SqlEditorOilBackdrop from "@/public/sql-editor-oil-backdrop.png";
 
 type PageProps = { params: Promise<{ lang: string }> };
 type TextItem = { title: string; description: string };
@@ -114,7 +114,7 @@ export default async function ForHumansPage({ params }: PageProps) {
   const isCjk = lang === "zh" || lang === "ja";
   const completionFeatures = t.raw("agentHome.humans.workspace.completionFeatures") as TextItem[];
   const capabilities = t.raw("agentHome.humans.workspace.capabilities") as TextItem[];
-  const resultFeatures = t.raw("agentHome.humans.results.features") as string[];
+  const resultFeatures = t.raw("agentHome.humans.results.features") as TextItem[];
   const handoffFeatures = t.raw("agentHome.humans.handoff.features") as string[];
   const workflowSteps = t.raw("agentHome.workflow.steps") as TextItem[];
   const trustItems = t.raw("agentHome.humans.control.items") as string[];
@@ -203,67 +203,98 @@ export default async function ForHumansPage({ params }: PageProps) {
                 </div>
               </div>
 
-              <figure className="relative isolate overflow-hidden rounded-[24px] p-5 pt-9 shadow-[0_18px_46px_rgba(23,22,21,0.1)] sm:p-7 sm:pt-12 dark:shadow-[0_18px_46px_rgba(0,0,0,0.34)]">
-                <Image
-                  src={SqlEditorOilBackdrop}
-                  alt=""
-                  fill
-                  aria-hidden="true"
-                  sizes="(max-width: 1023px) calc(100vw - 48px), 700px"
-                  className="-z-10 object-cover object-center dark:brightness-[0.42] dark:saturate-[0.78]"
-                />
-                <Image
-                  src={AutoCompletePreview}
-                  alt={t("agentHome.humans.workspace.completionImageAlt")}
-                  sizes="(max-width: 1023px) calc(100vw - 72px), 700px"
-                  className="h-auto w-full rounded-[14px] shadow-[0_14px_30px_rgba(47,108,255,0.16)] dark:shadow-[0_14px_30px_rgba(0,0,0,0.48)]"
-                />
-              </figure>
+              <PaintedProductFrame
+                src={AutoCompletePreview}
+                alt={t("agentHome.humans.workspace.completionImageAlt")}
+                sizes="(max-width: 1023px) calc(100vw - 72px), 700px"
+              />
             </div>
+          </section>
 
-            <div className="mt-16 border-t border-dory-line pt-10 md:mt-20 md:pt-12">
-              <div className="max-w-4xl">
-                <h3
+          <section className="border-b border-dory-line py-16 md:py-24">
+            <div className="grid gap-10 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] lg:items-center lg:gap-12">
+              <div className="lg:order-2">
+                <p className="text-[11px] font-medium tracking-[0.16em] text-dory-muted uppercase">
+                  {t("agentHome.humans.results.label")}
+                </p>
+                <h2
                   className={cn(
-                    "max-w-[820px] text-[clamp(2.125rem,3.2vw,2.875rem)] leading-[1.12] font-medium tracking-[-0.03em] text-balance",
-                    isCjk &&
-                      "max-w-[760px] text-[clamp(2rem,3vw,2.625rem)] leading-[1.16] tracking-[-0.025em]",
+                    "mt-3 max-w-xl text-[clamp(2rem,3vw,2.75rem)] leading-[1.1] font-medium tracking-[-0.03em] text-balance",
+                    isCjk && "text-[clamp(1.875rem,2.8vw,2.5rem)] leading-[1.16] tracking-[-0.025em]",
                   )}
                 >
-                  {t("agentHome.humans.workspace.capabilitiesTitle")}
-                </h3>
-                <p className="mt-4 max-w-3xl text-base leading-7 text-pretty text-dory-muted">
-                  {t("agentHome.humans.workspace.capabilitiesDescription")}
+                  {t("agentHome.humans.results.title")}
+                </h2>
+                <p className="mt-4 max-w-xl text-base leading-7 text-pretty text-dory-muted">
+                  {t("agentHome.humans.results.description")}
                 </p>
-              </div>
 
-              <div className="mt-8 grid border-t border-l border-dory-line md:grid-cols-2 lg:grid-cols-4">
-                {capabilities.map((item, index) => {
-                  const Icon = capabilityIcons[index] ?? Bot;
-                  const isAi = index === capabilities.length - 1;
-
-                  return (
-                    <article
-                      key={item.title}
-                      className={cn(
-                        "min-h-[200px] border-r border-b border-dory-line p-5",
-                        isAi && "border-[#171615] bg-[#171615] text-[#f7f1e8] dark:border-white/15",
-                      )}
-                    >
-                      <div className="flex items-center justify-between gap-4">
-                        <Icon className={cn("size-5", isAi ? "text-[#d9c48b]" : "text-dory-muted")} />
-                        <span className={cn("font-mono text-[10px]", isAi ? "text-white/45" : "text-dory-muted")}>
-                          {String(index + 1).padStart(2, "0")}
-                        </span>
+                <div className="mt-8 border-t border-dory-line">
+                  {resultFeatures.map((item, index) => (
+                    <article key={item.title} className="grid grid-cols-[28px_1fr] gap-3 border-b border-dory-line py-4 last:border-b-0">
+                      <span className="pt-0.5 font-mono text-[10px] text-dory-muted">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                      <div>
+                        <h3 className="text-sm font-medium tracking-[-0.01em]">{item.title}</h3>
+                        <p className="mt-1.5 text-sm leading-6 text-dory-muted">{item.description}</p>
                       </div>
-                      <h4 className="mt-8 text-lg font-medium tracking-[-0.02em]">{item.title}</h4>
-                      <p className={cn("mt-3 text-sm leading-6", isAi ? "text-white/60" : "text-dory-muted")}>
-                        {item.description}
-                      </p>
                     </article>
-                  );
-                })}
+                  ))}
+                </div>
               </div>
+
+              <PaintedProductFrame
+                src={ResultPreview}
+                alt={t("agentHome.humans.results.imageAlt")}
+                sizes="(max-width: 1023px) calc(100vw - 72px), 700px"
+                className="lg:order-1"
+              />
+            </div>
+          </section>
+
+          <section className="border-b border-dory-line py-16 md:py-24">
+            <div className="max-w-4xl">
+              <h2
+                className={cn(
+                  "max-w-[820px] text-[clamp(2.125rem,3.2vw,2.875rem)] leading-[1.12] font-medium tracking-[-0.03em] text-balance",
+                  isCjk &&
+                    "max-w-[760px] text-[clamp(2rem,3vw,2.625rem)] leading-[1.16] tracking-[-0.025em]",
+                )}
+              >
+                {t("agentHome.humans.workspace.capabilitiesTitle")}
+              </h2>
+              <p className="mt-4 max-w-3xl text-base leading-7 text-pretty text-dory-muted">
+                {t("agentHome.humans.workspace.capabilitiesDescription")}
+              </p>
+            </div>
+
+            <div className="mt-8 grid border-t border-l border-dory-line md:grid-cols-2 lg:grid-cols-4">
+              {capabilities.map((item, index) => {
+                const Icon = capabilityIcons[index] ?? Bot;
+                const isAi = index === capabilities.length - 1;
+
+                return (
+                  <article
+                    key={item.title}
+                    className={cn(
+                      "min-h-[200px] border-r border-b border-dory-line p-5",
+                      isAi && "border-[#171615] bg-[#171615] text-[#f7f1e8] dark:border-white/15",
+                    )}
+                  >
+                    <div className="flex items-center justify-between gap-4">
+                      <Icon className={cn("size-5", isAi ? "text-[#d9c48b]" : "text-dory-muted")} />
+                      <span className={cn("font-mono text-[10px]", isAi ? "text-white/45" : "text-dory-muted")}>
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                    </div>
+                    <h3 className="mt-8 text-lg font-medium tracking-[-0.02em]">{item.title}</h3>
+                    <p className={cn("mt-3 text-sm leading-6", isAi ? "text-white/60" : "text-dory-muted")}>
+                      {item.description}
+                    </p>
+                  </article>
+                );
+              })}
             </div>
 
             <div className="mt-10 grid gap-5 md:grid-cols-2">
@@ -283,28 +314,6 @@ export default async function ForHumansPage({ params }: PageProps) {
                 />
                 <figcaption className="mt-3 text-xs tracking-[0.1em] text-dory-muted uppercase">Query History</figcaption>
               </figure>
-            </div>
-          </section>
-
-          <section className="border-b border-dory-line py-16 md:py-24">
-            <div className="max-w-3xl">
-              <h2 className="text-3xl leading-[1.06] font-medium tracking-[-0.035em] md:text-4xl lg:text-5xl">
-                {t("agentHome.humans.results.title")}
-              </h2>
-              <p className="mt-4 text-base leading-7 text-pretty text-dory-muted md:text-lg md:leading-8">
-                {t("agentHome.humans.results.description")}
-              </p>
-              <FeatureList items={resultFeatures} />
-            </div>
-            <div className="relative mt-8 md:mt-10 lg:mt-12 lg:pb-20">
-              <ProductFrame src={ResultPreview} alt={t("agentHome.humans.results.imageAlt")} width={3024} height={1898} />
-              <ProductFrame
-                src="/images/charts.png"
-                alt={t("agentHome.humans.results.chartAlt")}
-                width={3024}
-                height={1964}
-                className="mt-5 rounded-[14px] p-1 shadow-none lg:absolute lg:right-[-1.5rem] lg:bottom-0 lg:w-[48%]"
-              />
             </div>
           </section>
 

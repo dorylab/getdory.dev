@@ -364,16 +364,23 @@
           "historyAlt": "Dory Query History showing successful Play queries and restorable results"
         },
         "results": {
-          "title": "Results that remain useful after the query finishes.",
-          "description": "Dory stores complete query results as durable artifacts, so even million-row outputs remain available to explore without rerunning expensive SQL.",
-          "imageAlt": "Dory complete result set with search, filters, and row actions",
-          "chartAlt": "Chart created from a real Dory query result",
+          "label": "Result Set Engine",
+          "title": "Millions of rows, still smooth to explore",
+          "description": "After querying millions of rows, you can still filter, sort, search, and analyze quickly. Dory uses DuckDB and Parquet to build a high-performance results layer, making large Result Sets feel as fluid to browse as local data.",
+          "imageAlt": "A persistent large Result Set in Dory with fast browsing, filtering, and row actions",
           "features": [
-            "Explore millions of rows without loading everything into memory",
-            "Filter, search, and sort across the complete result set",
-            "Reopen historical results without rerunning the query",
-            "Create charts that remain attached to the query result",
-            "Export the complete or filtered result as CSV or Parquet"
+            {
+              "title": "Browse large result sets",
+              "description": "Load millions of query-result rows with smooth scrolling and fast navigation, without waiting for the full dataset to render."
+            },
+            {
+              "title": "Filter, search, and sort the full result",
+              "description": "Work directly on the result set to filter, search, sort, and continue analyzing without rerunning SQL."
+            },
+            {
+              "title": "Persistent results, ready to resume",
+              "description": "Query results are saved automatically, so you can close the tab or reopen history and continue analyzing."
+            }
           ]
         },
         "handoff": {

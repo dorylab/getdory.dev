@@ -1,72 +1,63 @@
 # Design QA
 
-- Source visual truth paths:
-  - Card treatment: `/var/folders/8t/5d4kjsy95pdb46sy3x204z8w0000gn/T/codex-clipboard-61f5430b-ea22-4b15-934d-395654151957.png`
-  - Blue color reference: `/var/folders/8t/5d4kjsy95pdb46sy3x204z8w0000gn/T/codex-clipboard-6c555d0f-e800-455f-aaaf-af8a4eed3c0f.png`
+- Source visual truth:
+  - Layout and content specification: approved “For Humans 第二幕：百万行数据流畅探索” implementation plan.
   - Oil-painting treatment: `/var/folders/8t/5d4kjsy95pdb46sy3x204z8w0000gn/T/codex-clipboard-0e7e1354-5fe5-4ec5-a188-27555ff0099f.png`
-- Generated background asset: `/Users/jeffrey/Documents/Code/Dory/www/public/sql-editor-oil-backdrop.png`
-- Implementation screenshot path: `/tmp/dory-sql-oil-figure-viewport.png`
-- Combined comparison path: `/tmp/dory-oil-style-comparison.png`
-- Viewport: desktop CSS viewport 1280 × 720; the earlier mobile CSS viewport 390 × 844 check remains applicable because the responsive grid and image dimensions are unchanged.
-- Density normalization: the 1834 × 1287 px source crop and 691 × 565 px implementation crop were both normalized to 700 px wide for focused comparison.
-- State: Chinese locale, light theme for visual comparison; responsive behavior also checked on mobile.
+- Reusable background asset: `/Users/jeffrey/Documents/Code/Dory/www/public/product-oil-backdrop.png`
+- Implementation screenshots:
+  - Desktop: `/tmp/dory-result-set-engine-final.png`
+  - Mobile: `/tmp/dory-result-set-engine-mobile.png`
+- Combined focused comparison: `/tmp/dory-second-act-frame-comparison.png`
+- Viewports:
+  - Desktop: 1280 × 720 CSS px at device scale 1.
+  - Mobile: 390 × 844 CSS px at device scale 1.
+- State: Chinese locale and light theme; English, Japanese, and Spanish were also checked at the desktop breakpoint.
 
 ## Full-view comparison evidence
 
-The references are style samples rather than the same page composition, so full-page 1:1 matching is not applicable. The implementation preserves the existing 40/60 SQL Editor section layout and changes only the screenshot surround to the selected oil-canvas treatment.
+The desktop capture shows the approved mirrored composition: a 60% result screenshot on the left and 40% copy on the right. The general capability grid begins only after the second-act divider. The mobile capture confirms that document order remains copy first, followed by the painted screenshot frame.
 
 ## Focused region comparison evidence
 
-The combined comparison at `/tmp/dory-oil-style-comparison.png` places the Cursor reference crop and the rendered SQL Editor panel side by side. Both use a pale, low-contrast oil-painted landscape as a wide inset behind a centered application screenshot. The implementation intentionally shifts the palette toward Dory's blue-gray family and keeps the center quieter so the SQL content remains dominant.
+`/tmp/dory-second-act-frame-comparison.png` places the Cursor oil-canvas reference and the new result-set frame side by side. Both use a restrained painted landscape around a centered application screenshot. The implementation keeps Dory's cooler blue-gray palette, native result screenshot ratio, rounded frame, and quiet elevation.
 
 ## Fidelity surfaces
 
-- Fonts and typography: unchanged; the reference was used only for the screenshot container treatment.
-- Spacing and layout rhythm: desktop uses a 28 px side/bottom inset with a 48 px top inset, while mobile uses a 20 px side/bottom inset with a 36 px top inset. This exposes enough canvas to create the Cursor-like framed composition without shrinking the SQL screenshot excessively.
-- Colors and visual tokens: the generated backdrop uses low-saturation periwinkle, slate blue, soft ivory, and muted green. Dark mode applies lower brightness and saturation to the same asset rather than substituting an unrelated flat color.
-- Image quality and asset fidelity: the original 1739 × 904 oil texture is loaded through a static `next/image` import and cropped responsively with `object-cover`. `auto-complete.png` still renders directly at its native aspect ratio without an additional black `ProductFrame` wrapper.
-- Copy and content: existing SQL Editor copy is unchanged, and the removed caption remains absent.
+- Fonts and typography: the second act reuses the first act's responsive heading, description, numbered feature title, and body styles. Chinese fits on one desktop line; English, Japanese, and Spanish wrap without clipping.
+- Spacing and layout rhythm: desktop uses a 3:2 image/text grid with 48 px gap; mobile uses a single column with text before media. The 28 px desktop and 20 px mobile frame insets expose the canvas without shrinking the product UI excessively.
+- Colors and visual tokens: the shared background uses low-saturation periwinkle, slate blue, ivory, and muted green. Existing dark-mode brightness and saturation treatment is centralized in `PaintedProductFrame`.
+- Image quality and asset fidelity: both product screenshots use static imports, retain their native aspect ratios, and are rendered without the extra black `ProductFrame` wrapper. The 1739 × 904 oil asset is cropped with `object-cover`.
+- Copy and content: the second act includes the `Result Set Engine` label, the approved million-row title and DuckDB/Parquet description, and only the three large-result browsing, full-result operations, and persistence features. All four locales have the same object-shaped message structure.
 
 ## Findings
 
-No actionable P0, P1, or P2 differences remain. The implementation intentionally retains Dory's existing screenshot aspect ratio and uses an original blue-gray landscape instead of copying the source artwork.
+No actionable P0, P1, or P2 differences remain. The source is a style reference rather than the same product composition, so the Dory screenshot content and blue-gray artwork are intentional product-specific deviations.
 
 ## Comparison history
 
-### Iteration 1
+### Iterations 1–5
 
-- Earlier finding: the blue-gray gradient panel felt too soft and visually unrelated to the selected reference.
-- Fix: replaced it with a solid sampled mustard background and compact card shadow.
+The earlier SQL Editor work removed the generic black screenshot wrapper, eliminated the stale white strip through static imports, matched Dory's blue palette, and replaced the flat panel with an original oil-painted landscape.
 
-### Iteration 2
+### Iteration 6
 
-- Earlier finding: the shared `ProductFrame` added an extra black outer layer around the screenshot.
-- Fix: rendered the screenshot directly with `next/image`, preserving only its radius and shadow.
-- Post-fix evidence: focused comparison shows the screenshot sitting directly on the mustard panel with no extra black wrapper.
+- Earlier finding: the oil asset and wrapper were SQL Editor-specific, while the results story was a separate full-width block with five bullets and a chart overlay.
+- Fix: renamed the asset, extracted `PaintedProductFrame`, reused it in both acts, replaced the results block with a mirrored second act, reduced the story to the three approved capabilities, and moved the general capability section after it.
+- Post-fix evidence: desktop and mobile captures confirm the approved order and layout; the focused comparison confirms consistent painted-frame treatment.
 
-### Iteration 3
+### Iteration 7
 
-- Earlier finding: the preview could retain an older optimized version of the same `/auto-complete.png` URL, which showed a light strip no longer present in the replaced source asset.
-- Fix: switched the image to a static import so Next.js emits a content-hashed media URL.
-- Post-fix evidence: `/tmp/dory-latest-sql-editor-card.png` shows the current source image with no white strip above it.
-
-### Iteration 4
-
-- Earlier finding: the mustard panel and the first blue revision did not match the page's existing hero color closely enough.
-- Fix: sampled the user's marked hero region and set the panel to `#e3e5f0`, with a lighter blue-tinted image shadow.
-- Post-fix evidence: `/tmp/dory-blue-style-comparison.png` confirms the panel and marked reference region share the same pale lavender-blue tone.
-
-### Iteration 5
-
-- Earlier finding: the flat blue panel lacked the material depth and editorial character of the newly selected Cursor reference.
-- Fix: generated an original low-contrast blue-gray oil landscape, placed it as a real responsive image behind the SQL screenshot, and increased the top inset to reveal the painted canvas.
-- Post-fix evidence: `/tmp/dory-oil-style-comparison.png` confirms the same canvas-wrapped product composition while preserving Dory's palette and content hierarchy.
+- Earlier finding: the second-act copy emphasized multi-tab and multiple-result-set workflows rather than the Result Set Engine itself.
+- Fix: added the `Result Set Engine` label, replaced the title and architecture description, and refocused all three features on large-result browsing, full-result filtering/search/sorting, and persisted results.
+- Post-fix evidence: `/tmp/dory-result-set-engine-final.png` and `/tmp/dory-result-set-engine-mobile.png` show the revised hierarchy and copy with no overflow.
 
 ## Verification
 
-- Desktop light-theme focused comparison: passed.
-- Mobile 390 × 844 stacking and overflow check from the unchanged responsive grid: passed.
-- Browser console errors: none.
+- Desktop Chinese layout and focused visual comparison: passed.
+- Desktop English, Japanese, and Spanish heading/wrapping checks: passed.
+- Mobile 390 × 844 stacking, image ratio, and horizontal overflow checks: passed.
+- Browser console errors and warnings: none.
+- Message JSON parsing: passed.
 - `npm run types:check`: passed.
 - `git diff --check`: passed.
 
