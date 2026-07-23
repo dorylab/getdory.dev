@@ -55,15 +55,11 @@
       "humans": {
         "label": "Para personas",
         "title": "Un espacio SQL completo, mejorado con IA.",
-        "description": "Explora bases de datos, escribe y guarda SQL, revisa resultados completos y continúa el trabajo con agentes de IA sin salir del espacio.",
+        "description": "Explora bases de datos, escribe SQL, gestiona los resultados de las consultas y usa la IA para explorar datos, optimizar consultas y completar análisis.",
         "metaTitle": "Dory para personas — Cliente SQL con IA y espacio de bases de datos",
         "metaDescription": "Explora bases de datos, escribe y guarda SQL, reabre el historial, revisa ResultSets completos, crea gráficos, exporta datos y continúa el trabajo de agentes en Dory.",
         "workspace": {
-          "title": "La forma conocida de trabajar con SQL, en un solo lugar.",
-          "description": "Dory empieza como un espacio familiar para consultas y análisis diarios, no como un chat que oculta el trabajo real.",
-          "imageAlt": "Espacio Dory con la fuente Play, explorador de esquemas, editor SQL, pestañas, ResultSet y contexto de IA",
-          "completionLabel": "Monaco Editor × ANTLR4",
-          "completionTitle": "Autocompletado que entiende el SQL alrededor del cursor.",
+          "completionTitle": "Un editor SQL que entiende el contexto",
           "completionDescription": "Dory combina Monaco Editor con un analizador basado en ANTLR4, metadatos en vivo de la conexión y soporte consciente del dialecto. Las sugerencias se adaptan a la sentencia que estás escribiendo en lugar de venir de una lista estática.",
           "completionFeatures": [
             {
@@ -80,7 +76,6 @@
             }
           ],
           "completionImageAlt": "Editor SQL de Dory con la fuente ClickHouse Play sugiriendo tablas de Hacker News después de FROM hack",
-          "completionCaption": "Sugerencias de tablas en vivo · ClickHouse Play",
           "capabilitiesTitle": "Todo lo necesario para el trabajo diario con bases de datos, en un espacio.",
           "capabilitiesDescription": "Desde explorar datos y escribir SQL hasta guardar consultas, revisar el historial, crear gráficos y exportar resultados, Dory cubre el flujo completo de consulta.",
           "capabilities": [

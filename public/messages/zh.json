@@ -55,15 +55,11 @@
       "humans": {
         "label": "人类用户",
         "title": "完整的 SQL 工作台，由 AI 进一步增强。",
-        "description": "无需离开工作区，就能浏览数据库、编写和保存 SQL、检查完整结果集，并与 AI Agent 持续协作。",
+        "description": "浏览数据库、编写 SQL、管理查询结果，并使用 AI 探索数据、优化查询和完成分析。",
         "metaTitle": "Dory 人类用户版 — AI SQL Client 与数据库工作台",
         "metaDescription": "使用 Dory 浏览数据库、编写和保存 SQL、重开查询历史、检查完整 ResultSet、创建图表、导出数据，并继续 Agent 的工作。",
         "workspace": {
-          "title": "熟悉的 SQL 工作方式，这里都有。",
-          "description": "Dory 首先是面向日常查询与分析的数据库工作台，而不是把真实工作藏起来的聊天框。",
-          "imageAlt": "使用 Play 数据源的 Dory 工作区，包含 Schema 浏览器、SQL 编辑器、多 Tab、ResultSet 和 AI 上下文",
-          "completionLabel": "Monaco Editor × ANTLR4",
-          "completionTitle": "不只是补全关键词，而是理解光标附近的 SQL。",
+          "completionTitle": "智能感知上下文的 SQL Editor",
           "completionDescription": "Dory 将 Monaco Editor、ANTLR4 驱动的解析器、实时连接元数据和方言感知的语言支持结合起来。建议会跟随你正在编写的语句变化，而不是来自一份固定词表。",
           "completionFeatures": [
             {
@@ -80,7 +76,6 @@
             }
           ],
           "completionImageAlt": "Dory 在 ClickHouse Play 数据源中输入 FROM hack 后智能提示匹配的 Hacker News 表",
-          "completionCaption": "真实表名提示 · ClickHouse Play",
           "capabilitiesTitle": "日常数据库工作需要的能力，一个工作区就够了。",
           "capabilitiesDescription": "从浏览数据、编写 SQL，到保存查询、查看历史、创建图表和导出结果，Dory 可以承担完整的日常查询工作。",
           "capabilities": [

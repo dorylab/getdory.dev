@@ -55,15 +55,11 @@
       "humans": {
         "label": "人向け",
         "title": "AI で強化された、完全な SQL ワークスペース。",
-        "description": "ワークスペースを離れずに、データベースを参照し、SQL を作成・保存し、完全な結果セットを確認して、AI Agent と作業を継続できます。",
+        "description": "データベースの閲覧、SQL の作成、クエリ結果の管理に加え、AI を使ってデータを探索し、クエリを最適化して分析を完了できます。",
         "metaTitle": "Dory for Humans — AI SQL クライアントとデータベースワークスペース",
         "metaDescription": "Dory でデータベースを参照し、SQL を作成・保存し、クエリ履歴を開き直し、完全な ResultSet の確認、チャート作成、エクスポート、Agent との引き継ぎを行えます。",
         "workspace": {
-          "title": "使い慣れた SQL ワークフローを、ひとつの場所に。",
-          "description": "Dory は、実際の作業を隠すチャットボックスではなく、日常のクエリと分析に使えるデータベースワークスペースから始まります。",
-          "imageAlt": "Play データソースを使う Dory ワークスペース。スキーマブラウザー、SQL エディター、複数タブ、ResultSet、AI コンテキストを表示",
-          "completionLabel": "Monaco Editor × ANTLR4",
-          "completionTitle": "カーソル周辺の SQL を理解するオートコンプリート。",
+          "completionTitle": "コンテキストを理解する SQL エディター",
           "completionDescription": "Dory は Monaco Editor、ANTLR4 ベースのパーサー、接続先のライブメタデータ、方言を意識した言語サポートを組み合わせています。固定の単語リストではなく、記述中のステートメントに合わせて候補が変化します。",
           "completionFeatures": [
             {
@@ -80,7 +76,6 @@
             }
           ],
           "completionImageAlt": "ClickHouse Play データソースで FROM hack と入力した後、Hacker News テーブル候補を表示する Dory SQL エディター",
-          "completionCaption": "ライブテーブル候補 · ClickHouse Play",
           "capabilitiesTitle": "日常のデータベース作業に必要な機能を、ひとつのワークスペースに。",
           "capabilitiesDescription": "データ参照、SQL 作成、クエリ保存、履歴、チャート、エクスポートまで、Dory が日常のクエリ作業を支えます。",
           "capabilities": [

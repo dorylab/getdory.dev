@@ -295,15 +295,11 @@
       "humans": {
         "label": "For Humans",
         "title": "A complete SQL workspace, enhanced by AI.",
-        "description": "Browse databases, write and save SQL, inspect complete result sets, and continue work with AI agents without leaving the workspace.",
+        "description": "Browse databases, write SQL, manage query results, and use AI to explore data, optimize queries, and complete analyses.",
         "metaTitle": "Dory for Humans — AI SQL Client and Database Workspace",
         "metaDescription": "Browse databases, write and save SQL, reopen query history, inspect complete result sets, create charts, export data, and continue agent work in Dory.",
         "workspace": {
-          "title": "The SQL workflow you already know, all in one place.",
-          "description": "Dory starts as a familiar database workspace for daily querying and analysis—not a chat box that hides the underlying work.",
-          "imageAlt": "Dory workspace using the Play data source with schema browser, SQL editor, tabs, result set, and AI context",
-          "completionLabel": "Monaco Editor × ANTLR4",
-          "completionTitle": "Autocomplete that understands the SQL around your cursor.",
+          "completionTitle": "A context-aware SQL editor",
           "completionDescription": "Dory combines Monaco Editor with an ANTLR4-powered parser, live connection metadata, and dialect-aware language support. Suggestions adapt to the statement you are writing instead of coming from a static keyword list.",
           "completionFeatures": [
             {
@@ -320,7 +316,6 @@
             }
           ],
           "completionImageAlt": "Dory SQL editor on the ClickHouse Play data source suggesting matching Hacker News tables after FROM hack",
-          "completionCaption": "Live table suggestions · ClickHouse Play",
           "capabilitiesTitle": "Everything daily database work needs, in one workspace.",
           "capabilitiesDescription": "From browsing data and writing SQL to saved queries, history, charts, and exports, Dory carries the complete query workflow.",
           "capabilities": [

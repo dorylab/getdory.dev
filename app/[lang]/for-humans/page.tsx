@@ -16,16 +16,17 @@ import Image from "next/image";
 import type { StaticImageData } from "next/image";
 import { getTranslations } from "next-intl/server";
 
-import { buttonVariants } from "@/components/landing/variants";
 import { MarketingLayout } from "@/components/marketing-layout";
 import FooterSection from "@/components/sections/footer";
-import { Link } from "@/i18n/navigation";
 import { getMarketingOgImage } from "@/lib/marketing-og";
 import { cn } from "@/lib/utils";
 import ActionsPreview from "@/public/actions-focus.png";
 import AskPreview from "@/public/ask-focus.png";
+import AutoCompletePreview from "@/public/auto-complete.png";
 import ContextPreview from "@/public/context-focus.png";
+import HeroPreview from "@/public/hero.png";
 import ResultPreview from "@/public/result-table.png";
+import SqlEditorOilBackdrop from "@/public/sql-editor-oil-backdrop.png";
 
 type PageProps = { params: Promise<{ lang: string }> };
 type TextItem = { title: string; description: string };
@@ -148,15 +149,12 @@ export default async function ForHumansPage({ params }: PageProps) {
     <MarketingLayout lang={lang}>
       <main lang={lang} className="min-h-screen overflow-x-clip bg-dory-page px-4 pb-20 text-dory-ink sm:px-6 md:px-8 lg:px-10">
         <div className="mx-auto w-full max-w-[1200px]">
-          <header className="relative isolate border-b border-dory-line pt-20 pb-16 sm:pt-24 md:pt-28 md:pb-20">
+          <header className="relative isolate mx-auto w-full max-w-[1080px] border-b border-dory-line pt-20 pb-16 sm:pt-24 md:pt-28 md:pb-20">
             <div className="pointer-events-none absolute top-0 left-1/2 h-[480px] w-screen -translate-x-1/2 bg-[radial-gradient(circle_at_30%_0%,rgba(47,108,255,0.13),transparent_40%)] dark:bg-[radial-gradient(circle_at_30%_0%,rgba(136,182,255,0.11),transparent_40%)]" />
             <div className="relative max-w-4xl">
-              <p className="text-[11px] leading-none font-medium tracking-[0.16em] text-dory-muted uppercase">
-                {t("agentHome.humans.label")}
-              </p>
               <h1
                 className={cn(
-                  "mt-5 max-w-[920px] text-[clamp(3.2rem,6vw,5.75rem)] leading-[0.94] font-medium tracking-[-0.055em] text-balance",
+                  "max-w-[920px] text-[clamp(3.2rem,6vw,5.75rem)] leading-[0.94] font-medium tracking-[-0.055em] text-balance",
                   isCjk &&
                     "max-w-[850px] text-[clamp(3rem,5.4vw,5.2rem)] leading-[1.02] tracking-[-0.045em]",
                 )}
@@ -166,136 +164,61 @@ export default async function ForHumansPage({ params }: PageProps) {
               <p className="mt-6 max-w-2xl text-base leading-7 text-pretty text-dory-muted md:text-lg md:leading-8">
                 {t("agentHome.humans.description")}
               </p>
-              <div className="mt-8 flex flex-wrap gap-3">
-                <Link href="/download" className={cn(buttonVariants(), "gap-2")}>
-                  {t("downloadLatest")}
-                  <ArrowRight className="size-4" />
-                </Link>
-                <Link href="/for-agents" className={cn(buttonVariants({ variant: "secondary" }), "gap-2")}>
-                  {t("agentHome.agents.label")}
-                  <ArrowRight className="size-4" />
-                </Link>
-              </div>
             </div>
+            <ProductFrame
+              src={HeroPreview}
+              alt={t("agentHome.hero.imageAlt")}
+              priority
+              className="relative mt-10 md:mt-12"
+            />
           </header>
 
           <section className="border-b border-dory-line py-16 md:py-24">
-            <div className="grid gap-7 lg:grid-cols-[1.05fr_0.95fr] lg:items-end lg:gap-12">
+            <div className="grid gap-10 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] lg:items-center lg:gap-12">
               <div>
-                <h2
+                <h3
                   className={cn(
-                    "max-w-[760px] text-[clamp(3rem,6vw,5.25rem)] leading-[0.96] font-medium tracking-[-0.05em] text-balance",
-                    isCjk &&
-                      "max-w-[700px] text-[clamp(2.75rem,5.4vw,4.8rem)] leading-[1.04] tracking-[-0.045em]",
+                    "max-w-xl text-[clamp(2rem,3vw,2.75rem)] leading-[1.1] font-medium tracking-[-0.03em] text-balance",
+                    isCjk && "text-[clamp(1.875rem,2.8vw,2.5rem)] leading-[1.16] tracking-[-0.025em]",
                   )}
                 >
-                  {t.rich("aiNative.heading", {
-                    ask: (chunks) => <span className="text-dory-ink">{chunks} </span>,
-                    act: (chunks) => <span className="text-dory-ink">{chunks} </span>,
-                    stay: (chunks) => <span className="text-dory-muted">{chunks}</span>,
-                  })}
-                </h2>
-              </div>
-              <p className="max-w-xl text-base leading-7 text-pretty text-dory-muted md:text-lg md:leading-8 lg:justify-self-end lg:pb-1">
-                {t("aiNative.description")}
-              </p>
-            </div>
-
-            <div className="mt-10 grid border-t border-l border-dory-line lg:grid-cols-3">
-              {aiCards.map((card, index) => (
-                <article
-                  key={card.id}
-                  className="flex min-h-[520px] flex-col border-r border-b border-dory-line bg-dory-surface p-5 sm:p-7 lg:min-h-[610px]"
-                >
-                  <div className="flex items-center justify-between gap-4 text-xs text-dory-muted">
-                    <span className="tabular-nums">{String(index + 1).padStart(2, "0")}</span>
-                    <span>{card.label}</span>
-                  </div>
-                  <h3 className="mt-10 text-2xl leading-tight font-medium tracking-[-0.025em] md:text-[1.7rem]">
-                    {card.title}
-                  </h3>
-                  <p className="mt-4 text-sm leading-6 text-pretty text-dory-muted md:text-base md:leading-7">
-                    {card.description}
-                  </p>
-                  <figure className="mt-auto pt-9">
-                    <div className="aspect-square overflow-hidden border border-black/10 bg-[#11100f] p-2 dark:border-white/12">
-                      <Image
-                        src={card.image}
-                        alt={card.imageAlt}
-                        sizes="(max-width: 1023px) 100vw, 400px"
-                        placeholder="blur"
-                        className="h-full w-full bg-[#11100f] object-cover object-top"
-                      />
-                    </div>
-                  </figure>
-                </article>
-              ))}
-            </div>
-          </section>
-
-          <section className="border-b border-dory-line py-16 md:py-24">
-            <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-center lg:gap-12">
-              <div className="lg:pr-2">
-                <h2 className="max-w-lg text-3xl leading-[1.06] font-medium tracking-[-0.035em] md:text-4xl lg:text-5xl">
-                  {t("agentHome.humans.workspace.title")}
-                </h2>
-                <p className="mt-4 max-w-xl text-base leading-7 text-pretty text-dory-muted md:text-lg md:leading-8">
-                  {t("agentHome.humans.workspace.description")}
+                  {t("agentHome.humans.workspace.completionTitle")}
+                </h3>
+                <p className="mt-4 max-w-xl text-base leading-7 text-pretty text-dory-muted">
+                  {t("agentHome.humans.workspace.completionDescription")}
                 </p>
-              </div>
-              <ProductFrame
-                src="/images/for-humans/play-workspace.png"
-                alt={t("agentHome.humans.workspace.imageAlt")}
-                priority
-              />
-            </div>
 
-            <div className="mt-16 border-t border-dory-line pt-10 md:mt-20 md:pt-12">
-              <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start lg:gap-12">
-                <div className="lg:pt-2">
-                  <p className="font-mono text-[11px] tracking-[0.12em] text-dory-muted uppercase">
-                    {t("agentHome.humans.workspace.completionLabel")}
-                  </p>
-                  <h3
-                    className={cn(
-                      "mt-4 max-w-lg text-[clamp(2rem,3vw,2.75rem)] leading-[1.1] font-medium tracking-[-0.03em] text-balance",
-                      isCjk && "text-[clamp(1.875rem,2.8vw,2.5rem)] leading-[1.16] tracking-[-0.025em]",
-                    )}
-                  >
-                    {t("agentHome.humans.workspace.completionTitle")}
-                  </h3>
-                  <p className="mt-4 max-w-xl text-base leading-7 text-pretty text-dory-muted">
-                    {t("agentHome.humans.workspace.completionDescription")}
-                  </p>
-
-                  <div className="mt-8 border-t border-dory-line">
-                    {completionFeatures.map((item, index) => (
-                      <article key={item.title} className="grid grid-cols-[28px_1fr] gap-3 border-b border-dory-line py-4 last:border-b-0">
-                        <span className="pt-0.5 font-mono text-[10px] text-dory-muted">
-                          {String(index + 1).padStart(2, "0")}
-                        </span>
-                        <div>
-                          <h4 className="text-sm font-medium tracking-[-0.01em]">{item.title}</h4>
-                          <p className="mt-1.5 text-sm leading-6 text-dory-muted">{item.description}</p>
-                        </div>
-                      </article>
-                    ))}
-                  </div>
+                <div className="mt-8 border-t border-dory-line">
+                  {completionFeatures.map((item, index) => (
+                    <article key={item.title} className="grid grid-cols-[28px_1fr] gap-3 border-b border-dory-line py-4 last:border-b-0">
+                      <span className="pt-0.5 font-mono text-[10px] text-dory-muted">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                      <div>
+                        <h4 className="text-sm font-medium tracking-[-0.01em]">{item.title}</h4>
+                        <p className="mt-1.5 text-sm leading-6 text-dory-muted">{item.description}</p>
+                      </div>
+                    </article>
+                  ))}
                 </div>
-
-                <figure>
-                  <ProductFrame
-                    src="/images/for-humans/play-smart-completion.jpg"
-                    alt={t("agentHome.humans.workspace.completionImageAlt")}
-                    width={1341}
-                    height={768}
-                    className="rounded-[18px]"
-                  />
-                  <figcaption className="mt-3 text-xs tracking-[0.08em] text-dory-muted uppercase">
-                    {t("agentHome.humans.workspace.completionCaption")}
-                  </figcaption>
-                </figure>
               </div>
+
+              <figure className="relative isolate overflow-hidden rounded-[24px] p-5 pt-9 shadow-[0_18px_46px_rgba(23,22,21,0.1)] sm:p-7 sm:pt-12 dark:shadow-[0_18px_46px_rgba(0,0,0,0.34)]">
+                <Image
+                  src={SqlEditorOilBackdrop}
+                  alt=""
+                  fill
+                  aria-hidden="true"
+                  sizes="(max-width: 1023px) calc(100vw - 48px), 700px"
+                  className="-z-10 object-cover object-center dark:brightness-[0.42] dark:saturate-[0.78]"
+                />
+                <Image
+                  src={AutoCompletePreview}
+                  alt={t("agentHome.humans.workspace.completionImageAlt")}
+                  sizes="(max-width: 1023px) calc(100vw - 72px), 700px"
+                  className="h-auto w-full rounded-[14px] shadow-[0_14px_30px_rgba(47,108,255,0.16)] dark:shadow-[0_14px_30px_rgba(0,0,0,0.48)]"
+                />
+              </figure>
             </div>
 
             <div className="mt-16 border-t border-dory-line pt-10 md:mt-20 md:pt-12">
@@ -363,8 +286,17 @@ export default async function ForHumansPage({ params }: PageProps) {
             </div>
           </section>
 
-          <section className="grid gap-10 border-b border-dory-line py-16 md:py-24 lg:grid-cols-[1.2fr_0.8fr] lg:items-center lg:gap-12">
-            <div className="relative lg:pb-20">
+          <section className="border-b border-dory-line py-16 md:py-24">
+            <div className="max-w-3xl">
+              <h2 className="text-3xl leading-[1.06] font-medium tracking-[-0.035em] md:text-4xl lg:text-5xl">
+                {t("agentHome.humans.results.title")}
+              </h2>
+              <p className="mt-4 text-base leading-7 text-pretty text-dory-muted md:text-lg md:leading-8">
+                {t("agentHome.humans.results.description")}
+              </p>
+              <FeatureList items={resultFeatures} />
+            </div>
+            <div className="relative mt-8 md:mt-10 lg:mt-12 lg:pb-20">
               <ProductFrame src={ResultPreview} alt={t("agentHome.humans.results.imageAlt")} width={3024} height={1898} />
               <ProductFrame
                 src="/images/charts.png"
@@ -373,15 +305,6 @@ export default async function ForHumansPage({ params }: PageProps) {
                 height={1964}
                 className="mt-5 rounded-[14px] p-1 shadow-none lg:absolute lg:right-[-1.5rem] lg:bottom-0 lg:w-[48%]"
               />
-            </div>
-            <div className="lg:pl-2">
-              <h2 className="text-3xl leading-[1.06] font-medium tracking-[-0.035em] md:text-4xl lg:text-5xl">
-                {t("agentHome.humans.results.title")}
-              </h2>
-              <p className="mt-4 text-base leading-7 text-pretty text-dory-muted md:text-lg md:leading-8">
-                {t("agentHome.humans.results.description")}
-              </p>
-              <FeatureList items={resultFeatures} />
             </div>
           </section>
 
@@ -469,6 +392,60 @@ export default async function ForHumansPage({ params }: PageProps) {
                   <Check className="mt-1 size-3.5 shrink-0 text-[#d9c48b]" />
                   <span>{item}</span>
                 </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="border-b border-dory-line py-16 md:py-24">
+            <div className="grid gap-7 lg:grid-cols-[1.05fr_0.95fr] lg:items-end lg:gap-12">
+              <div>
+                <h2
+                  className={cn(
+                    "max-w-[760px] text-[clamp(3rem,6vw,5.25rem)] leading-[0.96] font-medium tracking-[-0.05em] text-balance",
+                    isCjk &&
+                      "max-w-[700px] text-[clamp(2.75rem,5.4vw,4.8rem)] leading-[1.04] tracking-[-0.045em]",
+                  )}
+                >
+                  {t.rich("aiNative.heading", {
+                    ask: (chunks) => <span className="text-dory-ink">{chunks} </span>,
+                    act: (chunks) => <span className="text-dory-ink">{chunks} </span>,
+                    stay: (chunks) => <span className="text-dory-muted">{chunks}</span>,
+                  })}
+                </h2>
+              </div>
+              <p className="max-w-xl text-base leading-7 text-pretty text-dory-muted md:text-lg md:leading-8 lg:justify-self-end lg:pb-1">
+                {t("aiNative.description")}
+              </p>
+            </div>
+
+            <div className="mt-10 grid border-t border-l border-dory-line lg:grid-cols-3">
+              {aiCards.map((card, index) => (
+                <article
+                  key={card.id}
+                  className="flex min-h-[520px] flex-col border-r border-b border-dory-line bg-dory-surface p-5 sm:p-7 lg:min-h-[610px]"
+                >
+                  <div className="flex items-center justify-between gap-4 text-xs text-dory-muted">
+                    <span className="tabular-nums">{String(index + 1).padStart(2, "0")}</span>
+                    <span>{card.label}</span>
+                  </div>
+                  <h3 className="mt-10 text-2xl leading-tight font-medium tracking-[-0.025em] md:text-[1.7rem]">
+                    {card.title}
+                  </h3>
+                  <p className="mt-4 text-sm leading-6 text-pretty text-dory-muted md:text-base md:leading-7">
+                    {card.description}
+                  </p>
+                  <figure className="mt-auto pt-9">
+                    <div className="aspect-square overflow-hidden border border-black/10 bg-[#11100f] p-2 dark:border-white/12">
+                      <Image
+                        src={card.image}
+                        alt={card.imageAlt}
+                        sizes="(max-width: 1023px) 100vw, 400px"
+                        placeholder="blur"
+                        className="h-full w-full bg-[#11100f] object-cover object-top"
+                      />
+                    </div>
+                  </figure>
+                </article>
               ))}
             </div>
           </section>
